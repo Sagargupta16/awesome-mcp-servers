@@ -1,0 +1,51 @@
+name: Suggest a Server
+description: Suggest an MCP server to add to the list
+title: "Add: "
+labels: ["addition"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Server Name
+      placeholder: "e.g., Stripe MCP Server"
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Repository URL
+      placeholder: "https://github.com/org/repo"
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Data & Databases
+        - Developer Tools
+        - Cloud & Infrastructure
+        - Productivity
+        - Search & Knowledge
+        - Communication
+        - File Systems & Storage
+        - AI & ML
+        - Finance
+        - Monitoring & Observability
+        - Other (specify below)
+    validations:
+      required: true
+  - type: input
+    id: language
+    attributes:
+      label: Language
+      placeholder: "e.g., TypeScript, Python, Go"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Short description of what the server does (max 80 chars)
+    validations:
+      required: true
