@@ -73,6 +73,7 @@ MCP is an open protocol that enables AI assistants (Claude, GPT, etc.) to secure
 
 ### Productivity
 
+- **[ScopeShield](https://github.com/robot-rubik/ceoclaw/tree/master/ceoclaw/scopeshield-mcp)** - MCP server for freelancer scope creep management. Detects client change requests, logs them to a tracker, and drafts change-order responses to protect freelance income.
 | Server | Description | Language |
 |--------|-------------|----------|
 | [Google Drive MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/gdrive) | Google Drive file access | TypeScript |
