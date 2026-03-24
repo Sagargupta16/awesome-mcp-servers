@@ -48,6 +48,7 @@ MCP is an open protocol that enables AI assistants (Claude, GPT, etc.) to secure
 | [Supabase MCP](https://github.com/supabase-community/supabase-mcp) | Supabase database, auth, and storage | TypeScript |
 | [Neon MCP](https://github.com/neondatabase/mcp-server-neon) | Neon serverless Postgres management | TypeScript |
 | [Turso MCP](https://github.com/tursodatabase/mcp-server-turso) | Turso/libSQL embedded databases | TypeScript |
+| [Upstash MCP](https://github.com/upstash/mcp-server) | Upstash Redis and Vector databases | TypeScript |
 
 ### Developer Tools
 
@@ -60,6 +61,8 @@ MCP is an open protocol that enables AI assistants (Claude, GPT, etc.) to secure
 | [Docker MCP](https://github.com/ckreiling/mcp-server-docker) | Docker container management | Python |
 | [Kubernetes MCP](https://github.com/strowk/mcp-k8s-go) | Kubernetes cluster operations | Go |
 | [NPM MCP](https://github.com/punkpeye/mcp-server-npm) | NPM package information and search | TypeScript |
+| [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Browser automation and testing | TypeScript |
+| [Figma MCP](https://github.com/niconiahi/figma-developer-mcp) | Figma design file access | TypeScript |
 
 ### Cloud & Infrastructure
 
@@ -77,7 +80,7 @@ MCP is an open protocol that enables AI assistants (Claude, GPT, etc.) to secure
 |--------|-------------|----------|
 | [Google Drive MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/gdrive) | Google Drive file access | TypeScript |
 | [Slack MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/slack) | Slack workspace integration | TypeScript |
-| [Notion MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/notion) | Notion pages and databases | TypeScript |
+| [Notion MCP](https://github.com/notionhq/notion-mcp-server) | Official Notion API integration | TypeScript |
 | [Google Calendar MCP](https://github.com/nspady/google-calendar-mcp) | Google Calendar management | TypeScript |
 | [Todoist MCP](https://github.com/abhiz123/todoist-mcp-server) | Todoist task management | TypeScript |
 | [Obsidian MCP](https://github.com/smithery-ai/mcp-obsidian) | Obsidian vault access | TypeScript |
@@ -91,6 +94,9 @@ MCP is an open protocol that enables AI assistants (Claude, GPT, etc.) to secure
 | [Tavily MCP](https://github.com/tavily-ai/tavily-mcp) | Tavily AI search for agents | Python |
 | [Wikipedia MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/wikipedia) | Wikipedia article search | TypeScript |
 | [Context7 MCP](https://github.com/upstash/context7) | Up-to-date library documentation | TypeScript |
+| [DeepWiki MCP](https://github.com/regenrek/deepwiki-mcp) | Fetch deepwiki.com repo docs as markdown | TypeScript |
+| [Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server) | Web scraping and crawling (cloud + self-hosted) | TypeScript |
+| [Apify MCP](https://github.com/apify/actors-mcp-server) | Web scraping actors and automation | TypeScript |
 
 ### Communication
 
@@ -106,6 +112,7 @@ MCP is an open protocol that enables AI assistants (Claude, GPT, etc.) to secure
 |--------|-------------|----------|
 | [Filesystem MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem) | Local filesystem operations | TypeScript |
 | [S3 MCP](https://github.com/awslabs/mcp/tree/main/src/amazon-s3-mcp-server) | AWS S3 bucket operations | Python |
+| [PDF MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/pdf) | Extract text from PDF files with pagination | TypeScript |
 
 ### AI & ML
 
@@ -121,6 +128,7 @@ MCP is an open protocol that enables AI assistants (Claude, GPT, etc.) to secure
 | Server | Description | Language |
 |--------|-------------|----------|
 | [Stripe MCP](https://github.com/stripe/agent-toolkit) | Stripe payments and billing | TypeScript |
+| [Coinbase MCP](https://github.com/coinbase/agentkit) | Coinbase crypto trading and wallet | TypeScript |
 | [Yahoo Finance MCP](https://github.com/nick-w-nick/yahoo-finance-mcp) | Stock data and financial info | TypeScript |
 
 ### Monitoring & Observability
@@ -141,6 +149,7 @@ MCP is an open protocol that enables AI assistants (Claude, GPT, etc.) to secure
 | [mcp-framework](https://github.com/QuantGeekDev/mcp-framework) | Framework for building MCP servers with TypeScript | TypeScript |
 | [EasyMCP](https://github.com/zueai/EasyMCP) | Simplified MCP server builder | TypeScript |
 | [spring-ai-mcp](https://github.com/spring-projects-experimental/spring-ai-mcp) | Spring Boot MCP integration | Java |
+| [21st Magic](https://github.com/21st-dev/magic) | AI component builder for React | TypeScript |
 
 ## Clients
 
@@ -153,6 +162,8 @@ MCP is an open protocol that enables AI assistants (Claude, GPT, etc.) to secure
 | [Windsurf](https://codeium.com/windsurf) | Codeium's AI IDE | Partial |
 | [Zed](https://zed.dev/) | High-performance code editor | Partial |
 | [Continue](https://continue.dev/) | Open-source AI code assistant | Full |
+| [Claude Mobile](https://claude.ai/download) | Claude on iOS/Android | Full |
+| [Claude Web](https://claude.ai) | Claude in the browser | Full |
 
 ## Tutorials & Articles
 
