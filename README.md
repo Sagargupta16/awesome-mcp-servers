@@ -54,7 +54,7 @@ MCP is an open protocol that enables AI assistants (Claude, GPT, etc.) to secure
 
 | Server | Description | Language |
 |--------|-------------|----------|
-| [GitHub MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/github) | GitHub API — repos, issues, PRs, actions | TypeScript |
+| [GitHub MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/github) | GitHub API - repos, issues, PRs, actions | TypeScript |
 | [GitLab MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/gitlab) | GitLab API integration | TypeScript |
 | [Linear MCP](https://github.com/jerhadf/linear-mcp-server) | Linear project management | TypeScript |
 | [Sentry MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/sentry) | Sentry error tracking and monitoring | TypeScript |
@@ -199,4 +199,4 @@ To add a new MCP server:
 
 [![CC0](https://licensebuttons.net/p/zero/1.0/88x31.png)](https://creativecommons.org/publicdomain/zero/1.0/)
 
-This list is released under [CC0 1.0 Universal](LICENSE) — public domain.
+This list is released under [CC0 1.0 Universal](LICENSE) - public domain.
