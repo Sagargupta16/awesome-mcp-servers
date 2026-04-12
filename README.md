@@ -63,6 +63,8 @@ MCP is an open protocol that enables AI assistants (Claude, GPT, etc.) to secure
 | [NPM MCP](https://github.com/punkpeye/mcp-server-npm) | NPM package information and search | TypeScript |
 | [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Browser automation and testing | TypeScript |
 | [Figma MCP](https://github.com/niconiahi/figma-developer-mcp) | Figma design file access | TypeScript |
+| [toprank](https://github.com/nowork-studio/toprank) | SEO & Google Ads skills for Claude Code — meta tags, schema markup, keyword bids, CMS pushes | TypeScript |
+
 
 ### Cloud & Infrastructure
 
