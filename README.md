@@ -124,6 +124,7 @@ MCP is an open protocol that enables AI assistants (Claude, GPT, etc.) to secure
 | [OpenAI MCP](https://github.com/pierrebrunelle/mcp-server-openai) | OpenAI API access | Python |
 | [Ollama MCP](https://github.com/patruff/ollama-mcp-bridge) | Local Ollama model management | TypeScript |
 | [LangChain MCP](https://github.com/rectalogic/langchain-mcp) | LangChain tool integration | Python |
+| [prompt-to-asset](https://github.com/MohamedAbdallah-14/prompt-to-asset) | Image generation across 30+ models (DALL-E, Flux, Stable Diffusion, Midjourney) via unified API | JavaScript |
 
 ### Finance
 
