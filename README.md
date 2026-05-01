@@ -110,6 +110,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [DigitalOcean MCP](https://github.com/digitalocean-labs/mcp-digitalocean) | Official DO droplets, apps, databases | Go |
 | [Heroku MCP](https://github.com/heroku/heroku-mcp-server) | Official Heroku platform CLI wrapper | TypeScript |
 | [Helm MCP](https://github.com/zekker6/mcp-helm) | Helm package manager for Kubernetes | Go |
+| [KubeStellar Console kc-agent](https://github.com/kubestellar/console) | MCP server for multi-cluster Kubernetes AI operations (CNCF Sandbox) | Go |
 | [Nomad MCP](https://github.com/kocierik/mcp-nomad) | HashiCorp Nomad cluster operations | Go |
 
 ### Productivity
