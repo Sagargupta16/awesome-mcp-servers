@@ -252,6 +252,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [Puppeteer MCP](https://github.com/merajmehrabi/puppeteer-mcp-server) | Browser automation via Puppeteer | TypeScript |
 | [Browser Use MCP](https://github.com/Saik0s/mcp-browser-use) | browser-use agent wrapped as MCP server | Python |
 | [Fetcher MCP](https://github.com/jae-jae/fetcher-mcp) | Headless Playwright page fetcher | TypeScript |
+| [Xquik MCP](https://github.com/Xquik-dev/x-twitter-scraper) | X/Twitter search, profile tweets, posting, and media tools | TypeScript |
 
 ### Media & Entertainment
 
