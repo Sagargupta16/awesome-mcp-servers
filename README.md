@@ -316,6 +316,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [HubSpot MCP](https://github.com/baryhuang/mcp-hubspot) | HubSpot CRM with vector storage | Python |
 | [PostHog MCP](https://github.com/PostHog/mcp) | Official PostHog product analytics | TypeScript |
 | [Mixpanel MCP](https://github.com/dragonkhoi/mixpanel-mcp) | Talk to your Mixpanel data | TypeScript |
+| [NotFair Google Ads MCP](https://github.com/nowork-studio/toprank) | Connect Claude and AI agents to Google Ads: diagnose performance, recommend optimizations, execute approved changes via the Google Ads API with a built-in human-approval gate. Hosted, streamable-HTTP. | Hosted (Python) |
 
 ### Knowledge Management
 
