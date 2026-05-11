@@ -280,10 +280,11 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [Amazon MCP](https://github.com/rigwild/mcp-server-amazon) | Search and purchase Amazon products | TypeScript |
+| [eBay MCP](https://github.com/YosefHayim/ebay-mcp) | 325 tools for eBay Sell APIs | TypeScript |
+| [Packrift MCP](https://github.com/Packrift/packrift-mcp) | Packaging catalog search, pricing, inventory, and cart URLs | TypeScript |
 | [Shopify MCP](https://github.com/GeLi2001/shopify-mcp) | Shopify API integration | TypeScript |
 | [WooCommerce MCP](https://github.com/techspawn/woocommerce-mcp-server) | WooCommerce MCP server | JavaScript |
-| [eBay MCP](https://github.com/YosefHayim/ebay-mcp) | 325 tools for eBay Sell APIs | TypeScript |
-| [Amazon MCP](https://github.com/rigwild/mcp-server-amazon) | Search and purchase Amazon products | TypeScript |
 
 ### Game Development
 
