@@ -92,6 +92,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [Postman MCP](https://github.com/postmanlabs/postman-mcp-server) | Official Postman API collections server | TypeScript |
 | [CircleCI MCP](https://github.com/CircleCI-Public/mcp-server-circleci) | Official CircleCI workflow integration | TypeScript |
 | [Jupyter MCP](https://github.com/datalayer/jupyter-mcp-server) | Jupyter notebook cell execution | Python |
+| [MartinLoop MCP](https://github.com/Keesan12/martin-loop/tree/main/packages/mcp) | Governed runtime for AI coding agents with budget caps, verifier gates, and inspectable runs | TypeScript |
 | [toprank](https://github.com/nowork-studio/toprank) | SEO & Google Ads skills for Claude Code | TypeScript |
 
 ### Cloud & Infrastructure
