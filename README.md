@@ -199,6 +199,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [QuickBooks MCP](https://github.com/intuit/quickbooks-online-mcp-server) | Official Intuit QuickBooks Online | TypeScript |
 | [Square MCP](https://github.com/square/square-mcp-server) | Official Square payments and commerce | TypeScript |
 | [Ramp MCP](https://github.com/ramp-public/ramp_mcp) | Official Ramp corporate cards + expenses | Python |
+| [TWZRD Agent Intel](https://intel.twzrd.xyz) | Solana on-chain trust scoring for AI agents. Verify wallet reputation before x402 micropayments | Remote |
 
 ### Monitoring & Observability
 
