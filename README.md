@@ -56,7 +56,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [MongoDB MCP](https://github.com/mongodb-js/mongodb-mcp-server) | Official MongoDB and Atlas cluster management | TypeScript |
 | [Redis MCP](https://github.com/redis/mcp-redis) | Official Redis cache and data structures | Python |
 | [MySQL MCP](https://github.com/benborla/mcp-server-mysql) | MySQL database queries and management | TypeScript |
-| [Supabase MCP](https://github.com/supabase-community/supabase-mcp) | Supabase database, auth, and storage | TypeScript |
+| [Supabase MCP](https://github.com/supabase/mcp) | Supabase database, auth, and storage | TypeScript |
 | [Neon MCP](https://github.com/neondatabase/mcp-server-neon) | Neon serverless Postgres branching and management | TypeScript |
 | [Upstash MCP](https://github.com/upstash/mcp-server) | Upstash Redis and Vector databases | TypeScript |
 | [SQL Database MCP](https://github.com/executeautomation/mcp-database-server) | SQLite, Postgres and SQL Server unified server | TypeScript |
@@ -93,7 +93,6 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [CircleCI MCP](https://github.com/CircleCI-Public/mcp-server-circleci) | Official CircleCI workflow integration | TypeScript |
 | [Jupyter MCP](https://github.com/datalayer/jupyter-mcp-server) | Jupyter notebook cell execution | Python |
 | [MartinLoop MCP](https://github.com/Keesan12/martin-loop/tree/main/packages/mcp) | Governed runtime for AI coding agents with budget caps, verifier gates, and inspectable runs | TypeScript |
-| [toprank](https://github.com/nowork-studio/toprank) | SEO & Google Ads skills for Claude Code | TypeScript |
 
 ### Cloud & Infrastructure
 
@@ -102,11 +101,11 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [AWS MCP Servers](https://github.com/awslabs/mcp) | Official AWS MCP servers (S3, Lambda, CDK, Bedrock, etc.) | Multiple |
 | [Cloudflare MCP](https://github.com/cloudflare/mcp-server-cloudflare) | Cloudflare Workers, KV, R2, D1 | TypeScript |
 | [Google Cloud MCP](https://github.com/googleapis/gcloud-mcp) | Official gcloud CLI wrapper for GCP services | TypeScript |
-| [Azure MCP](https://github.com/Azure/azure-mcp) | Official Azure cloud services | Python |
+| [Azure MCP](https://github.com/microsoft/mcp) | Official Azure cloud services | C# |
 | [Terraform MCP](https://github.com/hashicorp/terraform-mcp-server) | Official HashiCorp Terraform / OpenTofu | Go |
 | [Vercel MCP Handler](https://github.com/vercel/mcp-handler) | Official Vercel MCP handler for Next.js / Nuxt / Svelte | TypeScript |
 | [Vercel Next DevTools MCP](https://github.com/vercel/next-devtools-mcp) | Official Next.js dev tools for coding agents | TypeScript |
-| [Railway MCP](https://github.com/railwayapp/railway-mcp-server) | Official Railway deployment platform | TypeScript |
+| [Railway MCP](https://docs.railway.com/cli/mcp) | Official Railway MCP server built into the Railway CLI | Rust |
 | [Render MCP](https://github.com/render-oss/render-mcp-server) | Official Render deployment server | Go |
 | [DigitalOcean MCP](https://github.com/digitalocean-labs/mcp-digitalocean) | Official DO droplets, apps, databases | Go |
 | [Heroku MCP](https://github.com/heroku/heroku-mcp-server) | Official Heroku platform CLI wrapper | TypeScript |
@@ -122,7 +121,6 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [Slack MCP](https://github.com/korotovsky/slack-mcp-server) | Slack workspace integration | TypeScript |
 | [Notion MCP](https://github.com/makenotion/notion-mcp-server) | Official Notion API integration | TypeScript |
 | [Google Calendar MCP](https://github.com/nspady/google-calendar-mcp) | Google Calendar management | TypeScript |
-| [Gmail MCP](https://github.com/GongRzhe/Gmail-MCP-Server) | Gmail read/send with OAuth auto-auth | JavaScript |
 | [Outlook MCP](https://github.com/ryaker/outlook-mcp) | Outlook email and calendar via MS Graph | JavaScript |
 | [Microsoft 365 MCP](https://github.com/Softeria/ms-365-mcp-server) | Full M365 suite (Outlook, OneDrive, Teams, Excel) | TypeScript |
 | [Todoist MCP](https://github.com/abhiz123/todoist-mcp-server) | Todoist task management | TypeScript |
@@ -130,7 +128,6 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [Asana MCP](https://github.com/roychri/mcp-server-asana) | Asana tasks, projects, workspaces | TypeScript |
 | [Trello MCP](https://github.com/delorenj/mcp-server-trello) | Trello boards, lists, cards | TypeScript |
 | [Coda MCP](https://github.com/orellazri/coda-mcp) | Coda documents and tables | TypeScript |
-| [Apple MCP](https://github.com/supermemoryai/apple-mcp) | Apple Notes, Reminders, Calendar, Contacts, Maps | TypeScript |
 
 ### Search & Knowledge
 
@@ -143,7 +140,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [DuckDuckGo MCP](https://github.com/nickclyde/duckduckgo-mcp-server) | DuckDuckGo search with content fetching | Python |
 | [Kagi MCP](https://github.com/kagisearch/kagimcp) | Official Kagi search API | Python |
 | [SerpAPI MCP](https://github.com/serpapi/serpapi-mcp) | Official SerpAPI Google search results | Python |
-| [Algolia MCP](https://github.com/algolia/mcp-node) | Official Algolia search index management | TypeScript |
+| [Algolia MCP](https://github.com/algolia/mcp) | Official Algolia search index management | Go |
 | [Meilisearch MCP](https://github.com/meilisearch/meilisearch-mcp) | Official Meilisearch index server | Python |
 | [Context7 MCP](https://github.com/upstash/context7) | Up-to-date library documentation | TypeScript |
 | [DeepWiki MCP](https://github.com/regenrek/deepwiki-mcp) | Fetch deepwiki.com repo docs as markdown | TypeScript |
@@ -168,7 +165,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [Filesystem MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem) | Local filesystem operations | TypeScript |
 | [S3 Tables MCP](https://github.com/awslabs/mcp/tree/main/src/s3-tables-mcp-server) | Official AWS S3 Tables | Python |
 | [PDF MCP](https://github.com/Sohaib-2/pdf-mcp-server) | Extract text and metadata from PDF files | TypeScript |
-| [Box MCP](https://github.com/box-community/mcp-server-box) | Box file storage and metadata | Python |
+| [Box MCP](https://github.com/box/mcp-server-box-remote) | Official Box remote MCP server for enterprise content | Remote |
 | [Dropbox Dash MCP](https://github.com/dropbox/mcp-server-dash) | Official Dropbox Dash search server | Python |
 | [OneDrive / SharePoint MCP](https://github.com/ftaricano/mcp-onedrive-sharepoint) | OneDrive and SharePoint document access | TypeScript |
 | [IPFS MCP](https://github.com/alexbakers/mcp-ipfs) | IPFS pin, get, publish operations | TypeScript |
@@ -182,7 +179,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [Ollama MCP](https://github.com/patruff/ollama-mcp-bridge) | Local Ollama model management | TypeScript |
 | [LangChain MCP Adapters](https://github.com/langchain-ai/langchain-mcp-adapters) | Official LangChain / LangGraph MCP bridge | Python |
 | [LlamaCloud MCP](https://github.com/run-llama/llamacloud-mcp) | Official LlamaIndex Cloud index query | Python |
-| [Replicate MCP](https://github.com/deepfates/mcp-replicate) | Run Replicate-hosted models | TypeScript |
+| [Replicate MCP](https://replicate.com/docs/reference/mcp) | Official Replicate hosted MCP server | Remote |
 | [Weights & Biases MCP](https://github.com/wandb/wandb-mcp-server) | Official W&B Models + Weave | Python |
 | [prompt-to-asset](https://github.com/MohamedAbdallah-14/prompt-to-asset) | Image generation across 30+ models via unified API | JavaScript |
 
@@ -190,7 +187,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 
 | Server | Description | Language |
 |--------|-------------|----------|
-| [Stripe MCP](https://github.com/stripe/agent-toolkit) | Stripe payments and billing | TypeScript |
+| [Stripe MCP](https://github.com/stripe/ai) | Stripe payments and billing | TypeScript |
 | [Coinbase MCP](https://github.com/coinbase/agentkit) | Coinbase crypto trading and wallet | TypeScript |
 | [Yahoo Finance MCP](https://github.com/Alex2Yang97/yahoo-finance-mcp) | Stock data and financial info | Python |
 | [Financial Datasets MCP](https://github.com/financial-datasets/mcp-server) | Stock financials, prices, insider trades | Python |
@@ -199,7 +196,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [QuickBooks MCP](https://github.com/intuit/quickbooks-online-mcp-server) | Official Intuit QuickBooks Online | TypeScript |
 | [Square MCP](https://github.com/square/square-mcp-server) | Official Square payments and commerce | TypeScript |
 | [Ramp MCP](https://github.com/ramp-public/ramp_mcp) | Official Ramp corporate cards + expenses | Python |
-| [TWZRD Agent Intel](https://intel.twzrd.xyz) | Solana on-chain trust scoring for AI agents. Verify wallet reputation before x402 micropayments | Remote |
+| [TWZRD Agent Intel](https://smithery.ai/servers/wzrd/twzrd-agent-intel) | Solana on-chain trust scoring for AI agents. Verify wallet reputation before x402 micropayments | Remote |
 
 ### Monitoring & Observability
 
@@ -211,8 +208,8 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [PagerDuty MCP](https://github.com/PagerDuty/pagerduty-mcp-server) | Official PagerDuty incident management | TypeScript |
 | [Prometheus MCP](https://github.com/pab1it0/prometheus-mcp-server) | Prometheus metrics and PromQL queries | Python |
 | [OpenTelemetry MCP](https://github.com/traceloop/opentelemetry-mcp-server) | Unified OTEL traces across backends | Python |
-| [Logfire MCP](https://github.com/pydantic/logfire-mcp) | Official Pydantic Logfire observability | Python |
-| [Honeycomb MCP](https://github.com/honeycombio/honeycomb-mcp) | Official Honeycomb trace queries | TypeScript |
+| [Logfire MCP](https://logfire.pydantic.dev/docs/how-to-guides/mcp-server/) | Official Pydantic Logfire observability | Remote |
+| [Honeycomb MCP](https://docs.honeycomb.io/integrations/mcp/) | Official Honeycomb trace queries | Remote |
 
 ### Design & Creative
 
@@ -239,11 +236,11 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | Server | Description | Language |
 |--------|-------------|----------|
 | [Bitwarden MCP](https://github.com/bitwarden/mcp-server) | Official Bitwarden password manager | TypeScript |
-| [Semgrep MCP](https://github.com/semgrep/mcp) | Official Semgrep static analysis for vulnerabilities | Python |
+| [Semgrep MCP](https://github.com/semgrep/semgrep/tree/develop/cli/src/semgrep/mcp) | Official Semgrep static analysis for vulnerabilities | Python |
 | [Burp AI Agent](https://github.com/six2dez/burp-ai-agent) | Burp Suite extension with MCP tooling | Kotlin |
 | [BurpMCP](https://github.com/swgee/BurpMCP) | Burp Suite MCP server for app security testing | Java |
 | [MCP Security Hub](https://github.com/FuzzingLabs/mcp-security-hub) | Offensive tools (Nmap, Ghidra, Nuclei) | Python |
-| [MCP for Security](https://github.com/cyproxio/mcp-for-security) | SQLMap, FFUF, Nmap, Masscan via MCP | TypeScript |
+| [Bolt (MCP for Security)](https://github.com/CyberStrikeus/bolt) | SQLMap, FFUF, Nmap, Masscan and 100+ Kali tools via MCP | TypeScript |
 
 ### Web Browsing & Scraping
 
@@ -297,7 +294,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [UnrealGenAISupport](https://github.com/prajwalshettydev/UnrealGenAISupport) | UE5 plugin for LLM/GenAI + MCP | C++ |
 | [Unity Natural MCP](https://github.com/notargs/UnityNaturalMCP) | Natural UX Unity MCP implementation | C# |
 | [Unity MCP Server](https://github.com/AnkleBreaker-Studio/unity-mcp-server) | 268 tools for Unity Editor / Hub | JavaScript |
-| [Roblox Studio MCP](https://github.com/Roblox/studio-rust-mcp-server) | Official Roblox Studio standalone MCP | Rust |
+| [Roblox Studio MCP](https://create.roblox.com/docs/studio/mcp) | Official MCP server built into Roblox Studio | Built-in |
 
 ### IoT & Home Automation
 
@@ -317,9 +314,9 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [Salesforce MCP](https://github.com/salesforcecli/mcp) | Official Salesforce CLI MCP | TypeScript |
 | [Google Analytics MCP](https://github.com/surendranb/google-analytics-mcp) | GA4 data for AI agents | Python |
 | [HubSpot MCP](https://github.com/baryhuang/mcp-hubspot) | HubSpot CRM with vector storage | Python |
-| [PostHog MCP](https://github.com/PostHog/mcp) | Official PostHog product analytics | TypeScript |
+| [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp) | Official PostHog product analytics | TypeScript |
 | [Mixpanel MCP](https://github.com/dragonkhoi/mixpanel-mcp) | Talk to your Mixpanel data | TypeScript |
-| [NotFair Google Ads MCP](https://github.com/nowork-studio/toprank) | Google Ads diagnostics and optimizations with human-approval gate | Python |
+| [NotFair](https://github.com/nowork-studio/NotFair) | Google Ads, Meta Ads, and SEO skills with human-approval gate | TypeScript |
 
 ### Knowledge Management
 
@@ -337,10 +334,10 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 |---------|-------------|----------|
 | [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk) | Official TypeScript SDK for servers and clients | TypeScript |
 | [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) | Official Python SDK for servers and clients | Python |
-| [FastMCP](https://github.com/jlowin/fastmcp) | Fast, Pythonic way to build MCP servers | Python |
+| [FastMCP](https://github.com/PrefectHQ/fastmcp) | Fast, Pythonic way to build MCP servers | Python |
 | [mcp-framework](https://github.com/QuantGeekDev/mcp-framework) | TypeScript framework for building MCP servers | TypeScript |
 | [easymcp (promptmesh)](https://github.com/promptmesh/easymcp) | Simplified Python MCP client SDK | Python |
-| [spring-ai-mcp](https://github.com/spring-projects-experimental/spring-ai-mcp) | Spring Boot MCP integration | Java |
+| [MCP Java SDK](https://github.com/modelcontextprotocol/java-sdk) | Official Java SDK, maintained with Spring AI | Java |
 | [21st Magic MCP](https://github.com/21st-dev/magic-mcp) | AI component builder for React | TypeScript |
 | [Vercel mcp-handler](https://github.com/vercel/mcp-handler) | Official Vercel MCP adapter for meta-frameworks | TypeScript |
 | [MCP Registry](https://github.com/modelcontextprotocol/registry) | Official community-driven MCP server registry | TypeScript |
