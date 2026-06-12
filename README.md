@@ -351,7 +351,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | Anthropic's CLI coding agent | Full |
 | [VS Code + Claude](https://marketplace.visualstudio.com/items?itemName=Anthropic.claude-code) | VS Code extension | Full |
 | [Cursor](https://cursor.com/) | AI-powered code editor | Full |
-| [Windsurf](https://codeium.com/windsurf) | Codeium's AI IDE | Full |
+| [Windsurf](https://windsurf.com) | Windsurf AI IDE (formerly Codeium) | Full |
 | [Zed](https://zed.dev/) | High-performance code editor | Partial |
 | [Continue](https://continue.dev/) | Open-source AI code assistant | Full |
 | [Claude Mobile](https://claude.ai/download) | Claude on iOS / Android | Full |
