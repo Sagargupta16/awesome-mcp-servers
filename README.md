@@ -203,6 +203,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [ax](https://github.com/Necmttn/ax) | Agent session telemetry and cost analytics | TypeScript |
 | [Datadog MCP](https://github.com/winor30/mcp-server-datadog) | Datadog metrics, logs, monitors | TypeScript |
 | [Grafana MCP](https://github.com/grafana/mcp-grafana) | Official Grafana dashboards and alerts | Go |
 | [Loki MCP](https://github.com/grafana/loki-mcp) | Official Grafana Loki log aggregation | Go |
