@@ -243,6 +243,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [BurpMCP](https://github.com/swgee/BurpMCP) | Burp Suite MCP server for app security testing | Java |
 | [MCP Security Hub](https://github.com/FuzzingLabs/mcp-security-hub) | Offensive tools (Nmap, Ghidra, Nuclei) | Python |
 | [Bolt (MCP for Security)](https://github.com/CyberStrikeus/bolt) | SQLMap, FFUF, Nmap, Masscan and 100+ Kali tools via MCP | TypeScript |
+| [DomScan MCP](https://github.com/estevecastells/domscan-mcp) | Domain intelligence: DNS, WHOIS/RDAP, SSL, subdomains, valuation, typosquatting/brand protection | TypeScript |
 
 ### Web Browsing & Scraping
 
@@ -319,6 +320,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp) | Official PostHog product analytics | TypeScript |
 | [Mixpanel MCP](https://github.com/dragonkhoi/mixpanel-mcp) | Talk to your Mixpanel data | TypeScript |
 | [NotFair](https://github.com/nowork-studio/NotFair) | Google Ads, Meta Ads, and SEO skills with human-approval gate | TypeScript |
+| [LLM Pulse MCP](https://github.com/estevecastells/llmpulse-mcp) | AI search visibility (GEO/AEO): mentions, citations, share of voice, AI traffic across ChatGPT, Perplexity, Gemini, Google AI Overviews | Ruby |
 
 ### Knowledge Management
 
