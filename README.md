@@ -321,7 +321,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp) | Official PostHog product analytics | TypeScript |
 | [Mixpanel MCP](https://github.com/dragonkhoi/mixpanel-mcp) | Talk to your Mixpanel data | TypeScript |
 | [NotFair](https://github.com/nowork-studio/NotFair) | Google Ads, Meta Ads, and SEO skills with human-approval gate | TypeScript |
-| [LLM Pulse MCP](https://github.com/estevecastells/llmpulse-mcp) | AI search visibility (GEO/AEO): mentions, citations, share of voice, AI traffic across ChatGPT, Perplexity, Gemini, Google AI Overviews | Ruby |
+| [LLM Pulse MCP](https://github.com/LLM-Pulse/llmpulse-mcp) | AI visibility analytics for mentions, citations, sentiment, and AI traffic | JavaScript |
 
 ### Knowledge Management
 
