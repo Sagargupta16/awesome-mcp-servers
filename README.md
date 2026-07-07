@@ -94,6 +94,9 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [CircleCI MCP](https://github.com/CircleCI-Public/mcp-server-circleci) | Official CircleCI workflow integration | TypeScript |
 | [Jupyter MCP](https://github.com/datalayer/jupyter-mcp-server) | Jupyter notebook cell execution | Python |
 | [MartinLoop MCP](https://github.com/Keesan12/martin-loop/tree/main/packages/mcp) | Governed runtime for AI coding agents with budget caps, verifier gates, and inspectable runs | TypeScript |
+| [mcp-probe](https://github.com/alvabillwu/mcp-probe) | CLI tool to probe and inspect any MCP server — lists tools, resources, prompts, validates schemas, tests connectivity | Go |
+| [mcp-factory](https://github.com/alvabillwu/mcp-factory) | MCP server scaffolding CLI — generate new MCP server projects from templates | TypeScript |
+| [mcpindex](https://github.com/alvabillwu/mcpindex) | MCP server search and discovery directory | TypeScript |
 
 ### Cloud & Infrastructure
 
@@ -233,6 +236,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [Axe MCP](https://github.com/dequelabs/axe-mcp-server-public) | Official Deque accessibility testing + AI remediation | TypeScript |
 | [Vibetest (browser-use)](https://github.com/browser-use/vibetest-use) | Automated QA using Browser-Use agents | Python |
 | [Web Eval Agent](https://github.com/refreshdotdev/web-eval-agent) | Autonomously evaluates web applications | Python |
+| [mcp-compliance-lite](https://github.com/alvabillwu/mcp-compliance-lite) | MCP protocol specification conformance tester | Python |
 
 ### Security
 
@@ -245,6 +249,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [MCP Security Hub](https://github.com/FuzzingLabs/mcp-security-hub) | Offensive tools (Nmap, Ghidra, Nuclei) | Python |
 | [Bolt (MCP for Security)](https://github.com/CyberStrikeus/bolt) | SQLMap, FFUF, Nmap, Masscan and 100+ Kali tools via MCP | TypeScript |
 | [DomScan MCP](https://github.com/estevecastells/domscan-mcp) | Domain intelligence: DNS, WHOIS/RDAP, SSL, subdomains, valuation, typosquatting/brand protection | TypeScript |
+| [mcp-guard](https://github.com/alvabillwu/mcp-guard) | Security scanner for MCP server tools — detects vulnerabilities and misconfigurations | Go |
 
 ### Web Browsing & Scraping
 
