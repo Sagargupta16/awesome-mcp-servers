@@ -249,6 +249,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [MCP Security Hub](https://github.com/FuzzingLabs/mcp-security-hub) | Offensive tools (Nmap, Ghidra, Nuclei) | Python |
 | [Bolt (MCP for Security)](https://github.com/CyberStrikeus/bolt) | SQLMap, FFUF, Nmap, Masscan and 100+ Kali tools via MCP | TypeScript |
 | [DomScan MCP](https://github.com/estevecastells/domscan-mcp) | Domain intelligence: DNS, WHOIS/RDAP, SSL, subdomains, valuation, typosquatting/brand protection | TypeScript |
+| [Dark-Moon](https://github.com/ASCIT31/Dark-Moon) | Open source (GPL-3.0) autonomous AI pentest platform and MCP host orchestrating offensive tools across web, API, Active Directory and Kubernetes | Python |
 | [mcp-guard](https://github.com/alvabillwu/mcp-guard) | Security scanner for MCP server tools — detects vulnerabilities and misconfigurations | Go |
 
 ### Web Browsing & Scraping
