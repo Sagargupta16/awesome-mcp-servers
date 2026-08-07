@@ -188,6 +188,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [RouterBase MCP](https://github.com/zenlee123/routerbase-mcp) | Model discovery, pricing lookup, and OpenAI-compatible chat completions through [routerbase](https://routerbase.com) | TypeScript |
 | [Weights & Biases MCP](https://github.com/wandb/wandb-mcp-server) | Official W&B Models + Weave | Python |
 | [prompt-to-asset](https://github.com/MohamedAbdallah-14/prompt-to-asset) | Image generation across 30+ models via unified API | JavaScript |
+| [AISOTools MCP](https://aisotools.com/mcp) | AI-tool catalog search, comparison, and alternatives lookup | Remote |
 
 ### Finance
 
