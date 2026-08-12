@@ -224,11 +224,12 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 
 | Server | Description | Language |
 |--------|-------------|----------|
-| [Figma Dev Guide (official)](https://github.com/figma/mcp-server-guide) | Official Figma MCP usage guide and reference | JavaScript |
-| [Figma Context MCP](https://github.com/GLips/Figma-Context-MCP) | Figma layouts for AI coding agents (Framelink) | TypeScript |
 | [Blender MCP](https://github.com/ahujasid/blender-mcp) | Control Blender 3D modeling from AI assistants | Python |
-| [Photoshop MCP](https://github.com/loonghao/photoshop-python-api-mcp-server) | Adobe Photoshop automation | Python |
+| [Figma Context MCP](https://github.com/GLips/Figma-Context-MCP) | Figma layouts for AI coding agents (Framelink) | TypeScript |
+| [Figma Dev Guide (official)](https://github.com/figma/mcp-server-guide) | Official Figma MCP usage guide and reference | JavaScript |
 | [Framer Plugin MCP](https://github.com/Sheshiyer/framer-plugin-mcp) | Create and manage Framer plugins | JavaScript |
+| [OrkasVideoStudio](https://github.com/Orkas-AI/Orkas-VideoStudio) | Compose, edit, analyze, and render video from coding agents | TypeScript |
+| [Photoshop MCP](https://github.com/loonghao/photoshop-python-api-mcp-server) | Adobe Photoshop automation | Python |
 
 ### Testing & QA
 
