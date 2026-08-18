@@ -333,6 +333,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [NotFair](https://github.com/nowork-studio/NotFair) | Google Ads, Meta Ads, and SEO skills with human-approval gate | TypeScript |
 | [LLM Pulse MCP](https://github.com/LLM-Pulse/llmpulse-mcp) | AI visibility analytics for mentions, citations, sentiment, and AI traffic | JavaScript |
 | [Autoposting](https://github.com/Autoposting-ai/autoposting-mcp) | Schedule, generate and publish social posts to X, LinkedIn, Instagram, Threads and YouTube | TypeScript |
+| [UnrealUGC MCP](https://github.com/UnrealUGC/mcp) | Create AI UGC video ads through the UnrealUGC platform | TypeScript |
 
 ### Knowledge Management
 
