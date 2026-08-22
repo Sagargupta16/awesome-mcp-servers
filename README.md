@@ -285,6 +285,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [Google Maps MCP](https://github.com/cablate/mcp-google-map) | Google Maps API with LLM processing | TypeScript |
 | [OpenStreetMap MCP](https://github.com/jagan-shanmugam/open-streetmap-mcp) | Location services and geospatial data | Python |
 | [Airbnb MCP](https://github.com/openbnb-org/mcp-server-airbnb) | Search Airbnb from your AI agent | JavaScript |
+| [Pocket Drives](https://github.com/RevList/pocket-drives-mcp) | Search peer-to-peer luxury, exotic, and EV rentals from independent hosts. Booking finishes in the iOS app. Remote at https://pocketdrives.ai/mcp | TypeScript |
 | [Weather MCP](https://github.com/ezh0v/weather-mcp-server) | Real-time weather data | Go |
 | [Flights MCP](https://github.com/ravinahp/flights-mcp) | Flight search via Duffel API | Python |
 | [Flight Search MCP](https://github.com/arjunprabhulal/mcp-flight-search) | Realtime flight search server | Python |
