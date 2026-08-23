@@ -84,6 +84,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [Atlassian MCP (Jira + Confluence)](https://github.com/sooperset/mcp-atlassian) | Jira and Confluence integration | Python |
 | [Bitbucket MCP](https://github.com/aashari/mcp-server-atlassian-bitbucket) | Bitbucket Cloud repos, PRs, pipelines | TypeScript |
 | [Linear MCP](https://github.com/jerhadf/linear-mcp-server) | Linear project management | TypeScript |
+| [LRSI](https://github.com/ANAMIZED/LRSI) | Local recursive self-improvement OS MCP on a closed-loop runtime | Python |
 | [Sentry MCP](https://github.com/getsentry/sentry-mcp) | Official Sentry error and performance tracking | TypeScript |
 | [Docker MCP](https://github.com/ckreiling/mcp-server-docker) | Docker container management | Python |
 | [Kubernetes MCP](https://github.com/strowk/mcp-k8s-go) | Kubernetes cluster operations | Go |
@@ -97,6 +98,10 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [mcp-probe](https://github.com/alvabillwu/mcp-probe) | CLI tool to probe and inspect any MCP server — lists tools, resources, prompts, validates schemas, tests connectivity | Go |
 | [mcp-factory](https://github.com/alvabillwu/mcp-factory) | MCP server scaffolding CLI — generate new MCP server projects from templates | TypeScript |
 | [mcpindex](https://github.com/alvabillwu/mcpindex) | MCP server search and discovery directory | TypeScript |
+| [OpenMesha](https://github.com/ANAMIZED/OpenMesha) | Agentic operations mesh MCP for local economic coordination | Python |
+| [Server-OS](https://github.com/ANAMIZED/Server-OS) | Fail-closed agentic OS MCP with governance and cost control | Python |
+| [SuperAgenticMCP](https://github.com/ANAMIZED/SuperAgenticMCP) | MCP-native multi-agent router for planning and tool-call routing | Python |
+| [YodMCP](https://github.com/ANAMIZED/YodMCP) | Autonomous agent OS MCP with memory, tasks, skills, and A2A | Python |
 
 ### Cloud & Infrastructure
 
@@ -205,6 +210,9 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [Square MCP](https://github.com/square/square-mcp-server) | Official Square payments and commerce | TypeScript |
 | [Ramp MCP](https://github.com/ramp-public/ramp_mcp) | Official Ramp corporate cards + expenses | Python |
 | [TWZRD Agent Intel](https://smithery.ai/servers/wzrd/twzrd-agent-intel) | Solana on-chain trust scoring for AI agents. Verify wallet reputation before x402 micropayments | Remote |
+| [NeedRail](https://github.com/ANAMIZED/NeedRail) | Needs registry MCP with x402 for public-goods coordination | Python |
+| [OpenGOS](https://github.com/ANAMIZED/OpenGOS) | Grants discovery, matching, drafting, and lifecycle MCP | Python |
+| [x402-cloudflare-starter](https://github.com/ANAMIZED/x402-cloudflare-starter) | USDC x402 micropayments on Base and Solana via Cloudflare Workers | TypeScript |
 
 ### Monitoring & Observability
 
