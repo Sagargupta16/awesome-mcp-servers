@@ -271,6 +271,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [Live Tennis API MCP](https://github.com/livetennisapi/livetennisapi-mcp) | Live tennis scores, match state, and model win-probability | TypeScript |
 | [Spotify MCP](https://github.com/marcelmarais/spotify-mcp-server) | Lightweight Spotify integration | TypeScript |
 | [YouTube MCP](https://github.com/ZubeidHendricks/youtube-mcp-server) | YouTube API videos and analytics | TypeScript |
 | [YouTube Transcript MCP](https://github.com/kimtaeyoon83/mcp-server-youtube-transcript) | Download YouTube video transcripts | TypeScript |
