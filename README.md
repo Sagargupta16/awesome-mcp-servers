@@ -191,6 +191,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [LlamaCloud MCP](https://github.com/run-llama/llamacloud-mcp) | Official LlamaIndex Cloud index query | Python |
 | [Replicate MCP](https://replicate.com/docs/reference/mcp) | Official Replicate hosted MCP server | Remote |
 | [RunAPI MCP](https://github.com/runapi-ai/mcp) | Model discovery, pricing lookup, task creation, and LLM chat | TypeScript |
+| [SandBase CLI](https://github.com/sandbaseai/cli) | Local MCP gateway for discovering and running 2,000+ AI models via one API | TypeScript |
 | [RouterBase MCP](https://github.com/zenlee123/routerbase-mcp) | Model discovery, pricing lookup, and OpenAI-compatible chat completions through [routerbase](https://routerbase.com) | TypeScript |
 | [Weights & Biases MCP](https://github.com/wandb/wandb-mcp-server) | Official W&B Models + Weave | Python |
 | [prompt-to-asset](https://github.com/MohamedAbdallah-14/prompt-to-asset) | Image generation across 30+ models via unified API | JavaScript |
