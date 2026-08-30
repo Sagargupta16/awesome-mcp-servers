@@ -80,7 +80,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 |--------|-------------|----------|
 | [GitHub MCP](https://github.com/github/github-mcp-server) | Official GitHub — repos, issues, PRs, Actions | Go |
 | [GitLab MCP](https://github.com/zereight/gitlab-mcp) | GitLab API integration (repos, MRs, issues) | TypeScript |
-| [Hephaestus](https://github.com/agentlas-ai/Hephaestus) | Routes coding agents and skills over MCP across Claude Code, Codex and Cursor | Python |
+| [Agentlas OS](https://github.com/agentlas-ai/Agentlas-OS) | Portable agent teams and cross-host orchestration over MCP | Python |
 | [Atlassian MCP (Jira + Confluence)](https://github.com/sooperset/mcp-atlassian) | Jira and Confluence integration | Python |
 | [Bitbucket MCP](https://github.com/aashari/mcp-server-atlassian-bitbucket) | Bitbucket Cloud repos, PRs, pipelines | TypeScript |
 | [Linear MCP](https://github.com/jerhadf/linear-mcp-server) | Linear project management | TypeScript |
