@@ -100,6 +100,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [mcpindex](https://github.com/alvabillwu/mcpindex) | MCP server search and discovery directory | TypeScript |
 | [OpenMesha](https://github.com/ANAMIZED/OpenMesha) | Agentic operations mesh MCP for local economic coordination | Python |
 | [Server-OS](https://github.com/ANAMIZED/Server-OS) | Fail-closed agentic OS MCP with governance and cost control | Python |
+| [SandBase Harness](https://github.com/sandbaseai/sandbase-harness) | Self-hosted MCP runtime with agent sessions, sandboxing, permissions, and audit/replay | TypeScript |
 | [SuperAgenticMCP](https://github.com/ANAMIZED/SuperAgenticMCP) | MCP-native multi-agent router for planning and tool-call routing | Python |
 | [YodMCP](https://github.com/ANAMIZED/YodMCP) | Autonomous agent OS MCP with memory, tasks, skills, and A2A | Python |
 
