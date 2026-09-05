@@ -214,6 +214,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 | [TWZRD Agent Intel](https://smithery.ai/servers/wzrd/twzrd-agent-intel) | Solana on-chain trust scoring for AI agents. Verify wallet reputation before x402 micropayments | Remote |
 | [NeedRail](https://github.com/ANAMIZED/NeedRail) | Needs registry MCP with x402 for public-goods coordination | Python |
 | [OpenGOS](https://github.com/ANAMIZED/OpenGOS) | Grants discovery, matching, drafting, and lifecycle MCP | Python |
+| [ParlayAPI](https://github.com/JacobiusMakes/parlay-api-mcp) | Sports odds and player props using your own API key and account allowances | Python |
 | [x402-cloudflare-starter](https://github.com/ANAMIZED/x402-cloudflare-starter) | USDC x402 micropayments on Base and Solana via Cloudflare Workers | TypeScript |
 
 ### Monitoring & Observability
