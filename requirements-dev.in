@@ -1,0 +1,9 @@
+# Tooling for the gate scripts in scripts/ and the suite in tests/.
+#
+# Edit this file, then regenerate the hash-locked requirements-dev.txt:
+#
+#     uv pip compile requirements-dev.in --universal --generate-hashes \
+#       --python-version "$(cat .python-version)" -o requirements-dev.txt
+#
+ruff==0.16.6
+pytest==9.0.3
