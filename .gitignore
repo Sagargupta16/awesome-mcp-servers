@@ -11,3 +11,9 @@ Thumbs.db
 .env.local
 .env.*.local
 *.log
+
+# Python, for the scripts in scripts/
+__pycache__/
+*.py[cod]
+.venv/
+.ruff_cache/
