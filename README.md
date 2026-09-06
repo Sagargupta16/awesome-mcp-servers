@@ -11,7 +11,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 **This list is curated, not exhaustive.** Bigger MCP lists exist. The point of this one is that everything on it has been checked. Every entry:
 
 - implements MCP for real -- not a README with a `server.json` next to it
-- has a licence GitHub can detect
+- ships a licence file, read by hand when GitHub cannot classify it
 - was pushed within the last 180 days, and is not archived
 - has 150+ stars, or is the vendor's own official server
 - appears exactly once, in one category

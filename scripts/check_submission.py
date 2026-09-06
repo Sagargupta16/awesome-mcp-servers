@@ -49,7 +49,7 @@ MANIFEST_ONLY = {
 }
 
 ROW_RE = re.compile(
-    r"^\+\|\s*\[(?P<name>[^\]]+)\]\((?P<url>[^)\s]+)\)\s*\|(?P<rest>.*)\|\s*$"
+    r"^\|\s*\[(?P<name>[^\]]+)\]\((?P<url>[^)\s]+)\)\s*\|(?P<rest>.*)\|\s*$"
 )
 GH_REPO_RE = re.compile(r"^https://github\.com/(?P<owner>[\w.-]+)/(?P<repo>[\w.-]+)/?$")
 
@@ -85,32 +85,49 @@ def gh_api(path: str):
         return None, f"network: {exc}"
 
 
-def added_rows(base_ref: str) -> list:
-    diff = subprocess.run(
-        ["git", "diff", "--unified=0", f"{base_ref}...HEAD", "--", "README.md"],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    if diff.returncode != 0:
-        print(f"warning: git diff failed: {diff.stderr.strip()}", file=sys.stderr)
-        return []
-
-    rows = []
-    for line in diff.stdout.splitlines():
+def parse_rows(text: str) -> dict:
+    """Map normalised URL to Submission for every table row in a README."""
+    rows = {}
+    for line in text.splitlines():
         m = ROW_RE.match(line)
         if not m:
             continue
         cells = [c.strip() for c in m.group("rest").split("|")]
-        rows.append(
-            Submission(
-                name=m.group("name").strip(),
-                url=m.group("url").strip(),
-                desc=cells[0] if cells else "",
-                third=cells[1] if len(cells) > 1 else "",
-            )
+        url = m.group("url").strip()
+        key = re.sub(r"^https?://(www\.)?", "", url.rstrip("/")).lower()
+        rows[key] = Submission(
+            name=m.group("name").strip(),
+            url=url,
+            desc=cells[0] if cells else "",
+            third=cells[1] if len(cells) > 1 else "",
         )
     return rows
+
+
+def added_rows(base_ref: str) -> list:
+    """Entries present at HEAD but not at the base.
+
+    Compares the two parsed entry sets rather than reading `+` lines from the
+    diff. Reordering a table rewrites every moved row, so a diff-based reading
+    reports untouched entries as new submissions and then blocks the pull
+    request over rot that was already on the base branch.
+    """
+    base = subprocess.run(
+        ["git", "show", f"{base_ref}:README.md"],
+        capture_output=True,
+        check=False,
+    )
+    if base.returncode != 0:
+        print(
+            f"warning: could not read README.md at {base_ref}: "
+            f"{base.stderr.decode('utf-8', 'replace').strip()}",
+            file=sys.stderr,
+        )
+        return []
+
+    before = parse_rows(base.stdout.decode("utf-8", "replace"))
+    after = parse_rows(Path("README.md").read_text(encoding="utf-8"))
+    return [sub for key, sub in after.items() if key not in before]
 
 
 def inspect(sub: Submission) -> None:
@@ -160,11 +177,23 @@ def inspect(sub: Submission) -> None:
         sub.hard.append(
             "The repository is a fork. Submit the upstream project instead."
         )
+    # "NOASSERTION" means GitHub found a licence file it could not classify,
+    # which is a different thing from having none. The official MCP SDKs all
+    # report it. Only a genuinely absent licence blocks.
     if licence in (None, "", "NOASSERTION"):
-        sub.hard.append(
-            "No recognised open-source licence. CONTRIBUTING.md requires a clearly "
-            "stated licence; add a LICENSE file GitHub can detect."
-        )
+        lic_file, lic_err = gh_api(f"repos/{slug}/license")
+        if isinstance(lic_file, dict) and lic_file.get("name"):
+            sub.facts["license"] = f"{lic_file['name']} (unrecognised by GitHub)"
+            sub.soft.append(
+                f"GitHub cannot classify `{lic_file['name']}`, so it reports no SPDX "
+                f"licence. Confirm by hand that the terms are open source. Common for "
+                f"a vendor repo with a customised header, suspicious for a small one."
+            )
+        else:
+            sub.hard.append(
+                f"No licence file at the repository root ({lic_err}). CONTRIBUTING.md "
+                f"requires a clearly stated licence; add a LICENSE file."
+            )
     if stale_days > STALE_DAYS:
         sub.hard.append(
             f"Last push was {stale_days} days ago, over the {STALE_DAYS}-day "

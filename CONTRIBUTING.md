@@ -93,7 +93,7 @@ Entries are sorted alphabetically by name within each table, case-insensitively 
 Every submission must meet all of these. CI checks the mechanical ones automatically and reports the rest for a maintainer.
 
 1. **It really is an MCP server.** The repository contains a working [MCP](https://modelcontextprotocol.io/) implementation -- server, client, or framework, matching the section. A repository holding only a README and a registry manifest such as `server.json` is rejected.
-2. **Open source with a detectable licence.** GitHub must identify a licence for the repository. If the licence sidebar is empty or reads "unknown", add a standard `LICENSE` file first.
+2. **Open source with a licence file.** The repository must have a `LICENSE` at its root. If GitHub cannot classify it -- the sidebar reads "unknown" and the API reports `NOASSERTION` -- that is not an automatic rejection, but a maintainer will read the terms by hand. It is common for a vendor repo with a customised header and suspicious for a small one. No licence file at all is a rejection.
 3. **Documented.** A README covering what it does, how to install and configure it, and basic usage.
 4. **Maintained.** Pushed within the last **180 days**, and not archived.
 5. **Notable.** Either 150 or more stars, or the vendor's own official server for a product people already use. A brand-new personal project with a handful of stars is not declined for being new -- it is declined for being unverifiable. Come back when it has traction.
