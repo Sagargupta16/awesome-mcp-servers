@@ -1,0 +1,70 @@
+name: Report a problem with an entry
+description: A listed link is dead, the project is abandoned, or it should be removed
+title: "Problem: "
+labels: ["maintenance"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep the list accurate. Correcting or pruning entries is
+        as valuable as adding them.
+
+        If a listed server behaves **maliciously**, do not file this publicly --
+        follow [SECURITY.md](../blob/main/SECURITY.md) instead.
+
+  - type: input
+    id: entry
+    attributes:
+      label: Entry name
+      description: Exactly as it appears in README.md.
+      placeholder: "Example MCP"
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: URL as listed
+      placeholder: "https://github.com/org/repo"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: problem
+    attributes:
+      label: What is wrong
+      options:
+        - Dead link (404)
+        - Repository moved or renamed
+        - Archived upstream
+        - Abandoned (no meaningful activity)
+        - No longer implements MCP
+        - Wrong category
+        - Wrong or misleading description
+        - Duplicate of another entry
+        - Licence removed or changed to non-open-source
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: detail
+    attributes:
+      label: Details
+      description: >
+        What did you observe? For a move or rename, give the new URL. For abandonment,
+        link the last meaningful commit or an unanswered issue. For a duplicate, name
+        the other entry.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: action
+    attributes:
+      label: Suggested action
+      options:
+        - Update the entry
+        - Remove the entry
+        - Not sure -- maintainer's call
+    validations:
+      required: true

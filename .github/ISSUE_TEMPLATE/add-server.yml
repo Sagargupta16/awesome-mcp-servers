@@ -1,26 +1,55 @@
-name: Suggest a Server
-description: Suggest an MCP server to add to the list
+name: Suggest a server
+description: Suggest an MCP server, client, framework, or resource for the list
 title: "Add: "
 labels: ["addition"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this if you would rather not open a pull request, or if your project is
+        too new to clear the notability bar yet -- a suggestion stays on record and
+        you can point at it later.
+
+        Please check [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md#quality-standards) first.
+        Suggestions that clearly miss the bar get closed without much discussion.
+
   - type: input
     id: name
     attributes:
-      label: Server Name
-      placeholder: "e.g., Stripe MCP Server"
+      label: Name
+      placeholder: "Stripe MCP"
     validations:
       required: true
+
   - type: input
     id: url
     attributes:
-      label: Repository URL
+      label: Repository or project URL
       placeholder: "https://github.com/org/repo"
     validations:
       required: true
+
+  - type: dropdown
+    id: section
+    attributes:
+      label: Section
+      options:
+        - Servers
+        - Frameworks & Libraries
+        - Clients
+        - Official
+        - Tutorials & Articles
+        - Videos
+        - Community
+      default: 0
+    validations:
+      required: true
+
   - type: dropdown
     id: category
     attributes:
       label: Category
+      description: Only applies to the Servers section. Pick "n/a" for anything else.
       options:
         - Data & Databases
         - Developer Tools
@@ -32,20 +61,72 @@ body:
         - AI & ML
         - Finance
         - Monitoring & Observability
-        - Other (specify below)
+        - Design & Creative
+        - Testing & QA
+        - Security
+        - Web Browsing & Scraping
+        - Media & Entertainment
+        - Travel & Location
+        - E-commerce
+        - Game Development
+        - IoT & Home Automation
+        - Marketing & Analytics
+        - Knowledge Management
+        - n/a
     validations:
       required: true
+
   - type: input
     id: language
     attributes:
       label: Language
-      placeholder: "e.g., TypeScript, Python, Go"
+      description: Primary implementation language, or Remote for a hosted endpoint.
+      placeholder: "TypeScript"
     validations:
       required: true
+
   - type: textarea
     id: description
     attributes:
       label: Description
-      description: Short description of what the server does (max 80 chars)
+      description: What it does, in 80 characters or fewer. State the function, not the pitch.
+      placeholder: "Stripe payments, billing and subscription management"
     validations:
       required: true
+
+  - type: dropdown
+    id: affiliation
+    attributes:
+      label: Affiliation
+      description: Suggesting your own project is welcome. Not saying so is not.
+      options:
+        - I am not connected to this project
+        - I am the author or maintainer
+        - I work for the company behind it
+        - Other connection (explain below)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: standards
+    attributes:
+      label: Quality standards
+      options:
+        - label: The repository holds a working MCP implementation, not just a README and a manifest
+          required: true
+        - label: GitHub detects an open-source licence for it
+          required: true
+        - label: Its README documents installation and usage
+          required: true
+        - label: It was pushed within the last 180 days and is not archived
+          required: true
+        - label: It is not already on the list
+          required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else
+      description: >
+        If it is under 150 stars, say why it still belongs -- for example that it is
+        the vendor's own official server. Add any other context here.
