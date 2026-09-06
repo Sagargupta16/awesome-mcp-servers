@@ -1,0 +1,40 @@
+name: Submission check
+
+# Looks up every entry a pull request adds and reports what a maintainer would
+# otherwise verify by hand: stars, licence, last push, archived state, repo age,
+# and whether the repository holds a real MCP implementation.
+#
+# Runs on `pull_request` (not `pull_request_target`) so a fork's code never
+# executes with a writable token. The report goes to the job summary and the
+# check fails on a blocking problem.
+
+on:
+  pull_request:
+    branches: [main]
+    paths: ["README.md"]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Check submitted entries
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Inspect added entries
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: |
+          git fetch --no-tags origin "${{ github.event.pull_request.base.ref }}"
+          python scripts/check_submission.py \
+            --base-ref "origin/${{ github.event.pull_request.base.ref }}" \
+            --labels "$LABELS"
