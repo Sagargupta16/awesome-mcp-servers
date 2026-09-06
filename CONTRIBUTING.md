@@ -1,8 +1,10 @@
 # Contributing to Awesome MCP Servers
 
-Thanks for wanting to add to this list. It aims to be a **curated** collection of Model Context Protocol (MCP) servers, tools, and resources -- not an exhaustive one. There are much larger MCP lists; the point of this one is that everything on it works, is maintained, and is safe to install.
+Thanks for wanting to add to this list. **Anyone can contribute, including your own project.** That is the normal way entries get here.
 
-That means submissions get checked, and some get declined. Everything below is enforced by CI, so you can see exactly where you stand before a maintainer looks.
+The list aims to be a **curated** collection of Model Context Protocol (MCP) servers, tools, and resources -- not an exhaustive one. Curated means everything on it works, is maintained, and is safe to install. It does **not** mean famous: there is no minimum star count and no minimum project age. If you shipped an MCP server last week and it runs, it belongs here.
+
+Submissions are checked, and the checks are about whether the thing is real, not whether it is popular. CI runs them automatically, so you can see exactly where you stand before a maintainer looks.
 
 ## Table of Contents
 
@@ -96,7 +98,7 @@ Every submission must meet all of these. CI checks the mechanical ones automatic
 2. **Open source with a licence file.** The repository must have a `LICENSE` at its root. If GitHub cannot classify it -- the sidebar reads "unknown" and the API reports `NOASSERTION` -- that is not an automatic rejection, but a maintainer will read the terms by hand. It is common for a vendor repo with a customised header and suspicious for a small one. No licence file at all is a rejection.
 3. **Documented.** A README covering what it does, how to install and configure it, and basic usage.
 4. **Maintained.** Pushed within the last **180 days**, and not archived.
-5. **Notable.** Either 150 or more stars, or the vendor's own official server for a product people already use. A brand-new personal project with a handful of stars is not declined for being new -- it is declined for being unverifiable. Come back when it has traction.
+5. **Runnable by someone else.** A reader should be able to follow your README and get the server working. That is the bar, not popularity: there is **no minimum star count and no minimum project age**. A three-day-old server with ten stars, a licence and clear setup instructions is a better entry than a famous repository nobody can configure.
 6. **Not a duplicate.** Not already listed, and not a second server for a product already covered. If yours is genuinely better than the listed one, say why in the pull request and propose replacing it.
 7. **Not a fork.** Submit the upstream project.
 
@@ -104,25 +106,26 @@ Entries that stop meeting these get removed. A monthly [health workflow](.github
 
 ## What is not accepted
 
-Being explicit saves everyone time:
+Short list, and none of it is about how big your project is:
 
-- **Manifest-only repositories.** A README plus `server.json` / `glama.json` with no implementation.
-- **Undisclosed self-promotion.** Submitting your own project is welcome; hiding it is not. See below.
-- **Batch submissions.** Several servers from one author or organisation in one pull request. One per pull request, and if you have eight, expect scrutiny on all eight.
-- **Umbrella "agent OS" projects** that are not primarily an MCP server, however many buzzwords the README carries.
-- **Paid or closed products with no MCP implementation to inspect**, other than genuinely well-known hosted servers that document their MCP endpoint publicly.
-- **SEO and backlink submissions.** If the goal is a link rather than a useful entry, it will be declined and the pull request closed.
-- **Entries whose description is marketing copy.** Rewrite it as a factual capability statement.
-- **Removing or reordering unrelated entries** alongside your addition.
+- **Repositories with no implementation.** A README plus `server.json` or `glama.json` and nothing to run. Publish the source, or link the repository that holds it.
+- **Undisclosed self-promotion.** Submitting your own work is welcome and common. Just tick the affiliation box.
+- **Several servers in one pull request.** One per pull request, so each can be reviewed and reverted on its own. Open as many as you like.
+- **Projects that are not really MCP servers**, where MCP is a passing mention in the README rather than something implemented.
+- **Hosted products with no MCP endpoint anyone can inspect or documentation describing it.**
+- **Descriptions written as marketing copy.** Say what it does. This is usually a one-line fix, not a rejection.
+- **Changes that remove or reorder unrelated entries** alongside your addition.
+
+If a submission is declined it will say which of these applies and what would change the answer. "Too new" and "too few stars" are not on the list and will not be the reason.
 
 ## Submitting your own project
 
 That is fine and normal -- much of this list exists because authors submitted their own work. Two requirements:
 
-1. **Disclose it.** Tick the affiliation box in the pull request template. Undisclosed self-promotion that is discovered gets the entry removed.
-2. **Meet the same bar as everyone else.** No exceptions on licence, documentation, or maintenance.
+1. **Disclose it.** Tick the affiliation box in the pull request template. That is all: the disclosure is not held against you, it just means nobody has to guess. Self-promotion that was hidden and later discovered gets the entry removed, which is the only reason this matters.
+2. **Meet the same bar as everyone else.** Licence, documentation, maintenance, real implementation. Being the author neither helps nor hurts.
 
-If your project is too new to clear the notability bar, open a [server suggestion issue](https://github.com/Sagargupta16/awesome-mcp-servers/issues/new/choose) instead. It stays on record, and you can point at it later once the project has grown.
+Being new is not a reason to hold back. If you would rather not open a pull request, a [server suggestion issue](https://github.com/Sagargupta16/awesome-mcp-servers/issues/new/choose) works just as well and a maintainer can add the row for you.
 
 ## Pull request process
 

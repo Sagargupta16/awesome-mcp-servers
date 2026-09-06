@@ -25,10 +25,9 @@ Submitting your own work is welcome. Hiding that you did is not: undisclosed sel
 Confirming these against [CONTRIBUTING.md](../CONTRIBUTING.md#quality-standards):
 
 - [ ] The repository contains a working MCP implementation, not just a README and a `server.json` manifest
-- [ ] GitHub detects an open-source licence for it
+- [ ] It has a `LICENSE` file at the repository root
 - [ ] Its README documents installation, configuration, and basic usage
 - [ ] It was pushed within the last 180 days and is not archived
-- [ ] It has 150+ stars, **or** it is the vendor's own official server (say which below)
 - [ ] It is not already listed, and not a second server for a product already covered
 - [ ] It is not a fork of another project
 
@@ -43,7 +42,10 @@ Confirming these against [CONTRIBUTING.md](../CONTRIBUTING.md#quality-standards)
 ## Anything else
 
 <!--
-If you ticked "vendor's own official server", or your project is under the star
-threshold for another reason, explain here. If you are proposing a replacement
-for an existing entry, say which one and why yours is better.
+Optional. Useful things to mention: what makes your server different from a
+similar one already listed, or which existing entry you are proposing to replace
+and why yours is better.
+
+There is no star or age requirement, so please do not feel you need to justify a
+new or small project. If it works, is licensed and is documented, it qualifies.
 -->

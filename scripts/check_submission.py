@@ -31,10 +31,13 @@ from pathlib import Path
 API = "https://api.github.com"
 
 # Tunables. These encode the quality bar in CONTRIBUTING.md.
+#
+# There is deliberately no star or repo-age minimum. Anyone may submit their own
+# MCP server, including a brand-new one with no traction. What is checked is
+# whether the thing is real: a working implementation, a licence, documentation,
+# and recent activity. Stars measure popularity, which is a different question.
 MAX_SERVERS_PER_PR = 1
 STALE_DAYS = 180
-MIN_STARS = 150
-YOUNG_REPO_DAYS = 90
 OVERRIDE_LABEL = "maintainer-override"
 
 # Files that make a repo a manifest-only listing rather than a real project.
@@ -257,17 +260,9 @@ def inspect(sub: Submission) -> None:
             f"not verified."
         )
 
-    if stars < MIN_STARS:
-        sub.soft.append(
-            f"{stars} stars, below the {MIN_STARS} guideline. Acceptable only if this "
-            f"is the vendor's own official server for a well-known product -- a "
-            f"maintainer must confirm that."
-        )
-    if age_days < YOUNG_REPO_DAYS:
-        sub.soft.append(
-            f"The repository is only {age_days} days old. New projects are welcome but "
-            f"get extra scrutiny for self-promotion."
-        )
+    # Star count and repo age are reported in the facts table above as context.
+    # Neither is a bar: popularity is not quality, and a new project that works,
+    # is licensed and is documented belongs on the list as much as a famous one.
 
 
 def render(subs: list, override: bool) -> tuple[str, bool]:

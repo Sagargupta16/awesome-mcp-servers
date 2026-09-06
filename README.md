@@ -8,12 +8,12 @@
 
 MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, etc.) connect to local and remote data sources through standardized server implementations.
 
-**This list is curated, not exhaustive.** Bigger MCP lists exist. The point of this one is that everything on it has been checked. Every entry:
+**This list is curated, not exhaustive, and open to anyone.** Bigger MCP lists exist. The point of this one is that everything on it has been checked. Curated does not mean famous: there is no star or age requirement, and submitting your own server is welcome. Every entry:
 
 - implements MCP for real -- not a README with a `server.json` next to it
 - ships a licence file, read by hand when GitHub cannot classify it
 - was pushed within the last 180 days, and is not archived
-- has 150+ stars, or is the vendor's own official server
+- documents how to install and configure it, so someone else can actually run it
 - appears exactly once, in one category
 
 Those rules are enforced by [CI](.github/workflows/), not by good intentions: a pull request that breaks the format, adds a dead link, or submits an unlicensed repo fails its checks. A [monthly audit](.github/workflows/health.yml) re-checks every listed repository and files what has rotted.
@@ -580,7 +580,7 @@ but not all of resources and prompts.
 
 ## Contributing
 
-Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) first -- it lists the quality bar, and most declined pull requests miss one of those points.
+**Anyone can contribute, including your own server.** There is no star requirement and no minimum project age -- if it works, is licensed and is documented, it qualifies. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the details.
 
 To add a server:
 
@@ -596,7 +596,6 @@ Other ways to help, no pull request needed:
 - **Fix a description.** Plenty are terser than they should be, or read like marketing.
 - **Fill a gap.** Categories with few entries, and the Clients and Tutorials sections, are the thinnest parts of the list.
 - **Triage the [health report](https://github.com/Sagargupta16/awesome-mcp-servers/issues?q=is%3Aissue+label%3Amaintenance).** The monthly audit files what broke; confirming or dismissing an item is a real contribution.
-5. Submit a PR
 
 ## License
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.1.0] - 2026-09-06
+
+### Changed
+
+- **Removed the star and project-age bar.** Anyone can submit an MCP server, including a brand-new one with no traction. The checks now ask whether a thing is real -- working implementation, licence file, documentation, recent activity -- not whether it is popular. A 3-day-old server with 10 stars and clear setup instructions qualifies.
+- `check_submission.py` no longer warns on low stars or a young repository. Both are still shown as context in the report, without a verdict attached.
+- `CONTRIBUTING.md` leads with "anyone can contribute, including your own project", and the "what is not accepted" list is now only about spam and broken submissions. Declining a PR has to name a specific reason, and "too new" or "too few stars" is not available as one.
+- Affiliation disclosure is framed as the one thing asked, rather than as a suspicion.
+
 ## [2.0.0] - 2026-09-06
 
 Curation is now enforced by CI rather than promised in a document. The list goes
