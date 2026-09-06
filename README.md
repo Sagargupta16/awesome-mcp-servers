@@ -11,7 +11,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 **This list is curated, not exhaustive, and open to anyone.** Bigger MCP lists exist. The point of this one is that everything on it has been checked. Curated does not mean famous: there is no star or age requirement, and submitting your own server is welcome. Every entry:
 
 - implements MCP for real -- not a README with a `server.json` next to it
-- ships a licence file, read by hand when GitHub cannot classify it
+- states an open-source licence -- a `LICENSE` file, or a licence field in its package manifest
 - was pushed within the last 180 days, and is not archived
 - documents how to install and configure it, so someone else can actually run it
 - appears exactly once, in one category
@@ -19,6 +19,41 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 Those rules are enforced by [CI](.github/workflows/), not by good intentions: a pull request that breaks the format, adds a dead link, or submits an unlicensed repo fails its checks. A [monthly audit](.github/workflows/health.yml) re-checks every listed repository and files what has rotted.
 
 An MCP server runs as a trusted extension of your assistant, with your files and your credentials. Read the source before you configure one -- a place on this list is a filter, not an audit. See [SECURITY.md](SECURITY.md).
+
+## Using a server from this list
+
+Almost every entry here is a **stdio** server: your client starts the process and talks to it over stdin and stdout. Clients read the same `mcpServers` shape, so a row on this list turns into a few lines of configuration.
+
+Two local servers, run straight from their published packages:
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/dir"]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
+  }
+}
+```
+
+A **remote** server, where the vendor hosts it and the client only needs the endpoint:
+
+```json
+{
+  "mcpServers": {
+    "example": {
+      "url": "https://mcp.example.com/mcp"
+    }
+  }
+}
+```
+
+Where that JSON lives differs per client: each one has its own file and its own UI for it. Start from the protocol's [example clients](https://modelcontextprotocol.io/clients) and its [guide to connecting a local server](https://modelcontextprotocol.io/docs/develop/connect-local-servers), then read the server's own README for the arguments, tokens and environment variables it expects.
 
 ## Contents
 
@@ -71,10 +106,8 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 | Server | Description | Language |
 |--------|-------------|----------|
-| [Airflow MCP](https://github.com/yangkyeongmo/mcp-server-apache-airflow) | Apache Airflow DAG management and runs | Python |
 | [Apache Doris MCP](https://github.com/apache/doris-mcp-server) | Official Apache Doris analytics database queries and management | Python |
 | [BigQuery MCP](https://github.com/ergut/mcp-bigquery-server) | Query Google BigQuery datasets and tables | TypeScript |
-| [Chroma MCP](https://github.com/chroma-core/chroma-mcp) | Official Chroma vector DB for RAG workflows | Python |
 | [ClickHouse MCP](https://github.com/ClickHouse/mcp-clickhouse) | Official ClickHouse columnar analytics | Python |
 | [Confluent MCP](https://github.com/confluentinc/mcp-confluent) | Official Confluent Cloud Kafka topics, connectors and Flink | TypeScript |
 | [Couchbase MCP](https://github.com/couchbase/mcp-server-couchbase) | Official Couchbase and Capella cluster, scope and query access | Python |
@@ -95,12 +128,11 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Qdrant MCP](https://github.com/qdrant/mcp-server-qdrant) | Official Qdrant vector database server | Python |
 | [Redis MCP](https://github.com/redis/mcp-redis) | Official Redis cache and data structures | Python |
 | [Snowflake MCP](https://github.com/Snowflake-Labs/mcp) | Official Snowflake Cortex AI + SQL orchestration | Python |
-| [SQL Database MCP](https://github.com/executeautomation/mcp-database-server) | SQLite, Postgres and SQL Server unified server | TypeScript |
 | [StarRocks MCP](https://github.com/StarRocks/mcp-server-starrocks) | Official StarRocks OLAP database query and schema access | Python |
 | [Supabase MCP](https://github.com/supabase/mcp) | Supabase database, auth, and storage | TypeScript |
 | [Upstash MCP](https://github.com/upstash/mcp-server) | Upstash Redis and Vector databases | TypeScript |
-| [Weaviate MCP](https://github.com/weaviate/mcp-server-weaviate) | Official Weaviate vector database | Go |
-| [Wikipedia MCP](https://github.com/timjuenemann/wikipedia-mcp) | Wikipedia article search and retrieval | TypeScript |
+| [Weaviate MCP](https://github.com/weaviate/weaviate) | Official Weaviate vector search with a built-in MCP server | Go |
+| [Wikipedia MCP](https://github.com/Rudra-ravi/wikipedia-mcp) | Wikipedia article search and retrieval | Python |
 
 ### Developer Tools
 
@@ -111,9 +143,9 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Argo CD MCP](https://github.com/argoproj-labs/mcp-for-argocd) | Argo CD applications, syncs and GitOps state (argoproj-labs) | TypeScript |
 | [ast-grep MCP](https://github.com/ast-grep/ast-grep-mcp) | Structural code search and rewrite via ast-grep patterns | Python |
 | [Atlassian MCP (Jira + Confluence)](https://github.com/sooperset/mcp-atlassian) | Jira and Confluence integration | Python |
+| [Atlassian Rovo MCP Server](https://github.com/atlassian/atlassian-mcp-server) | Official hosted server for Jira, Confluence, JSM, Bitbucket and Compass | Remote |
 | [Azure DevOps MCP](https://github.com/microsoft/azure-devops-mcp) | Official Azure DevOps repos, pipelines, work items and wikis | TypeScript |
 | [Bifrost MCP](https://github.com/biegehydra/BifrostMCP) | VS Code extension exposing find-usages, rename and LSP tools over MCP | TypeScript |
-| [Bitbucket MCP](https://github.com/aashari/mcp-server-atlassian-bitbucket) | Bitbucket Cloud repos, PRs, pipelines | TypeScript |
 | [Buildkite MCP](https://github.com/buildkite/buildkite-mcp-server) | Official Buildkite pipelines, builds, jobs and test runs | Go |
 | [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) | Official Chrome DevTools for coding agents - debug, trace and inspect pages | TypeScript |
 | [CircleCI MCP](https://github.com/CircleCI-Public/mcp-server-circleci) | Official CircleCI workflow integration | TypeScript |
@@ -127,25 +159,24 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Jupyter MCP](https://github.com/datalayer/jupyter-mcp-server) | Jupyter notebook cell execution | Python |
 | [Klavis](https://github.com/Klavis-AI/klavis) | Self-hostable MCP server platform with OAuth and hosted integrations | Python |
 | [kubectl MCP](https://github.com/rohitg00/kubectl-mcp-server) | Natural-language kubectl operations (CNCF listed) | Python |
-| [Kubernetes MCP](https://github.com/strowk/mcp-k8s-go) | Kubernetes cluster operations | Go |
-| [Linear MCP](https://github.com/jerhadf/linear-mcp-server) | Linear project management | TypeScript |
+| [Linear MCP](https://linear.app/docs/mcp) | Official hosted Linear issue tracking and project management | Remote |
 | [MartinLoop MCP](https://github.com/Keesan12/martin-loop/tree/main/packages/mcp) | Governed agent runtime with budget caps, verifier gates and inspectable runs | TypeScript |
 | [MCP Context Forge](https://github.com/IBM/mcp-context-forge) | Official IBM MCP gateway federating MCP, A2A and REST tools | Python |
 | [mcp-proxy](https://github.com/sparfenyuk/mcp-proxy) | Bridge between Streamable HTTP and stdio MCP transports | Python |
-| [mcp-remote](https://github.com/geelen/mcp-remote) | Bridge stdio-only MCP clients to remote HTTP or SSE servers | TypeScript |
+| [mcp-remote](https://github.com/punkpeye/mcp-remote) | Bridge stdio-only MCP clients to remote HTTP or SSE servers | TypeScript |
 | [mcpo](https://github.com/open-webui/mcpo) | MCP-to-OpenAPI proxy that exposes MCP servers as REST endpoints | Python |
 | [MetaMCP](https://github.com/metatool-ai/metamcp) | MCP aggregator, orchestrator and gateway in one container | TypeScript |
 | [n8n MCP](https://github.com/czlonkowski/n8n-mcp) | Node docs and workflow building for n8n automations | TypeScript |
 | [Nx MCP](https://github.com/nrwl/nx-console/tree/master/apps/nx-mcp) | Official Nx monorepo workspace graph and generator context server | TypeScript |
-| [octocode-mcp](https://github.com/bgauryy/octocode-mcp) | Code research across GitHub repos and packages for coding agents | TypeScript |
+| [octocode](https://github.com/bgauryy/octocode) | Code research across GitHub repos and packages for coding agents | TypeScript |
 | [Postman MCP](https://github.com/postmanlabs/postman-mcp-server) | Official Postman API collections server | TypeScript |
-| [Probe](https://github.com/buger/probe) | Semantic code search over large codebases with ripgrep and tree-sitter | Rust |
+| [Probe](https://github.com/probelabs/probe) | Semantic code search over large codebases with ripgrep and tree-sitter | Rust |
 | [Repomix](https://github.com/yamadashy/repomix) | Packs a repository into an AI-friendly file, with built-in MCP server | TypeScript |
 | [SandBase Harness](https://github.com/sandbaseai/sandbase-harness) | Self-hosted MCP runtime with sandboxing, permissions and audit replay | TypeScript |
 | [Sentry MCP](https://github.com/getsentry/sentry-mcp) | Official Sentry error and performance tracking | TypeScript |
 | [Serena](https://github.com/oraios/serena) | Semantic code retrieval and editing toolkit for coding agents | Python |
 | [Supergateway](https://github.com/supercorp-ai/supergateway) | Gateway that runs stdio MCP servers over SSE and HTTP | TypeScript |
-| [XcodeBuildMCP](https://github.com/cameroncooke/XcodeBuildMCP) | Build, run and debug Xcode iOS and macOS projects from an agent | TypeScript |
+| [XcodeBuildMCP](https://github.com/getsentry/XcodeBuildMCP) | Build, run and debug Xcode iOS and macOS projects from an agent | TypeScript |
 
 ### Cloud & Infrastructure
 
@@ -183,7 +214,6 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Coda MCP](https://github.com/orellazri/coda-mcp) | Coda documents and tables | TypeScript |
 | [Excel MCP](https://github.com/haris-musa/excel-mcp-server) | Read, write and format Excel workbooks without Excel installed | Python |
 | [Google Calendar MCP](https://github.com/nspady/google-calendar-mcp) | Google Calendar management | TypeScript |
-| [Google Drive MCP](https://github.com/felores/gdrive-mcp-server) | Google Drive file access and search | TypeScript |
 | [Google Workspace MCP](https://github.com/taylorwilsdon/google_workspace_mcp) | Gmail, Calendar, Docs, Sheets, Slides, Chat, Forms and Tasks in one server | Python |
 | [iMCP](https://github.com/mattt/iMCP) | Exposes macOS Messages, Contacts, Calendar and Reminders to agents | Swift |
 | [Make MCP](https://github.com/integromat/make-mcp-server) | Official Make server turning scenarios into callable agent tools | TypeScript |
@@ -193,8 +223,8 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Notion MCP](https://github.com/makenotion/notion-mcp-server) | Official Notion API integration | TypeScript |
 | [Outlook MCP](https://github.com/ryaker/outlook-mcp) | Outlook email and calendar via MS Graph | JavaScript |
 | [Plane MCP](https://github.com/makeplane/plane-mcp-server) | Official Plane projects, work items and cycles automation | Python |
-| [Slack MCP](https://github.com/korotovsky/slack-mcp-server) | Slack workspace integration | TypeScript |
-| [Todoist MCP](https://github.com/abhiz123/todoist-mcp-server) | Todoist task management | TypeScript |
+| [Slack MCP](https://github.com/korotovsky/slack-mcp-server) | Slack workspace integration | Go |
+| [Todoist MCP](https://github.com/Doist/todoist-mcp) | Official Todoist task and project management | TypeScript |
 | [Trello MCP](https://github.com/delorenj/mcp-server-trello) | Trello boards, lists, cards | TypeScript |
 
 ### Search & Knowledge
@@ -218,38 +248,33 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Ref MCP](https://github.com/ref-tools/ref-tools-mcp) | Token-efficient search over public and private technical docs | TypeScript |
 | [SearXNG MCP](https://github.com/ihor-sokoliuk/mcp-searxng) | Metasearch across engines via a self-hosted SearXNG instance | TypeScript |
 | [SerpAPI MCP](https://github.com/serpapi/serpapi-mcp) | Official SerpAPI Google search results | Python |
-| [Tavily MCP](https://github.com/tavily-ai/tavily-mcp) | Tavily AI search for agents | Python |
+| [Tavily MCP](https://github.com/tavily-ai/tavily-mcp) | Tavily AI search for agents | JavaScript |
 
 ### Communication
 
 | Server | Description | Language |
 |--------|-------------|----------|
-| [Discord MCP](https://github.com/v-3/discordmcp) | Discord bot and channel management | Python |
+| [Discord MCP](https://github.com/SaseQ/discord-mcp) | Discord channel, message and role management | Java |
 | [Discourse MCP](https://github.com/discourse/discourse-mcp) | Official Discourse forum search, topic reading and posting | TypeScript |
 | [Joinly](https://github.com/joinly-ai/joinly) | Join Zoom, Google Meet and Teams calls to transcribe and act live | Python |
 | [LINE Bot MCP](https://github.com/line/line-bot-mcp-server) | Official LINE Messaging API server for sending and managing messages | TypeScript |
 | [Mailgun MCP](https://github.com/mailgun/mailgun-mcp-server) | Official Mailgun email sending, logs and analytics | TypeScript |
 | [Mailtrap MCP](https://github.com/mailtrap/mailtrap-mcp) | Official Mailtrap email sending and sandbox testing | TypeScript |
-| [Matrix MCP](https://github.com/mjknowles/matrix-mcp-server) | Matrix chat protocol server | TypeScript |
 | [Microsoft Teams MCP](https://github.com/InditexTech/mcp-teams-server) | Teams channels, messages, meetings | Python |
 | [Resend MCP](https://github.com/resend/resend-mcp) | Official Resend transactional email | TypeScript |
 | [sms-florin MCP](https://github.com/flovoice53-tech/sms-florin-mcp) | Rent real UK SMS numbers to test OTP/verification flows | TypeScript |
 | [Telegram MCP](https://github.com/chigwell/telegram-mcp) | Telegram messaging | Python |
-| [WhatsApp MCP](https://github.com/lharries/whatsapp-mcp) | WhatsApp messaging via web client | Python |
 | [Zulip MCP](https://github.com/zulip/zulipmcp) | Official Zulip streams, messages and mentionable bot agents | Python |
 
 ### File Systems & Storage
 
 | Server | Description | Language |
 |--------|-------------|----------|
-| [Box MCP](https://github.com/box/mcp-server-box-remote) | Official Box remote MCP server for enterprise content | Remote |
 | [Dropbox Dash MCP](https://github.com/dropbox/mcp-server-dash) | Official Dropbox Dash search server | Python |
 | [Filesystem MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem) | Local filesystem operations | TypeScript |
 | [Google Sheets MCP](https://github.com/xing5/mcp-google-sheets) | Create and edit Google Sheets spreadsheets via Google Drive | Python |
-| [IPFS MCP](https://github.com/alexbakers/mcp-ipfs) | IPFS pin, get, publish operations | TypeScript |
 | [Markdownify MCP](https://github.com/zcaceres/markdownify-mcp) | Convert PDF, Office, audio and web files to Markdown | TypeScript |
 | [OneDrive / SharePoint MCP](https://github.com/ftaricano/mcp-onedrive-sharepoint) | OneDrive and SharePoint document access | TypeScript |
-| [PDF MCP](https://github.com/Sohaib-2/pdf-mcp-server) | Extract text and metadata from PDF files | TypeScript |
 | [S3 Tables MCP](https://github.com/awslabs/mcp/tree/main/src/s3-tables-mcp-server) | Official AWS S3 Tables | Python |
 
 ### AI & ML
@@ -263,9 +288,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Headroom MCP](https://github.com/headroomlabs-ai/headroom) | Token-compression proxy and MCP server for tool output and logs | Python |
 | [HuggingFace MCP](https://github.com/huggingface/hf-mcp-server) | Official HF Hub models, datasets, Spaces | TypeScript |
 | [LangChain MCP Adapters](https://github.com/langchain-ai/langchain-mcp-adapters) | Official LangChain / LangGraph MCP bridge | Python |
-| [Ollama MCP](https://github.com/patruff/ollama-mcp-bridge) | Local Ollama model management | TypeScript |
-| [OpenAI MCP](https://github.com/pierrebrunelle/mcp-server-openai) | OpenAI API access | Python |
-| [prompt-to-asset](https://github.com/MohamedAbdallah-14/prompt-to-asset) | Image generation across 30+ models via unified API | JavaScript |
+| [prompt-to-asset](https://github.com/MohamedAbdallah-14/prompt-to-asset) | Image generation across 30+ models via unified API | TypeScript |
 | [Replicate MCP](https://replicate.com/docs/reference/mcp) | Official Replicate hosted MCP server | Remote |
 | [RouterBase MCP](https://github.com/zenlee123/routerbase-mcp) | Model discovery, pricing lookup and OpenAI-compatible chat completions | TypeScript |
 | [RunAPI MCP](https://github.com/runapi-ai/mcp) | Model discovery, pricing lookup, task creation, and LLM chat | TypeScript |
@@ -279,7 +302,6 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Adyen MCP](https://github.com/Adyen/adyen-mcp) | Official Adyen server for checkout, configuration and management APIs | TypeScript |
 | [Alpaca MCP](https://github.com/alpacahq/alpaca-mcp-server) | Official Alpaca stocks / ETF / crypto trading | Python |
 | [Coinbase MCP](https://github.com/coinbase/agentkit) | Coinbase crypto trading and wallet | TypeScript |
-| [Financial Datasets MCP](https://github.com/financial-datasets/mcp-server) | Stock financials, prices, insider trades | Python |
 | [Financial Modeling Prep MCP](https://github.com/imbenrabi/Financial-Modeling-Prep-MCP-Server) | FMP market data and fundamentals | TypeScript |
 | [Massive.com (Polygon.io) MCP](https://github.com/massive-com/mcp_massive) | Official Massive.com (formerly Polygon.io) market data for stocks and crypto | Python |
 | [MetaTrader MCP](https://github.com/ariadng/metatrader-mcp-server) | Place and manage MetaTrader 5 trades, positions and market data | Python |
@@ -305,7 +327,6 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Grafana MCP](https://github.com/grafana/mcp-grafana) | Official Grafana dashboards and alerts | Go |
 | [Honeycomb MCP](https://docs.honeycomb.io/integrations/mcp/) | Official Honeycomb trace queries | Remote |
 | [Logfire MCP](https://logfire.pydantic.dev/docs/how-to-guides/mcp-server/) | Official Pydantic Logfire observability | Remote |
-| [Loki MCP](https://github.com/grafana/loki-mcp) | Official Grafana Loki log aggregation | Go |
 | [Netdata MCP](https://github.com/netdata/netdata) | Official Netdata observability with a built-in MCP server | C |
 | [OpenTelemetry MCP](https://github.com/traceloop/opentelemetry-mcp-server) | Unified OTEL traces across backends | Python |
 | [Prometheus MCP](https://github.com/pab1it0/prometheus-mcp-server) | Prometheus metrics and PromQL queries | Python |
@@ -325,8 +346,6 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [designlang](https://github.com/Manavarya09/design-extract) | Extract a website's design system into DTCG tokens and framework code | JavaScript |
 | [Excalidraw MCP](https://github.com/yctimlin/mcp_excalidraw) | Create and edit Excalidraw diagrams on a live canvas | TypeScript |
 | [Figma Context MCP](https://github.com/GLips/Figma-Context-MCP) | Figma layouts for AI coding agents (Framelink) | TypeScript |
-| [Figma Dev Guide (official)](https://github.com/figma/mcp-server-guide) | Official Figma MCP usage guide and reference | JavaScript |
-| [Framer Plugin MCP](https://github.com/Sheshiyer/framer-plugin-mcp) | Create and manage Framer plugins | JavaScript |
 | [Houdini MCP](https://github.com/capoomgit/houdini-mcp) | Build and modify SideFX Houdini scenes and nodes | Python |
 | [OrkasVideoStudio](https://github.com/Orkas-AI/Orkas-VideoStudio) | Compose, edit, analyze, and render video from coding agents | TypeScript |
 | [Photoshop MCP](https://github.com/loonghao/photoshop-python-api-mcp-server) | Adobe Photoshop automation | Python |
@@ -341,7 +360,6 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Axe MCP](https://github.com/dequelabs/axe-mcp-server-public) | Official Deque accessibility testing + AI remediation | TypeScript |
 | [BrowserStack MCP](https://github.com/browserstack/mcp-server) | Official BrowserStack cross-browser and device testing | TypeScript |
 | [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Official Microsoft Playwright browser automation | TypeScript |
-| [Vibetest (browser-use)](https://github.com/browser-use/vibetest-use) | Automated QA using Browser-Use agents | Python |
 
 ### Security
 
@@ -351,17 +369,16 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Bitwarden MCP](https://github.com/bitwarden/mcp-server) | Official Bitwarden password manager | TypeScript |
 | [Bolt (MCP for Security)](https://github.com/CyberStrikeus/bolt) | SQLMap, FFUF, Nmap, Masscan and 100+ Kali tools via MCP | TypeScript |
 | [Burp AI Agent](https://github.com/six2dez/burp-ai-agent) | Burp Suite extension with MCP tooling | Kotlin |
-| [BurpMCP](https://github.com/swgee/BurpMCP) | Burp Suite MCP server for app security testing | Java |
 | [CrowdStrike Falcon MCP](https://github.com/CrowdStrike/falcon-mcp) | Official CrowdStrike Falcon threat hunting and detections | Python |
 | [Dark-Moon](https://github.com/ASCIT31/Dark-Moon) | Autonomous pentest platform for web, API, Active Directory and Kubernetes | Python |
 | [DomScan MCP](https://github.com/estevecastells/domscan-mcp) | Domain intelligence: DNS, WHOIS, SSL, subdomains and typosquatting checks | TypeScript |
 | [HashiCorp Vault MCP](https://github.com/hashicorp/vault-mcp-server) | Official HashiCorp Vault secrets and mounts management | Go |
 | [IDA Pro MCP](https://github.com/mrexodia/ida-pro-mcp) | IDA Pro reverse engineering assistant for LLM clients | Python |
 | [MCP Security Hub](https://github.com/FuzzingLabs/mcp-security-hub) | Offensive tools (Nmap, Ghidra, Nuclei) | Python |
-| [mcp-scan](https://github.com/invariantlabs-ai/mcp-scan) | Scans MCP servers for tool poisoning and prompt injection | Python |
 | [radare2 MCP](https://github.com/radareorg/radare2-mcp) | Official radare2 reverse engineering stdio server | C |
 | [Semgrep MCP](https://github.com/semgrep/semgrep/tree/develop/cli/src/semgrep/mcp) | Official Semgrep static analysis for vulnerabilities | Python |
 | [Shodan MCP](https://github.com/w0h1v/mcp-shodan) | Shodan device search, IP recon, DNS and CVE intelligence | TypeScript |
+| [Snyk Agent Scan](https://github.com/snyk/agent-scan) | Security scanner for AI agents, MCP servers and agent skills | Python |
 | [vet](https://github.com/safedep/vet) | Dependency and malicious package scanning with an MCP server | Go |
 
 ### Web Browsing & Scraping
@@ -370,12 +387,9 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 |--------|-------------|----------|
 | [Bright Data MCP](https://github.com/brightdata/brightdata-mcp) | Official Bright Data web search, scraping, and browser automation | JavaScript |
 | [Browser Tools MCP](https://github.com/AgentDeskAI/browser-tools-mcp) | Read browser console logs, network traffic and DOM via a Chrome extension | TypeScript |
-| [Browser Use MCP](https://github.com/Saik0s/mcp-browser-use) | Browser-use agent wrapped as an MCP server | Python |
 | [Crawl4AI](https://github.com/unclecode/crawl4ai) | LLM-friendly web crawler and scraper with built-in MCP endpoints | Python |
-| [Fetcher MCP](https://github.com/jae-jae/fetcher-mcp) | Headless Playwright page fetcher | TypeScript |
 | [Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server) | Official Firecrawl web scraping and search | TypeScript |
 | [Jina AI MCP](https://github.com/jina-ai/MCP) | Official Jina AI web reader, search, and content reranking | TypeScript |
-| [Puppeteer MCP](https://github.com/merajmehrabi/puppeteer-mcp-server) | Browser automation via Puppeteer | TypeScript |
 | [Skyvern](https://github.com/Skyvern-AI/skyvern/tree/main/integrations/mcp) | Browser workflow automation via LLMs and computer vision, over MCP | Python |
 | [Xquik MCP](https://github.com/Xquik-dev/x-twitter-scraper) | X/Twitter search, profile tweets, posting, and media tools | TypeScript |
 
@@ -387,10 +401,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Arr MCP](https://github.com/aplaceforallmystuff/mcp-arr) | Manage Sonarr, Radarr, and other arr media library services | TypeScript |
 | [Live Tennis API MCP](https://github.com/livetennisapi/livetennisapi-mcp) | Live tennis scores, match state, and model win-probability | TypeScript |
 | [MiniMax MCP](https://github.com/MiniMax-AI/MiniMax-MCP) | Generate speech, music, images, and video with MiniMax models | Python |
-| [Plex MCP](https://github.com/vladimir-tutin/plex-mcp-server) | Converse with a Plex media server | Python |
-| [Spotify MCP](https://github.com/marcelmarais/spotify-mcp-server) | Lightweight Spotify integration | TypeScript |
 | [TMDB MCP](https://github.com/Laksh-star/mcp-server-tmdb) | The Movie Database (TMDB) | TypeScript |
-| [Twitch MCP](https://github.com/TomCools/twitch-mcp) | Connect MCP clients to Twitch Chat | TypeScript |
 | [YouTube MCP](https://github.com/ZubeidHendricks/youtube-mcp-server) | YouTube API videos and analytics | TypeScript |
 | [YouTube Transcript MCP](https://github.com/kimtaeyoon83/mcp-server-youtube-transcript) | Download YouTube video transcripts | TypeScript |
 
@@ -400,14 +411,10 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 |--------|-------------|----------|
 | [Airbnb MCP](https://github.com/openbnb-org/mcp-server-airbnb) | Search Airbnb from your AI agent | JavaScript |
 | [Cesium MCP](https://github.com/CesiumGS/cesium-ai-integrations/tree/main/mcp) | Official Cesium 3D geospatial and geolocation MCP servers | TypeScript |
-| [Flight Search MCP](https://github.com/arjunprabhulal/mcp-flight-search) | Realtime flight search server | Python |
-| [Flights MCP](https://github.com/ravinahp/flights-mcp) | Flight search via Duffel API | Python |
 | [GIS MCP](https://github.com/mahdin75/gis-mcp) | Geospatial analysis via GDAL, Shapely, GeoPandas, and PyProj | Python |
 | [Google Maps MCP](https://github.com/cablate/mcp-google-map) | Google Maps API with LLM processing | TypeScript |
 | [Mapbox MCP](https://github.com/mapbox/mcp-server) | Official Mapbox geocoding, POI search, directions, and isochrones | TypeScript |
-| [OpenStreetMap MCP](https://github.com/jagan-shanmugam/open-streetmap-mcp) | Location services and geospatial data | Python |
-| [TomTom MCP](https://github.com/tomtom-international/tomtom-mcp) | Official TomTom maps, search, routing, and traffic APIs | TypeScript |
-| [Weather MCP](https://github.com/ezh0v/weather-mcp-server) | Real-time weather data | Go |
+| [TomTom MCP](https://github.com/tomtom-international/tomtom-maps-mcp) | Official TomTom maps, search, routing, and traffic APIs | TypeScript |
 
 ### E-commerce
 
@@ -419,7 +426,6 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Packrift MCP](https://github.com/Packrift/packrift-mcp) | Packaging catalog search, pricing, inventory, and cart URLs | TypeScript |
 | [Saleor MCP](https://github.com/saleor/saleor-mcp) | Official Saleor server for products, orders, customers and channels | Python |
 | [Shopify MCP](https://github.com/GeLi2001/shopify-mcp) | Shopify API integration | TypeScript |
-| [WooCommerce MCP](https://github.com/techspawn/woocommerce-mcp-server) | WooCommerce MCP server | JavaScript |
 
 ### Game Development
 
@@ -429,9 +435,9 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Godot MCP](https://github.com/Coding-Solo/godot-mcp) | Godot game engine integration | JavaScript |
 | [Minecraft MCP Server](https://github.com/yuniko-software/minecraft-mcp-server) | Control a Minecraft bot to build, mine, and navigate in game | TypeScript |
 | [Roblox Studio MCP](https://create.roblox.com/docs/studio/mcp) | Official MCP server built into Roblox Studio | Built-in |
-| [STS2MCP](https://github.com/Gennadiyev/STS2MCP) | Read Slay the Spire 2 game state and play runs through a mod | Python |
+| [STS2MCP](https://github.com/Gennadiyev/STS2MCP) | Read Slay the Spire 2 game state and play runs through a mod | C# |
 | [Unity MCP Server](https://github.com/AnkleBreaker-Studio/unity-mcp-server) | 268 tools for Unity Editor / Hub | JavaScript |
-| [Unreal MCP](https://github.com/ChiR24/Unreal_mcp) | Unreal Engine C++ Automation Bridge | C++ |
+| [Unreal MCP](https://github.com/ChiR24/Unreal_mcp) | Unreal Engine C++ Automation Bridge | Multiple |
 | [UnrealGenAISupport](https://github.com/prajwalshettydev/UnrealGenAISupport) | UE5 plugin for LLM/GenAI + MCP | C++ |
 
 ### IoT & Home Automation
@@ -440,13 +446,10 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 |--------|-------------|----------|
 | [Apache IoTDB MCP](https://github.com/apache/iotdb-mcp-server) | Official MCP server for the Apache IoTDB time-series database | Python |
 | [Bagel](https://github.com/Extelligence-ai/bagel) | Query robotics, drone, and IoT telemetry in plain English | Python |
-| [EMQX MCP](https://github.com/Benniu/emqx-mcp-server) | EMQX MQTT broker | Python |
 | [Hass MCP](https://github.com/voska/hass-mcp) | Minimal Home Assistant MCP | Python |
-| [Home Assistant MCP](https://github.com/tevonsb/homeassistant-mcp) | Alternative Home Assistant MCP | TypeScript |
 | [Home Assistant MCP (ha-mcp)](https://github.com/homeassistant-ai/ha-mcp) | The unofficial awesome Home Assistant MCP | Python |
 | [HomeClaw](https://github.com/omarshahine/HomeClaw) | Control HomeKit lights, locks, thermostats, and scenes on macOS | Swift |
 | [MQTT MCP](https://github.com/ezhuk/mqtt-mcp) | Generic MQTT broker interaction | Python |
-| [Philips Hue MCP](https://github.com/ykhli/mcp-light-control) | Control Philips Hue lights | TypeScript |
 | [UniFi MCP](https://github.com/sirkirby/unifi-mcp) | Query and control UniFi Network, Protect, Access, and Drive | Python |
 
 ### Marketing & Analytics
@@ -458,11 +461,9 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Google Analytics MCP](https://github.com/surendranb/google-analytics-mcp) | GA4 data for AI agents | Python |
 | [Google Search Console MCP](https://github.com/AminForou/mcp-gsc) | Query Google Search Console search analytics, sitemaps and indexing | Python |
 | [Google Tag Manager MCP](https://github.com/stape-io/google-tag-manager-mcp-server) | Manage GTM containers, tags, triggers and variables | TypeScript |
-| [HubSpot MCP](https://github.com/baryhuang/mcp-hubspot) | HubSpot CRM with vector storage | Python |
 | [LLM Pulse MCP](https://github.com/LLM-Pulse/llmpulse-mcp) | AI visibility analytics for mentions, citations, sentiment, and AI traffic | JavaScript |
 | [Meta Ads MCP (GoMarble)](https://github.com/gomarble-ai/facebook-ads-mcp-server) | Read and manage Meta and Instagram ad campaigns via the Meta Ads API | Python |
-| [Mixpanel MCP](https://github.com/dragonkhoi/mixpanel-mcp) | Talk to your Mixpanel data | TypeScript |
-| [NotFair](https://github.com/nowork-studio/NotFair) | Google Ads, Meta Ads, and SEO skills with human-approval gate | TypeScript |
+| [NotFair](https://github.com/nowork-studio/notfair-plugin) | Open-source SEO, GEO and marketing skills for AI agents | TypeScript |
 | [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp) | Official PostHog product analytics | TypeScript |
 | [Salesforce MCP](https://github.com/salesforcecli/mcp) | Official Salesforce CLI MCP | TypeScript |
 | [UnrealUGC MCP](https://github.com/UnrealUGC/mcp) | Create AI UGC video ads through the UnrealUGC platform | TypeScript |
@@ -479,7 +480,6 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Logseq MCP](https://github.com/ergut/mcp-logseq) | Read / write / manage LogSeq graph | Python |
 | [Obsidian MCP](https://github.com/MarkusPfundstein/mcp-obsidian) | Obsidian via REST API community plugin | Python |
 | [Obsidian MCP (alt)](https://github.com/StevenStavrakis/obsidian-mcp) | Simple MCP server for Obsidian | TypeScript |
-| [Readwise Skills](https://github.com/readwiseio/readwise-skills) | Official Readwise agent skills + MCP | Python |
 | [Zotero MCP](https://github.com/54yyyu/zotero-mcp) | Search and read your Zotero reference library | Python |
 
 ## Frameworks & Libraries
@@ -487,7 +487,6 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | Project | Description | Language |
 |---------|-------------|----------|
 | [21st Magic MCP](https://github.com/21st-dev/magic-mcp) | AI component builder for React | TypeScript |
-| [easymcp (promptmesh)](https://github.com/promptmesh/easymcp) | Simplified Python MCP client SDK | Python |
 | [FastMCP (Python)](https://github.com/PrefectHQ/fastmcp) | Fast, Pythonic way to build MCP servers | Python |
 | [FastMCP (TypeScript)](https://github.com/punkpeye/fastmcp) | TypeScript framework for building MCP servers | TypeScript |
 | [Google ADK](https://github.com/google/adk-python) | Official Google Agent Development Kit with an MCP toolset | Python |
@@ -508,7 +507,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Pydantic AI](https://github.com/pydantic/pydantic-ai) | Typed Python agent framework with MCP client and server support | Python |
 | [Quarkus MCP Server](https://github.com/quarkiverse/quarkus-mcp-server) | Quarkus extension for building MCP servers in Java | Java |
 | [Spring AI MCP](https://github.com/spring-projects/spring-ai) | Spring Boot starters for MCP servers and clients | Java |
-| [Strands Agents SDK](https://github.com/strands-agents/sdk-python) | AWS agent SDK with MCP tool clients and its own MCP server | Python |
+| [Strands Agents SDK](https://github.com/strands-agents/harness-sdk) | Agent harness SDK with MCP tool clients and its own MCP server | Python |
 | [Vercel mcp-handler](https://github.com/vercel/mcp-handler) | Official Vercel MCP adapter for meta-frameworks | TypeScript |
 | [xmcp](https://github.com/basementstudio/xmcp) | TypeScript MCP framework with CLI scaffolding for Next.js and Express | TypeScript |
 
@@ -523,7 +522,7 @@ but not all of resources and prompts.
 |--------|-------------|-------------|
 | [Amazon Q Developer CLI](https://github.com/aws/amazon-q-developer-cli) | AWS terminal coding agent | Partial |
 | [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) | All-in-one desktop and Docker RAG chat app | Tools only |
-| [Chatbox](https://github.com/Bin-Huang/chatbox) | Desktop and web LLM chat client | Tools only |
+| [Chatbox](https://github.com/chatboxai/chatbox) | Desktop and web LLM chat client | Tools only |
 | [Cherry Studio](https://github.com/CherryHQ/cherry-studio) | Cross-platform desktop LLM client | Standard |
 | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | Anthropic's CLI coding agent | Full |
 | [Claude Desktop](https://claude.ai/download) | Anthropic's desktop app | Standard |
@@ -532,13 +531,13 @@ but not all of resources and prompts.
 | [Continue](https://continue.dev/) | Open-source AI code assistant for VS Code and JetBrains | Standard |
 | [Cursor](https://cursor.com/) | AI-powered code editor | Full |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Google's open-source terminal AI agent | Standard |
-| [Goose](https://github.com/block/goose) | Block's extensible AI agent for desktop and CLI | Full |
+| [Goose](https://github.com/aaif-goose/goose) | Extensible open-source AI agent for desktop and CLI | Full |
 | [Kilo Code](https://github.com/Kilo-Org/kilocode) | AI coding agent for VS Code, JetBrains and the CLI | Standard |
 | [Langflow](https://github.com/langflow-ai/langflow) | Visual low-code builder for agents and flows | Tools only |
 | [LibreChat](https://github.com/danny-avila/LibreChat) | Self-hosted multi-model chat web app | Tools only |
 | [OpenAI Codex CLI](https://github.com/openai/codex) | OpenAI's terminal coding agent | Tools + resources |
-| [opencode](https://github.com/sst/opencode) | Open-source terminal coding agent for any model | Standard |
-| [OpenHands](https://github.com/All-Hands-AI/OpenHands) | Autonomous coding agent with a web UI | Tools only |
+| [opencode](https://github.com/anomalyco/opencode) | Open-source terminal coding agent for any model | Standard |
+| [OpenHands](https://github.com/OpenHands/OpenHands) | Autonomous coding agent with a web UI | Tools only |
 | [Qwen Code](https://github.com/QwenLM/qwen-code) | Alibaba's open-source terminal coding agent | Standard |
 | [VS Code + Claude](https://marketplace.visualstudio.com/items?itemName=Anthropic.claude-code) | Claude Code extension for VS Code | Full |
 | [Warp](https://www.warp.dev/) | AI terminal with an agent mode | Tools + resources |
