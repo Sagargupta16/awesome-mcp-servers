@@ -48,6 +48,30 @@ MANIFEST_ONLY = {
     "license",
 }
 
+# A build manifest at the root is positive evidence of a real project, where the
+# MANIFEST_ONLY list above is only evidence of a known-bad shape.
+PROJECT_MARKERS = {
+    "package.json",
+    "pyproject.toml",
+    "setup.py",
+    "requirements.txt",
+    "go.mod",
+    "cargo.toml",
+    "pom.xml",
+    "build.gradle",
+    "build.gradle.kts",
+    "gemfile",
+    "composer.json",
+    "pubspec.yaml",
+    "mix.exs",
+    "build.zig",
+    "package.swift",
+    "makefile",
+    "dockerfile",
+    "deno.json",
+    "bun.lockb",
+}
+
 ROW_RE = re.compile(
     r"^\|\s*\[(?P<name>[^\]]+)\]\((?P<url>[^)\s]+)\)\s*\|(?P<rest>.*)\|\s*$"
 )
@@ -215,6 +239,17 @@ def inspect(sub: Submission) -> None:
                 f"The repository root contains only {sorted(names)} -- a README plus "
                 f"registry manifests, with no MCP implementation. Publish the server "
                 f"source, or submit the repository that holds it."
+            )
+        elif not (names & PROJECT_MARKERS) and not any(
+            f["type"] == "dir" for f in tree
+        ):
+            # The check above only catches roots made entirely of known manifest
+            # names, so an unrecognised file slips past it. Look for a positive
+            # signal instead: a build manifest, or any directory to hold source.
+            sub.soft.append(
+                f"No build manifest or source directory at the repository root, only "
+                f"{sorted(names)}. Confirm by hand that this holds a real MCP "
+                f"implementation and is not a listing stub."
             )
     elif tree_err:
         sub.soft.append(
