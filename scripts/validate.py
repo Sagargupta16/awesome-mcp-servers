@@ -377,6 +377,47 @@ def check_alphabetical(entries, rep: Report) -> None:
                     )
 
 
+def check_local_links(lines, heading_lines, rep: Report) -> None:
+    """Every non-http link must resolve: a real file, or a real heading anchor.
+
+    The link checker in CI treats a relative target as a filesystem path, so
+    GitHub's `../../issues/new/choose` form passes review and then fails the
+    build. Catch both cases here instead.
+    """
+    root = README.parent
+    anchors = {slugify(h) for h in heading_lines}
+    in_fence = False
+    for i, raw in enumerate(lines, 1):
+        line = raw.rstrip("\n")
+        # Fenced blocks hold format examples like `| [Name](URL) |`, which are
+        # illustrations rather than links. The CI link checker skips them too.
+        if line.lstrip().startswith("```"):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+        # Inline code spans are illustrations too, as in `| [Name](URL) | ... |`.
+        line = re.sub(r"`[^`]*`", "", line)
+        for target in re.findall(r"\]\(([^)\s]+)\)", line):
+            if target.startswith(("http://", "https://", "mailto:")):
+                continue
+            if target.startswith("#"):
+                if target[1:] not in anchors:
+                    rep.err(i, f"link to #{target[1:]} has no matching heading")
+                continue
+            if target.startswith(".."):
+                rep.err(
+                    i,
+                    f"relative link '{target}' escapes the repository; the link "
+                    f"checker resolves it as a file path and fails. Use the full "
+                    f"https://github.com/... URL instead",
+                )
+                continue
+            path = target.partition("#")[0]
+            if path and not (root / path).exists():
+                rep.err(i, f"link target '{path}' does not exist")
+
+
 def check_whitespace_and_dashes(lines, rep: Report) -> None:
     for i, raw in enumerate(lines, 1):
         line = raw.rstrip("\n")
@@ -446,6 +487,7 @@ def main() -> int:
     check_entries(entries, rep)
     check_duplicates(entries, rep)
     check_alphabetical(entries, rep)
+    check_local_links(lines, heading_lines, rep)
     check_whitespace_and_dashes(lines, rep)
 
     counted = {

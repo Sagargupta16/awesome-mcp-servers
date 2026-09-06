@@ -592,10 +592,10 @@ To add a server:
 
 Other ways to help, no pull request needed:
 
-- **Report rot.** Dead link, archived upstream, project that no longer speaks MCP -- [open an issue](../../issues/new/choose). Pruning is as useful as adding.
+- **Report rot.** Dead link, archived upstream, project that no longer speaks MCP -- [open an issue](https://github.com/Sagargupta16/awesome-mcp-servers/issues/new/choose). Pruning is as useful as adding.
 - **Fix a description.** Plenty are terser than they should be, or read like marketing.
 - **Fill a gap.** Categories with few entries, and the Clients and Tutorials sections, are the thinnest parts of the list.
-- **Triage the [health report](../../issues?q=is%3Aissue+label%3Amaintenance).** The monthly audit files what broke; confirming or dismissing an item is a real contribution.
+- **Triage the [health report](https://github.com/Sagargupta16/awesome-mcp-servers/issues?q=is%3Aissue+label%3Amaintenance).** The monthly audit files what broke; confirming or dismissing an item is a real contribution.
 5. Submit a PR
 
 ## License

@@ -10,7 +10,7 @@ body:
         as valuable as adding them.
 
         If a listed server behaves **maliciously**, do not file this publicly --
-        follow [SECURITY.md](../blob/main/SECURITY.md) instead.
+        follow [SECURITY.md](https://github.com/Sagargupta16/awesome-mcp-servers/blob/main/SECURITY.md) instead.
 
   - type: input
     id: entry
