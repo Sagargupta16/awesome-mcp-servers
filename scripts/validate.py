@@ -329,16 +329,9 @@ def check_duplicates(entries, rep: Report) -> None:
     by_url = defaultdict(list)
     by_name = defaultdict(list)
     for section, rows in entries.items():
-        # An official SDK legitimately appears in both Official and
-        # Frameworks & Libraries; every other section must be unique.
-        if section in (
-            "Contents",
-            "Contributing",
-            "License",
-            "Servers",
-            "Official",
-            "Frameworks & Libraries",
-        ):
+        # Every entry appears exactly once across the whole list. Official holds
+        # the protocol and its tooling; the SDKs live in Frameworks & Libraries.
+        if section in ("Contents", "Contributing", "License", "Servers"):
             continue
         for e in rows:
             by_url[normalize_url(e.url)].append(e)
