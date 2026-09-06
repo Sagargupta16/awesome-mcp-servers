@@ -7,11 +7,17 @@ name: Submission check
 # Runs on `pull_request` (not `pull_request_target`) so a fork's code never
 # executes with a writable token. The report goes to the job summary and the
 # check fails on a blocking problem.
+#
+# `labeled` and `unlabeled` are in the trigger list because the check honours the
+# maintainer-override label. Without them the job never re-runs after a label is
+# applied, so the documented escape hatch would only take effect on the next
+# push, which is not an escape hatch at all.
 
 on:
   pull_request:
     branches: [main]
     paths: ["README.md"]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
 
 permissions:
   contents: read
