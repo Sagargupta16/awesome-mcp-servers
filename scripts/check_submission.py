@@ -17,11 +17,13 @@ Set GITHUB_TOKEN to raise the API rate limit from 60 to 5000 requests/hour.
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import os
 import re
 import subprocess
 import sys
+import tomllib
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
@@ -75,6 +77,38 @@ PROJECT_MARKERS = {
     "bun.lockb",
 }
 
+# Package manifests that can carry a licence declaration. CONTRIBUTING.md accepts
+# one of these when there is no LICENSE file at the root, because GitHub's licence
+# API only reads the root file and so reports such a project as unlicensed.
+MANIFEST_LICENCE_FILES = (
+    "package.json",
+    "pyproject.toml",
+    "Cargo.toml",
+    "pom.xml",
+    "composer.json",
+    "deno.json",
+)
+
+# Values that fill the licence field without granting open-source terms. npm
+# documents `UNLICENSED` for a package that is deliberately not open source and
+# `SEE LICENSE IN <file>` for terms the API cannot read. `Unlicense` -- the
+# public-domain dedication -- is a real licence and is deliberately not here.
+NOT_OPEN_SOURCE = {
+    "unlicensed",
+    "proprietary",
+    "commercial",
+    "closed",
+    "closed-source",
+    "none",
+    "noassertion",
+}
+NOT_OPEN_SOURCE_PREFIXES = ("see license in", "see licence in")
+
+# Maven has no JSON or TOML form to parse, so this one manifest stays a regex.
+POM_LICENCE_RE = re.compile(
+    r"<licenses?>.*?<name>\s*([^<]+?)\s*</name>", re.DOTALL | re.IGNORECASE
+)
+
 ROW_RE = re.compile(
     r"^\|\s*\[(?P<name>[^\]]+)\]\((?P<url>[^)\s]+)\)\s*\|(?P<rest>.*)\|\s*$"
 )
@@ -110,6 +144,94 @@ def gh_api(path: str):
         return None, exc.code
     except (urllib.error.URLError, TimeoutError) as exc:
         return None, f"network: {exc}"
+
+
+def is_open_source(licence: str) -> bool:
+    """False for a licence field that names no open-source terms.
+
+    The field being filled in is not the same as the terms being open source:
+    `UNLICENSED` is npm's documented marker for a package that is explicitly not.
+    """
+    value = licence.strip().lower()
+    if value in NOT_OPEN_SOURCE:
+        return False
+    return not value.startswith(NOT_OPEN_SOURCE_PREFIXES)
+
+
+def _first_licence_string(value) -> str | None:
+    """Pull a licence name out of the shapes the manifest formats allow.
+
+    A plain string, npm's legacy `{"type": "MIT"}` object, a composer array, or
+    PEP 621's `{text = "MIT"}` table. A `{file = ...}` or `license-file` pointer
+    names no terms, so it is not treated as a declaration.
+    """
+    if isinstance(value, str):
+        return value.strip() or None
+    if isinstance(value, dict):
+        for key in ("type", "text"):
+            found = _first_licence_string(value.get(key))
+            if found:
+                return found
+        return None
+    if isinstance(value, list):
+        for item in value:
+            found = _first_licence_string(item)
+            if found:
+                return found
+    return None
+
+
+def parse_manifest_licence(filename: str, text: str) -> str | None:
+    """Read the declared licence out of one manifest, or None.
+
+    Parsed rather than pattern-matched: a regex over the raw text reads a nested
+    `"license"` key belonging to some other object as the package's own.
+    """
+    name = filename.lower()
+    try:
+        if name.endswith(".json"):
+            data = json.loads(text)
+            if not isinstance(data, dict):
+                return None
+            return _first_licence_string(data.get("license") or data.get("licenses"))
+        if name.endswith(".toml"):
+            data = tomllib.loads(text)
+            # `[project]` is PEP 621, `[package]` is Cargo.
+            for table in ("project", "package"):
+                section = data.get(table)
+                if isinstance(section, dict):
+                    found = _first_licence_string(section.get("license"))
+                    if found:
+                        return found
+            return None
+        if name.endswith(".xml"):
+            match = POM_LICENCE_RE.search(text)
+            return match.group(1) if match else None
+    except (json.JSONDecodeError, tomllib.TOMLDecodeError, UnicodeDecodeError):
+        return None
+    return None
+
+
+def manifest_licence(slug: str) -> tuple[str | None, str | None]:
+    """Return (manifest filename, licence) for the first manifest that declares one.
+
+    GitHub's licence endpoint only looks at a `LICENSE` file in the repository
+    root, so a project that declares its licence in `package.json` or
+    `pyproject.toml` reports as having none at all. CONTRIBUTING.md accepts a
+    manifest declaration, so look for one before blocking a submission.
+    """
+    for name in MANIFEST_LICENCE_FILES:
+        data, _ = gh_api(f"repos/{slug}/contents/{name}")
+        if not isinstance(data, dict) or not data.get("content"):
+            continue
+        try:
+            text = base64.b64decode(data["content"]).decode("utf-8", "replace")
+        except ValueError:
+            continue
+        licence = parse_manifest_licence(name, text)
+        if licence:
+            return name, licence
+    return None, None
 
 
 def parse_rows(text: str) -> dict:
@@ -217,10 +339,27 @@ def inspect(sub: Submission) -> None:
                 f"a vendor repo with a customised header, suspicious for a small one."
             )
         else:
-            sub.hard.append(
-                f"No licence file at the repository root ({lic_err}). CONTRIBUTING.md "
-                f"requires a clearly stated licence; add a LICENSE file."
-            )
+            man_file, man_lic = manifest_licence(slug)
+            if man_lic and not is_open_source(man_lic):
+                sub.facts["license"] = f"{man_lic} (declared in {man_file})"
+                sub.hard.append(
+                    f"`{man_file}` declares `{man_lic}`, which states that the terms "
+                    f"are not open source rather than naming a licence. "
+                    f"CONTRIBUTING.md requires an open-source licence."
+                )
+            elif man_lic:
+                sub.facts["license"] = f"{man_lic} (declared in {man_file})"
+                sub.soft.append(
+                    f"No `LICENSE` file at the repository root; the licence is declared "
+                    f"as `{man_lic}` in `{man_file}`. CONTRIBUTING.md accepts that, but "
+                    f"a root `LICENSE` file is what GitHub reads. Confirm the terms."
+                )
+            else:
+                sub.hard.append(
+                    f"No licence anywhere ({lic_err}): no `LICENSE` file at the root and "
+                    f"no licence field in a package manifest. CONTRIBUTING.md requires a "
+                    f"clearly stated licence."
+                )
     if stale_days > STALE_DAYS:
         sub.hard.append(
             f"Last push was {stale_days} days ago, over the {STALE_DAYS}-day "
@@ -279,7 +418,7 @@ def render(subs: list, override: bool) -> tuple[str, bool]:
 
     too_many = servers > MAX_SERVERS_PER_PR
     if too_many:
-        lines.append(f"> [!CAUTION]")
+        lines.append("> [!CAUTION]")
         lines.append(
             f"> This pull request adds {servers} entries. CONTRIBUTING.md asks for "
             f"**one server per pull request** so each can be reviewed and reverted "
@@ -347,7 +486,7 @@ def main() -> int:
     for s in subs:
         inspect(s)
 
-    override = OVERRIDE_LABEL in {l.strip() for l in args.labels.split(",")}
+    override = OVERRIDE_LABEL in {label.strip() for label in args.labels.split(",")}
     report, failing = render(subs, override)
 
     print(report)

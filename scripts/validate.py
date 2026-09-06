@@ -59,6 +59,19 @@ TOP_SECTIONS = [
     "Community",
 ]
 
+# Prose sections that hold no entries. They sit outside the canonical top-level
+# order and are not listed in the table of contents.
+PROSE_SECTIONS = (
+    "Contents",
+    "Using a server from this list",
+    "Contributing",
+    "License",
+)
+
+# Sections the entry checks skip: the prose sections above, plus "Servers",
+# which is only a container for the category headings beneath it.
+NON_ENTRY_SECTIONS = PROSE_SECTIONS + ("Servers",)
+
 # Sections whose body is a markdown table, and the header row each must use.
 TABLE_HEADERS = {
     "Frameworks & Libraries": ["Project", "Description", "Language"],
@@ -214,7 +227,7 @@ def parse(lines):
 
 def check_structure(lines, order, heading_lines, rep: Report) -> None:
     top = [h for h in order if lines[heading_lines[h] - 1].startswith("## ")]
-    top = [h for h in top if h not in ("Contents", "Contributing", "License")]
+    top = [h for h in top if h not in PROSE_SECTIONS]
     if top != TOP_SECTIONS:
         rep.err(
             None,
@@ -239,11 +252,11 @@ def check_structure(lines, order, heading_lines, rep: Report) -> None:
 
 def check_toc(lines, heading_lines, rep: Report) -> None:
     try:
-        start = next(i for i, l in enumerate(lines) if l.startswith("## Contents"))
+        start = next(i for i, ln in enumerate(lines) if ln.startswith("## Contents"))
         end = next(
             i
-            for i, l in enumerate(lines[start + 1 :], start + 1)
-            if l.startswith("---")
+            for i, ln in enumerate(lines[start + 1 :], start + 1)
+            if ln.startswith("---")
         )
     except StopIteration:
         rep.err(None, "could not locate the '## Contents' block")
@@ -296,7 +309,7 @@ def check_table_headers(lines, heading_lines, rep: Report) -> None:
 
 def check_entries(entries, rep: Report) -> None:
     for section, rows in entries.items():
-        if section in ("Contents", "Contributing", "License", "Servers"):
+        if section in NON_ENTRY_SECTIONS:
             continue
         is_bullet = section in BULLET_SECTIONS
 
@@ -346,7 +359,7 @@ def check_duplicates(entries, rep: Report) -> None:
     for section, rows in entries.items():
         # Every entry appears exactly once across the whole list. Official holds
         # the protocol and its tooling; the SDKs live in Frameworks & Libraries.
-        if section in ("Contents", "Contributing", "License", "Servers"):
+        if section in NON_ENTRY_SECTIONS:
             continue
         for e in rows:
             by_url[normalize_url(e.url)].append(e)
@@ -445,9 +458,9 @@ def fix(lines):
         for e, new in zip(rows, ordered):
             out[e.line - 1] = new
 
-    out = [l.rstrip() + "\n" for l in out]
+    out = [ln.rstrip() + "\n" for ln in out]
     for ch in DASHES:
-        out = [l.replace(ch, "--") for l in out]
+        out = [ln.replace(ch, "--") for ln in out]
     while len(out) > 1 and out[-1].strip() == "":
         out.pop()
     return out
@@ -490,11 +503,7 @@ def main() -> int:
     check_local_links(lines, heading_lines, rep)
     check_whitespace_and_dashes(lines, rep)
 
-    counted = {
-        k: v
-        for k, v in entries.items()
-        if k not in ("Contents", "Contributing", "License", "Servers")
-    }
+    counted = {k: v for k, v in entries.items() if k not in NON_ENTRY_SECTIONS}
     total = sum(len(v) for v in counted.values())
     if rep.errors:
         print(

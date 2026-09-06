@@ -1,1 +1,11 @@
-{"$schema":"https://docs.renovatebot.com/renovate-schema.json","extends":["github>Sagargupta16/shared-workflows"]}
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>Sagargupta16/shared-workflows"],
+  "description": [
+    "requirements-dev.txt is a uv-generated --generate-hashes lock, installed with --require-hashes in .github/workflows/lint.yml.",
+    "The pip_requirements manager matches requirements-*.txt by default and would rewrite the pinned version without regenerating the --hash= block, which fails the install. Bump requirements-dev.in instead and recompile with the command in its header."
+  ],
+  "pip_requirements": {
+    "enabled": false
+  }
+}

@@ -1,0 +1,11 @@
+# Pinned so a local run and the python-checks job in .github/workflows/lint.yml
+# reach the same verdict. Without a config here, ruff falls back to whatever
+# global config a contributor happens to have, which reports rules CI never runs.
+
+line-length = 88
+
+[lint]
+# Ruff's default set: the pycodestyle error subset plus Pyflakes. Line length is
+# left to `ruff format`, which rewraps code but deliberately leaves long string
+# literals alone -- and these scripts are mostly long report strings.
+select = ["E4", "E7", "E9", "F"]
