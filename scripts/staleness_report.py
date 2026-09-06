@@ -25,9 +25,16 @@ API = "https://api.github.com/graphql"
 STALE_DAYS = 180
 BATCH = 50
 
+# Matches an entry link and stops at the first path separator, so an entry that
+# points into a subdirectory -- `.../getzep/graphiti/tree/main/mcp_server` -- still
+# resolves to its parent repository instead of being skipped. Requiring a bare
+# `owner/repo)` previously left 13 entries unchecked.
 ENTRY_RE = re.compile(
-    r"\[(?P<name>[^\]]+)\]\(https://github\.com/(?P<owner>[\w.-]+)/(?P<repo>[\w.-]+)/?\)"
+    r"\[(?P<name>[^\]]+)\]\(https://github\.com/(?P<owner>[\w.-]+)/(?P<repo>[\w.-]+)(?:[/)]|$)"
 )
+
+# This repository's own links (the CI badge, the issue links) are not entries.
+SELF_SLUG = "sagargupta16/awesome-mcp-servers"
 
 
 def graphql(query: str):
@@ -59,9 +66,9 @@ def collect():
             continue
         for e in ENTRY_RE.finditer(line):
             slug = f"{e.group('owner')}/{e.group('repo')}"
-            if slug in seen:
+            if slug.lower() == SELF_SLUG or slug.lower() in seen:
                 continue
-            seen.add(slug)
+            seen.add(slug.lower())
             out.append(
                 (e.group("name"), e.group("owner"), e.group("repo"), section or "?")
             )
@@ -89,13 +96,17 @@ def main() -> int:
     results = fetch(entries)
     now = datetime.now(timezone.utc)
 
-    gone, archived, unlicensed, stale = [], [], [], []
+    gone, archived, unlicensed, stale, moved = [], [], [], [], []
     for entry, info in results.items():
         name, owner, repo, section = entry
         slug = f"{owner}/{repo}"
         if info is None:
             gone.append((name, slug, section))
             continue
+        # GitHub serves a renamed or transferred repository over a redirect, so the
+        # listed URL keeps working right up until someone claims the old name.
+        if info["nameWithOwner"].lower() != slug.lower():
+            moved.append((name, slug, info["nameWithOwner"], section))
         pushed = datetime.fromisoformat(info["pushedAt"].replace("Z", "+00:00"))
         days = (now - pushed).days
         licence = (info.get("licenseInfo") or {}).get("spdxId")
@@ -110,9 +121,12 @@ def main() -> int:
 
     checked = len(entries)
     out = [
-        f"Automated health check of all {checked} GitHub-hosted entries in `README.md`.",
+        f"Automated health check of the {checked} GitHub repositories behind the entries "
+        f"in `README.md`. Entries hosted elsewhere are covered only by the lychee link "
+        f"check in `.github/workflows/lint.yml`.",
         "",
-        f"- **{len(gone)}** gone (404 -- deleted, renamed, or made private)",
+        f"- **{len(gone)}** gone (404 -- deleted or made private)",
+        f"- **{len(moved)}** reachable only through a rename or transfer redirect",
         f"- **{len(archived)}** archived upstream",
         f"- **{len(unlicensed)}** with no recognised licence",
         f"- **{len(stale)}** not pushed in over {STALE_DAYS} days",
@@ -131,6 +145,23 @@ def main() -> int:
             "|-------|------|---------|",
         ]
         out += [f"| {n} | `{s}` | {sec} |" for n, s, sec in sorted(gone)]
+        out.append("")
+
+    if moved:
+        out += [
+            "## Moved: update the URL",
+            "",
+            "These resolve through a redirect, which only holds while the old name stays "
+            "unclaimed. Rewrite the URL, and check the entry name and description too if "
+            "the project was renamed rather than just transferred.",
+            "",
+            "| Entry | Listed as | Now | Section |",
+            "|-------|-----------|-----|---------|",
+        ]
+        out += [
+            f"| {n} | `{s}` | `{actual}` | {sec} |"
+            for n, s, actual, sec in sorted(moved)
+        ]
         out.append("")
 
     if archived:
@@ -167,9 +198,13 @@ def main() -> int:
         out += [
             "## No recognised licence",
             "",
-            "CONTRIBUTING.md requires a clearly stated licence. `NOASSERTION` means GitHub "
-            "found a licence file it could not identify -- usually fine for a large vendor "
-            "repo, suspicious for a small one.",
+            "CONTRIBUTING.md requires a clearly stated licence. Neither value below is "
+            "automatically a rejection. `NOASSERTION` means GitHub found a licence file "
+            "it could not identify -- usually fine for a large vendor repo, suspicious "
+            "for a small one. `none` means there is no `LICENSE` file in the repository "
+            "root, which is also what GitHub reports for a project that declares its "
+            "licence in `package.json` or `pyproject.toml`; check the manifest before "
+            "acting, because CONTRIBUTING.md accepts that.",
             "",
             "| Entry | Repo | Section | Licence | Stars |",
             "|-------|------|---------|---------|-------|",
@@ -180,7 +215,7 @@ def main() -> int:
         ]
         out.append("")
 
-    if not (gone or archived or stale or unlicensed):
+    if not (gone or moved or archived or stale or unlicensed):
         out.append(
             "Every entry is live, licensed, maintained, and unarchived. Nothing to do."
         )

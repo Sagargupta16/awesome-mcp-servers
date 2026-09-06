@@ -17,6 +17,7 @@ Set GITHUB_TOKEN to raise the API rate limit from 60 to 5000 requests/hour.
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import os
 import re
@@ -75,6 +76,26 @@ PROJECT_MARKERS = {
     "bun.lockb",
 }
 
+# Package manifests that can carry a licence declaration. CONTRIBUTING.md accepts
+# one of these when there is no LICENSE file at the root, because GitHub's licence
+# API only reads the root file and so reports such a project as unlicensed.
+MANIFEST_LICENCE_FILES = (
+    "package.json",
+    "pyproject.toml",
+    "Cargo.toml",
+    "pom.xml",
+    "composer.json",
+    "deno.json",
+)
+
+# "license": "MIT"  |  license = "MIT"  |  <license><name>MIT</name></license>
+MANIFEST_LICENCE_RE = re.compile(
+    r'"license"\s*:\s*"([^"]+)"'
+    r'|^\s*license\s*=\s*"([^"]+)"'
+    r"|<licenses?>.*?<name>([^<]+)</name>",
+    re.DOTALL | re.MULTILINE,
+)
+
 ROW_RE = re.compile(
     r"^\|\s*\[(?P<name>[^\]]+)\]\((?P<url>[^)\s]+)\)\s*\|(?P<rest>.*)\|\s*$"
 )
@@ -110,6 +131,28 @@ def gh_api(path: str):
         return None, exc.code
     except (urllib.error.URLError, TimeoutError) as exc:
         return None, f"network: {exc}"
+
+
+def manifest_licence(slug: str) -> tuple[str | None, str | None]:
+    """Return (manifest filename, licence) for the first manifest that declares one.
+
+    GitHub's licence endpoint only looks at a `LICENSE` file in the repository
+    root, so a project that declares its licence in `package.json` or
+    `pyproject.toml` reports as having none at all. CONTRIBUTING.md accepts a
+    manifest declaration, so look for one before blocking a submission.
+    """
+    for name in MANIFEST_LICENCE_FILES:
+        data, _ = gh_api(f"repos/{slug}/contents/{name}")
+        if not isinstance(data, dict) or not data.get("content"):
+            continue
+        try:
+            text = base64.b64decode(data["content"]).decode("utf-8", "replace")
+        except ValueError:
+            continue
+        match = MANIFEST_LICENCE_RE.search(text)
+        if match:
+            return name, next(g for g in match.groups() if g)
+    return None, None
 
 
 def parse_rows(text: str) -> dict:
@@ -217,10 +260,20 @@ def inspect(sub: Submission) -> None:
                 f"a vendor repo with a customised header, suspicious for a small one."
             )
         else:
-            sub.hard.append(
-                f"No licence file at the repository root ({lic_err}). CONTRIBUTING.md "
-                f"requires a clearly stated licence; add a LICENSE file."
-            )
+            man_file, man_lic = manifest_licence(slug)
+            if man_lic:
+                sub.facts["license"] = f"{man_lic} (declared in {man_file})"
+                sub.soft.append(
+                    f"No `LICENSE` file at the repository root; the licence is declared "
+                    f"as `{man_lic}` in `{man_file}`. CONTRIBUTING.md accepts that, but "
+                    f"a root `LICENSE` file is what GitHub reads. Confirm the terms."
+                )
+            else:
+                sub.hard.append(
+                    f"No licence anywhere ({lic_err}): no `LICENSE` file at the root and "
+                    f"no licence field in a package manifest. CONTRIBUTING.md requires a "
+                    f"clearly stated licence."
+                )
     if stale_days > STALE_DAYS:
         sub.hard.append(
             f"Last push was {stale_days} days ago, over the {STALE_DAYS}-day "
@@ -279,7 +332,7 @@ def render(subs: list, override: bool) -> tuple[str, bool]:
 
     too_many = servers > MAX_SERVERS_PER_PR
     if too_many:
-        lines.append(f"> [!CAUTION]")
+        lines.append("> [!CAUTION]")
         lines.append(
             f"> This pull request adds {servers} entries. CONTRIBUTING.md asks for "
             f"**one server per pull request** so each can be reviewed and reverted "
@@ -347,7 +400,7 @@ def main() -> int:
     for s in subs:
         inspect(s)
 
-    override = OVERRIDE_LABEL in {l.strip() for l in args.labels.split(",")}
+    override = OVERRIDE_LABEL in {label.strip() for label in args.labels.split(",")}
     report, failing = render(subs, override)
 
     print(report)

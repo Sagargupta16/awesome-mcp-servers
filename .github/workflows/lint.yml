@@ -19,12 +19,39 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # Read from .python-version so a local run and CI cannot drift onto
+      # different interpreters with nothing reconciling them.
       - uses: actions/setup-python@v6
         with:
-          python-version: "3.12"
+          python-version-file: .python-version
 
       - name: Validate README structure
         run: python scripts/validate.py
+
+  python-checks:
+    name: Lint and test the gate scripts
+    runs-on: ubuntu-latest
+    # The submission gate is Python now, so it needs a gate of its own: a
+    # regression in validate.py or check_submission.py silently weakens every
+    # pull-request check while the list itself stays green.
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: .python-version
+
+      - name: Install tooling
+        run: python -m pip install --upgrade ruff pytest
+
+      - name: Lint
+        run: ruff check scripts/ tests/
+
+      - name: Check formatting
+        run: ruff format --check scripts/ tests/
+
+      - name: Test
+        run: pytest tests/ -q
 
   link-check:
     name: Check links
@@ -37,7 +64,7 @@ jobs:
       - name: Link Checker
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --config lychee.toml --verbose README.md CONTRIBUTING.md
+          args: --config lychee.toml --verbose README.md CONTRIBUTING.md SECURITY.md CHANGELOG.md
           fail: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
