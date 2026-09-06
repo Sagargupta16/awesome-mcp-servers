@@ -94,7 +94,21 @@ LANGUAGES = {
     "Built-in",
 }
 
-CLIENT_SUPPORT = {"Full", "Tools only", "Tools + resources", "Partial", "Experimental"}
+# Capability tiers for the Clients table, derived from which MCP primitives each
+# client actually implements. The README carries the same legend for readers.
+#   Full              tools, resources, prompts, and sampling or elicitation
+#   Standard          tools, resources and prompts
+#   Tools + resources tools and resources, no prompts
+#   Tools only        tools only
+#   Partial           tools plus some but not all of resources and prompts
+CLIENT_SUPPORT = {
+    "Full",
+    "Standard",
+    "Tools + resources",
+    "Tools only",
+    "Partial",
+    "Experimental",
+}
 
 # Table rows are scanned, so they stay terse. Bullet sections are prose and
 # get more room.
@@ -264,7 +278,8 @@ def check_table_headers(lines, heading_lines, rep: Report) -> None:
         if start is None:
             continue
         header = None
-        for i in range(start, min(start + 5, len(lines))):
+        # Wide enough to skip an explanatory paragraph between heading and table.
+        for i in range(start, min(start + 15, len(lines))):
             if lines[i].startswith("|"):
                 header = (
                     i + 1,

@@ -1,4 +1,8 @@
-# Awesome MCP Servers [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+# Awesome MCP Servers
+
+[![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+[![Lint](https://github.com/Sagargupta16/awesome-mcp-servers/actions/workflows/lint.yml/badge.svg)](https://github.com/Sagargupta16/awesome-mcp-servers/actions/workflows/lint.yml)
+[![License: CC0-1.0](https://img.shields.io/badge/License-CC0--1.0-lightgrey.svg)](LICENSE)
 
 > A curated list of [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers, tools, frameworks, and resources.
 
@@ -113,6 +117,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Buildkite MCP](https://github.com/buildkite/buildkite-mcp-server) | Official Buildkite pipelines, builds, jobs and test runs | Go |
 | [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) | Official Chrome DevTools for coding agents - debug, trace and inspect pages | TypeScript |
 | [CircleCI MCP](https://github.com/CircleCI-Public/mcp-server-circleci) | Official CircleCI workflow integration | TypeScript |
+| [Desktop Commander MCP](https://github.com/wonderwhy-er/DesktopCommanderMCP) | Terminal control, file search and diff-based file editing | TypeScript |
 | [Docker MCP](https://github.com/ckreiling/mcp-server-docker) | Docker container management | Python |
 | [Docker MCP Gateway](https://github.com/docker/mcp-gateway) | Official Docker MCP gateway and catalog CLI plugin | Go |
 | [GitHub MCP](https://github.com/github/github-mcp-server) | Official GitHub -- repos, issues, PRs, Actions | Go |
@@ -125,7 +130,9 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Kubernetes MCP](https://github.com/strowk/mcp-k8s-go) | Kubernetes cluster operations | Go |
 | [Linear MCP](https://github.com/jerhadf/linear-mcp-server) | Linear project management | TypeScript |
 | [MartinLoop MCP](https://github.com/Keesan12/martin-loop/tree/main/packages/mcp) | Governed agent runtime with budget caps, verifier gates and inspectable runs | TypeScript |
+| [MCP Context Forge](https://github.com/IBM/mcp-context-forge) | Official IBM MCP gateway federating MCP, A2A and REST tools | Python |
 | [mcp-proxy](https://github.com/sparfenyuk/mcp-proxy) | Bridge between Streamable HTTP and stdio MCP transports | Python |
+| [mcp-remote](https://github.com/geelen/mcp-remote) | Bridge stdio-only MCP clients to remote HTTP or SSE servers | TypeScript |
 | [mcpo](https://github.com/open-webui/mcpo) | MCP-to-OpenAPI proxy that exposes MCP servers as REST endpoints | Python |
 | [MetaMCP](https://github.com/metatool-ai/metamcp) | MCP aggregator, orchestrator and gateway in one container | TypeScript |
 | [n8n MCP](https://github.com/czlonkowski/n8n-mcp) | Node docs and workflow building for n8n automations | TypeScript |
@@ -195,6 +202,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | Server | Description | Language |
 |--------|-------------|----------|
 | [Apify MCP](https://github.com/apify/apify-mcp-server) | Web scraping actors and automation | TypeScript |
+| [arXiv MCP](https://github.com/blazickjp/arxiv-mcp-server) | Search arXiv papers and read full LaTeX sections | Python |
 | [Brave Search MCP](https://github.com/brave/brave-search-mcp-server) | Official Brave Search API | TypeScript |
 | [Context7 MCP](https://github.com/upstash/context7) | Up-to-date library documentation | TypeScript |
 | [DeepWiki MCP](https://github.com/regenrek/deepwiki-mcp) | Fetch deepwiki.com repo docs as markdown | TypeScript |
@@ -309,6 +317,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | Server | Description | Language |
 |--------|-------------|----------|
 | [Adobe Premiere Pro MCP](https://github.com/hetpatel-11/Adobe_Premiere_Pro_MCP) | Drive Adobe Premiere Pro timelines and edits from an agent | TypeScript |
+| [AntV Chart MCP](https://github.com/antvis/mcp-server-chart) | Official AntV server generating 25+ chart types | TypeScript |
 | [Aseprite MCP](https://github.com/diivi/aseprite-mcp) | Create and edit pixel art through the Aseprite API | Python |
 | [Blender MCP](https://github.com/ahujasid/blender-mcp) | Control Blender 3D modeling from AI assistants | Python |
 | [ComfyUI MCP](https://github.com/artokun/comfyui-mcp) | Run and author ComfyUI workflows for image, video, and audio | TypeScript |
@@ -349,6 +358,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [HashiCorp Vault MCP](https://github.com/hashicorp/vault-mcp-server) | Official HashiCorp Vault secrets and mounts management | Go |
 | [IDA Pro MCP](https://github.com/mrexodia/ida-pro-mcp) | IDA Pro reverse engineering assistant for LLM clients | Python |
 | [MCP Security Hub](https://github.com/FuzzingLabs/mcp-security-hub) | Offensive tools (Nmap, Ghidra, Nuclei) | Python |
+| [mcp-scan](https://github.com/invariantlabs-ai/mcp-scan) | Scans MCP servers for tool poisoning and prompt injection | Python |
 | [radare2 MCP](https://github.com/radareorg/radare2-mcp) | Official radare2 reverse engineering stdio server | C |
 | [Semgrep MCP](https://github.com/semgrep/semgrep/tree/develop/cli/src/semgrep/mcp) | Official Semgrep static analysis for vulnerabilities | Python |
 | [Shodan MCP](https://github.com/w0h1v/mcp-shodan) | Shodan device search, IP recon, DNS and CVE intelligence | TypeScript |
@@ -366,7 +376,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server) | Official Firecrawl web scraping and search | TypeScript |
 | [Jina AI MCP](https://github.com/jina-ai/MCP) | Official Jina AI web reader, search, and content reranking | TypeScript |
 | [Puppeteer MCP](https://github.com/merajmehrabi/puppeteer-mcp-server) | Browser automation via Puppeteer | TypeScript |
-| [Skyvern](https://github.com/Skyvern-AI/skyvern) | Automate browser workflows with LLMs and computer vision | Python |
+| [Skyvern](https://github.com/Skyvern-AI/skyvern/tree/main/integrations/mcp) | Browser workflow automation via LLMs and computer vision, over MCP | Python |
 | [Xquik MCP](https://github.com/Xquik-dev/x-twitter-scraper) | X/Twitter search, profile tweets, posting, and media tools | TypeScript |
 
 ### Media & Entertainment
@@ -478,7 +488,9 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 |---------|-------------|----------|
 | [21st Magic MCP](https://github.com/21st-dev/magic-mcp) | AI component builder for React | TypeScript |
 | [easymcp (promptmesh)](https://github.com/promptmesh/easymcp) | Simplified Python MCP client SDK | Python |
-| [FastMCP](https://github.com/PrefectHQ/fastmcp) | Fast, Pythonic way to build MCP servers | Python |
+| [FastMCP (Python)](https://github.com/PrefectHQ/fastmcp) | Fast, Pythonic way to build MCP servers | Python |
+| [FastMCP (TypeScript)](https://github.com/punkpeye/fastmcp) | TypeScript framework for building MCP servers | TypeScript |
+| [Google ADK](https://github.com/google/adk-python) | Official Google Agent Development Kit with an MCP toolset | Python |
 | [MCP C# SDK](https://github.com/modelcontextprotocol/csharp-sdk) | Official C# and .NET SDK for MCP servers and clients | C# |
 | [MCP Go SDK](https://github.com/modelcontextprotocol/go-sdk) | Official Go SDK for MCP servers and clients | Go |
 | [MCP Java SDK](https://github.com/modelcontextprotocol/java-sdk) | Official Java SDK, maintained with Spring AI | Java |
@@ -492,21 +504,45 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [mcp-framework](https://github.com/QuantGeekDev/mcp-framework) | TypeScript framework for building MCP servers | TypeScript |
 | [mcp-go (mark3labs)](https://github.com/mark3labs/mcp-go) | Community Go library for building MCP servers and clients | Go |
 | [mcp-use](https://github.com/mcp-use/mcp-use) | Fullstack framework for MCP apps, servers, and agent clients | TypeScript |
+| [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) | Official OpenAI multi-agent framework with MCP server support | Python |
+| [Pydantic AI](https://github.com/pydantic/pydantic-ai) | Typed Python agent framework with MCP client and server support | Python |
+| [Quarkus MCP Server](https://github.com/quarkiverse/quarkus-mcp-server) | Quarkus extension for building MCP servers in Java | Java |
 | [Spring AI MCP](https://github.com/spring-projects/spring-ai) | Spring Boot starters for MCP servers and clients | Java |
+| [Strands Agents SDK](https://github.com/strands-agents/sdk-python) | AWS agent SDK with MCP tool clients and its own MCP server | Python |
 | [Vercel mcp-handler](https://github.com/vercel/mcp-handler) | Official Vercel MCP adapter for meta-frameworks | TypeScript |
 | [xmcp](https://github.com/basementstudio/xmcp) | TypeScript MCP framework with CLI scaffolding for Next.js and Express | TypeScript |
 
 ## Clients
 
+Support tiers reflect which MCP primitives each client implements, verified against its own docs:
+**Full** tools, resources, prompts, plus sampling or elicitation. **Standard** tools, resources and
+prompts. **Tools + resources** no prompts. **Tools only** tools alone. **Partial** tools plus some
+but not all of resources and prompts.
+
 | Client | Description | MCP Support |
 |--------|-------------|-------------|
+| [Amazon Q Developer CLI](https://github.com/aws/amazon-q-developer-cli) | AWS terminal coding agent | Partial |
+| [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) | All-in-one desktop and Docker RAG chat app | Tools only |
+| [Chatbox](https://github.com/Bin-Huang/chatbox) | Desktop and web LLM chat client | Tools only |
+| [Cherry Studio](https://github.com/CherryHQ/cherry-studio) | Cross-platform desktop LLM client | Standard |
 | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | Anthropic's CLI coding agent | Full |
-| [Claude Desktop](https://claude.ai/download) | Anthropic's desktop app | Full |
-| [Claude Web](https://claude.ai) | Claude in the browser | Full |
-| [Continue](https://continue.dev/) | Open-source AI code assistant | Full |
+| [Claude Desktop](https://claude.ai/download) | Anthropic's desktop app | Standard |
+| [Claude Web](https://claude.ai) | Claude in the browser | Standard |
+| [Cline](https://github.com/cline/cline) | Autonomous coding agent extension for VS Code | Tools + resources |
+| [Continue](https://continue.dev/) | Open-source AI code assistant for VS Code and JetBrains | Standard |
 | [Cursor](https://cursor.com/) | AI-powered code editor | Full |
-| [VS Code + Claude](https://marketplace.visualstudio.com/items?itemName=Anthropic.claude-code) | VS Code extension | Full |
-| [Windsurf](https://windsurf.com) | Windsurf AI IDE (formerly Codeium) | Full |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Google's open-source terminal AI agent | Standard |
+| [Goose](https://github.com/block/goose) | Block's extensible AI agent for desktop and CLI | Full |
+| [Kilo Code](https://github.com/Kilo-Org/kilocode) | AI coding agent for VS Code, JetBrains and the CLI | Standard |
+| [Langflow](https://github.com/langflow-ai/langflow) | Visual low-code builder for agents and flows | Tools only |
+| [LibreChat](https://github.com/danny-avila/LibreChat) | Self-hosted multi-model chat web app | Tools only |
+| [OpenAI Codex CLI](https://github.com/openai/codex) | OpenAI's terminal coding agent | Tools + resources |
+| [opencode](https://github.com/sst/opencode) | Open-source terminal coding agent for any model | Standard |
+| [OpenHands](https://github.com/All-Hands-AI/OpenHands) | Autonomous coding agent with a web UI | Tools only |
+| [Qwen Code](https://github.com/QwenLM/qwen-code) | Alibaba's open-source terminal coding agent | Standard |
+| [VS Code + Claude](https://marketplace.visualstudio.com/items?itemName=Anthropic.claude-code) | Claude Code extension for VS Code | Full |
+| [Warp](https://www.warp.dev/) | AI terminal with an agent mode | Tools + resources |
+| [Windsurf](https://windsurf.com) | Windsurf AI IDE (formerly Codeium) | Standard |
 | [Zed](https://zed.dev/) | High-performance code editor | Partial |
 
 ## Tutorials & Articles
