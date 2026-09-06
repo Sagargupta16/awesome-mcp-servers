@@ -17,7 +17,7 @@ Curated awesome-list of MCP servers, frameworks, clients, and resources, maintai
 - **Language**: Markdown (the list) plus Python (the gate scripts in `scripts/`, stdlib only)
 - **Framework**: none
 - **Database**: none
-- **Package manager**: none for the list; `pip install -r requirements-dev.txt` pins `ruff` and `pytest` for the scripts
+- **Package manager**: none for the list; `requirements-dev.in` / `requirements-dev.txt` hash-lock `ruff` and `pytest` for the scripts
 - **Deploy target**: GitHub README (no build, no deploy)
 
 ## Run
@@ -34,13 +34,13 @@ GITHUB_TOKEN=$(gh auth token) python scripts/staleness_report.py
 ## Test
 
 ```bash
-pip install -r requirements-dev.txt
+pip install --require-hashes -r requirements-dev.txt
 pytest tests/ -q
 ruff check scripts/ tests/
 ruff format --check scripts/ tests/
 ```
 
-`ruff` and `pytest` are pinned in `requirements-dev.txt` so `ruff format --check` cannot flip on a formatter release; `ruff.toml` pins the rule set for the same reason.
+`requirements-dev.txt` is a uv-generated universal hash lock; `requirements-dev.in` is the source and carries the regeneration command. Both the pin and `ruff.toml`'s rule set exist so `ruff format --check` cannot flip on a formatter release.
 
 Three workflows:
 
