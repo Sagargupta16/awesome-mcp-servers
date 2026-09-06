@@ -1,0 +1,6 @@
+# Tooling for the gate scripts in scripts/ and the suite in tests/. Pinned so a
+# local run and the python-checks job in .github/workflows/lint.yml reach the
+# same verdict, and so `ruff format --check` cannot flip on a formatter release.
+# Renovate bumps these monthly.
+ruff==0.16.6
+pytest==9.0.3

@@ -26,7 +26,7 @@ The header promised three things the list did not deliver. Measured against the 
 - A **"Using a server from this list"** section: the `mcpServers` config shape for a local (`npx` / `uvx`) server and for a remote one. The file listed 389 entries and gave no example of wiring even one into a client.
 - A **`python-checks` CI job** running `ruff check`, `ruff format --check` and `pytest` over `scripts/` and `tests/`. The submission gate was 1,075 lines of Python with no checks of its own.
 - **`tests/`** -- 46 tests over all three scripts, including the reordering invariant that `added_rows()` depends on and a guard that CONTRIBUTING.md's category table matches `SERVER_CATEGORIES` exactly.
-- `ruff.toml`, so a contributor's global ruff config cannot report rules CI never runs.
+- `ruff.toml`, so a contributor's global ruff config cannot report rules CI never runs, and `requirements-dev.txt` pinning `ruff` and `pytest` so `ruff format --check` cannot flip on a formatter release.
 - `SECURITY.md` and `CHANGELOG.md` to the link check, which only covered README and CONTRIBUTING.
 
 ### Fixed
