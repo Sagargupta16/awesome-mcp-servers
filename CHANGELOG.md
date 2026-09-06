@@ -1,5 +1,39 @@
 # Changelog
 
+Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
+
+## [2.2.0] - 2026-09-06
+
+The header promised three things the list did not deliver. Measured against the GitHub API on 2026-09-06 and corrected.
+
+### Removed
+
+- **36 entries.** 32 had not been pushed in over 180 days, which `scripts/check_submission.py` hard-fails a new contributor for: worst was OpenAI MCP at 647 days, with Twitch MCP at 593 and Puppeteer MCP at 541. The other four had no licence anywhere, in a `LICENSE` file or a package manifest: Loki MCP, Spotify MCP, and two that held no MCP implementation either. Kubernetes MCP (`strowk/mcp-k8s-go`, 257 days) went as a duplicate of the maintained Kubernetes MCP Server already listed.
+- Figma Dev Guide and Readwise Skills, whose repository roots hold a README, a `server.json` and a `skills/` directory with no server in them -- the exact shape CONTRIBUTING.md rejects.
+- `.maintenance`, `.dockerignore` and `.nvmrc`: leftovers from an old bulk-maintenance round, in a repository with no Dockerfile and no JavaScript.
+
+### Changed
+
+- **Six rotted entries replaced by the maintained or vendor-official server for the same product**: Todoist (`Doist/todoist-mcp`), Discord (`SaseQ/discord-mcp`), Wikipedia (`Rudra-ravi/wikipedia-mcp`), Linear (its hosted server), Bitbucket (the official Atlassian Rovo server, which covers Jira, Confluence, JSM, Bitbucket and Compass), and Weaviate, whose standalone server is deprecated in favour of the one built into the Weaviate binary.
+- **12 URLs rewritten to their current slug.** Each resolved only through a GitHub rename or transfer redirect, which holds just until someone claims the old name: mcp-scan is now `snyk/agent-scan`, XcodeBuildMCP is under `getsentry`, Strands Agents SDK is `harness-sdk`, plus Chatbox, Goose, opencode, OpenHands, Probe, octocode, mcp-remote, TomTom MCP and NotFair. Names and descriptions were re-checked for the ones that were renamed rather than just moved.
+- **Six Language cells corrected** against each repository's own language breakdown rather than GitHub's primary-language guess: Slack MCP is Go (was TypeScript), Tavily MCP is JavaScript (was Python), STS2MCP is C# (was Python), prompt-to-asset is TypeScript (was JavaScript), Unreal MCP is `Multiple`. TypeScript-versus-JavaScript disagreements caused by a committed `dist/` were left alone.
+- The licence rule now accepts a licence declared in a package manifest (`package.json`, `pyproject.toml`, `Cargo.toml`, `pom.xml`, `composer.json`, `deno.json`), not only a root `LICENSE` file. GitHub's licence API reads the root file only, so projects such as `vercel/mcp-handler` and `modelcontextprotocol/inspector` reported as unlicensed while shipping a real licence. `check_submission.py` reads the manifest before blocking, and flags the case for a maintainer.
+- `staleness_report.py` now reaches every listed repository. Its entry regex required a bare `owner/repo` link, so 13 entries pointing into a subdirectory were silently skipped, and the report header claimed to have checked "all" of them. It also reports repositories that only resolve through a redirect, and skips this repository's own badge and issue links.
+- The server-suggestion issue template no longer refers to a "notability bar" that 2.1.0 removed, and its licence checkbox matches the rule instead of asking authors to confirm something GitHub cannot see.
+
+### Added
+
+- A **"Using a server from this list"** section: the `mcpServers` config shape for a local (`npx` / `uvx`) server and for a remote one. The file listed 389 entries and gave no example of wiring even one into a client.
+- A **`python-checks` CI job** running `ruff check`, `ruff format --check` and `pytest` over `scripts/` and `tests/`. The submission gate was 1,075 lines of Python with no checks of its own.
+- **`tests/`** -- 46 tests over all three scripts, including the reordering invariant that `added_rows()` depends on and a guard that CONTRIBUTING.md's category table matches `SERVER_CATEGORIES` exactly.
+- `ruff.toml`, so a contributor's global ruff config cannot report rules CI never runs.
+- `SECURITY.md` and `CHANGELOG.md` to the link check, which only covered README and CONTRIBUTING.
+
+### Fixed
+
+- Six ruff findings in the gate scripts: five ambiguous `l` identifiers and an f-string with no placeholders.
+- Every workflow now installs the interpreter named in `.python-version`. They pinned 3.12 while the file said 3.14, with nothing reconciling the two.
+
 ## [2.1.0] - 2026-09-06
 
 ### Changed

@@ -6,9 +6,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this if you would rather not open a pull request, or if your project is
-        too new to clear the notability bar yet -- a suggestion stays on record and
-        you can point at it later.
+        Use this if you would rather not open a pull request. A maintainer can add
+        the row for you. There is no star or age requirement, so a brand-new
+        project is welcome here.
 
         Please check [CONTRIBUTING.md](https://github.com/Sagargupta16/awesome-mcp-servers/blob/main/CONTRIBUTING.md#quality-standards) first.
         Suggestions that clearly miss the bar get closed without much discussion.
@@ -114,13 +114,13 @@ body:
       options:
         - label: The repository holds a working MCP implementation, not just a README and a manifest
           required: true
-        - label: GitHub detects an open-source licence for it
+        - label: It states an open-source licence, in a LICENSE file at the root or in its package manifest
           required: true
         - label: Its README documents installation and usage
           required: true
         - label: It was pushed within the last 180 days and is not archived
           required: true
-        - label: It is not already on the list
+        - label: It is not already on the list, and no other server for the same product is
           required: true
 
   - type: textarea
