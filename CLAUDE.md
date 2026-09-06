@@ -67,11 +67,11 @@ Three workflows:
 
 - The link check runs with `fail: true`, so a broken link fails CI. `lychee.toml` excludes five hosts that hard-block automation (x.com, twitter.com, linkedin.com, discord.gg, smithery.ai) -- links to those are never verified by CI.
 - The submission gate hard-fails at 181 days since last push and on a repo with no licence anywhere. Incumbent entries are held to the same bar; that is what the monthly health report is for.
-- A licence declared only in `package.json` / `pyproject.toml` is accepted (GitHub's licence API reads the root `LICENSE` file only, so those repos report as unlicensed). See `MANIFEST_LICENCE_FILES` in `check_submission.py`.
+- A licence declared only in `package.json` / `pyproject.toml` is accepted (GitHub's licence API reads the root `LICENSE` file only, so those repos report as unlicensed). See `MANIFEST_LICENCE_FILES` in `check_submission.py`. The field having a value is not enough: `is_open_source()` rejects `UNLICENSED`, `SEE LICENSE IN <file>` and `Proprietary`, which fill the field while withholding the terms. `staleness_report.py` imports both helpers so the report and the gate cannot disagree.
 - GitHub serves renamed and transferred repos over a redirect, so a stale slug keeps working until someone claims the old name. `staleness_report.py` compares `nameWithOwner` to the listed slug to catch that.
-- `renovate.json` extends `Sagargupta16/shared-workflows`; the only things it can bump are the pinned GitHub Actions.
+- `renovate.json` extends `Sagargupta16/shared-workflows`, which is `config:recommended` plus `automerge: true` on a monthly grouped PR. That covers the pinned GitHub Actions and, by default, `requirements-dev.txt`. The pip manager is switched off in `renovate.json` because it rewrites the pinned version without regenerating the `--hash=` block, which then fails `pip install --require-hashes`. Bumping `ruff` or `pytest` means editing `requirements-dev.in` and running the compile command in its header.
 - Server entries must be strict `| [Name](URL) | Description | Language |` rows: description under 80 chars, capitalized, no trailing period, alphabetical within each category table.
-- `CHANGELOG.md` declares 2.1.0, 2.0.0, 1.0.0 and 0.1.0, but no git tag or GitHub release exists for any of them. Treat the version headings as documentation milestones until someone cuts real tags.
+- No git tag or GitHub release exists for any version heading in `CHANGELOG.md`. Treat them as documentation milestones until someone cuts real tags.
 
 ## Repo-specific rules
 

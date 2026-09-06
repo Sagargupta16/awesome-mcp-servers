@@ -6,9 +6,10 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this if you would rather not open a pull request. A maintainer can add
-        the row for you. There is no star or age requirement, so a brand-new
-        project is welcome here.
+        Use this if you would rather not open a pull request: a maintainer can add
+        the row for you, and the suggestion stays on record so you can point at it
+        later. There is no star or age requirement, so a brand-new project is
+        welcome here.
 
         Please check [CONTRIBUTING.md](https://github.com/Sagargupta16/awesome-mcp-servers/blob/main/CONTRIBUTING.md#quality-standards) first.
         Suggestions that clearly miss the bar get closed without much discussion.
