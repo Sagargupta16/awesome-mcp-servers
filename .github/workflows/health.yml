@@ -1,0 +1,46 @@
+name: List health
+
+# Monthly audit of every GitHub-hosted entry: dead links, archived upstreams,
+# missing licences, and stale projects. The result is written into one tracking
+# issue that is rewritten in place, so the report never accumulates noise.
+
+on:
+  schedule:
+    - cron: "0 6 1 * *" # 06:00 UTC on the 1st of each month
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    name: Audit listed repositories
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Build report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/staleness_report.py > report.md
+
+      - name: Publish to tracking issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TITLE: "List health report"
+        run: |
+          gh label create maintenance --color ededed \
+            --description "Automated list-health tracking" 2>/dev/null || true
+          existing=$(gh issue list --state open --label maintenance \
+            --search "$TITLE in:title" --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file report.md
+            echo "Updated issue #$existing"
+          else
+            gh issue create --title "$TITLE" --label maintenance --body-file report.md
+          fi

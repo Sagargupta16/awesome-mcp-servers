@@ -1,5 +1,14 @@
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
-  - name: MCP Documentation
+  - name: MCP documentation
     url: https://modelcontextprotocol.io/
-    about: Official MCP documentation and specification
+    about: Official Model Context Protocol documentation and specification
+  - name: MCP community channels
+    url: https://modelcontextprotocol.io/community/communication
+    about: Official Discord and discussion forums for protocol questions
+  - name: Report a malicious entry
+    url: https://github.com/Sagargupta16/awesome-mcp-servers/security/advisories/new
+    about: Private disclosure for a listed server that behaves maliciously
+  - name: Propose a new category
+    url: https://github.com/Sagargupta16/awesome-mcp-servers/issues/new?labels=enhancement&title=New+category%3A+
+    about: Categories need discussion before a pull request, since CI rejects unknown headings
