@@ -23,6 +23,7 @@ import os
 import re
 import subprocess
 import sys
+import tomllib
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
@@ -88,12 +89,24 @@ MANIFEST_LICENCE_FILES = (
     "deno.json",
 )
 
-# "license": "MIT"  |  license = "MIT"  |  <license><name>MIT</name></license>
-MANIFEST_LICENCE_RE = re.compile(
-    r'"license"\s*:\s*"([^"]+)"'
-    r'|^\s*license\s*=\s*"([^"]+)"'
-    r"|<licenses?>.*?<name>([^<]+)</name>",
-    re.DOTALL | re.MULTILINE,
+# Values that fill the licence field without granting open-source terms. npm
+# documents `UNLICENSED` for a package that is deliberately not open source and
+# `SEE LICENSE IN <file>` for terms the API cannot read. `Unlicense` -- the
+# public-domain dedication -- is a real licence and is deliberately not here.
+NOT_OPEN_SOURCE = {
+    "unlicensed",
+    "proprietary",
+    "commercial",
+    "closed",
+    "closed-source",
+    "none",
+    "noassertion",
+}
+NOT_OPEN_SOURCE_PREFIXES = ("see license in", "see licence in")
+
+# Maven has no JSON or TOML form to parse, so this one manifest stays a regex.
+POM_LICENCE_RE = re.compile(
+    r"<licenses?>.*?<name>\s*([^<]+?)\s*</name>", re.DOTALL | re.IGNORECASE
 )
 
 ROW_RE = re.compile(
@@ -133,6 +146,72 @@ def gh_api(path: str):
         return None, f"network: {exc}"
 
 
+def is_open_source(licence: str) -> bool:
+    """False for a licence field that names no open-source terms.
+
+    The field being filled in is not the same as the terms being open source:
+    `UNLICENSED` is npm's documented marker for a package that is explicitly not.
+    """
+    value = licence.strip().lower()
+    if value in NOT_OPEN_SOURCE:
+        return False
+    return not value.startswith(NOT_OPEN_SOURCE_PREFIXES)
+
+
+def _first_licence_string(value) -> str | None:
+    """Pull a licence name out of the shapes the manifest formats allow.
+
+    A plain string, npm's legacy `{"type": "MIT"}` object, a composer array, or
+    PEP 621's `{text = "MIT"}` table. A `{file = ...}` or `license-file` pointer
+    names no terms, so it is not treated as a declaration.
+    """
+    if isinstance(value, str):
+        return value.strip() or None
+    if isinstance(value, dict):
+        for key in ("type", "text"):
+            found = _first_licence_string(value.get(key))
+            if found:
+                return found
+        return None
+    if isinstance(value, list):
+        for item in value:
+            found = _first_licence_string(item)
+            if found:
+                return found
+    return None
+
+
+def parse_manifest_licence(filename: str, text: str) -> str | None:
+    """Read the declared licence out of one manifest, or None.
+
+    Parsed rather than pattern-matched: a regex over the raw text reads a nested
+    `"license"` key belonging to some other object as the package's own.
+    """
+    name = filename.lower()
+    try:
+        if name.endswith(".json"):
+            data = json.loads(text)
+            if not isinstance(data, dict):
+                return None
+            return _first_licence_string(data.get("license") or data.get("licenses"))
+        if name.endswith(".toml"):
+            data = tomllib.loads(text)
+            # `[project]` is PEP 621, `[package]` is Cargo.
+            for table in ("project", "package"):
+                section = data.get(table)
+                if isinstance(section, dict):
+                    found = _first_licence_string(section.get("license"))
+                    if found:
+                        return found
+            return None
+        if name.endswith(".xml"):
+            match = POM_LICENCE_RE.search(text)
+            return match.group(1) if match else None
+    except (json.JSONDecodeError, tomllib.TOMLDecodeError, UnicodeDecodeError):
+        return None
+    return None
+
+
 def manifest_licence(slug: str) -> tuple[str | None, str | None]:
     """Return (manifest filename, licence) for the first manifest that declares one.
 
@@ -149,9 +228,9 @@ def manifest_licence(slug: str) -> tuple[str | None, str | None]:
             text = base64.b64decode(data["content"]).decode("utf-8", "replace")
         except ValueError:
             continue
-        match = MANIFEST_LICENCE_RE.search(text)
-        if match:
-            return name, next(g for g in match.groups() if g)
+        licence = parse_manifest_licence(name, text)
+        if licence:
+            return name, licence
     return None, None
 
 
@@ -261,7 +340,14 @@ def inspect(sub: Submission) -> None:
             )
         else:
             man_file, man_lic = manifest_licence(slug)
-            if man_lic:
+            if man_lic and not is_open_source(man_lic):
+                sub.facts["license"] = f"{man_lic} (declared in {man_file})"
+                sub.hard.append(
+                    f"`{man_file}` declares `{man_lic}`, which states that the terms "
+                    f"are not open source rather than naming a licence. "
+                    f"CONTRIBUTING.md requires an open-source licence."
+                )
+            elif man_lic:
                 sub.facts["license"] = f"{man_lic} (declared in {man_file})"
                 sub.soft.append(
                     f"No `LICENSE` file at the repository root; the licence is declared "

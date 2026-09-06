@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Health report for every GitHub repository on the list.
 
-Groups entries into what needs action: gone (404), archived, unlicensed, and
-stale. Written to be run on a schedule and piped into a single tracking issue,
+Groups entries into what needs action: gone (404), moved, archived, unlicensed,
+and stale. Written to be run on a schedule and piped into a single tracking issue,
 so the report replaces itself instead of accumulating noise.
 
     python scripts/staleness_report.py > report.md
@@ -20,6 +20,12 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
+# Same directory, so this resolves when the script is run as `python
+# scripts/staleness_report.py`. The licence rule lives in one place: a report that
+# judged a manifest licence differently from the submission gate would send the
+# maintainer after entries the gate accepts.
+from check_submission import is_open_source, manifest_licence
+
 README = Path(__file__).resolve().parent.parent / "README.md"
 API = "https://api.github.com/graphql"
 STALE_DAYS = 180
@@ -28,7 +34,8 @@ BATCH = 50
 # Matches an entry link and stops at the first path separator, so an entry that
 # points into a subdirectory -- `.../getzep/graphiti/tree/main/mcp_server` -- still
 # resolves to its parent repository instead of being skipped. Requiring a bare
-# `owner/repo)` previously left 13 entries unchecked.
+# `owner/repo)` left 11 of the repositories behind the list unchecked, measured by
+# running both forms over README.md.
 ENTRY_RE = re.compile(
     r"\[(?P<name>[^\]]+)\]\(https://github\.com/(?P<owner>[\w.-]+)/(?P<repo>[\w.-]+)(?:[/)]|$)"
 )
@@ -96,7 +103,8 @@ def main() -> int:
     results = fetch(entries)
     now = datetime.now(timezone.utc)
 
-    gone, archived, unlicensed, stale, moved = [], [], [], [], []
+    gone, archived, stale, moved = [], [], [], []
+    unlicensed, manifest_licensed, no_root_licence = [], [], []
     for entry, info in results.items():
         name, owner, repo, section = entry
         slug = f"{owner}/{repo}"
@@ -113,11 +121,26 @@ def main() -> int:
         if info["isArchived"]:
             archived.append((name, slug, section, days))
         if licence in (None, "", "NOASSERTION"):
-            unlicensed.append(
+            no_root_licence.append(
                 (name, slug, section, licence or "none", info["stargazerCount"])
             )
         if days > STALE_DAYS and not info["isArchived"]:
             stale.append((days, name, slug, section, info["stargazerCount"]))
+
+    # GitHub reads the root `LICENSE` file only, so a project that declares its
+    # licence in a package manifest lands here reporting `none`. CONTRIBUTING.md
+    # accepts that declaration, so read the manifest instead of asking a
+    # maintainer to do it by hand.
+    for name, slug, section, licence, stars in no_root_licence:
+        man_file, man_lic = (
+            (None, None) if licence != "none" else manifest_licence(slug)
+        )
+        if man_lic and is_open_source(man_lic):
+            manifest_licensed.append((name, slug, section, man_lic, man_file, stars))
+        elif man_lic:
+            unlicensed.append((name, slug, section, f"{man_lic} in {man_file}", stars))
+        else:
+            unlicensed.append((name, slug, section, licence, stars))
 
     checked = len(entries)
     out = [
@@ -128,8 +151,11 @@ def main() -> int:
         f"- **{len(gone)}** gone (404 -- deleted or made private)",
         f"- **{len(moved)}** reachable only through a rename or transfer redirect",
         f"- **{len(archived)}** archived upstream",
-        f"- **{len(unlicensed)}** with no recognised licence",
+        f"- **{len(unlicensed)}** with no licence the automated checks can find",
         f"- **{len(stale)}** not pushed in over {STALE_DAYS} days",
+        f"- **{len(manifest_licensed)}** licensed in a package manifest rather than a "
+        f"root `LICENSE` file, which CONTRIBUTING.md accepts (listed for information, "
+        f"no action needed)",
         "",
         "This issue is rewritten in place on every run, so it always reflects the current state.",
         "",
@@ -198,13 +224,13 @@ def main() -> int:
         out += [
             "## No recognised licence",
             "",
-            "CONTRIBUTING.md requires a clearly stated licence. Neither value below is "
-            "automatically a rejection. `NOASSERTION` means GitHub found a licence file "
-            "it could not identify -- usually fine for a large vendor repo, suspicious "
-            "for a small one. `none` means there is no `LICENSE` file in the repository "
-            "root, which is also what GitHub reports for a project that declares its "
-            "licence in `package.json` or `pyproject.toml`; check the manifest before "
-            "acting, because CONTRIBUTING.md accepts that.",
+            "CONTRIBUTING.md requires a clearly stated licence. `NOASSERTION` means "
+            "GitHub found a licence file it could not identify -- usually fine for a "
+            "large vendor repo, suspicious for a small one, and not automatically a "
+            "rejection. `none` means neither a root `LICENSE` file nor a licence field "
+            "in a package manifest, which is a rejection. A named value below is a "
+            "manifest field that withholds open-source terms rather than granting "
+            "them, such as npm's `UNLICENSED`.",
             "",
             "| Entry | Repo | Section | Licence | Stars |",
             "|-------|------|---------|---------|-------|",
@@ -212,6 +238,23 @@ def main() -> int:
         out += [
             f"| {n} | `{s}` | {sec} | {lic} | {st} |"
             for n, s, sec, lic, st in sorted(unlicensed, key=lambda x: x[4])
+        ]
+        out.append("")
+
+    if manifest_licensed:
+        out += [
+            "## Licensed in a package manifest",
+            "",
+            "No action needed. GitHub's licence API reads the root `LICENSE` file only, "
+            "so these report as unlicensed in the sidebar while declaring real terms in "
+            "a manifest. CONTRIBUTING.md accepts that.",
+            "",
+            "| Entry | Repo | Section | Licence | Declared in | Stars |",
+            "|-------|------|---------|---------|-------------|-------|",
+        ]
+        out += [
+            f"| {n} | `{s}` | {sec} | {lic} | `{f}` | {st} |"
+            for n, s, sec, lic, f, st in sorted(manifest_licensed, key=lambda x: x[5])
         ]
         out.append("")
 

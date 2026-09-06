@@ -7,8 +7,10 @@ declared only in a package manifest is recognised.
 
 from __future__ import annotations
 
+import base64
 import shutil
 import subprocess
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -104,31 +106,214 @@ def test_added_rows_reports_one_row_when_a_table_is_both_sorted_and_extended(
 # --- manifest licence detection ----------------------------------------------
 
 
-def _licence(text: str) -> str | None:
-    match = check_submission.MANIFEST_LICENCE_RE.search(text)
-    if not match:
-        return None
-    return next(group for group in match.groups() if group)
+def _licence(filename: str, text: str) -> str | None:
+    return check_submission.parse_manifest_licence(filename, text)
 
 
 def test_package_json_licence_is_read():
-    assert _licence('{\n  "name": "acme",\n  "license": "MIT"\n}') == "MIT"
-
-
-def test_pyproject_licence_is_read():
     assert (
-        _licence('[project]\nname = "acme"\nlicense = "Apache-2.0"\n') == "Apache-2.0"
+        _licence("package.json", '{\n  "name": "acme",\n  "license": "MIT"\n}') == "MIT"
     )
+
+
+def test_package_json_legacy_object_licence_is_read():
+    manifest = '{"name": "acme", "license": {"type": "MIT", "url": "http://x/y"}}'
+
+    assert _licence("package.json", manifest) == "MIT"
+
+
+def test_composer_array_licence_is_read():
+    """CONTRIBUTING.md lists composer.json, which allows an array of licences."""
+    assert _licence("composer.json", '{"license": ["MIT", "GPL-3.0"]}') == "MIT"
+
+
+def test_pyproject_string_licence_is_read():
+    assert (
+        _licence("pyproject.toml", '[project]\nname = "acme"\nlicense = "Apache-2.0"\n')
+        == "Apache-2.0"
+    )
+
+
+def test_pyproject_table_licence_is_read():
+    """PEP 621's `license = {text = "..."}` form, which a text search misses."""
+    manifest = '[project]\nname = "acme"\nlicense = {text = "Apache-2.0"}\n'
+
+    assert _licence("pyproject.toml", manifest) == "Apache-2.0"
+
+
+def test_cargo_licence_is_read():
+    assert _licence("Cargo.toml", '[package]\nlicense = "MIT OR Apache-2.0"\n') == (
+        "MIT OR Apache-2.0"
+    )
+
+
+def test_licence_pointing_at_a_file_is_not_a_declaration():
+    """A file pointer names no terms, and GitHub already read the root files."""
+    manifest = '[project]\nname = "acme"\nlicense = {file = "LICENSE.txt"}\n'
+
+    assert _licence("pyproject.toml", manifest) is None
 
 
 def test_pom_xml_licence_is_read():
     pom = "<licenses><license><name>MIT License</name></license></licenses>"
 
-    assert _licence(pom) == "MIT License"
+    assert _licence("pom.xml", pom) == "MIT License"
 
 
 def test_manifest_without_a_licence_reads_as_none():
-    assert _licence('{\n  "name": "acme",\n  "version": "1.0.0"\n}') is None
+    assert (
+        _licence("package.json", '{\n  "name": "acme",\n  "version": "1.0.0"\n}')
+        is None
+    )
+
+
+def test_a_nested_licence_key_is_not_read_as_the_packages_own():
+    """The reason this is parsed rather than pattern-matched."""
+    manifest = '{"name": "acme", "dependencies": {"dep": {"license": "MIT"}}}'
+
+    assert _licence("package.json", manifest) is None
+
+
+def test_unparseable_manifest_reads_as_none():
+    assert _licence("package.json", "{not json") is None
+    assert _licence("pyproject.toml", "[project") is None
+
+
+# --- open-source check on the declared value ---------------------------------
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "UNLICENSED",
+        "unlicensed",
+        "SEE LICENSE IN proprietary.txt",
+        "Proprietary",
+        "none",
+    ],
+)
+def test_a_field_that_withholds_open_source_terms_is_rejected(value: str):
+    assert check_submission.is_open_source(value) is False
+
+
+@pytest.mark.parametrize(
+    "value", ["MIT", "Apache-2.0", "Unlicense", "MIT OR Apache-2.0"]
+)
+def test_a_real_licence_is_accepted(value: str):
+    assert check_submission.is_open_source(value) is True
+
+
+# --- manifest_licence over the API -------------------------------------------
+
+
+def _fake_api(files: dict):
+    """Stand in for gh_api, serving base64 file contents for the paths given."""
+
+    def fake(path: str):
+        for name, text in files.items():
+            if path.endswith(f"/contents/{name}"):
+                content = base64.b64encode(text.encode("utf-8")).decode("ascii")
+                return {"content": content}, None
+        return None, 404
+
+    return fake
+
+
+def test_manifest_licence_returns_the_first_manifest_that_declares_one(monkeypatch):
+    monkeypatch.setattr(
+        check_submission,
+        "gh_api",
+        _fake_api(
+            {
+                "package.json": '{"name": "acme"}',
+                "pyproject.toml": '[project]\nlicense = {text = "Apache-2.0"}\n',
+            }
+        ),
+    )
+
+    assert check_submission.manifest_licence("acme/alpha") == (
+        "pyproject.toml",
+        "Apache-2.0",
+    )
+
+
+def test_manifest_licence_returns_nothing_when_no_manifest_exists(monkeypatch):
+    monkeypatch.setattr(check_submission, "gh_api", _fake_api({}))
+
+    assert check_submission.manifest_licence("acme/alpha") == (None, None)
+
+
+# --- inspect(), with the GitHub API stubbed ----------------------------------
+
+
+def _repo_api(files: dict):
+    """Serve a live, licence-less, MIT-free repository plus the given manifests."""
+    fresh = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    repo = {
+        "pushed_at": fresh,
+        "created_at": fresh,
+        "license": None,
+        "stargazers_count": 3,
+        "archived": False,
+        "fork": False,
+        "language": "TypeScript",
+    }
+    manifests = _fake_api(files)
+
+    def fake(path: str):
+        if path == "repos/acme/alpha":
+            return repo, None
+        if path == "repos/acme/alpha/license":
+            return None, 404
+        if path == "repos/acme/alpha/contents":
+            return [
+                {"name": "README.md", "type": "file"},
+                {"name": "src", "type": "dir"},
+            ], None
+        return manifests(path)
+
+    return fake
+
+
+def _inspected(files: dict, monkeypatch) -> check_submission.Submission:
+    monkeypatch.setattr(check_submission, "gh_api", _repo_api(files))
+    sub = check_submission.Submission(
+        name="Alpha",
+        url="https://github.com/acme/alpha",
+        desc="Alpha widget",
+        third="TypeScript",
+    )
+    check_submission.inspect(sub)
+    return sub
+
+
+def test_inspect_blocks_a_manifest_that_declares_unlicensed(monkeypatch):
+    """npm's marker for a package that is explicitly not open source."""
+    sub = _inspected({"package.json": '{"license": "UNLICENSED"}'}, monkeypatch)
+
+    assert any("UNLICENSED" in problem for problem in sub.hard)
+
+
+def test_inspect_blocks_a_manifest_that_points_at_proprietary_terms(monkeypatch):
+    sub = _inspected(
+        {"package.json": '{"license": "SEE LICENSE IN proprietary.txt"}'}, monkeypatch
+    )
+
+    assert sub.hard != []
+
+
+def test_inspect_accepts_a_manifest_licence_with_a_maintainer_note(monkeypatch):
+    sub = _inspected({"package.json": '{"license": "Apache-2.0"}'}, monkeypatch)
+
+    assert sub.hard == []
+    assert any("package.json" in note for note in sub.soft)
+    assert sub.facts["license"] == "Apache-2.0 (declared in package.json)"
+
+
+def test_inspect_blocks_a_repository_with_no_licence_anywhere(monkeypatch):
+    sub = _inspected({}, monkeypatch)
+
+    assert any("No licence anywhere" in problem for problem in sub.hard)
 
 
 # --- report rendering --------------------------------------------------------
