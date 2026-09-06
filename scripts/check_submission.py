@@ -283,9 +283,21 @@ def render(subs: list, override: bool) -> tuple[str, bool]:
     if override:
         lines.append(f"Gate bypassed by the `{OVERRIDE_LABEL}` label.")
     elif failing:
+        if hard_total and too_many:
+            why = (
+                f"{hard_total} blocking problem(s), and it adds {servers} entries "
+                f"instead of {MAX_SERVERS_PER_PR}"
+            )
+        elif hard_total:
+            why = f"{hard_total} blocking problem(s)"
+        else:
+            why = (
+                f"every entry passes its checks, but this adds {servers} entries "
+                f"instead of {MAX_SERVERS_PER_PR}"
+            )
         lines.append(
-            f"**Result: blocked.** {hard_total} blocking problem(s). Fix them, or a "
-            f"maintainer can add the `{OVERRIDE_LABEL}` label to merge anyway."
+            f"**Result: blocked.** {why}. Fix that, or a maintainer can add the "
+            f"`{OVERRIDE_LABEL}` label to merge anyway."
         )
     else:
         lines.append("**Result: passed.** No blocking problems.")
