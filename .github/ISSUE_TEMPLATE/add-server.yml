@@ -128,5 +128,6 @@ body:
     attributes:
       label: Anything else
       description: >
-        If it is under 150 stars, say why it still belongs -- for example that it is
-        the vendor's own official server. Add any other context here.
+        Optional. Anything that helps, such as what makes it different from a similar
+        server already listed. There is no star or age requirement, so a new or small
+        project does not need justifying.
