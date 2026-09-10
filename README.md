@@ -298,6 +298,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Alpaca MCP](https://github.com/alpacahq/alpaca-mcp-server) | Official Alpaca stocks / ETF / crypto trading | Python |
 | [Coinbase MCP](https://github.com/coinbase/agentkit) | Coinbase crypto trading and wallet | TypeScript |
 | [Financial Modeling Prep MCP](https://github.com/imbenrabi/Financial-Modeling-Prep-MCP-Server) | FMP market data and fundamentals | TypeScript |
+| [Invoice MCP](https://github.com/theluckystrike/mcp-invoice) | Create PDF invoices with VAT lines, sequential numbering and overdue tracking | JavaScript |
 | [Massive.com (Polygon.io) MCP](https://github.com/massive-com/mcp_massive) | Official Massive.com (formerly Polygon.io) market data for stocks and crypto | Python |
 | [MetaTrader MCP](https://github.com/ariadng/metatrader-mcp-server) | Place and manage MetaTrader 5 trades, positions and market data | Python |
 | [ParlayAPI](https://github.com/JacobiusMakes/parlay-api-mcp) | Sports odds and player props using your own API key and account allowances | Python |
