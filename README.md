@@ -298,6 +298,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Alpaca MCP](https://github.com/alpacahq/alpaca-mcp-server) | Official Alpaca stocks / ETF / crypto trading | Python |
 | [Coinbase MCP](https://github.com/coinbase/agentkit) | Coinbase crypto trading and wallet | TypeScript |
 | [Financial Modeling Prep MCP](https://github.com/imbenrabi/Financial-Modeling-Prep-MCP-Server) | FMP market data and fundamentals | TypeScript |
+| [Invoice MCP](https://github.com/theluckystrike/mcp-invoice) | Create PDF invoices with VAT lines, sequential numbering and overdue tracking | JavaScript |
 | [Massive.com (Polygon.io) MCP](https://github.com/massive-com/mcp_massive) | Official Massive.com (formerly Polygon.io) market data for stocks and crypto | Python |
 | [MetaTrader MCP](https://github.com/ariadng/metatrader-mcp-server) | Place and manage MetaTrader 5 trades, positions and market data | Python |
 | [ParlayAPI](https://github.com/JacobiusMakes/parlay-api-mcp) | Sports odds and player props using your own API key and account allowances | Python |
@@ -362,6 +363,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 |--------|-------------|----------|
 | [Binary Ninja MCP](https://github.com/fosdickio/binary_ninja_mcp) | Binary Ninja plugin for LLM-driven binary analysis | Python |
 | [Bitwarden MCP](https://github.com/bitwarden/mcp-server) | Official Bitwarden password manager | TypeScript |
+| [http-detection-agent](https://github.com/ai-blueteam/http-detection-agent) | Capability-aware HTTP attack detection: Rust CLI and local MCP server over a 76-detection rule catalog | Rust |
 | [Bolt (MCP for Security)](https://github.com/CyberStrikeus/bolt) | SQLMap, FFUF, Nmap, Masscan and 100+ Kali tools via MCP | TypeScript |
 | [Burp AI Agent](https://github.com/six2dez/burp-ai-agent) | Burp Suite extension with MCP tooling | Kotlin |
 | [CrowdStrike Falcon MCP](https://github.com/CrowdStrike/falcon-mcp) | Official CrowdStrike Falcon threat hunting and detections | Python |
