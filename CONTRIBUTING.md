@@ -136,6 +136,10 @@ Being new is not a reason to hold back. If you would rather not open a pull requ
    - **Validate format** -- structure, ordering, duplicates, description length
    - **Check links** -- every URL resolves
    - **Submission check** -- licence, maintenance, archived state, real implementation
+
+   On a pull request, **Validate format** only fails on problems your change
+   introduces. If `main` already has a bad row, it is listed for the record but
+   marked as pre-existing and does not count against you.
 5. A maintainer reviews. Expect questions if the description reads promotionally, or if it is unclear what the server does.
 
 Maintainers can apply the `maintainer-override` label when a submission is genuinely fine but trips a threshold, for example a vendor-official server with few stars.

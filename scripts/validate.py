@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import subprocess
 import sys
 from collections import defaultdict
 from dataclasses import dataclass, field
@@ -466,12 +467,64 @@ def fix(lines):
     return out
 
 
+def run_checks(lines) -> tuple:
+    """Return (errors, entry_count) for a README given as a list of lines."""
+    rep = Report()
+    entries, heading_lines, order = parse(lines)
+    check_structure(lines, order, heading_lines, rep)
+    check_toc(lines, heading_lines, rep)
+    check_table_headers(lines, heading_lines, rep)
+    check_entries(entries, rep)
+    check_duplicates(entries, rep)
+    check_alphabetical(entries, rep)
+    check_local_links(lines, heading_lines, rep)
+    check_whitespace_and_dashes(lines, rep)
+
+    counted = {k: v for k, v in entries.items() if k not in NON_ENTRY_SECTIONS}
+    return rep.errors, sum(len(v) for v in counted.values())
+
+
+def problem_key(error: str) -> str:
+    """Identity of a problem, independent of where it sits in the file.
+
+    Adding a row shifts every line below it, so line numbers cannot be part of
+    the key: otherwise an untouched problem would look new to --baseline.
+    """
+    return re.sub(r"^README\.md:\d+:\s*", "", error)
+
+
+def baseline_errors(ref: str):
+    """Problems already present in README.md at `ref`, or None if unreadable."""
+    proc = subprocess.run(
+        ["git", "show", f"{ref}:README.md"],
+        capture_output=True,
+        check=False,
+    )
+    if proc.returncode != 0:
+        detail = proc.stderr.decode("utf-8", "replace").strip()
+        print(
+            f"warning: cannot read README.md at {ref} ({detail}); "
+            f"treating every problem as new",
+            file=sys.stderr,
+        )
+        return None
+    text = proc.stdout.decode("utf-8", "replace")
+    errors, _ = run_checks(text.splitlines(keepends=True))
+    return {problem_key(e) for e in errors}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     ap.add_argument(
         "--fix", action="store_true", help="auto-repair ordering, whitespace and dashes"
+    )
+    ap.add_argument(
+        "--baseline",
+        metavar="REF",
+        help="only fail on problems absent from README.md at REF, so a pull "
+        "request is not blamed for breakage already on the base branch",
     )
     args = ap.parse_args()
 
@@ -492,31 +545,43 @@ def main() -> int:
             print("README.md: nothing to fix")
         lines = fixed
 
-    rep = Report()
-    entries, heading_lines, order = parse(lines)
-    check_structure(lines, order, heading_lines, rep)
-    check_toc(lines, heading_lines, rep)
-    check_table_headers(lines, heading_lines, rep)
-    check_entries(entries, rep)
-    check_duplicates(entries, rep)
-    check_alphabetical(entries, rep)
-    check_local_links(lines, heading_lines, rep)
-    check_whitespace_and_dashes(lines, rep)
+    errors, total = run_checks(lines)
 
-    counted = {k: v for k, v in entries.items() if k not in NON_ENTRY_SECTIONS}
-    total = sum(len(v) for v in counted.values())
-    if rep.errors:
-        print(
-            f"{len(rep.errors)} problem(s) found in {total} entries:\n", file=sys.stderr
-        )
-        for e in rep.errors:
-            print(f"  {e}", file=sys.stderr)
+    inherited = set()
+    if args.baseline and errors:
+        known = baseline_errors(args.baseline)
+        if known:
+            inherited = {e for e in errors if problem_key(e) in known}
+
+    new_errors = [e for e in errors if e not in inherited]
+
+    if errors:
+        print(f"{len(errors)} problem(s) found in {total} entries:\n", file=sys.stderr)
+        for e in errors:
+            tag = " (already on the base branch)" if e in inherited else ""
+            print(f"  {e}{tag}", file=sys.stderr)
+        if inherited:
+            print(
+                f"\n{len(inherited)} of these are already on `{args.baseline}` and are "
+                f"not this change's fault. They still need fixing, but they are not "
+                f"blocking here.",
+                file=sys.stderr,
+            )
         print(
             "\nRun 'python scripts/validate.py --fix' to repair ordering, whitespace and "
             "dashes automatically. Everything else needs a human edit.",
             file=sys.stderr,
         )
+
+    if new_errors:
         return 1
+
+    if inherited:
+        print(
+            f"This change introduces no new problems in {total} entries. "
+            f"{len(inherited)} pre-existing problem(s) remain, listed above."
+        )
+        return 0
 
     print(
         f"README.md is valid: {total} entries across {len(SERVER_CATEGORIES)} server "
