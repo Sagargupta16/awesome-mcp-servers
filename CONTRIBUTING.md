@@ -110,7 +110,7 @@ Short list, and none of it is about how big your project is:
 
 - **Repositories with no implementation.** A README plus `server.json` or `glama.json` and nothing to run. Publish the source, or link the repository that holds it.
 - **Undisclosed self-promotion.** Submitting your own work is welcome and common. Just tick the affiliation box.
-- **Several servers in one pull request.** One per pull request, so each can be reviewed and reverted on its own. Open as many as you like.
+- **Nothing about how many servers you add at once.** One per pull request is preferred and CI will say so, but it does not fail the check, and a batch of genuinely good entries is not a reason to decline.
 - **Projects that are not really MCP servers**, where MCP is a passing mention in the README rather than something implemented.
 - **Hosted products with no MCP endpoint anyone can inspect or documentation describing it.**
 - **Descriptions written as marketing copy.** Say what it does. This is usually a one-line fix, not a rejection.
@@ -129,14 +129,14 @@ Being new is not a reason to hold back. If you would rather not open a pull requ
 
 ## Pull request process
 
-1. **One server per pull request.** This keeps review and revert independent. CI fails a pull request that adds more than one entry.
+1. **One server per pull request, preferred.** It keeps review and revert independent. This is a preference, not a gate: CI notes the count and carries on, so a pull request adding several good entries still comes back green. A maintainer may still ask you to split a large one.
 2. Branch off `main`, add your row, and commit with a clear message such as `Add Acme MCP to Developer Tools`.
 3. Fill in the pull request template, including the affiliation question.
 4. Make sure all checks pass:
    - **Validate format** -- structure, ordering, duplicates, description length
    - **Check links** -- every URL resolves
    - **Submission check** -- licence, maintenance, archived state, real implementation
-5. A maintainer reviews. Expect questions if your project is new or the description reads promotionally.
+5. A maintainer reviews. Expect questions if the description reads promotionally, or if it is unclear what the server does.
 
 Maintainers can apply the `maintainer-override` label when a submission is genuinely fine but trips a threshold, for example a vendor-official server with few stars.
 
