@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       # Read from .python-version so a local run and CI cannot drift onto
       # different interpreters with nothing reconciling them.
@@ -25,7 +27,20 @@ jobs:
         with:
           python-version-file: .python-version
 
+      # On a pull request, fail only on problems the pull request introduces.
+      # A bad row merged to main used to break validation for every contributor
+      # who came after it, which is how #88 went red for #87's mistake.
+      # Pre-existing problems are still listed, just not blamed on the author.
       - name: Validate README structure
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch --no-tags --depth=1 origin "${{ github.base_ref }}"
+          python scripts/validate.py --baseline "origin/${{ github.base_ref }}"
+
+      # Everywhere else, hold the whole file to the bar so pre-existing breakage
+      # stays visible on main rather than becoming permanently tolerated.
+      - name: Validate README structure (full)
+        if: github.event_name != 'pull_request'
         run: python scripts/validate.py
 
   python-checks:

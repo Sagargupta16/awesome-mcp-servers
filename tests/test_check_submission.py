@@ -349,17 +349,47 @@ def test_render_honours_the_maintainer_override_label():
     assert check_submission.OVERRIDE_LABEL in report
 
 
-def test_render_blocks_a_pull_request_that_adds_more_than_one_entry():
-    subs = [
+def _clean_subs(*names):
+    return [
         check_submission.Submission(
             name=name, url=f"https://github.com/acme/{name}", desc="Widget", third="Go"
         )
-        for name in ("alpha", "beta")
+        for name in names
     ]
 
-    _, failing = check_submission.render(subs, override=False)
+
+def test_render_passes_several_entries_when_none_has_a_defect():
+    report, failing = check_submission.render(
+        _clean_subs("alpha", "beta"), override=False
+    )
+
+    assert failing is False
+    assert "Result: passed." in report
+
+
+def test_render_notes_the_entry_count_without_failing():
+    report, _ = check_submission.render(
+        _clean_subs("alpha", "beta", "gamma"), override=False
+    )
+
+    assert "adds 3 entries" in report
+    assert "does not fail this check" in report
+
+
+def test_render_omits_the_count_note_for_a_single_entry():
+    report, _ = check_submission.render(_clean_subs("alpha"), override=False)
+
+    assert "one server per" not in report
+
+
+def test_render_blocks_when_one_of_several_entries_has_a_defect():
+    subs = _clean_subs("alpha", "beta")
+    subs[1].hard.append("The repository is archived.")
+
+    report, failing = check_submission.render(subs, override=False)
 
     assert failing is True
+    assert "1 blocking problem(s) across 2 entries" in report
 
 
 def test_render_passes_a_clean_single_entry():

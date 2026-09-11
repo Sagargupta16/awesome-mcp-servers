@@ -1,6 +1,7 @@
 <!--
-One server per pull request, please. If you are adding several, open one PR each.
-Run `python scripts/validate.py` before pushing -- it catches most review comments.
+One server per pull request is preferred, but adding several will not fail any
+check. Run `python scripts/validate.py` before pushing -- it catches most review
+comments.
 -->
 
 ## What this adds

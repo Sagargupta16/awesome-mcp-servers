@@ -416,13 +416,16 @@ def render(subs: list, override: bool) -> tuple[str, bool]:
     lines.append(f"Found **{servers}** new entr{'y' if servers == 1 else 'ies'}.")
     lines.append("")
 
-    too_many = servers > MAX_SERVERS_PER_PR
-    if too_many:
-        lines.append("> [!CAUTION]")
+    # Adding several servers at once is a process preference, not a defect in the
+    # entries. It is surfaced for the maintainer and never fails the build: a
+    # contributor whose entries are all fine should not see a red check.
+    if servers > MAX_SERVERS_PER_PR:
+        lines.append("> [!NOTE]")
         lines.append(
-            f"> This pull request adds {servers} entries. CONTRIBUTING.md asks for "
-            f"**one server per pull request** so each can be reviewed and reverted "
-            f"independently. Please split it up."
+            f"> This adds {servers} entries. CONTRIBUTING.md prefers one server per "
+            f"pull request, so each can be reviewed and reverted on its own. That is "
+            f"a preference, not a requirement, and it does not fail this check -- a "
+            f"maintainer may still ask you to split it."
         )
         lines.append("")
 
@@ -448,24 +451,15 @@ def render(subs: list, override: bool) -> tuple[str, bool]:
             lines.append("Passes every automated check.")
             lines.append("")
 
-    failing = (hard_total > 0 or too_many) and not override
+    # Only a real defect in a submitted entry fails the check.
+    failing = hard_total > 0 and not override
     if override:
         lines.append(f"Gate bypassed by the `{OVERRIDE_LABEL}` label.")
     elif failing:
-        if hard_total and too_many:
-            why = (
-                f"{hard_total} blocking problem(s), and it adds {servers} entries "
-                f"instead of {MAX_SERVERS_PER_PR}"
-            )
-        elif hard_total:
-            why = f"{hard_total} blocking problem(s)"
-        else:
-            why = (
-                f"every entry passes its checks, but this adds {servers} entries "
-                f"instead of {MAX_SERVERS_PER_PR}"
-            )
+        entries = "entry" if len(subs) == 1 else "entries"
         lines.append(
-            f"**Result: blocked.** {why}. Fix that, or a maintainer can add the "
+            f"**Result: blocked.** {hard_total} blocking problem(s) across "
+            f"{len(subs)} {entries}. Fix those, or a maintainer can add the "
             f"`{OVERRIDE_LABEL}` label to merge anyway."
         )
     else:
