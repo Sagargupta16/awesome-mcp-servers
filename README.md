@@ -475,6 +475,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Joplin MCP](https://github.com/alondmnt/joplin-mcp) | Read, search, and write Joplin notes and notebooks | Python |
 | [Karakeep MCP](https://github.com/karakeep-app/karakeep/tree/main/apps/mcp) | Official server for the Karakeep bookmark and read-later app | TypeScript |
 | [Logseq MCP](https://github.com/ergut/mcp-logseq) | Read / write / manage LogSeq graph | Python |
+| [Neither](https://github.com/stonianua/neither-mcp) | Selected project notes/docs for Cursor and Claude Desktop via stdio MCP | TypeScript |
 | [Obsidian MCP](https://github.com/MarkusPfundstein/mcp-obsidian) | Obsidian via REST API community plugin | Python |
 | [Obsidian MCP (alt)](https://github.com/StevenStavrakis/obsidian-mcp) | Simple MCP server for Obsidian | TypeScript |
 | [Zotero MCP](https://github.com/54yyyu/zotero-mcp) | Search and read your Zotero reference library | Python |
