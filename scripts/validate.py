@@ -136,6 +136,10 @@ ROW_RE = re.compile(
 BULLET_RE = re.compile(r"^- \[(?P<name>[^\]]+)\]\((?P<url>[^)\s]+)\) - (?P<desc>.+)$")
 TOC_RE = re.compile(r"^\s*- \[(?P<label>[^\]]+)\]\(#(?P<anchor>[a-z0-9-]+)\)\s*$")
 
+# Shape of an acceptable --baseline value. Must not start with a dash, or git
+# would read it as an option instead of a revision.
+REF_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._/~^@{}-]*$")
+
 
 @dataclass
 class Entry:
@@ -494,11 +498,25 @@ def problem_key(error: str) -> str:
 
 
 def baseline_errors(ref: str):
-    """Problems already present in README.md at `ref`, or None if unreadable."""
+    """Problems already present in README.md at `ref`, or None if unreadable.
+
+    `ref` reaches us from a command line, so it is checked against the shape of
+    a git ref before being handed to git. Nothing is run through a shell, but a
+    value beginning with `-` would still be read as an option rather than a
+    revision, so the leading character is constrained too.
+    """
+    if not REF_RE.match(ref):
+        print(
+            f"error: {ref!r} is not a valid git ref for --baseline",
+            file=sys.stderr,
+        )
+        return None
+
     proc = subprocess.run(
         ["git", "show", f"{ref}:README.md"],
         capture_output=True,
         check=False,
+        shell=False,
     )
     if proc.returncode != 0:
         detail = proc.stderr.decode("utf-8", "replace").strip()
@@ -536,58 +554,73 @@ def main() -> int:
         lines = fh.readlines()
 
     if args.fix:
-        fixed = fix(lines)
-        if fixed != lines:
-            with README.open("w", encoding="utf-8", newline="") as fh:
-                fh.writelines(fixed)
-            print("README.md: applied automatic fixes (ordering, whitespace, dashes)")
-        else:
-            print("README.md: nothing to fix")
-        lines = fixed
+        lines = apply_fixes(lines)
 
     errors, total = run_checks(lines)
-
-    inherited = set()
-    if args.baseline and errors:
-        known = baseline_errors(args.baseline)
-        if known:
-            inherited = {e for e in errors if problem_key(e) in known}
-
+    inherited = split_inherited(errors, args.baseline)
     new_errors = [e for e in errors if e not in inherited]
 
     if errors:
-        print(f"{len(errors)} problem(s) found in {total} entries:\n", file=sys.stderr)
-        for e in errors:
-            tag = " (already on the base branch)" if e in inherited else ""
-            print(f"  {e}{tag}", file=sys.stderr)
-        if inherited:
-            print(
-                f"\n{len(inherited)} of these are already on `{args.baseline}` and are "
-                f"not this change's fault. They still need fixing, but they are not "
-                f"blocking here.",
-                file=sys.stderr,
-            )
-        print(
-            "\nRun 'python scripts/validate.py --fix' to repair ordering, whitespace and "
-            "dashes automatically. Everything else needs a human edit.",
-            file=sys.stderr,
-        )
+        print_problems(errors, inherited, total, args.baseline)
 
     if new_errors:
         return 1
 
+    print_success(total, inherited)
+    return 0
+
+
+def apply_fixes(lines):
+    """Write the auto-repairable fixes back to README.md and return the result."""
+    fixed = fix(lines)
+    if fixed == lines:
+        print("README.md: nothing to fix")
+        return lines
+    with README.open("w", encoding="utf-8", newline="") as fh:
+        fh.writelines(fixed)
+    print("README.md: applied automatic fixes (ordering, whitespace, dashes)")
+    return fixed
+
+
+def split_inherited(errors, baseline):
+    """Problems from `errors` that README.md at `baseline` already had."""
+    if not baseline or not errors:
+        return set()
+    known = baseline_errors(baseline)
+    if not known:
+        return set()
+    return {e for e in errors if problem_key(e) in known}
+
+
+def print_problems(errors, inherited, total: int, baseline) -> None:
+    print(f"{len(errors)} problem(s) found in {total} entries:\n", file=sys.stderr)
+    for e in errors:
+        tag = " (already on the base branch)" if e in inherited else ""
+        print(f"  {e}{tag}", file=sys.stderr)
+    if inherited:
+        print(
+            f"\n{len(inherited)} of these are already on `{baseline}` and are not this "
+            f"change's fault. They still need fixing, but they are not blocking here.",
+            file=sys.stderr,
+        )
+    print(
+        "\nRun 'python scripts/validate.py --fix' to repair ordering, whitespace and "
+        "dashes automatically. Everything else needs a human edit.",
+        file=sys.stderr,
+    )
+
+
+def print_success(total: int, inherited) -> None:
     if inherited:
         print(
             f"This change introduces no new problems in {total} entries. "
             f"{len(inherited)} pre-existing problem(s) remain, listed above."
         )
-        return 0
-
+        return
     print(
         f"README.md is valid: {total} entries across {len(SERVER_CATEGORIES)} server "
         f"categories, no duplicates, all alphabetically ordered."
     )
-    return 0
 
 
 if __name__ == "__main__":

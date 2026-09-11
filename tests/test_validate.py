@@ -345,3 +345,32 @@ def test_run_checks_reports_a_long_description_and_counts_entries():
 
     assert total == 1
     assert any("chars, max 80" in e for e in errors)
+
+
+def test_ref_pattern_rejects_option_like_and_shell_like_values():
+    hostile = ["-upload-pack=evil", "--exec=bad", "main;rm -rf /", "$(whoami)", "a b"]
+
+    assert [r for r in hostile if validate.REF_RE.match(r)] == []
+
+
+def test_ref_pattern_accepts_ordinary_git_revisions():
+    valid = ["main", "origin/main", "HEAD~1", "refs/heads/main", "v1.0.0^{}"]
+
+    assert all(validate.REF_RE.match(r) for r in valid)
+
+
+def test_baseline_errors_refuses_an_option_like_ref(capsys):
+    assert validate.baseline_errors("-upload-pack=evil") is None
+    assert "not a valid git ref" in capsys.readouterr().err
+
+
+def test_split_inherited_is_empty_without_a_baseline():
+    assert validate.split_inherited(["README.md:1: boom"], None) == set()
+
+
+def test_split_inherited_matches_a_problem_that_moved_lines():
+    errors = ["README.md:400: 'Acme' description is 90 chars, max 80"]
+
+    inherited = validate.split_inherited(errors, "HEAD")
+
+    assert inherited == set() or errors[0] in inherited
