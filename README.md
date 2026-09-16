@@ -473,6 +473,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Anki MCP](https://github.com/ankimcp/anki-mcp-server) | Anki flashcards via AnkiConnect | TypeScript |
 | [Anytype MCP](https://github.com/anyproto/anytype-mcp) | Official MCP server for the Anytype local-first workspace | TypeScript |
 | [Basic Memory](https://github.com/basicmachines-co/basic-memory) | Local-first Markdown knowledge base with persistent agent memory | Python |
+| [ContextStream](https://github.com/contextstream/mcp-server) | Shared project context for AI agents -- code search, decisions, lessons, plans | Rust |
 | [Joplin MCP](https://github.com/alondmnt/joplin-mcp) | Read, search, and write Joplin notes and notebooks | Python |
 | [Karakeep MCP](https://github.com/karakeep-app/karakeep/tree/main/apps/mcp) | Official server for the Karakeep bookmark and read-later app | TypeScript |
 | [Logseq MCP](https://github.com/ergut/mcp-logseq) | Read / write / manage LogSeq graph | Python |
