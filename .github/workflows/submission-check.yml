@@ -13,10 +13,14 @@ name: Submission check
 # applied, so the documented escape hatch would only take effect on the next
 # push, which is not an escape hatch at all.
 
+# There is deliberately no `paths` filter. A required status check that is
+# path-filtered never reports on a pull request that misses the filter, and
+# auto-merge then waits on it forever. The job costs a few seconds when
+# README.md is untouched: check_submission.py finds no new entries and exits 0.
+
 on:
   pull_request:
     branches: [main]
-    paths: ["README.md"]
     types: [opened, synchronize, reopened, labeled, unlabeled]
 
 permissions:

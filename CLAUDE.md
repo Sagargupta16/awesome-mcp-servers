@@ -42,10 +42,11 @@ ruff format --check scripts/ tests/
 
 `requirements-dev.txt` is a uv-generated universal hash lock; `requirements-dev.in` is the source and carries the regeneration command. Both the pin and `ruff.toml`'s rule set exist so `ruff format --check` cannot flip on a formatter release.
 
-Three workflows:
+Four workflows:
 
 - [lint.yml](.github/workflows/lint.yml) -- `validate` (README structure), `python-checks` (ruff + pytest on the gate scripts), `link-check` (lychee over README, CONTRIBUTING, SECURITY, CHANGELOG). Runs on PRs to `main`, pushes to `main`, and weekly on Sundays.
-- [submission-check.yml](.github/workflows/submission-check.yml) -- inspects the rows a PR adds against the GitHub API: licence, last push, archived, fork, real implementation. Honours the `maintainer-override` label.
+- [submission-check.yml](.github/workflows/submission-check.yml) -- inspects the rows a PR adds against the GitHub API: licence, last push, archived, fork, real implementation. Honours the `maintainer-override` label. Deliberately has no `paths` filter: it is a required status check, and a path-filtered required check never reports on a PR that misses the filter, which hangs auto-merge forever.
+- [auto-merge.yml](.github/workflows/auto-merge.yml) -- switches on GitHub's native auto-merge for PRs that only touch `README.md` or `CHANGELOG.md`, so a community entry lands unattended once the required checks pass. Runs on `pull_request_target` so a fork cannot edit the workflow that judges it, and never checks out PR code, so the writable token is never exposed to contributor-controlled input. Skipped when a PR reaches `.github/`, `scripts/`, `tests/` or tooling config, or carries `maintainer-override` or `no-auto-merge`.
 - [health.yml](.github/workflows/health.yml) -- monthly (1st, 06:00 UTC) audit of every listed repository, rewritten into one `maintenance`-labelled tracking issue. First scheduled run: 2026-10-01.
 
 ## Entry points
@@ -66,6 +67,8 @@ Three workflows:
 ## Gotchas
 
 - The link check runs with `fail: true`, so a broken link fails CI. `lychee.toml` excludes five hosts that hard-block automation (x.com, twitter.com, linkedin.com, discord.gg, smithery.ai) -- links to those are never verified by CI.
+- Auto-merge is the only merge path for content PRs and the checks are the only gate, so the required-check list on the `main` ruleset is load-bearing. Adding a `paths` filter to any required check, or renaming a job, silently breaks it: a required check that never reports leaves auto-merge waiting forever, and a renamed job means the old name never arrives. Change a job name and the ruleset in the same pass.
+- Ruleset bypass is granted to `repository_admin` on purpose. Without it, required checks would lock Sagar out of an emergency fix on `main`.
 - The submission gate hard-fails at 181 days since last push and on a repo with no licence anywhere. Incumbent entries are held to the same bar; that is what the monthly health report is for.
 - A licence declared only in `package.json` / `pyproject.toml` is accepted (GitHub's licence API reads the root `LICENSE` file only, so those repos report as unlicensed). See `MANIFEST_LICENCE_FILES` in `check_submission.py`. The field having a value is not enough: `is_open_source()` rejects `UNLICENSED`, `SEE LICENSE IN <file>` and `Proprietary`, which fill the field while withholding the terms. `staleness_report.py` imports both helpers so the report and the gate cannot disagree.
 - GitHub serves renamed and transferred repos over a redirect, so a stale slug keeps working until someone claims the old name. `staleness_report.py` compares `nameWithOwner` to the listed slug to catch that.

@@ -1,0 +1,108 @@
+name: Auto merge
+
+# Turns on GitHub's native auto-merge for pull requests that only add or correct
+# list content, so a community entry lands as soon as the checks go green with
+# nobody having to press a button. GitHub does the waiting: the merge fires when
+# every required status check on `main` passes, and never before.
+#
+# Why an allowlist rather than "auto-merge everything". On a `pull_request` event
+# the workflow definition comes from the pull request itself, so a fork can edit
+# the very checks that judge it. Auto-merging such a change with no human in the
+# loop would hand the repository to whoever opened it. So a pull request is only
+# eligible when every file it touches is list content. Anything reaching
+# `.github/`, `scripts/`, `tests/`, or the tooling config is left for a person.
+#
+# This runs on `pull_request_target`, which means the workflow definition comes
+# from `main` and cannot be altered by a fork. It reads the changed-file list
+# over the API and never checks out pull request code, so the writable token is
+# never exposed to anything a contributor controls.
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: auto-merge-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  enable:
+    name: Enable auto merge
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Decide eligibility and enable auto merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: |
+          set -euo pipefail
+
+          # Files a pull request may touch and still merge unattended. Content
+          # only: nothing here can change what the checks do.
+          is_allowed() {
+            case "$1" in
+              README.md|CHANGELOG.md) return 0 ;;
+              *) return 1 ;;
+            esac
+          }
+
+          blocked=""
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            if ! is_allowed "$f"; then
+              blocked="$blocked$f"$'\n'
+            fi
+          done < <(gh api "repos/$REPO/pulls/$PR/files" --paginate --jq '.[].filename')
+
+          {
+            echo "## Auto merge"
+            echo
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -n "$blocked" ]; then
+            {
+              echo "Not enabled. This pull request changes files outside the list itself:"
+              echo
+              echo '```'
+              printf '%s' "$blocked"
+              echo '```'
+              echo
+              echo "Changes to workflows, scripts, tests or tooling config are reviewed"
+              echo "by a maintainer, because they can alter what the checks verify."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          case ",$LABELS," in
+            *,no-auto-merge,*)
+              echo "Not enabled: the \`no-auto-merge\` label is set." >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+              ;;
+            *,maintainer-override,*)
+              {
+                echo "Not enabled: the \`maintainer-override\` label is set."
+                echo
+                echo "That label bypasses the submission gate, which is a maintainer's"
+                echo "judgement call. Whoever applied it can merge by hand."
+              } >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+              ;;
+          esac
+
+          gh pr merge "$PR" --repo "$REPO" --auto --squash
+
+          {
+            echo "Enabled. This pull request only touches list content, so GitHub will"
+            echo "squash-merge it as soon as every required check passes. No approval"
+            echo "is needed, and it will not merge while any required check is red."
+            echo
+            echo "To stop it, add the \`no-auto-merge\` label."
+          } >> "$GITHUB_STEP_SUMMARY"

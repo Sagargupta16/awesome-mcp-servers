@@ -2,6 +2,19 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.3.0] - 2026-09-17
+
+### Added
+
+- `auto-merge.yml`. A pull request that only touches `README.md` or `CHANGELOG.md` gets GitHub's native auto-merge switched on, so a community entry squash-merges itself the moment every required check passes. No approval, no waiting on a maintainer.
+- A `no-auto-merge` label to stop it on a specific pull request.
+- Required status checks on `main`, with no required reviews. The checks are now the only gate, which is what makes unattended merging safe.
+
+### Changed
+
+- `submission-check.yml` no longer filters on `paths`. A path-filtered required check never reports on a pull request that misses the filter, and auto-merge would then wait on it forever. The job exits in a few seconds when `README.md` is untouched.
+- Auto-merge deliberately excludes any pull request reaching `.github/`, `scripts/`, `tests/` or tooling config. On a `pull_request` event the workflow definition comes from the pull request itself, so a fork can edit the checks that judge it, and merging that unattended would hand over the repository. Those changes stay with a human, as do pull requests carrying `maintainer-override`.
+
 ## [2.2.0] - 2026-09-06
 
 The header promised three things the list did not deliver. Measured against the GitHub API on 2026-09-06 and corrected. This release only removes and repairs. It adds no entry, because CONTRIBUTING.md asks for one server per pull request and the gate enforces it.

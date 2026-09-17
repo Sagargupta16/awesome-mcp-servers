@@ -140,9 +140,16 @@ Being new is not a reason to hold back. If you would rather not open a pull requ
    On a pull request, **Validate format** only fails on problems your change
    introduces. If `main` already has a bad row, it is listed for the record but
    marked as pre-existing and does not count against you.
-5. A maintainer reviews. Expect questions if the description reads promotionally, or if it is unclear what the server does.
+5. **It merges itself.** If your pull request only touches `README.md` or `CHANGELOG.md`, auto-merge is switched on for you: GitHub squash-merges it the moment every required check passes. No approval, no waiting for a maintainer to be awake. It will not merge while any required check is red.
 
-Maintainers can apply the `maintainer-override` label when a submission is genuinely fine but trips a threshold, for example a vendor-official server with few stars.
+A maintainer still reads what lands, and may follow up if a description reads promotionally or it is unclear what the server does. Two things opt a pull request out of auto-merge:
+
+- **It touches anything beyond the list** -- a workflow, a script, a test, tooling config. Those change what the checks verify, so a person looks first.
+- **It carries the `maintainer-override` label**, which bypasses the submission gate. That is a maintainer's judgement call, so whoever applied it merges by hand.
+
+Anyone can also stop auto-merge on a specific pull request by adding the `no-auto-merge` label.
+
+Maintainers can apply the `maintainer-override` label when a submission is genuinely fine but trips a threshold.
 
 ## Running the checks locally
 
