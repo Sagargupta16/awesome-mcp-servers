@@ -224,6 +224,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Trello MCP](https://github.com/delorenj/mcp-server-trello) | Trello boards, lists, cards | TypeScript |
 
 ### Search & Knowledge
+- [Statsnet](https://github.com/usenetstate/statsnet-mcp) - Background check any company in the world: registration, executives, courts and finances. Remote: `https://statsnet.co/mcp` · `io.github.usenetstate/statsnet`
 
 | Server | Description | Language |
 |--------|-------------|----------|
