@@ -6,7 +6,13 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "0 0 * * 0" # Weekly on Sunday
+    # Daily rather than weekly, because the push-to-main run cannot be relied on.
+    # Auto-merge lands a pull request using GITHUB_TOKEN, and GitHub does not
+    # start a workflow run from a GITHUB_TOKEN push, so the full-file check on
+    # main is skipped for every auto-merged pull request. The pull request check
+    # is baseline-scoped by design and only sees problems that pull request
+    # introduces, so this schedule is what actually holds main to the whole bar.
+    - cron: "0 6 * * *" # Daily at 06:00 UTC
   workflow_dispatch:
 
 permissions:
