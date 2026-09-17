@@ -67,7 +67,9 @@ def collect():
     seen = set()
     out = []
     for line in README.read_text(encoding="utf-8").splitlines():
-        m = re.match(r"^#{2,3}\s+(.*)$", line)
+        # One fixed whitespace character, not `\s+`: `.` matches whitespace too,
+        # so `\s+(.*)` overlaps and backtracks super-linearly. Strip in Python.
+        m = re.match(r"^#{2,3}\s(.*)$", line)
         if m:
             section = m.group(1).strip()
             continue
@@ -98,39 +100,42 @@ def fetch(entries):
     return results
 
 
-def main() -> int:
-    entries = collect()
-    results = fetch(entries)
-    now = datetime.now(timezone.utc)
-
-    gone, archived, stale, moved = [], [], [], []
-    unlicensed, manifest_licensed, no_root_licence = [], [], []
+def classify(results, now) -> dict:
+    """Sort the API results into the buckets the report is organised around."""
+    buckets = {"gone": [], "archived": [], "stale": [], "moved": [], "no_licence": []}
     for entry, info in results.items():
         name, owner, repo, section = entry
         slug = f"{owner}/{repo}"
         if info is None:
-            gone.append((name, slug, section))
+            buckets["gone"].append((name, slug, section))
             continue
         # GitHub serves a renamed or transferred repository over a redirect, so the
         # listed URL keeps working right up until someone claims the old name.
         if info["nameWithOwner"].lower() != slug.lower():
-            moved.append((name, slug, info["nameWithOwner"], section))
+            buckets["moved"].append((name, slug, info["nameWithOwner"], section))
         pushed = datetime.fromisoformat(info["pushedAt"].replace("Z", "+00:00"))
         days = (now - pushed).days
         licence = (info.get("licenseInfo") or {}).get("spdxId")
         if info["isArchived"]:
-            archived.append((name, slug, section, days))
+            buckets["archived"].append((name, slug, section, days))
         if licence in (None, "", "NOASSERTION"):
-            no_root_licence.append(
+            buckets["no_licence"].append(
                 (name, slug, section, licence or "none", info["stargazerCount"])
             )
         if days > STALE_DAYS and not info["isArchived"]:
-            stale.append((days, name, slug, section, info["stargazerCount"]))
+            buckets["stale"].append((days, name, slug, section, info["stargazerCount"]))
+    return buckets
 
-    # GitHub reads the root `LICENSE` file only, so a project that declares its
-    # licence in a package manifest lands here reporting `none`. CONTRIBUTING.md
-    # accepts that declaration, so read the manifest instead of asking a
-    # maintainer to do it by hand.
+
+def resolve_manifest_licences(no_root_licence) -> tuple[list, list]:
+    """Split repositories with no root LICENSE into manifest-licensed and unlicensed.
+
+    GitHub reads the root `LICENSE` file only, so a project that declares its
+    licence in a package manifest arrives here reporting `none`. CONTRIBUTING.md
+    accepts that declaration, so read the manifest instead of asking a maintainer
+    to do it by hand.
+    """
+    manifest_licensed, unlicensed = [], []
     for name, slug, section, licence, stars in no_root_licence:
         man_file, man_lic = (
             (None, None) if licence != "none" else manifest_licence(slug)
@@ -141,6 +146,29 @@ def main() -> int:
             unlicensed.append((name, slug, section, f"{man_lic} in {man_file}", stars))
         else:
             unlicensed.append((name, slug, section, licence, stars))
+    return manifest_licensed, unlicensed
+
+
+def section_block(
+    title: str, intro: str, header: str, divider: str, rows: list
+) -> list:
+    """One report section, or nothing at all when the bucket is empty."""
+    if not rows:
+        return []
+    return [f"## {title}", "", intro, "", header, divider, *rows, ""]
+
+
+def main() -> int:
+    entries = collect()
+    results = fetch(entries)
+    now = datetime.now(timezone.utc)
+
+    buckets = classify(results, now)
+    gone = buckets["gone"]
+    archived = buckets["archived"]
+    stale = buckets["stale"]
+    moved = buckets["moved"]
+    manifest_licensed, unlicensed = resolve_manifest_licences(buckets["no_licence"])
 
     checked = len(entries)
     out = [
@@ -161,102 +189,76 @@ def main() -> int:
         "",
     ]
 
-    if gone:
-        out += [
-            "## Gone: remove these",
-            "",
-            "These URLs 404. Per CONTRIBUTING.md they should be removed.",
-            "",
-            "| Entry | Repo | Section |",
-            "|-------|------|---------|",
-        ]
-        out += [f"| {n} | `{s}` | {sec} |" for n, s, sec in sorted(gone)]
-        out.append("")
+    out += section_block(
+        "Gone: remove these",
+        "These URLs 404. Per CONTRIBUTING.md they should be removed.",
+        "| Entry | Repo | Section |",
+        "|-------|------|---------|",
+        [f"| {n} | `{s}` | {sec} |" for n, s, sec in sorted(gone)],
+    )
 
-    if moved:
-        out += [
-            "## Moved: update the URL",
-            "",
-            "These resolve through a redirect, which only holds while the old name stays "
-            "unclaimed. Rewrite the URL, and check the entry name and description too if "
-            "the project was renamed rather than just transferred.",
-            "",
-            "| Entry | Listed as | Now | Section |",
-            "|-------|-----------|-----|---------|",
-        ]
-        out += [
+    out += section_block(
+        "Moved: update the URL",
+        "These resolve through a redirect, which only holds while the old name stays "
+        "unclaimed. Rewrite the URL, and check the entry name and description too if "
+        "the project was renamed rather than just transferred.",
+        "| Entry | Listed as | Now | Section |",
+        "|-------|-----------|-----|---------|",
+        [
             f"| {n} | `{s}` | `{actual}` | {sec} |"
             for n, s, actual, sec in sorted(moved)
-        ]
-        out.append("")
+        ],
+    )
 
-    if archived:
-        out += [
-            "## Archived upstream",
-            "",
-            "The maintainer has archived these. Remove them, or note them as unmaintained.",
-            "",
-            "| Entry | Repo | Section | Last push |",
-            "|-------|------|---------|-----------|",
-        ]
-        out += [
-            f"| {n} | `{s}` | {sec} | {d}d ago |" for n, s, sec, d in sorted(archived)
-        ]
-        out.append("")
+    out += section_block(
+        "Archived upstream",
+        "The maintainer has archived these. Remove them, or note them as unmaintained.",
+        "| Entry | Repo | Section | Last push |",
+        "|-------|------|---------|-----------|",
+        [f"| {n} | `{s}` | {sec} | {d}d ago |" for n, s, sec, d in sorted(archived)],
+    )
 
-    if stale:
-        out += [
-            f"## Stale: no push in over {STALE_DAYS} days",
-            "",
-            "Not automatically disqualifying -- a finished, working server can sit still. "
-            "Check whether each still works against the current MCP spec.",
-            "",
-            "| Days | Entry | Repo | Section | Stars |",
-            "|------|-------|------|---------|-------|",
-        ]
-        out += [
+    out += section_block(
+        f"Stale: no push in over {STALE_DAYS} days",
+        "Not automatically disqualifying -- a finished, working server can sit still. "
+        "Check whether each still works against the current MCP spec.",
+        "| Days | Entry | Repo | Section | Stars |",
+        "|------|-------|------|---------|-------|",
+        [
             f"| {d} | {n} | `{s}` | {sec} | {st} |"
             for d, n, s, sec, st in sorted(stale, reverse=True)
-        ]
-        out.append("")
+        ],
+    )
 
-    if unlicensed:
-        out += [
-            "## No recognised licence",
-            "",
-            "CONTRIBUTING.md requires a clearly stated licence. `NOASSERTION` means "
-            "GitHub found a licence file it could not identify -- usually fine for a "
-            "large vendor repo, suspicious for a small one, and not automatically a "
-            "rejection. `none` means neither a root `LICENSE` file nor a licence field "
-            "in a package manifest, which is a rejection. A named value below is a "
-            "manifest field that withholds open-source terms rather than granting "
-            "them, such as npm's `UNLICENSED`.",
-            "",
-            "| Entry | Repo | Section | Licence | Stars |",
-            "|-------|------|---------|---------|-------|",
-        ]
-        out += [
+    out += section_block(
+        "No recognised licence",
+        "CONTRIBUTING.md requires a clearly stated licence. `NOASSERTION` means "
+        "GitHub found a licence file it could not identify -- usually fine for a "
+        "large vendor repo, suspicious for a small one, and not automatically a "
+        "rejection. `none` means neither a root `LICENSE` file nor a licence field "
+        "in a package manifest, which is a rejection. A named value below is a "
+        "manifest field that withholds open-source terms rather than granting "
+        "them, such as npm's `UNLICENSED`.",
+        "| Entry | Repo | Section | Licence | Stars |",
+        "|-------|------|---------|---------|-------|",
+        [
             f"| {n} | `{s}` | {sec} | {lic} | {st} |"
             for n, s, sec, lic, st in sorted(unlicensed, key=lambda x: x[4])
-        ]
-        out.append("")
+        ],
+    )
 
-    if manifest_licensed:
-        out += [
-            "## Licensed in a package manifest",
-            "",
-            "No action needed. GitHub's licence API reads the root `LICENSE` file only, "
-            "so these report as unlicensed in the sidebar while declaring real terms in "
-            "a manifest. CONTRIBUTING.md accepts that.",
-            "",
-            "| Entry | Repo | Section | Licence | Declared in | Stars |",
-            "|-------|------|---------|---------|-------------|-------|",
-        ]
-        out += [
+    out += section_block(
+        "Licensed in a package manifest",
+        "No action needed. GitHub's licence API reads the root `LICENSE` file only, "
+        "so these report as unlicensed in the sidebar while declaring real terms in "
+        "a manifest. CONTRIBUTING.md accepts that.",
+        "| Entry | Repo | Section | Licence | Declared in | Stars |",
+        "|-------|------|---------|---------|-------------|-------|",
+        [
             f"| {n} | `{s}` | {sec} | {lic} | `{f}` | {st} |"
             for n, s, sec, lic, f, st in sorted(manifest_licensed, key=lambda x: x[5])
-        ]
-        out.append("")
+        ],
+    )
 
     if not (gone or moved or archived or stale or unlicensed):
         out.append(

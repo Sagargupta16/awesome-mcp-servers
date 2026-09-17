@@ -178,6 +178,39 @@ def sort_key(name: str) -> str:
     return re.sub(r"^[^\w]+", "", name).casefold()
 
 
+# `\s(.*)` rather than `\s+(.*)`: `.` also matches whitespace, so the two
+# quantifiers overlap and the pattern backtracks super-linearly. One fixed
+# whitespace character plus a Python strip is equivalent and linear.
+HEADING_RE = re.compile(r"^(#{2,3})\s(.*)$")
+
+
+def parse_entry(line: str, lineno: int, section: str):
+    """Build an Entry from one table row or bullet, or None if the line is neither."""
+    rm = ROW_RE.match(line)
+    if rm:
+        cells = [c.strip() for c in rm.group("rest").split("|")]
+        return Entry(
+            lineno,
+            rm.group("name").strip(),
+            rm.group("url").strip(),
+            cells[0] if cells else "",
+            cells[1] if len(cells) > 1 else "",
+            section,
+        )
+
+    bm = BULLET_RE.match(line)
+    if bm and section in BULLET_SECTIONS:
+        return Entry(
+            lineno,
+            bm.group("name").strip(),
+            bm.group("url").strip(),
+            bm.group("desc").strip(),
+            "",
+            section,
+        )
+    return None
+
+
 def parse(lines):
     """Return entries per section, heading line numbers, and heading order."""
     entries = defaultdict(list)
@@ -187,7 +220,7 @@ def parse(lines):
 
     for i, raw in enumerate(lines, 1):
         line = raw.rstrip("\n")
-        m = re.match(r"^(#{2,3})\s+(.*)$", line)
+        m = HEADING_RE.match(line)
         if m:
             section = m.group(2).strip()
             heading_lines[section] = i
@@ -197,35 +230,9 @@ def parse(lines):
         if section is None:
             continue
 
-        rm = ROW_RE.match(line)
-        if rm:
-            cells = [c.strip() for c in rm.group("rest").split("|")]
-            desc = cells[0] if cells else ""
-            third = cells[1] if len(cells) > 1 else ""
-            entries[section].append(
-                Entry(
-                    i,
-                    rm.group("name").strip(),
-                    rm.group("url").strip(),
-                    desc,
-                    third,
-                    section,
-                )
-            )
-            continue
-
-        bm = BULLET_RE.match(line)
-        if bm and section in BULLET_SECTIONS:
-            entries[section].append(
-                Entry(
-                    i,
-                    bm.group("name").strip(),
-                    bm.group("url").strip(),
-                    bm.group("desc").strip(),
-                    "",
-                    section,
-                )
-            )
+        entry = parse_entry(line, i, section)
+        if entry is not None:
+            entries[section].append(entry)
 
     return entries, heading_lines, order
 
@@ -312,50 +319,53 @@ def check_table_headers(lines, heading_lines, rep: Report) -> None:
             rep.err(line_no, f"section '{section}' header is {got}, expected {cols}")
 
 
+def check_description(e: Entry, is_bullet: bool, rep: Report) -> None:
+    """Length, capitalisation and terminal punctuation for one entry."""
+    cap = MAX_BULLET_DESC if is_bullet else MAX_DESC
+    if len(e.desc) > cap:
+        rep.err(e.line, f"'{e.name}' description is {len(e.desc)} chars, max {cap}")
+    if not (e.desc[0].isupper() or e.desc[0].isdigit()):
+        rep.err(e.line, f"'{e.name}' description must start with a capital letter")
+    if is_bullet and not e.desc.endswith("."):
+        rep.err(e.line, f"'{e.name}' bullet description must end with a period")
+    if not is_bullet and e.desc.endswith("."):
+        rep.err(e.line, f"'{e.name}' table description must not end with a period")
+
+
+def check_third_column(e: Entry, section: str, rep: Report) -> None:
+    """The Clients table carries a support tier where other tables carry a language."""
+    if section == "Clients":
+        if e.third not in CLIENT_SUPPORT:
+            rep.err(
+                e.line,
+                f"'{e.name}' MCP Support is '{e.third}', expected one of "
+                f"{sorted(CLIENT_SUPPORT)}",
+            )
+    elif e.third not in LANGUAGES:
+        rep.err(
+            e.line,
+            f"'{e.name}' language is '{e.third}', expected one of {sorted(LANGUAGES)}",
+        )
+
+
+def check_entry(e: Entry, section: str, is_bullet: bool, rep: Report) -> None:
+    if not e.url.startswith("https://"):
+        rep.err(e.line, f"'{e.name}' URL must be https:// (got {e.url})")
+    if not e.desc:
+        rep.err(e.line, f"'{e.name}' has an empty description")
+        return
+    check_description(e, is_bullet, rep)
+    if not is_bullet:
+        check_third_column(e, section, rep)
+
+
 def check_entries(entries, rep: Report) -> None:
     for section, rows in entries.items():
         if section in NON_ENTRY_SECTIONS:
             continue
         is_bullet = section in BULLET_SECTIONS
-
         for e in rows:
-            if not e.url.startswith("https://"):
-                rep.err(e.line, f"'{e.name}' URL must be https:// (got {e.url})")
-            if not e.desc:
-                rep.err(e.line, f"'{e.name}' has an empty description")
-                continue
-            cap = MAX_BULLET_DESC if is_bullet else MAX_DESC
-            if len(e.desc) > cap:
-                rep.err(
-                    e.line,
-                    f"'{e.name}' description is {len(e.desc)} chars, max {cap}",
-                )
-            if not (e.desc[0].isupper() or e.desc[0].isdigit()):
-                rep.err(
-                    e.line, f"'{e.name}' description must start with a capital letter"
-                )
-            if is_bullet and not e.desc.endswith("."):
-                rep.err(e.line, f"'{e.name}' bullet description must end with a period")
-            if not is_bullet and e.desc.endswith("."):
-                rep.err(
-                    e.line, f"'{e.name}' table description must not end with a period"
-                )
-
-            if is_bullet:
-                continue
-            if section == "Clients":
-                if e.third not in CLIENT_SUPPORT:
-                    rep.err(
-                        e.line,
-                        f"'{e.name}' MCP Support is '{e.third}', expected one of "
-                        f"{sorted(CLIENT_SUPPORT)}",
-                    )
-            elif e.third not in LANGUAGES:
-                rep.err(
-                    e.line,
-                    f"'{e.name}' language is '{e.third}', expected one of "
-                    f"{sorted(LANGUAGES)}",
-                )
+            check_entry(e, section, is_bullet, rep)
 
 
 def check_duplicates(entries, rep: Report) -> None:
@@ -374,7 +384,7 @@ def check_duplicates(entries, rep: Report) -> None:
         if len(es) > 1:
             where = ", ".join(f"{e.section} L{e.line}" for e in es)
             rep.err(es[0].line, f"duplicate URL {url} listed {len(es)} times ({where})")
-    for _, es in by_name.items():
+    for es in by_name.values():
         if len(es) > 1:
             where = ", ".join(f"{e.section} L{e.line}" for e in es)
             rep.err(
@@ -404,36 +414,49 @@ def check_local_links(lines, heading_lines, rep: Report) -> None:
     """
     root = README.parent
     anchors = {slugify(h) for h in heading_lines}
+    for i, line in prose_lines(lines):
+        # Inline code spans are illustrations too, as in `| [Name](URL) | ... |`.
+        stripped = re.sub(r"`[^`]*`", "", line)
+        for target in re.findall(r"\]\(([^)\s]+)\)", stripped):
+            check_link_target(target, i, root, anchors, rep)
+
+
+def prose_lines(lines):
+    """Yield (lineno, text) for lines outside fenced code blocks.
+
+    Fenced blocks hold format examples like `| [Name](URL) |`, which are
+    illustrations rather than links. The CI link checker skips them too.
+    """
     in_fence = False
     for i, raw in enumerate(lines, 1):
         line = raw.rstrip("\n")
-        # Fenced blocks hold format examples like `| [Name](URL) |`, which are
-        # illustrations rather than links. The CI link checker skips them too.
         if line.lstrip().startswith("```"):
             in_fence = not in_fence
             continue
-        if in_fence:
-            continue
-        # Inline code spans are illustrations too, as in `| [Name](URL) | ... |`.
-        line = re.sub(r"`[^`]*`", "", line)
-        for target in re.findall(r"\]\(([^)\s]+)\)", line):
-            if target.startswith(("http://", "https://", "mailto:")):
-                continue
-            if target.startswith("#"):
-                if target[1:] not in anchors:
-                    rep.err(i, f"link to #{target[1:]} has no matching heading")
-                continue
-            if target.startswith(".."):
-                rep.err(
-                    i,
-                    f"relative link '{target}' escapes the repository; the link "
-                    f"checker resolves it as a file path and fails. Use the full "
-                    f"https://github.com/... URL instead",
-                )
-                continue
-            path = target.partition("#")[0]
-            if path and not (root / path).exists():
-                rep.err(i, f"link target '{path}' does not exist")
+        if not in_fence:
+            yield i, line
+
+
+def check_link_target(
+    target: str, lineno: int, root: Path, anchors, rep: Report
+) -> None:
+    if target.startswith(("http://", "https://", "mailto:")):
+        return
+    if target.startswith("#"):
+        if target[1:] not in anchors:
+            rep.err(lineno, f"link to #{target[1:]} has no matching heading")
+        return
+    if target.startswith(".."):
+        rep.err(
+            lineno,
+            f"relative link '{target}' escapes the repository; the link checker "
+            f"resolves it as a file path and fails. Use the full "
+            f"https://github.com/... URL instead",
+        )
+        return
+    path = target.partition("#")[0]
+    if path and not (root / path).exists():
+        rep.err(lineno, f"link target '{path}' does not exist")
 
 
 def check_whitespace_and_dashes(lines, rep: Report) -> None:

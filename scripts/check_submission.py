@@ -105,9 +105,19 @@ NOT_OPEN_SOURCE = {
 NOT_OPEN_SOURCE_PREFIXES = ("see license in", "see licence in")
 
 # Maven has no JSON or TOML form to parse, so this one manifest stays a regex.
+# The captured group is deliberately `[^<]*` with no surrounding `\s*`: pairing a
+# lazy quantifier with whitespace classes that can match the same characters is
+# what makes a pattern backtrack super-linearly. Trimming happens in Python.
 POM_LICENCE_RE = re.compile(
-    r"<licenses?>.*?<name>\s*([^<]+?)\s*</name>", re.DOTALL | re.IGNORECASE
+    r"<licenses?>.*?<name>([^<]*)</name>", re.DOTALL | re.IGNORECASE
 )
+
+# Shape of an acceptable git ref. Must not start with a dash, or git would read
+# it as an option instead of a revision.
+REF_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._/~^@{}-]*$")
+
+# Root filenames that count as install and usage documentation.
+README_NAMES = {"readme.md", "readme.rst", "readme", "readme.txt"}
 
 ROW_RE = re.compile(
     r"^\|\s*\[(?P<name>[^\]]+)\]\((?P<url>[^)\s]+)\)\s*\|(?P<rest>.*)\|\s*$"
@@ -181,6 +191,37 @@ def _first_licence_string(value) -> str | None:
     return None
 
 
+def _licence_from_json(text: str) -> str | None:
+    data = json.loads(text)
+    if not isinstance(data, dict):
+        return None
+    return _first_licence_string(data.get("license") or data.get("licenses"))
+
+
+def _licence_from_toml(text: str) -> str | None:
+    data = tomllib.loads(text)
+    # `[project]` is PEP 621, `[package]` is Cargo.
+    for table in ("project", "package"):
+        section = data.get(table)
+        if isinstance(section, dict):
+            found = _first_licence_string(section.get("license"))
+            if found:
+                return found
+    return None
+
+
+def _licence_from_pom(text: str) -> str | None:
+    match = POM_LICENCE_RE.search(text)
+    return match.group(1).strip() if match else None
+
+
+MANIFEST_READERS = (
+    (".json", _licence_from_json),
+    (".toml", _licence_from_toml),
+    (".xml", _licence_from_pom),
+)
+
+
 def parse_manifest_licence(filename: str, text: str) -> str | None:
     """Read the declared licence out of one manifest, or None.
 
@@ -189,24 +230,9 @@ def parse_manifest_licence(filename: str, text: str) -> str | None:
     """
     name = filename.lower()
     try:
-        if name.endswith(".json"):
-            data = json.loads(text)
-            if not isinstance(data, dict):
-                return None
-            return _first_licence_string(data.get("license") or data.get("licenses"))
-        if name.endswith(".toml"):
-            data = tomllib.loads(text)
-            # `[project]` is PEP 621, `[package]` is Cargo.
-            for table in ("project", "package"):
-                section = data.get(table)
-                if isinstance(section, dict):
-                    found = _first_licence_string(section.get("license"))
-                    if found:
-                        return found
-            return None
-        if name.endswith(".xml"):
-            match = POM_LICENCE_RE.search(text)
-            return match.group(1) if match else None
+        for suffix, reader in MANIFEST_READERS:
+            if name.endswith(suffix):
+                return reader(text)
     except (json.JSONDecodeError, tomllib.TOMLDecodeError, UnicodeDecodeError):
         return None
     return None
@@ -260,11 +286,23 @@ def added_rows(base_ref: str) -> list:
     diff. Reordering a table rewrites every moved row, so a diff-based reading
     reports untouched entries as new submissions and then blocks the pull
     request over rot that was already on the base branch.
+
+    `base_ref` arrives from a command line, so it is checked against the shape of
+    a git ref first. Nothing is run through a shell, but a value beginning with
+    `-` would still be read by git as an option rather than a revision.
     """
+    if not REF_RE.match(base_ref):
+        print(
+            f"error: {base_ref!r} is not a valid git ref for --base-ref",
+            file=sys.stderr,
+        )
+        return []
+
     base = subprocess.run(
         ["git", "show", f"{base_ref}:README.md"],
         capture_output=True,
         check=False,
+        shell=False,
     )
     if base.returncode != 0:
         print(
@@ -326,82 +364,98 @@ def inspect(sub: Submission) -> None:
         sub.hard.append(
             "The repository is a fork. Submit the upstream project instead."
         )
-    # "NOASSERTION" means GitHub found a licence file it could not classify,
-    # which is a different thing from having none. The official MCP SDKs all
-    # report it. Only a genuinely absent licence blocks.
     if licence in (None, "", "NOASSERTION"):
-        lic_file, lic_err = gh_api(f"repos/{slug}/license")
-        if isinstance(lic_file, dict) and lic_file.get("name"):
-            sub.facts["license"] = f"{lic_file['name']} (unrecognised by GitHub)"
-            sub.soft.append(
-                f"GitHub cannot classify `{lic_file['name']}`, so it reports no SPDX "
-                f"licence. Confirm by hand that the terms are open source. Common for "
-                f"a vendor repo with a customised header, suspicious for a small one."
-            )
-        else:
-            man_file, man_lic = manifest_licence(slug)
-            if man_lic and not is_open_source(man_lic):
-                sub.facts["license"] = f"{man_lic} (declared in {man_file})"
-                sub.hard.append(
-                    f"`{man_file}` declares `{man_lic}`, which states that the terms "
-                    f"are not open source rather than naming a licence. "
-                    f"CONTRIBUTING.md requires an open-source licence."
-                )
-            elif man_lic:
-                sub.facts["license"] = f"{man_lic} (declared in {man_file})"
-                sub.soft.append(
-                    f"No `LICENSE` file at the repository root; the licence is declared "
-                    f"as `{man_lic}` in `{man_file}`. CONTRIBUTING.md accepts that, but "
-                    f"a root `LICENSE` file is what GitHub reads. Confirm the terms."
-                )
-            else:
-                sub.hard.append(
-                    f"No licence anywhere ({lic_err}): no `LICENSE` file at the root and "
-                    f"no licence field in a package manifest. CONTRIBUTING.md requires a "
-                    f"clearly stated licence."
-                )
+        check_unclassified_licence(sub, slug)
     if stale_days > STALE_DAYS:
         sub.hard.append(
             f"Last push was {stale_days} days ago, over the {STALE_DAYS}-day "
             f"maintenance threshold."
         )
 
-    tree, tree_err = gh_api(f"repos/{slug}/contents")
-    if isinstance(tree, list):
-        names = {f["name"].lower() for f in tree}
-        if not any(
-            n in names for n in ("readme.md", "readme.rst", "readme", "readme.txt")
-        ):
-            sub.hard.append(
-                "No README at the repository root. CONTRIBUTING.md requires install "
-                "and usage documentation."
-            )
-        if names and names <= MANIFEST_ONLY:
-            sub.hard.append(
-                f"The repository root contains only {sorted(names)} -- a README plus "
-                f"registry manifests, with no MCP implementation. Publish the server "
-                f"source, or submit the repository that holds it."
-            )
-        elif not (names & PROJECT_MARKERS) and not any(
-            f["type"] == "dir" for f in tree
-        ):
-            # The check above only catches roots made entirely of known manifest
-            # names, so an unrecognised file slips past it. Look for a positive
-            # signal instead: a build manifest, or any directory to hold source.
-            sub.soft.append(
-                f"No build manifest or source directory at the repository root, only "
-                f"{sorted(names)}. Confirm by hand that this holds a real MCP "
-                f"implementation and is not a listing stub."
-            )
-    elif tree_err:
-        sub.soft.append(
-            f"Could not list the repository root ({tree_err}); MCP implementation "
-            f"not verified."
-        )
+    check_implementation(sub, slug)
 
     # Star count and repo age are reported in the facts table above as context.
     # Neither is a bar: popularity is not quality, and a new project that works,
     # is licensed and is documented belongs on the list as much as a famous one.
+
+
+def check_unclassified_licence(sub: Submission, slug: str) -> None:
+    """Resolve a licence GitHub could not classify, or block if there is none.
+
+    "NOASSERTION" means GitHub found a licence file it could not classify, which
+    is a different thing from having none. The official MCP SDKs all report it.
+    Only a genuinely absent licence blocks.
+    """
+    lic_file, lic_err = gh_api(f"repos/{slug}/license")
+    if isinstance(lic_file, dict) and lic_file.get("name"):
+        sub.facts["license"] = f"{lic_file['name']} (unrecognised by GitHub)"
+        sub.soft.append(
+            f"GitHub cannot classify `{lic_file['name']}`, so it reports no SPDX "
+            f"licence. Confirm by hand that the terms are open source. Common for "
+            f"a vendor repo with a customised header, suspicious for a small one."
+        )
+        return
+
+    man_file, man_lic = manifest_licence(slug)
+    if not man_lic:
+        sub.hard.append(
+            f"No licence anywhere ({lic_err}): no `LICENSE` file at the root and no "
+            f"licence field in a package manifest. CONTRIBUTING.md requires a "
+            f"clearly stated licence."
+        )
+        return
+
+    sub.facts["license"] = f"{man_lic} (declared in {man_file})"
+    if not is_open_source(man_lic):
+        sub.hard.append(
+            f"`{man_file}` declares `{man_lic}`, which states that the terms are not "
+            f"open source rather than naming a licence. CONTRIBUTING.md requires an "
+            f"open-source licence."
+        )
+        return
+    sub.soft.append(
+        f"No `LICENSE` file at the repository root; the licence is declared as "
+        f"`{man_lic}` in `{man_file}`. CONTRIBUTING.md accepts that, but a root "
+        f"`LICENSE` file is what GitHub reads. Confirm the terms."
+    )
+
+
+def check_implementation(sub: Submission, slug: str) -> None:
+    """Look for a README and for evidence the repository holds real source."""
+    tree, tree_err = gh_api(f"repos/{slug}/contents")
+    if not isinstance(tree, list):
+        if tree_err:
+            sub.soft.append(
+                f"Could not list the repository root ({tree_err}); MCP implementation "
+                f"not verified."
+            )
+        return
+
+    names = {f["name"].lower() for f in tree}
+    if not names & README_NAMES:
+        sub.hard.append(
+            "No README at the repository root. CONTRIBUTING.md requires install "
+            "and usage documentation."
+        )
+
+    if names and names <= MANIFEST_ONLY:
+        sub.hard.append(
+            f"The repository root contains only {sorted(names)} -- a README plus "
+            f"registry manifests, with no MCP implementation. Publish the server "
+            f"source, or submit the repository that holds it."
+        )
+        return
+
+    # The check above only catches roots made entirely of known manifest names,
+    # so an unrecognised file slips past it. Look for a positive signal instead:
+    # a build manifest, or any directory to hold source.
+    has_dir = any(f["type"] == "dir" for f in tree)
+    if not (names & PROJECT_MARKERS) and not has_dir:
+        sub.soft.append(
+            f"No build manifest or source directory at the repository root, only "
+            f"{sorted(names)}. Confirm by hand that this holds a real MCP "
+            f"implementation and is not a listing stub."
+        )
 
 
 def render(subs: list, override: bool) -> tuple[str, bool]:
@@ -430,42 +484,48 @@ def render(subs: list, override: bool) -> tuple[str, bool]:
         lines.append("")
 
     for s in subs:
-        lines.append(f"### {s.name}")
-        lines.append(f"{s.url}")
-        lines.append("")
-        if s.facts:
-            lines.append("| Check | Value |")
-            lines.append("|-------|-------|")
-            for k, v in s.facts.items():
-                lines.append(f"| {k} | {v} |")
-            lines.append("")
-        if s.hard:
-            lines.append("**Blocking:**")
-            lines.extend(f"- {h}" for h in s.hard)
-            lines.append("")
-        if s.soft:
-            lines.append("**Needs a maintainer decision:**")
-            lines.extend(f"- {w}" for w in s.soft)
-            lines.append("")
-        if not s.hard and not s.soft:
-            lines.append("Passes every automated check.")
-            lines.append("")
+        lines.extend(render_submission(s))
 
     # Only a real defect in a submitted entry fails the check.
     failing = hard_total > 0 and not override
-    if override:
-        lines.append(f"Gate bypassed by the `{OVERRIDE_LABEL}` label.")
-    elif failing:
-        entries = "entry" if len(subs) == 1 else "entries"
-        lines.append(
-            f"**Result: blocked.** {hard_total} blocking problem(s) across "
-            f"{len(subs)} {entries}. Fix those, or a maintainer can add the "
-            f"`{OVERRIDE_LABEL}` label to merge anyway."
-        )
-    else:
-        lines.append("**Result: passed.** No blocking problems.")
+    lines.append(render_result(subs, hard_total, override, failing))
 
     return "\n".join(lines) + "\n", failing
+
+
+def render_submission(s: Submission) -> list:
+    """The per-entry block: facts table, then blocking and advisory findings."""
+    lines = [f"### {s.name}", f"{s.url}", ""]
+    if s.facts:
+        lines.append("| Check | Value |")
+        lines.append("|-------|-------|")
+        lines.extend(f"| {k} | {v} |" for k, v in s.facts.items())
+        lines.append("")
+    if s.hard:
+        lines.append("**Blocking:**")
+        lines.extend(f"- {h}" for h in s.hard)
+        lines.append("")
+    if s.soft:
+        lines.append("**Needs a maintainer decision:**")
+        lines.extend(f"- {w}" for w in s.soft)
+        lines.append("")
+    if not s.hard and not s.soft:
+        lines.append("Passes every automated check.")
+        lines.append("")
+    return lines
+
+
+def render_result(subs: list, hard_total: int, override: bool, failing: bool) -> str:
+    if override:
+        return f"Gate bypassed by the `{OVERRIDE_LABEL}` label."
+    if not failing:
+        return "**Result: passed.** No blocking problems."
+    entries = "entry" if len(subs) == 1 else "entries"
+    return (
+        f"**Result: blocked.** {hard_total} blocking problem(s) across "
+        f"{len(subs)} {entries}. Fix those, or a maintainer can add the "
+        f"`{OVERRIDE_LABEL}` label to merge anyway."
+    )
 
 
 def main() -> int:

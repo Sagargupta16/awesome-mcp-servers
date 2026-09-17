@@ -66,8 +66,15 @@ jobs:
       # flip `ruff format --check` on an unrelated pull request, and nothing should
       # enter this job without a checksum. Regenerate with the command in
       # requirements-dev.in.
+      #
+      # --only-binary :all: refuses source distributions, whose setup.py runs
+      # arbitrary code at install time. Every pin in the lock resolves to a wheel,
+      # so nothing is lost; if a future pin has no wheel this fails loudly rather
+      # than quietly executing a build script.
       - name: Install tooling
-        run: python -m pip install --require-hashes -r requirements-dev.txt
+        run: |
+          python -m pip install --require-hashes --only-binary :all: \
+            -r requirements-dev.txt
 
       - name: Lint
         run: ruff check scripts/ tests/
@@ -86,8 +93,11 @@ jobs:
 
       # A dead link is a defect, so this job fails on one. lychee.toml holds the
       # retry and rate-limit settings that keep that from being flaky.
+      # Pinned to a commit rather than a moving tag: this is a third-party action
+      # and `v2` can be repointed at new code without the reference changing.
+      # Renovate bumps the SHA and the trailing comment together.
       - name: Link Checker
-        uses: lycheeverse/lychee-action@v2
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
           args: --config lychee.toml --verbose README.md CONTRIBUTING.md SECURITY.md CHANGELOG.md
           fail: true
