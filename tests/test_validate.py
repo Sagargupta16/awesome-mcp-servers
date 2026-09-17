@@ -374,3 +374,54 @@ def test_split_inherited_matches_a_problem_that_moved_lines():
     inherited = validate.split_inherited(errors, "HEAD")
 
     assert inherited == set() or errors[0] in inherited
+
+
+# --- entry syntax ------------------------------------------------------------
+
+
+def syntax_errors(body: str) -> list[str]:
+    rep = validate.Report()
+    validate.check_entry_syntax(_lines(body), rep)
+    return rep.errors
+
+
+def test_bullet_inside_a_table_section_is_reported():
+    """PR #98's shape: invisible to every other check, so it merged unvetted."""
+    body = (
+        "### Search & Knowledge\n"
+        "- [Statsnet](https://github.com/acme/statsnet) - Background checks.\n"
+    )
+
+    assert any("does not parse" in e for e in syntax_errors(body))
+
+
+def test_table_row_inside_a_bullet_section_is_reported():
+    body = f"## Official\n{GOOD_ROW}\n"
+
+    assert any("bullet list" in e for e in syntax_errors(body))
+
+
+def test_a_valid_table_row_passes_the_syntax_check():
+    assert syntax_errors(f"### Security\n{GOOD_ROW}\n") == []
+
+
+def test_a_valid_bullet_passes_the_syntax_check():
+    body = "## Official\n- [Acme](https://acme.dev) - Acme widget.\n"
+
+    assert syntax_errors(body) == []
+
+
+def test_table_header_and_divider_are_not_mistaken_for_entries():
+    body = (
+        "### Security\n"
+        "| Server | Description | Language |\n"
+        "|--------|-------------|----------|\n"
+    )
+
+    assert syntax_errors(body) == []
+
+
+def test_an_entry_shaped_line_inside_a_fence_is_ignored():
+    body = "### Security\n```\n- [Example](https://x.dev) - not a real entry\n```\n"
+
+    assert syntax_errors(body) == []

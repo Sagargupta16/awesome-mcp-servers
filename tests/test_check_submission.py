@@ -404,3 +404,82 @@ def test_render_passes_a_clean_single_entry():
 
     assert failing is False
     assert "Result: passed." in report
+
+
+# --- implementation detection -----------------------------------------------
+
+
+def _inspected_with_tree(tree: list, monkeypatch) -> check_submission.Submission:
+    """Inspect a repository whose root contains exactly `tree`."""
+    fresh = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+    def fake(path: str):
+        if path == "repos/acme/alpha":
+            return {
+                "pushed_at": fresh,
+                "created_at": fresh,
+                "license": {"spdx_id": "MIT"},
+                "stargazers_count": 0,
+                "archived": False,
+                "fork": False,
+                "language": None,
+            }, None
+        if path == "repos/acme/alpha/contents":
+            return tree, None
+        return None, 404
+
+    monkeypatch.setattr(check_submission, "gh_api", fake)
+    sub = check_submission.Submission(
+        name="Alpha",
+        url="https://github.com/acme/alpha",
+        desc="Alpha widget",
+        third="Remote",
+    )
+    check_submission.inspect(sub)
+    return sub
+
+
+def _stub_tree(extra: list) -> list:
+    """A README plus registry manifests, and nothing that implements anything."""
+    base = ["README.md", "LICENSE", "server.json", "mcp.json", "glama.json", "logo.png"]
+    return [{"name": n, "type": "file"} for n in base] + extra
+
+
+def test_manifest_only_repository_is_blocked(monkeypatch):
+    sub = _inspected_with_tree(_stub_tree([]), monkeypatch)
+
+    assert any("registry manifests" in problem for problem in sub.hard)
+
+
+def test_a_dotfile_does_not_rescue_a_manifest_only_repository(monkeypatch):
+    """A `.gitignore` used to break the subset test and let the stub through."""
+    sub = _inspected_with_tree(
+        _stub_tree([{"name": ".gitignore", "type": "file"}]), monkeypatch
+    )
+
+    assert any("registry manifests" in problem for problem in sub.hard)
+
+
+def test_a_dot_directory_does_not_count_as_source(monkeypatch):
+    """`.cursor-plugin` is tooling config, not somewhere an implementation lives."""
+    sub = _inspected_with_tree(
+        _stub_tree([{"name": ".cursor-plugin", "type": "dir"}]), monkeypatch
+    )
+
+    assert any("registry manifests" in problem for problem in sub.hard)
+
+
+def test_a_real_source_directory_clears_the_stub_check(monkeypatch):
+    sub = _inspected_with_tree(
+        _stub_tree([{"name": "src", "type": "dir"}]), monkeypatch
+    )
+
+    assert not any("registry manifests" in problem for problem in sub.hard)
+
+
+def test_a_build_manifest_clears_the_stub_check(monkeypatch):
+    sub = _inspected_with_tree(
+        _stub_tree([{"name": "package.json", "type": "file"}]), monkeypatch
+    )
+
+    assert not any("registry manifests" in problem for problem in sub.hard)

@@ -438,22 +438,30 @@ def check_implementation(sub: Submission, slug: str) -> None:
             "and usage documentation."
         )
 
-    if names and names <= MANIFEST_ONLY:
+    # Dotfiles and dot-directories are tooling, not implementation, and they used
+    # to defeat both checks below: `usenetstate/statsnet-mcp` passed with nothing
+    # but manifests because a `.gitignore` broke the subset test and a
+    # `.cursor-plugin` directory counted as somewhere source might live.
+    payload = {n for n in names if not n.startswith(".")}
+    source_dirs = [
+        f["name"] for f in tree if f["type"] == "dir" and not f["name"].startswith(".")
+    ]
+
+    if payload and payload <= MANIFEST_ONLY and not source_dirs:
         sub.hard.append(
-            f"The repository root contains only {sorted(names)} -- a README plus "
+            f"The repository root contains only {sorted(payload)} -- a README plus "
             f"registry manifests, with no MCP implementation. Publish the server "
             f"source, or submit the repository that holds it."
         )
         return
 
-    # The check above only catches roots made entirely of known manifest names,
-    # so an unrecognised file slips past it. Look for a positive signal instead:
-    # a build manifest, or any directory to hold source.
-    has_dir = any(f["type"] == "dir" for f in tree)
-    if not (names & PROJECT_MARKERS) and not has_dir:
+    # The check above only catches roots made entirely of known manifest names, so
+    # an unrecognised file slips past it. Look for a positive signal instead: a
+    # build manifest, or a directory that could hold source.
+    if not (payload & PROJECT_MARKERS) and not source_dirs:
         sub.soft.append(
             f"No build manifest or source directory at the repository root, only "
-            f"{sorted(names)}. Confirm by hand that this holds a real MCP "
+            f"{sorted(payload)}. Confirm by hand that this holds a real MCP "
             f"implementation and is not a listing stub."
         )
 

@@ -211,6 +211,49 @@ def parse_entry(line: str, lineno: int, section: str):
     return None
 
 
+def check_entry_syntax(lines, rep: Report) -> None:
+    """Flag lines that look like an entry but do not parse as one.
+
+    parse() ignores anything it cannot read, which is how PR #98 landed a bullet
+    inside the table-only Search & Knowledge section: invisible to this validator
+    and to check_submission.py, so it auto-merged completely unvetted. Anything
+    shaped like an entry must therefore either parse or be reported.
+    """
+    section = None
+    in_fence = False
+    for i, raw in enumerate(lines, 1):
+        line = raw.rstrip("\n")
+        if line.lstrip().startswith("```"):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+
+        heading = HEADING_RE.match(line)
+        if heading:
+            section = heading.group(2).strip()
+            continue
+        if section is None or section in PROSE_SECTIONS:
+            continue
+
+        looks_like_entry = line.startswith("- [") or (
+            line.startswith("|") and "](" in line
+        )
+        if not looks_like_entry:
+            continue
+
+        if parse_entry(line, i, section) is None:
+            style = "a bullet list" if section in BULLET_SECTIONS else "a table"
+            rep.err(
+                i,
+                f"line looks like an entry but does not parse; '{section}' uses "
+                f"{style}. Anything unparseable is invisible to every other check, "
+                f"so it must be fixed rather than ignored",
+            )
+        elif line.startswith("|") and section in BULLET_SECTIONS:
+            rep.err(i, f"'{section}' is a bullet list, but this is a table row")
+
+
 def parse(lines):
     """Return entries per section, heading line numbers, and heading order."""
     entries = defaultdict(list)
@@ -501,6 +544,7 @@ def run_checks(lines) -> tuple:
     check_structure(lines, order, heading_lines, rep)
     check_toc(lines, heading_lines, rep)
     check_table_headers(lines, heading_lines, rep)
+    check_entry_syntax(lines, rep)
     check_entries(entries, rep)
     check_duplicates(entries, rep)
     check_alphabetical(entries, rep)
