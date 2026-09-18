@@ -345,6 +345,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Excalidraw MCP](https://github.com/yctimlin/mcp_excalidraw) | Create and edit Excalidraw diagrams on a live canvas | TypeScript |
 | [Figma Context MCP](https://github.com/GLips/Figma-Context-MCP) | Figma layouts for AI coding agents (Framelink) | TypeScript |
 | [Houdini MCP](https://github.com/capoomgit/houdini-mcp) | Build and modify SideFX Houdini scenes and nodes | Python |
+| [Kleap](https://github.com/kleaphq/cli) | Official Kleap server for creating, editing and publishing websites | JavaScript |
 | [OrkasVideoStudio](https://github.com/Orkas-AI/Orkas-VideoStudio) | Compose, edit, analyze, and render video from coding agents | TypeScript |
 | [Photoshop MCP](https://github.com/loonghao/photoshop-python-api-mcp-server) | Adobe Photoshop automation | Python |
 | [Webflow MCP](https://github.com/webflow/mcp-server) | Official Webflow server for sites, pages, CMS, and components | TypeScript |
