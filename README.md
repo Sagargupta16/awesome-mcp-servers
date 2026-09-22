@@ -587,7 +587,7 @@ but not all of resources and prompts.
 To add a server:
 
 1. Fork the repo and branch off `main`.
-2. Add **one** row to the most appropriate existing category, in alphabetical order.
+2. Add **one** row to the most appropriate existing category. Alphabetical order is preferred, not required.
 3. Follow the format: `| [Name](URL) | Description | Language |` with the description at 80 characters or fewer.
 4. Run `python scripts/validate.py` and fix what it reports.
 5. Open a pull request and answer the affiliation question. Submitting your own project is welcome; not disclosing it is not.

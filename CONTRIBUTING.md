@@ -23,7 +23,7 @@ Submissions are checked, and the checks are about whether the thing is real, not
 
 1. Read [quality standards](#quality-standards) and [what is not accepted](#what-is-not-accepted). Most declined pull requests fail one of those.
 2. Fork the repo and branch off `main`.
-3. Add **one** row to the most appropriate existing category in `README.md`, in alphabetical order.
+3. Add **one** row to the most appropriate existing category in `README.md`. Alphabetical order is preferred but not required.
 4. Run `python scripts/validate.py` and fix anything it reports.
 5. Open a pull request and fill in the template, including the affiliation question.
 
@@ -88,7 +88,7 @@ Beyond the server categories, the list also has **Official**, **Frameworks & Lib
 
 ### Alphabetical order
 
-Entries are sorted alphabetically by name within each table, case-insensitively and ignoring leading punctuation. `python scripts/validate.py --fix` sorts them for you.
+Tables are kept alphabetical by name, case-insensitively and ignoring leading punctuation. This is a **preference, not a gate**: putting a row in the wrong place produces a note, never a failing check, because where a row sits says nothing about whether the server is real. `python scripts/validate.py --fix` sorts everything for you, and a maintainer runs it periodically anyway.
 
 ## Quality standards
 

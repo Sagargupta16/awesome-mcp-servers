@@ -37,11 +37,11 @@ def duplicate_errors(body: str) -> list[str]:
     return rep.errors
 
 
-def order_errors(body: str) -> list[str]:
+def order_report(body: str) -> validate.Report:
     rep = validate.Report()
     entries, _, _ = validate.parse(_lines(body))
     validate.check_alphabetical(entries, rep)
-    return rep.errors
+    return rep
 
 
 def structure_errors(categories: list[str]) -> list[str]:
@@ -144,24 +144,37 @@ def test_duplicate_name_across_sections_is_reported():
     assert any("duplicate name" in e for e in duplicate_errors(body))
 
 
-def test_rows_out_of_alphabetical_order_are_reported():
+def test_rows_out_of_alphabetical_order_are_noted():
     body = (
         "## Security\n\n"
         "| [Zeta](https://x.dev/z) | Zeta widget | Go |\n"
         "| [Alpha](https://x.dev/a) | Alpha widget | Go |"
     )
 
-    assert any("out of alphabetical order" in e for e in order_errors(body))
+    rep = order_report(body)
+
+    assert any("out of alphabetical order" in n for n in rep.notes)
 
 
-def test_sorted_rows_pass_the_order_check():
+def test_ordering_never_produces_a_blocking_error():
+    """Where a row sits is cosmetic, so it must not fail a pull request."""
+    body = (
+        "## Security\n\n"
+        "| [Zeta](https://x.dev/z) | Zeta widget | Go |\n"
+        "| [Alpha](https://x.dev/a) | Alpha widget | Go |"
+    )
+
+    assert order_report(body).errors == []
+
+
+def test_sorted_rows_produce_no_ordering_note():
     body = (
         "## Security\n\n"
         "| [Alpha](https://x.dev/a) | Alpha widget | Go |\n"
         "| [Zeta](https://x.dev/z) | Zeta widget | Go |"
     )
 
-    assert order_errors(body) == []
+    assert order_report(body).notes == []
 
 
 # --- structure and table of contents ----------------------------------------
@@ -341,7 +354,7 @@ def test_run_checks_reports_a_long_description_and_counts_entries():
 | [Acme](https://github.com/acme/acme) | {} | Go |
 """.format("x" * 90)
 
-    errors, total = validate.run_checks(_lines(body))
+    errors, total, _ = validate.run_checks(_lines(body))
 
     assert total == 1
     assert any("chars, max 80" in e for e in errors)

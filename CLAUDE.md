@@ -23,7 +23,7 @@ Curated awesome-list of MCP servers, frameworks, clients, and resources, maintai
 ## Run
 
 ```bash
-python scripts/validate.py          # structure, format, duplicates, ordering
+python scripts/validate.py          # structure, format, duplicates (ordering is a note)
 python scripts/validate.py --fix    # auto-repair ordering, whitespace, dashes
 GITHUB_TOKEN=$(gh auth token) python scripts/check_submission.py --base-ref origin/main
 GITHUB_TOKEN=$(gh auth token) python scripts/staleness_report.py
@@ -44,7 +44,7 @@ ruff format --check scripts/ tests/
 
 Four workflows:
 
-- [lint.yml](.github/workflows/lint.yml) -- `validate` (README structure), `python-checks` (ruff + pytest on the gate scripts), `link-check` (lychee over README, CONTRIBUTING, SECURITY, CHANGELOG). Runs on PRs to `main`, pushes to `main`, and weekly on Sundays.
+- [lint.yml](.github/workflows/lint.yml) -- `validate` (README structure), `python-checks` (ruff + pytest on the gate scripts), `link-check` (lychee over README, CONTRIBUTING, SECURITY, CHANGELOG). Runs on PRs to `main`, pushes to `main`, and daily at 06:00 UTC.
 - [submission-check.yml](.github/workflows/submission-check.yml) -- inspects the rows a PR adds against the GitHub API: licence, last push, archived, fork, real implementation. Honours the `maintainer-override` label. Deliberately has no `paths` filter: it is a required status check, and a path-filtered required check never reports on a PR that misses the filter, which hangs auto-merge forever.
 - [auto-merge.yml](.github/workflows/auto-merge.yml) -- switches on GitHub's native auto-merge for PRs that only touch `README.md` or `CHANGELOG.md`, so a community entry lands unattended once the required checks pass. Runs on `pull_request_target` so a fork cannot edit the workflow that judges it, and never checks out PR code, so the writable token is never exposed to contributor-controlled input. Skipped when a PR reaches `.github/`, `scripts/`, `tests/` or tooling config, or carries `maintainer-override` or `no-auto-merge`.
 - [health.yml](.github/workflows/health.yml) -- monthly (1st, 06:00 UTC) audit of every listed repository, rewritten into one `maintenance`-labelled tracking issue. First scheduled run: 2026-10-01.
@@ -70,17 +70,17 @@ Four workflows:
 - Auto-merge is the only merge path for content PRs and the checks are the only gate, so the required-check list on the `main` ruleset is load-bearing. Adding a `paths` filter to any required check, or renaming a job, silently breaks it: a required check that never reports leaves auto-merge waiting forever, and a renamed job means the old name never arrives. Change a job name and the ruleset in the same pass.
 - Ruleset bypass is granted to `repository_admin` on purpose. Without it, required checks would lock Sagar out of an emergency fix on `main`.
 - An auto-merged pull request produces **no push-to-main workflow run**. GitHub does not start a run from a `GITHUB_TOKEN` push, and auto-merge lands the commit as `github-actions[bot]`. Since the PR-side `Validate format` is baseline-scoped and only judges what that PR introduced, the daily 06:00 UTC `lint.yml` schedule is the only thing holding `main` to the full bar. Do not thin that schedule out, and do not assume a green PR means `main` is green.
-- Required checks are not strict (`strict_required_status_checks_policy: false`), so a branch need not be up to date to merge. Two individually-clean pull requests can therefore land a combined ordering violation. That is a deliberate trade for lower contributor friction: the daily run catches it, and the next PR's baseline marks it pre-existing so nobody is blamed for it.
+- Required checks are not strict (`strict_required_status_checks_policy: false`), so a branch need not be up to date to merge. Two individually-clean pull requests can therefore interleave their rows out of order. That is harmless now that ordering is only a note; `--fix` tidies it whenever someone runs it.
 - The submission gate hard-fails at 181 days since last push and on a repo with no licence anywhere. Incumbent entries are held to the same bar; that is what the monthly health report is for.
 - A licence declared only in `package.json` / `pyproject.toml` is accepted (GitHub's licence API reads the root `LICENSE` file only, so those repos report as unlicensed). See `MANIFEST_LICENCE_FILES` in `check_submission.py`. The field having a value is not enough: `is_open_source()` rejects `UNLICENSED`, `SEE LICENSE IN <file>` and `Proprietary`, which fill the field while withholding the terms. `staleness_report.py` imports both helpers so the report and the gate cannot disagree.
 - GitHub serves renamed and transferred repos over a redirect, so a stale slug keeps working until someone claims the old name. `staleness_report.py` compares `nameWithOwner` to the listed slug to catch that.
 - `renovate.json` extends `Sagargupta16/shared-workflows`, which is `config:recommended` plus `automerge: true` on a monthly grouped PR. That covers the pinned GitHub Actions and, by default, `requirements-dev.txt`. The pip manager is switched off in `renovate.json` because it rewrites the pinned version without regenerating the `--hash=` block, which then fails `pip install --require-hashes`. Bumping `ruff` or `pytest` means editing `requirements-dev.in` and running the compile command in its header.
-- Server entries must be strict `| [Name](URL) | Description | Language |` rows: description under 80 chars, capitalized, no trailing period, alphabetical within each category table.
+- Server entries must be strict `| [Name](URL) | Description | Language |` rows: description under 80 chars, capitalized, no trailing period. Alphabetical order within a table is a note, not an error, so it never fails a pull request.
 - No git tag or GitHub release exists for any version heading in `CHANGELOG.md`. Treat them as documentation milestones until someone cuts real tags.
 
 ## Repo-specific rules
 
-- Follow `CONTRIBUTING.md` exactly when adding entries: one server per PR, most-appropriate existing category, alphabetical order.
+- Follow `CONTRIBUTING.md` when adding entries: most-appropriate existing category, and alphabetical order where convenient. Neither one-server-per-PR nor ordering is enforced; both are preferences the checks only mention.
 - Only add servers meeting the quality bar: open source, documented README, actively maintained, working MCP implementation, not a duplicate.
 - Don't remove entries without a stated reason (broken link, abandoned, no longer MCP, over the 180-day bar, no licence). Community depends on the list.
 - New categories need an issue discussion first, not a direct PR. Adding one means editing `SERVER_CATEGORIES` in `scripts/validate.py` and the table in `CONTRIBUTING.md` together -- a test fails if they disagree.

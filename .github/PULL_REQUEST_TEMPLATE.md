@@ -36,7 +36,7 @@ Confirming these against [CONTRIBUTING.md](../CONTRIBUTING.md#quality-standards)
 
 - [ ] Description is 80 characters or fewer, starts with a capital, has no trailing period, and uses `--` rather than an em-dash
 - [ ] Description states what it does rather than selling it
-- [ ] Added in alphabetical order within its table
+- [ ] Added in alphabetical order within its table (preferred, but it will not fail any check)
 - [ ] `python scripts/validate.py` passes locally
 - [ ] I have not changed any unrelated entry
 

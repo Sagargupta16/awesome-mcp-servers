@@ -154,10 +154,20 @@ class Entry:
 @dataclass
 class Report:
     errors: list = field(default_factory=list)
+    notes: list = field(default_factory=list)
 
     def err(self, line, msg: str) -> None:
-        where = f"README.md:{line}" if line else "README.md"
-        self.errors.append(f"{where}: {msg}")
+        """A defect. Fails the build."""
+        self.errors.append(self._where(line, msg))
+
+    def note(self, line, msg: str) -> None:
+        """Worth tidying, but not worth failing a contributor's pull request."""
+        self.notes.append(self._where(line, msg))
+
+    @staticmethod
+    def _where(line, msg: str) -> str:
+        prefix = f"README.md:{line}" if line else "README.md"
+        return f"{prefix}: {msg}"
 
 
 def slugify(heading: str) -> str:
@@ -437,14 +447,21 @@ def check_duplicates(entries, rep: Report) -> None:
 
 
 def check_alphabetical(entries, rep: Report) -> None:
+    """Report ordering as a note, not an error.
+
+    Where a row sits in its table is cosmetic: it changes nothing about whether
+    the server is real, licensed or maintained. Failing a contributor's pull
+    request over it costs them a round trip to fix something `--fix` repairs in
+    a second, so this informs rather than blocks.
+    """
     for section, rows in entries.items():
         if section in TABLE_HEADERS and len(rows) > 1:
             for prev, cur in zip(rows, rows[1:]):
                 if sort_key(cur.name) < sort_key(prev.name):
-                    rep.err(
+                    rep.note(
                         cur.line,
                         f"'{cur.name}' is out of alphabetical order "
-                        f"(must come before '{prev.name}')",
+                        f"(should come before '{prev.name}')",
                     )
 
 
@@ -538,7 +555,7 @@ def fix(lines):
 
 
 def run_checks(lines) -> tuple:
-    """Return (errors, entry_count) for a README given as a list of lines."""
+    """Return (errors, entry_count, notes) for a README given as a list of lines."""
     rep = Report()
     entries, heading_lines, order = parse(lines)
     check_structure(lines, order, heading_lines, rep)
@@ -552,7 +569,7 @@ def run_checks(lines) -> tuple:
     check_whitespace_and_dashes(lines, rep)
 
     counted = {k: v for k, v in entries.items() if k not in NON_ENTRY_SECTIONS}
-    return rep.errors, sum(len(v) for v in counted.values())
+    return rep.errors, sum(len(v) for v in counted.values()), rep.notes
 
 
 def problem_key(error: str) -> str:
@@ -594,7 +611,7 @@ def baseline_errors(ref: str):
         )
         return None
     text = proc.stdout.decode("utf-8", "replace")
-    errors, _ = run_checks(text.splitlines(keepends=True))
+    errors, _, _ = run_checks(text.splitlines(keepends=True))
     return {problem_key(e) for e in errors}
 
 
@@ -623,18 +640,30 @@ def main() -> int:
     if args.fix:
         lines = apply_fixes(lines)
 
-    errors, total = run_checks(lines)
+    errors, total, notes = run_checks(lines)
     inherited = split_inherited(errors, args.baseline)
     new_errors = [e for e in errors if e not in inherited]
 
     if errors:
         print_problems(errors, inherited, total, args.baseline)
 
+    if notes:
+        print_notes(notes)
+
     if new_errors:
         return 1
 
     print_success(total, inherited)
     return 0
+
+
+def print_notes(notes) -> None:
+    """Advisory findings. Printed to stdout, and never part of the exit code."""
+    label = "note" if len(notes) == 1 else "notes"
+    print(f"{len(notes)} {label}, not blocking:\n")
+    for n in notes:
+        print(f"  {n}")
+    print("\nRun 'python scripts/validate.py --fix' to tidy these up.\n")
 
 
 def apply_fixes(lines):
@@ -684,9 +713,11 @@ def print_success(total: int, inherited) -> None:
             f"{len(inherited)} pre-existing problem(s) remain, listed above."
         )
         return
+    # Ordering is deliberately not claimed here: it is a note now, not a check,
+    # so a clean run says nothing about whether the tables are sorted.
     print(
         f"README.md is valid: {total} entries across {len(SERVER_CATEGORIES)} server "
-        f"categories, no duplicates, all alphabetically ordered."
+        f"categories, no duplicates."
     )
 
 
