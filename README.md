@@ -260,6 +260,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [MeetStream](https://github.com/meetstream-ai/meetstream-mcp) | Official meeting bots for Zoom, Meet and Teams: record and transcribe | TypeScript |
 | [Microsoft Teams MCP](https://github.com/InditexTech/mcp-teams-server) | Teams channels, messages, meetings | Python |
 | [Resend MCP](https://github.com/resend/resend-mcp) | Official Resend transactional email | TypeScript |
+| [SendRaven MCP](https://github.com/CommonNinja/sendraven-mcp-server) | Official SendRaven email sending, inbound reply threads and per-key send limits | TypeScript |
 | [sms-florin MCP](https://github.com/flovoice53-tech/sms-florin-mcp) | Rent real UK SMS numbers to test OTP/verification flows | TypeScript |
 | [Telegram MCP](https://github.com/chigwell/telegram-mcp) | Telegram messaging | Python |
 | [Zulip MCP](https://github.com/zulip/zulipmcp) | Official Zulip streams, messages and mentionable bot agents | Python |
