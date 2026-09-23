@@ -469,6 +469,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [NotFair](https://github.com/nowork-studio/NotFair) | Google Ads, Meta Ads, and SEO skills with human-approval gate | TypeScript |
 | [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp) | Official PostHog product analytics | TypeScript |
 | [Salesforce MCP](https://github.com/salesforcecli/mcp) | Official Salesforce CLI MCP | TypeScript |
+| [SearchLink Lite](https://github.com/GlobalMatchHub/searchlink-lite) | Read-only Google Search Console analytics, URL inspection and on-page checks | TypeScript |
 | [UnrealUGC MCP](https://github.com/UnrealUGC/mcp) | Create AI UGC video ads through the UnrealUGC platform | TypeScript |
 
 ### Knowledge Management
