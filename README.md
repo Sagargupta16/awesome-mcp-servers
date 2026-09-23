@@ -166,6 +166,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [n8n MCP](https://github.com/czlonkowski/n8n-mcp) | Node docs and workflow building for n8n automations | TypeScript |
 | [Nx MCP](https://github.com/nrwl/nx-console/tree/master/apps/nx-mcp) | Official Nx monorepo workspace graph and generator context server | TypeScript |
 | [octocode-mcp](https://github.com/bgauryy/octocode-mcp) | Code research across GitHub repos and packages for coding agents | TypeScript |
+| [OrcaReplay](https://github.com/Continuum-AI-Corp/OrcaReplay) | Read an agent's own recorded runs: walk the timeline, ask what happened at a step, replay offline with no model call | TypeScript |
 | [Postman MCP](https://github.com/postmanlabs/postman-mcp-server) | Official Postman API collections server | TypeScript |
 | [Probe](https://github.com/buger/probe) | Semantic code search over large codebases with ripgrep and tree-sitter | Rust |
 | [Repomix](https://github.com/yamadashy/repomix) | Packs a repository into an AI-friendly file, with built-in MCP server | TypeScript |
