@@ -330,6 +330,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Honeycomb MCP](https://docs.honeycomb.io/integrations/mcp/) | Official Honeycomb trace queries | Remote |
 | [Logfire MCP](https://logfire.pydantic.dev/docs/how-to-guides/mcp-server/) | Official Pydantic Logfire observability | Remote |
 | [Netdata MCP](https://github.com/netdata/netdata) | Official Netdata observability with a built-in MCP server | C |
+| [Noveum](https://noveum.ai/en/mcp) | AI agent traces, evaluation datasets and model comparisons | Remote |
 | [OpenTelemetry MCP](https://github.com/traceloop/opentelemetry-mcp-server) | Unified OTEL traces across backends | Python |
 | [Prometheus MCP](https://github.com/pab1it0/prometheus-mcp-server) | Prometheus metrics and PromQL queries | Python |
 | [VictoriaMetrics MCP](https://github.com/VictoriaMetrics/mcp-victoriametrics) | Official VictoriaMetrics metrics and logs queries | Go |
