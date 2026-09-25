@@ -263,7 +263,6 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Microsoft Teams MCP](https://github.com/InditexTech/mcp-teams-server) | Teams channels, messages, meetings | Python |
 | [Resend MCP](https://github.com/resend/resend-mcp) | Official Resend transactional email | TypeScript |
 | [SendRaven MCP](https://github.com/CommonNinja/sendraven-mcp-server) | Official SendRaven email sending, inbound reply threads and per-key send limits | TypeScript |
-| [sms-florin MCP](https://github.com/flovoice53-tech/sms-florin-mcp) | Rent real UK SMS numbers to test OTP/verification flows | TypeScript |
 | [Telegram MCP](https://github.com/chigwell/telegram-mcp) | Telegram messaging | Python |
 | [Zulip MCP](https://github.com/zulip/zulipmcp) | Official Zulip streams, messages and mentionable bot agents | Python |
 
@@ -471,7 +470,6 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [NotFair](https://github.com/nowork-studio/NotFair) | Google Ads, Meta Ads, and SEO skills with human-approval gate | TypeScript |
 | [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp) | Official PostHog product analytics | TypeScript |
 | [Salesforce MCP](https://github.com/salesforcecli/mcp) | Official Salesforce CLI MCP | TypeScript |
-| [SearchLink Lite](https://github.com/GlobalMatchHub/searchlink-lite) | Read-only Google Search Console analytics, URL inspection and on-page checks | TypeScript |
 | [UnrealUGC MCP](https://github.com/UnrealUGC/mcp) | Create AI UGC video ads through the UnrealUGC platform | TypeScript |
 
 ### Knowledge Management
