@@ -13,6 +13,7 @@ Version headings below are documentation milestones. No git tag or GitHub releas
 ### Changed
 
 - The form and CONTRIBUTING.md say what now happens to a submission instead of "a maintainer can add the row".
+- `issue-to-pr.yml` closes a form issue once its pull request has merged, from an hourly run. "Closes #N" never fires here: GitHub skips closing keywords for a merge made by auto-merge on `GITHUB_TOKEN`, which left #119 open after its entry merged in #120 (the first live end-to-end submission, merged with no maintainer involved).
 - `issue-to-pr.yml` runs on `opened` and `edited` only. A form issue arrives with its label, so `labeled` fired alongside `opened` and the first live test (#117) got the same comment twice.
 
 ## [2.4.0] - 2026-09-26
