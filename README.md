@@ -147,6 +147,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Buildkite MCP](https://github.com/buildkite/buildkite-mcp-server) | Official Buildkite pipelines, builds, jobs and test runs | Go |
 | [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) | Official Chrome DevTools for coding agents - debug, trace and inspect pages | TypeScript |
 | [CircleCI MCP](https://github.com/CircleCI-Public/mcp-server-circleci) | Official CircleCI workflow integration | TypeScript |
+| [Codebase Memory MCP](https://github.com/DeusData/codebase-memory-mcp) | Code intelligence server that indexes repos into a queryable knowledge graph | C |
 | [Desktop Commander MCP](https://github.com/wonderwhy-er/DesktopCommanderMCP) | Terminal control, file search and diff-based file editing | TypeScript |
 | [Docker MCP](https://github.com/ckreiling/mcp-server-docker) | Docker container management | Python |
 | [Docker MCP Gateway](https://github.com/docker/mcp-gateway) | Official Docker MCP gateway and catalog CLI plugin | Go |
@@ -217,6 +218,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [iMCP](https://github.com/mattt/iMCP) | Exposes macOS Messages, Contacts, Calendar and Reminders to agents | Swift |
 | [Make MCP](https://github.com/integromat/make-mcp-server) | Official Make server turning scenarios into callable agent tools | TypeScript |
 | [Microsoft 365 MCP](https://github.com/Softeria/ms-365-mcp-server) | Full M365 suite (Outlook, OneDrive, Teams, Excel) | TypeScript |
+| [MindMap AI](https://github.com/MindMap-AI/mcp) | Create and edit visual mind maps from MCP-compatible AI assistants | TypeScript |
 | [monday.com MCP](https://github.com/mondaycom/mcp) | Official monday.com boards, items and workspace automation | TypeScript |
 | [Nextcloud MCP](https://github.com/cbcoutinho/nextcloud-mcp-server) | Nextcloud Notes, Files, Calendar, Tasks, Deck and Talk access | Python |
 | [Notion MCP](https://github.com/makenotion/notion-mcp-server) | Official Notion API integration | TypeScript |
@@ -225,7 +227,6 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Plane MCP](https://github.com/makeplane/plane-mcp-server) | Official Plane projects, work items and cycles automation | Python |
 | [Slack MCP](https://github.com/korotovsky/slack-mcp-server) | Slack workspace integration | Go |
 | [Trello MCP](https://github.com/delorenj/mcp-server-trello) | Trello boards, lists, cards | TypeScript |
-| [MindMap AI](https://github.com/MindMap-AI/mcp) | Create and edit visual mind maps from MCP-compatible AI assistants | TypeScript |
 
 ### Search & Knowledge
 
