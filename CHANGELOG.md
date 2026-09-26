@@ -2,6 +2,15 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.4.0] - 2026-09-26
+
+### Added
+
+- A website for the list, on GitHub Pages. `scripts/build_site.py` reads `README.md` with the validator's own parser, so the README stays the single source of truth, adds live stars and last-push dates from the GitHub API, and renders one static page into `_site/`: search across every entry, tabs for servers, frameworks, clients, official, learning and community, a chip per server category, a language filter, and sorting by stars, recent updates or name. Filters live in the URL, so a search can be shared. Cards are rendered in HTML, so the page works without JavaScript; `site/app.js` only filters and sorts them.
+- `servers.json` next to the page: every entry with its tab, category, language or support tier, stars and last push, for anyone who wants the data.
+- `pages.yml` builds and deploys the site on every change to `README.md` or the site sources, and every hour. The hourly run is what publishes an auto-merged entry, since a merge made with `GITHUB_TOKEN` starts no workflow run.
+- Tests for the site builder in `tests/test_build_site.py`.
+
 ## [2.3.0] - 2026-09-17
 
 ### Added

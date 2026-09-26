@@ -18,7 +18,7 @@ Curated awesome-list of MCP servers, frameworks, clients, and resources, maintai
 - **Framework**: none
 - **Database**: none
 - **Package manager**: none for the list; `requirements-dev.in` / `requirements-dev.txt` hash-lock `ruff` and `pytest` for the scripts
-- **Deploy target**: GitHub README (no build, no deploy)
+- **Deploy target**: the GitHub README, plus a static site on GitHub Pages built from it by `scripts/build_site.py` (`site/` holds the template, CSS and JS; output `_site/` is gitignored)
 
 ## Run
 
@@ -27,6 +27,8 @@ python scripts/validate.py          # structure, format, duplicates (ordering is
 python scripts/validate.py --fix    # auto-repair ordering, whitespace, dashes
 GITHUB_TOKEN=$(gh auth token) python scripts/check_submission.py --base-ref origin/main
 GITHUB_TOKEN=$(gh auth token) python scripts/staleness_report.py
+GITHUB_TOKEN=$(gh auth token) python scripts/build_site.py      # site into _site/; without a token it builds with no stars
+python -m http.server 8766 --directory _site                   # preview it
 ```
 
 `.python-version` (3.14) is the interpreter every workflow installs via `python-version-file`.
@@ -42,12 +44,13 @@ ruff format --check scripts/ tests/
 
 `requirements-dev.txt` is a uv-generated universal hash lock; `requirements-dev.in` is the source and carries the regeneration command. Both the pin and `ruff.toml`'s rule set exist so `ruff format --check` cannot flip on a formatter release.
 
-Four workflows:
+Five workflows:
 
 - [lint.yml](.github/workflows/lint.yml) -- `validate` (README structure), `python-checks` (ruff + pytest on the gate scripts), `link-check` (lychee over README, CONTRIBUTING, SECURITY, CHANGELOG). Runs on PRs to `main`, pushes to `main`, and daily at 06:00 UTC.
 - [submission-check.yml](.github/workflows/submission-check.yml) -- inspects the rows a PR adds against the GitHub API: licence, last push, archived, fork, real implementation. Honours the `maintainer-override` label. Deliberately has no `paths` filter: it is a required status check, and a path-filtered required check never reports on a PR that misses the filter, which hangs auto-merge forever.
 - [auto-merge.yml](.github/workflows/auto-merge.yml) -- switches on GitHub's native auto-merge for PRs that only touch `README.md` or `CHANGELOG.md`, so a community entry lands unattended once the required checks pass. Runs on `pull_request_target` so a fork cannot edit the workflow that judges it, and never checks out PR code, so the writable token is never exposed to contributor-controlled input. Skipped when a PR reaches `.github/`, `scripts/`, `tests/` or tooling config, or carries `maintainer-override` or `no-auto-merge`.
 - [health.yml](.github/workflows/health.yml) -- monthly (1st, 06:00 UTC) audit of every listed repository, rewritten into one `maintenance`-labelled tracking issue. First scheduled run: 2026-10-01.
+- [pages.yml](.github/workflows/pages.yml) -- builds the website from `README.md` and deploys it to GitHub Pages, on push to `main` (README, `site/`, the builder or the validator) and hourly at :17. The hourly run is load-bearing for the same reason as lint's schedule: an auto-merged entry never produces a push run, so without it the site would not show community additions. Not a required check.
 
 ## Entry points
 
