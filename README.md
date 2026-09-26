@@ -227,6 +227,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Orbit MCP](https://github.com/Noveum/orbit) | Manage issues, projects, sprints and docs with workspace-scoped OAuth | TypeScript |
 | [Outlook MCP](https://github.com/ryaker/outlook-mcp) | Outlook email and calendar via MS Graph | JavaScript |
 | [Plane MCP](https://github.com/makeplane/plane-mcp-server) | Official Plane projects, work items and cycles automation | Python |
+| [Pomodoro Timer MCP](https://github.com/theluckystrike/mcp-servers) | Focus sessions with pomodoro timers from chat | TypeScript |
 | [Slack MCP](https://github.com/korotovsky/slack-mcp-server) | Slack workspace integration | Go |
 | [Trello MCP](https://github.com/delorenj/mcp-server-trello) | Trello boards, lists, cards | TypeScript |
 
@@ -279,6 +280,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Google Sheets MCP](https://github.com/xing5/mcp-google-sheets) | Create and edit Google Sheets spreadsheets via Google Drive | Python |
 | [Markdownify MCP](https://github.com/zcaceres/markdownify-mcp) | Convert PDF, Office, audio and web files to Markdown | TypeScript |
 | [OneDrive / SharePoint MCP](https://github.com/ftaricano/mcp-onedrive-sharepoint) | OneDrive and SharePoint document access | TypeScript |
+| [PDF Merger MCP](https://github.com/theluckystrike/mcp-servers) | Merge PDF files from chat | TypeScript |
 | [S3 Tables MCP](https://github.com/awslabs/mcp/tree/main/src/s3-tables-mcp-server) | Official AWS S3 Tables | Python |
 
 ### AI & ML
@@ -466,6 +468,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [Backlink Checker MCP](https://github.com/theluckystrike/mcp-servers) | Check backlinks: dofollow/nofollow, anchor text and robots guards | TypeScript |
 | [BulkPublish MCP](https://github.com/azeemkafridi/bulkpublish-api) | AI-agent API and MCP server for multi-platform social publishing and analytics | TypeScript |
 | [DataForSEO MCP](https://github.com/dataforseo/mcp-server-typescript) | Official DataForSEO server for SERP, keyword and backlink data | TypeScript |
 | [Google Analytics MCP](https://github.com/surendranb/google-analytics-mcp) | GA4 data for AI agents | Python |
