@@ -2,6 +2,18 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.5.0] - 2026-09-26
+
+### Added
+
+- `issue-to-pr.yml` and `scripts/issue_to_pr.py`. A "Suggest a server" form for a server or a framework now becomes the same one-row pull request a contributor would open: the row is built with the validator's rules (description length, capitalisation, known language and category, no duplicate link), inserted into its table in order, and merged by auto-merge once the required checks pass. A form that breaks a rule gets a comment saying which, and editing the issue retries. Clients, links and guides are still added by a maintainer.
+- `submission-check.yml` can be dispatched. A pull request opened with `GITHUB_TOKEN` starts no `pull_request` run, so the issue workflow dispatches `lint.yml` and `submission-check.yml` on the submission branch; their check runs land on the pull request's head commit and satisfy the required checks by name.
+- Tests for the form parser, the row rules and the insert in `tests/test_issue_to_pr.py`.
+
+### Changed
+
+- The form and CONTRIBUTING.md say what now happens to a submission instead of "a maintainer can add the row".
+
 ## [2.4.0] - 2026-09-26
 
 ### Added

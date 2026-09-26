@@ -22,6 +22,10 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened, labeled, unlabeled]
+  # issue-to-pr.yml dispatches this on a submission branch: its pull request is
+  # opened with GITHUB_TOKEN, which starts no pull_request run. The check run lands
+  # on the branch head, the pull request's head, so it still satisfies the rule.
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -43,8 +47,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+          # a dispatched run has no pull request, and submissions always target main
+          BASE: ${{ github.event.pull_request.base.ref || 'main' }}
         run: |
-          git fetch --no-tags origin "${{ github.event.pull_request.base.ref }}"
+          git fetch --no-tags origin "$BASE"
           python scripts/check_submission.py \
-            --base-ref "origin/${{ github.event.pull_request.base.ref }}" \
+            --base-ref "origin/$BASE" \
             --labels "$LABELS"
