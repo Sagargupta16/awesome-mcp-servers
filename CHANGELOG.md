@@ -13,6 +13,7 @@ Version headings below are documentation milestones. No git tag or GitHub releas
 ### Changed
 
 - The form and CONTRIBUTING.md say what now happens to a submission instead of "a maintainer can add the row".
+- `issue-to-pr.yml` runs on `opened` and `edited` only. A form issue arrives with its label, so `labeled` fired alongside `opened` and the first live test (#117) got the same comment twice.
 
 ## [2.4.0] - 2026-09-26
 

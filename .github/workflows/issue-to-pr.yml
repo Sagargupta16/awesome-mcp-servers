@@ -19,9 +19,12 @@ name: Issue to pull request
 #
 # Needs the repository setting "Allow GitHub Actions to create and approve pull
 # requests". There are no required reviews, so only the "create" half is used.
+# Not `labeled`: a form issue arrives with its label, which fires `opened` and
+# `labeled` together and ran this twice (two identical comments on #117). To retry
+# an older issue, edit it.
 on:
   issues:
-    types: [opened, edited, labeled]
+    types: [opened, edited]
 
 permissions:
   contents: write
@@ -38,8 +41,7 @@ jobs:
     name: Open the pull request
     if: >-
       github.event.issue.state == 'open' &&
-      contains(github.event.issue.labels.*.name, 'addition') &&
-      (github.event.action != 'labeled' || github.event.label.name == 'addition')
+      contains(github.event.issue.labels.*.name, 'addition')
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
