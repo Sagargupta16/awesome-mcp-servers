@@ -2,6 +2,12 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.5.1] - 2026-09-26
+
+### Added
+
+- A link to the website at the top of the README.
+
 ## [2.5.0] - 2026-09-26
 
 ### Added
