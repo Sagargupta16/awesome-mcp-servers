@@ -1,0 +1,93 @@
+name: Issue to pull request
+
+# Turns a "Suggest a server" form into the pull request a contributor would have
+# opened, so a submission without git merges itself on the same checks.
+#
+# Three GitHub rules shape this workflow:
+#
+# 1. A pull request opened with GITHUB_TOKEN starts no `pull_request` workflow run,
+#    so lint.yml and submission-check.yml would never report and auto-merge would
+#    wait forever. This workflow dispatches both on the submission branch instead:
+#    their check runs land on the branch head commit, which is the pull request's
+#    head, so the required checks are satisfied by name. GitGuardian is an app, not
+#    a workflow, and runs on its own.
+# 2. For the same reason auto-merge.yml never sees these pull requests, so this
+#    workflow switches auto-merge on itself. The checks stay the only gate.
+# 3. The issue body is untrusted. It is read from the event payload file by
+#    scripts/issue_to_pr.py and never interpolated into a command; the only value
+#    that comes back (the entry name) is passed through the environment.
+#
+# Needs the repository setting "Allow GitHub Actions to create and approve pull
+# requests". There are no required reviews, so only the "create" half is used.
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: issue-to-pr-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    name: Open the pull request
+    if: >-
+      github.event.issue.state == 'open' &&
+      contains(github.event.issue.labels.*.name, 'addition') &&
+      (github.event.action != 'labeled' || github.event.label.name == 'addition')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ISSUE: ${{ github.event.issue.number }}
+      BRANCH: submission/issue-${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: .python-version
+
+      - name: Build the row from the form
+        id: row
+        run: python scripts/issue_to_pr.py
+
+      - name: Explain why it was not added
+        if: steps.row.outputs.status != 'ok'
+        run: gh issue comment "$ISSUE" --body-file issue-comment.md
+
+      - name: Push the submission branch
+        if: steps.row.outputs.status == 'ok'
+        env:
+          NAME: ${{ steps.row.outputs.name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
+          git add README.md
+          git commit -m "Add $NAME" -m "Submitted in #$ISSUE."
+          # the branch belongs to this workflow; an edited issue replaces its commit
+          git push --force origin "$BRANCH"
+
+      - name: Open the pull request and start its checks
+        if: steps.row.outputs.status == 'ok'
+        env:
+          NAME: ${{ steps.row.outputs.name }}
+          SECTION: ${{ steps.row.outputs.section }}
+          AUTHOR: ${{ github.event.issue.user.login }}
+        run: |
+          pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
+          if [ -z "$pr" ]; then
+            printf 'Adds **%s** to %s, from the form in #%s by @%s.\n\nCloses #%s\n\nOpened by the issue-to-pr workflow. It merges itself once the required checks pass.\n' \
+              "$NAME" "$SECTION" "$ISSUE" "$AUTHOR" "$ISSUE" > pr-body.md
+            gh pr create --base main --head "$BRANCH" --title "Add $NAME" --body-file pr-body.md
+            pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
+            gh issue comment "$ISSUE" --body "Thanks! Opened #$pr with this entry. It merges itself when the checks pass and shows up on https://sagargupta.online/awesome-mcp-servers/ within the hour."
+          fi
+          gh workflow run lint.yml --ref "$BRANCH"
+          gh workflow run submission-check.yml --ref "$BRANCH"
+          gh pr merge "$pr" --auto --squash

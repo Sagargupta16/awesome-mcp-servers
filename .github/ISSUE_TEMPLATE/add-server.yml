@@ -6,10 +6,12 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this if you would rather not open a pull request: a maintainer can add
-        the row for you, and the suggestion stays on record so you can point at it
-        later. There is no star or age requirement, so a brand-new project is
-        welcome here.
+        Use this if you would rather not open a pull request. For a server or a
+        framework, a bot turns this form into the one-row pull request, runs the
+        same checks a contributor's pull request gets, and merges it when they pass.
+        If a field breaks a rule it says why here, and editing the issue retries.
+        Other sections are added by a maintainer. There is no star or age
+        requirement, so a brand-new project is welcome here.
 
         Please check [CONTRIBUTING.md](https://github.com/Sagargupta16/awesome-mcp-servers/blob/main/CONTRIBUTING.md#quality-standards) first.
         Suggestions that clearly miss the bar get closed without much discussion.

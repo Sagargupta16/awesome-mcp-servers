@@ -125,7 +125,7 @@ That is fine and normal -- much of this list exists because authors submitted th
 1. **Disclose it.** Tick the affiliation box in the pull request template. That is all: the disclosure is not held against you, it just means nobody has to guess. Self-promotion that was hidden and later discovered gets the entry removed, which is the only reason this matters.
 2. **Meet the same bar as everyone else.** Licence, documentation, maintenance, real implementation. Being the author neither helps nor hurts.
 
-Being new is not a reason to hold back. If you would rather not open a pull request, a [server suggestion issue](https://github.com/Sagargupta16/awesome-mcp-servers/issues/new/choose) works just as well and a maintainer can add the row for you.
+Being new is not a reason to hold back. If you would rather not open a pull request, the [server suggestion form](https://github.com/Sagargupta16/awesome-mcp-servers/issues/new?template=add-server.yml) works just as well: for a server or a framework, a bot turns the form into the same one-row pull request, runs the same checks, and merges it when they pass. If a field breaks a rule it comments on the issue, and editing the issue retries. Other sections are added by a maintainer.
 
 ## Pull request process
 

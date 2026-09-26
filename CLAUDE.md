@@ -44,13 +44,14 @@ ruff format --check scripts/ tests/
 
 `requirements-dev.txt` is a uv-generated universal hash lock; `requirements-dev.in` is the source and carries the regeneration command. Both the pin and `ruff.toml`'s rule set exist so `ruff format --check` cannot flip on a formatter release.
 
-Five workflows:
+Six workflows:
 
 - [lint.yml](.github/workflows/lint.yml) -- `validate` (README structure), `python-checks` (ruff + pytest on the gate scripts), `link-check` (lychee over README, CONTRIBUTING, SECURITY, CHANGELOG). Runs on PRs to `main`, pushes to `main`, and daily at 06:00 UTC.
 - [submission-check.yml](.github/workflows/submission-check.yml) -- inspects the rows a PR adds against the GitHub API: licence, last push, archived, fork, real implementation. Honours the `maintainer-override` label. Deliberately has no `paths` filter: it is a required status check, and a path-filtered required check never reports on a PR that misses the filter, which hangs auto-merge forever.
 - [auto-merge.yml](.github/workflows/auto-merge.yml) -- switches on GitHub's native auto-merge for PRs that only touch `README.md` or `CHANGELOG.md`, so a community entry lands unattended once the required checks pass. Runs on `pull_request_target` so a fork cannot edit the workflow that judges it, and never checks out PR code, so the writable token is never exposed to contributor-controlled input. Skipped when a PR reaches `.github/`, `scripts/`, `tests/` or tooling config, or carries `maintainer-override` or `no-auto-merge`.
 - [health.yml](.github/workflows/health.yml) -- monthly (1st, 06:00 UTC) audit of every listed repository, rewritten into one `maintenance`-labelled tracking issue. First scheduled run: 2026-10-01.
 - [pages.yml](.github/workflows/pages.yml) -- builds the website from `README.md` and deploys it to GitHub Pages, on push to `main` (README, `site/`, the builder or the validator) and hourly at :17. The hourly run is load-bearing for the same reason as lint's schedule: an auto-merged entry never produces a push run, so without it the site would not show community additions. Not a required check.
+- [issue-to-pr.yml](.github/workflows/issue-to-pr.yml) -- turns a "Suggest a server" form (label `addition`) for a server or framework into a one-row pull request on `submission/issue-N`, via `scripts/issue_to_pr.py`, which reads the untrusted issue body from the event payload file and never lets it reach a shell. Because a `GITHUB_TOKEN` pull request starts no `pull_request` runs, it dispatches `lint.yml` and `submission-check.yml` on the branch (their check runs land on the PR head, so the required checks match by name) and enables auto-merge itself. Needs the repository setting "Allow GitHub Actions to create and approve pull requests"; no reviews are required, so only "create" is used. An invalid form gets a comment and retries on edit.
 
 ## Entry points
 
