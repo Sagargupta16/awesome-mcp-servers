@@ -12,6 +12,9 @@ Thumbs.db
 .env.*.local
 *.log
 
+# The website build output (scripts/build_site.py); the Pages workflow deploys it
+_site/
+
 # Python, for the scripts in scripts/ and the suite in tests/
 __pycache__/
 *.py[cod]

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Awesome MCP Servers: {{SERVER_COUNT}} checked Model Context Protocol servers</title>
+<meta name="description" content="A curated, CI-checked list of {{SERVER_COUNT}} Model Context Protocol servers across {{CATEGORY_COUNT}} categories, plus frameworks, clients and guides. Every entry is open source and actively maintained.">
+<meta name="theme-color" content="#0a0b0d">
+<meta property="og:title" content="Awesome MCP Servers">
+<meta property="og:description" content="{{SERVER_COUNT}} checked MCP servers, searchable. Open source, maintained, verified by CI.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="./" aria-label="Awesome MCP Servers home">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l4-4 4 4-4 4zM12 12l4-4 4 4-4 4z"/></svg>
+    <span>awesome-mcp-servers</span>
+  </a>
+  <nav class="bar-links">
+    <a class="ghost" href="{{REPO_URL}}" target="_blank" rel="noopener">GitHub</a>
+    <a class="pill" href="{{SUBMIT_URL}}" target="_blank" rel="noopener">Add a server</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">Model Context Protocol</p>
+    <h1>MCP servers,<br>checked before they are listed.</h1>
+    <p class="lede">Every entry is open source, pushed to in the last 180 days, documented well enough to run, and verified by CI. There is no star requirement: new projects are welcome.</p>
+    <dl class="stats">
+      <div><dt>Servers</dt><dd>{{SERVER_COUNT}}</dd></div>
+      <div><dt>Categories</dt><dd>{{CATEGORY_COUNT}}</dd></div>
+      <div><dt>Clients</dt><dd>{{CLIENT_COUNT}}</dd></div>
+      <div><dt>Updated</dt><dd><time datetime="{{UPDATED_ISO}}">{{UPDATED}}</time></dd></div>
+    </dl>
+  </section>
+
+  <section class="finder" aria-label="Browse the list">
+    <div class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search {{TOTAL_COUNT}} entries: postgres, figma, browser..." autocomplete="off" aria-label="Search">
+      <kbd>/</kbd>
+    </div>
+    <div class="tabs" role="tablist">{{TABS}}</div>
+    <div class="cats" id="cats"><button class="cat" data-cat="" aria-pressed="true">All categories</button>{{CATEGORIES}}</div>
+    <div class="toolbar">
+      <p class="shown" id="shown" aria-live="polite"></p>
+      <label class="select">Language
+        <select id="tag"><option value="">Any</option>{{TAG_OPTIONS}}</select>
+      </label>
+      <label class="select">Sort
+        <select id="sort">
+          <option value="stars">Most stars</option>
+          <option value="pushed">Recently updated</option>
+          <option value="name">Name</option>
+        </select>
+      </label>
+    </div>
+    <div class="grid" id="grid">
+{{CARDS}}
+    </div>
+    <div class="empty" id="empty" hidden>
+      <p>Nothing matches that yet.</p>
+      <a class="pill" href="{{SUBMIT_URL}}" target="_blank" rel="noopener">Suggest a server</a>
+    </div>
+  </section>
+
+  <section class="submit">
+    <h2>Built an MCP server?</h2>
+    <p>Open a pull request that adds one row, or fill in the form. The checks verify the licence, recent activity and a real MCP implementation, and a passing pull request merges itself. It shows up here within the hour.</p>
+    <div class="submit-links">
+      <a class="pill" href="{{SUBMIT_URL}}" target="_blank" rel="noopener">Submit with the form</a>
+      <a class="ghost" href="{{REPO_URL}}/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing guide</a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Built from <a href="{{REPO_URL}}/blob/main/README.md">README.md</a> on every change and every hour. Stars and dates from the GitHub API. <a href="servers.json">servers.json</a></p>
+  <p>CC0 1.0. Maintained by <a href="https://github.com/Sagargupta16">Sagar Gupta</a> and contributors. A place on this list is a filter, not a security audit: read the source before you connect a server.</p>
+</footer>
+<script src="app.js" defer></script>
+</body>
+</html>

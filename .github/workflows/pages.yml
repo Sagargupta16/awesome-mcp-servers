@@ -1,0 +1,66 @@
+name: Website
+
+# Builds the searchable site from README.md (scripts/build_site.py) and deploys it
+# to GitHub Pages.
+#
+# Why a schedule as well as push. Auto-merge lands community pull requests with
+# GITHUB_TOKEN, and GitHub does not start a workflow run from a GITHUB_TOKEN push,
+# so an auto-merged entry never triggers the push event below. The hourly run
+# picks it up within the hour, and refreshes the stars and last-push dates too.
+on:
+  push:
+    branches: [main]
+    paths:
+      - README.md
+      - site/**
+      - scripts/build_site.py
+      - scripts/validate.py
+      - .github/workflows/pages.yml
+  schedule:
+    - cron: "17 * * * *" # hourly, off the top of the hour
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# one deploy at a time; a run already deploying finishes rather than being cut off
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: .python-version
+
+      - name: Build from README.md
+        env:
+          # read-only use: stars and last-push dates for the listed repositories
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/build_site.py
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
