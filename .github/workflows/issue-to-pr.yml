@@ -22,9 +22,16 @@ name: Issue to pull request
 # Not `labeled`: a form issue arrives with its label, which fires `opened` and
 # `labeled` together and ran this twice (two identical comments on #117). To retry
 # an older issue, edit it.
+#
+# The hourly run closes the issue once its pull request has merged. "Closes #N"
+# does not fire here: GitHub skips closing keywords when the merge is made by
+# auto-merge on GITHUB_TOKEN (#119 stayed open after #120 merged).
 on:
   issues:
     types: [opened, edited]
+  schedule:
+    - cron: "47 * * * *" # hourly
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -33,13 +40,33 @@ permissions:
   actions: write
 
 concurrency:
-  group: issue-to-pr-${{ github.event.issue.number }}
+  group: issue-to-pr-${{ github.event.issue.number || 'sweep' }}
   cancel-in-progress: false
 
 jobs:
+  close-merged:
+    name: Close issues whose submission merged
+    if: github.event_name != 'issues'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+    steps:
+      - name: Close each open form issue with a merged pull request
+        run: |
+          for n in $(gh issue list -R "$REPO" --label addition --state open --limit 200 --json number --jq '.[].number'); do
+            pr=$(gh pr list -R "$REPO" --head "submission/issue-$n" --state merged --json number --jq '.[0].number')
+            if [ -n "$pr" ]; then
+              gh issue close "$n" -R "$REPO" --reason completed \
+                --comment "Merged in #$pr, so it is on the list and at https://sagargupta.online/awesome-mcp-servers/ now. Thanks!"
+              echo "closed #$n (merged in #$pr)"
+            fi
+          done
+
   submit:
     name: Open the pull request
     if: >-
+      github.event_name == 'issues' &&
       github.event.issue.state == 'open' &&
       contains(github.event.issue.labels.*.name, 'addition')
     runs-on: ubuntu-latest
