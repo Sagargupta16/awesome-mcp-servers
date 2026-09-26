@@ -33,11 +33,8 @@ on:
     - cron: "47 * * * *" # hourly
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
-  issues: write
-  actions: write
+# nothing by default; each job asks for exactly what it writes
+permissions: {}
 
 concurrency:
   group: issue-to-pr-${{ github.event.issue.number || 'sweep' }}
@@ -48,6 +45,9 @@ jobs:
     name: Close issues whose submission merged
     if: github.event_name != 'issues'
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: read
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       REPO: ${{ github.repository }}
@@ -70,6 +70,11 @@ jobs:
       github.event.issue.state == 'open' &&
       contains(github.event.issue.labels.*.name, 'addition')
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # push the submission branch
+      pull-requests: write # open it and switch on auto-merge
+      issues: write # comment on the issue
+      actions: write # dispatch lint.yml and submission-check.yml
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ISSUE: ${{ github.event.issue.number }}
