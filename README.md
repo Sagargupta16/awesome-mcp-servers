@@ -178,6 +178,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Serena](https://github.com/oraios/serena) | Semantic code retrieval and editing toolkit for coding agents | Python |
 | [Supergateway](https://github.com/supercorp-ai/supergateway) | Gateway that runs stdio MCP servers over SSE and HTTP | TypeScript |
 | [XcodeBuildMCP](https://github.com/cameroncooke/XcodeBuildMCP) | Build, run and debug Xcode iOS and macOS projects from an agent | TypeScript |
+| [Codapult Guard](https://github.com/codapult/codapult-guard) | Architecture guardrails for AI coding agents | TypeScript |
 
 ### Cloud & Infrastructure
 
