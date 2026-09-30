@@ -134,6 +134,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [StarRocks MCP](https://github.com/StarRocks/mcp-server-starrocks) | Official StarRocks OLAP database query and schema access | Python |
 | [Supabase MCP](https://github.com/supabase/mcp) | Supabase database, auth, and storage | TypeScript |
 | [Upstash MCP](https://github.com/upstash/mcp-server) | Upstash Redis and Vector databases | TypeScript |
+| [YunCMS](https://github.com/Yunsoft-Software/yuncms) | Inspect CMS schema and read or write collection data with YunCMS RBAC | JavaScript |
 
 ### Developer Tools
 
