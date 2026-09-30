@@ -311,7 +311,6 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Invoice MCP](https://github.com/theluckystrike/mcp-invoice) | Create PDF invoices with VAT lines, sequential numbering and overdue tracking | JavaScript |
 | [Massive.com (Polygon.io) MCP](https://github.com/massive-com/mcp_massive) | Official Massive.com (formerly Polygon.io) market data for stocks and crypto | Python |
 | [MetaTrader MCP](https://github.com/ariadng/metatrader-mcp-server) | Place and manage MetaTrader 5 trades, positions and market data | Python |
-| [ParlayAPI](https://github.com/JacobiusMakes/parlay-api-mcp) | Sports odds and player props using your own API key and account allowances | Python |
 | [PayPal Agent Toolkit](https://github.com/paypal/agent-toolkit) | Official PayPal toolkit with an MCP server for payments and invoicing | TypeScript |
 | [QuickBooks MCP](https://github.com/intuit/quickbooks-online-mcp-server) | Official Intuit QuickBooks Online | TypeScript |
 | [Razorpay MCP](https://github.com/razorpay/razorpay-mcp-server) | Official Razorpay server for payments, orders, refunds and settlements | Go |
