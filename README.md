@@ -431,6 +431,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [brianbooms-mcp](https://github.com/brianbooms/brianbooms-mcp) | x402 agent commerce: search, price-check and buy 33 digital products with USDC micropayments on Base | TypeScript |
 | [Amazon MCP](https://github.com/rigwild/mcp-server-amazon) | Search and purchase Amazon products | TypeScript |
 | [commercetools MCP Essentials](https://github.com/commercetools/mcp-essentials) | Official commercetools server for products, carts, orders and customers | TypeScript |
 | [eBay MCP](https://github.com/YosefHayim/ebay-mcp) | 325 tools for eBay Sell APIs | TypeScript |
