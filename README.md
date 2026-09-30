@@ -396,6 +396,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | Server | Description | Language |
 |--------|-------------|----------|
 | [Bright Data MCP](https://github.com/brightdata/brightdata-mcp) | Official Bright Data web search, scraping, and browser automation | JavaScript |
+| [browser-buddy](https://github.com/hahahahahahahahah6/browser-buddy) | Let coding agents read your logged-in Chrome pages via MCP | Python |
 | [Browser Tools MCP](https://github.com/AgentDeskAI/browser-tools-mcp) | Read browser console logs, network traffic and DOM via a Chrome extension | TypeScript |
 | [Crawl4AI](https://github.com/unclecode/crawl4ai) | LLM-friendly web crawler and scraper with built-in MCP endpoints | Python |
 | [Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server) | Official Firecrawl web scraping and search | TypeScript |
