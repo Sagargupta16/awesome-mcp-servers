@@ -15,11 +15,12 @@ from __future__ import annotations
 
 import argparse
 import re
-import subprocess
 import sys
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
+
+import gitref
 
 README = Path(__file__).resolve().parent.parent / "README.md"
 
@@ -136,9 +137,8 @@ ROW_RE = re.compile(
 BULLET_RE = re.compile(r"^- \[(?P<name>[^\]]+)\]\((?P<url>[^)\s]+)\) - (?P<desc>.+)$")
 TOC_RE = re.compile(r"^\s*- \[(?P<label>[^\]]+)\]\(#(?P<anchor>[a-z0-9-]+)\)\s*$")
 
-# Shape of an acceptable --baseline value. Must not start with a dash, or git
-# would read it as an option instead of a revision.
-REF_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._/~^@{}-]*$")
+# Re-exported so the pattern has one definition for all three gate scripts.
+REF_RE = gitref.REF_RE
 
 
 @dataclass
@@ -589,28 +589,22 @@ def baseline_errors(ref: str):
     value beginning with `-` would still be read as an option rather than a
     revision, so the leading character is constrained too.
     """
-    if not REF_RE.match(ref):
+    if not gitref.is_valid_ref(ref):
         print(
             f"error: {ref!r} is not a valid git ref for --baseline",
             file=sys.stderr,
         )
         return None
 
-    proc = subprocess.run(
-        ["git", "show", f"{ref}:README.md"],
-        capture_output=True,
-        check=False,
-        shell=False,
-    )
-    if proc.returncode != 0:
-        detail = proc.stderr.decode("utf-8", "replace").strip()
+    text, detail = gitref.show(ref, "README.md")
+    if text is None:
         print(
             f"warning: cannot read README.md at {ref} ({detail}); "
             f"treating every problem as new",
             file=sys.stderr,
         )
         return None
-    text = proc.stdout.decode("utf-8", "replace")
+
     errors, _, _ = run_checks(text.splitlines(keepends=True))
     return {problem_key(e) for e in errors}
 

@@ -22,22 +22,19 @@ from __future__ import annotations
 import argparse
 import concurrent.futures
 import re
-import subprocess
 import sys
 import tomllib
 import urllib.error
 import urllib.request
 from pathlib import Path
 
+import gitref
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 LYCHEE_CONFIG = REPO_ROOT / "lychee.toml"
 
 # The same inputs the Check links job passes to lychee.
 SCANNED = ("README.md", "CONTRIBUTING.md", "SECURITY.md", "CHANGELOG.md")
-
-# Shape of an acceptable git ref. Must not start with a dash, or git would read
-# it as an option instead of a revision.
-REF_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._/~^@{}-]*$")
 
 LINK_RE = re.compile(r"\]\((https?://[^)\s]+)\)")
 FENCE_RE = re.compile(r"^\s*```")
@@ -81,23 +78,17 @@ def links_in(text: str) -> set[str]:
 
 def links_at_ref(ref: str) -> set[str] | None:
     """Links across the scanned files at `ref`, or None if the ref is unreadable."""
-    if not REF_RE.match(ref):
+    if not gitref.is_valid_ref(ref):
         print(f"error: {ref!r} is not a valid git ref", file=sys.stderr)
         return None
 
     found: set[str] = set()
     for name in SCANNED:
-        proc = subprocess.run(
-            ["git", "show", f"{ref}:{name}"],
-            capture_output=True,
-            check=False,
-            shell=False,
-        )
-        if proc.returncode != 0:
-            # A file that does not exist at the base is new, so everything in it
-            # is new. That is correct, not an error.
-            continue
-        found |= links_in(proc.stdout.decode("utf-8", "replace"))
+        text, _ = gitref.show(ref, name)
+        # A file that does not exist at the base is new, so everything in it is
+        # new. That is correct, not an error.
+        if text is not None:
+            found |= links_in(text)
     return found
 
 

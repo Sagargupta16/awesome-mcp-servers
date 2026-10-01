@@ -15,6 +15,7 @@ from pathlib import Path
 import pytest
 
 import check_new_links
+import gitref
 
 ALIVE = "https://github.com/python/cpython"
 DEAD = "https://github.com/Sagargupta16/this-repo-does-not-exist-xyz"
@@ -77,9 +78,16 @@ def test_option_like_ref_is_refused(capsys):
 
 
 def test_ordinary_revisions_match_the_ref_pattern():
+    """The pattern lives in gitref now, shared by all three gate scripts."""
     valid = ["main", "origin/main", "HEAD~1", "refs/heads/main"]
 
-    assert all(check_new_links.REF_RE.match(r) for r in valid)
+    assert all(gitref.is_valid_ref(r) for r in valid)
+
+
+def test_option_like_refs_are_refused_by_the_shared_guard():
+    hostile = ["-upload-pack=evil", "--exec=bad", "main;rm -rf /", "$(whoami)"]
+
+    assert [r for r in hostile if gitref.is_valid_ref(r)] == []
 
 
 # --- the diff against a real git history ------------------------------------
