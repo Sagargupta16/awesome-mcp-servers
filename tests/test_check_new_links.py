@@ -8,11 +8,10 @@ somebody actually added.
 
 from __future__ import annotations
 
-import shutil
-import subprocess
 from pathlib import Path
 
 import pytest
+from conftest import commit_readme
 
 import check_new_links
 import gitref
@@ -93,29 +92,11 @@ def test_option_like_refs_are_refused_by_the_shared_guard():
 # --- the diff against a real git history ------------------------------------
 
 
-def _git(cwd: Path, *args: str) -> None:
-    subprocess.run(
-        ["git", "-c", "commit.gpgsign=false", *args],
-        cwd=cwd,
-        check=True,
-        capture_output=True,
-    )
-
-
 @pytest.fixture
-def repo(tmp_path: Path) -> Path:
-    if shutil.which("git") is None:
-        pytest.skip("git is not available")
-    _git(tmp_path, "init", "-b", "main")
-    _git(tmp_path, "config", "user.email", "test@example.invalid")
-    _git(tmp_path, "config", "user.name", "Test")
-    # The base already carries a dead link, exactly like main did.
-    (tmp_path / "README.md").write_text(
-        f"| [Rotted]({DEAD}) | x | Go |\n", encoding="utf-8"
-    )
-    _git(tmp_path, "add", "README.md")
-    _git(tmp_path, "commit", "-m", "base")
-    return tmp_path
+def repo(git_repo: Path) -> Path:
+    """A base that already carries a dead link, exactly like main did."""
+    commit_readme(git_repo, f"| [Rotted]({DEAD}) | x | Go |\n")
+    return git_repo
 
 
 def test_a_link_already_on_the_base_is_not_reported_as_new(repo: Path, monkeypatch):
