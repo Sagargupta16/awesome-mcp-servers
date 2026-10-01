@@ -85,18 +85,49 @@ jobs:
       - name: Test
         run: pytest tests/ -q
 
+  # The job name is a required status check on the `main` ruleset. Do not rename
+  # it without updating the ruleset in the same pass, or auto-merge waits forever
+  # on a check that never arrives under the old name.
   link-check:
     name: Check links
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
-      # A dead link is a defect, so this job fails on one. lychee.toml holds the
-      # retry and rate-limit settings that keep that from being flaky.
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+
+      # On a pull request, only the links the change introduces can fail it. A
+      # full sweep here charges the author for rot already on the base branch,
+      # which has blocked six innocent submissions across three rotted entries.
+      - name: Check new links
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch --no-tags --depth=1 origin "${{ github.base_ref }}"
+          python scripts/check_new_links.py --base-ref "origin/${{ github.base_ref }}"
+
+      # The whole file is still swept on a pull request, for visibility, but it
+      # cannot fail the check. Pre-existing rot is the base branch's problem.
+      - name: Sweep every link (advisory on a pull request)
+        if: github.event_name == 'pull_request'
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: --config lychee.toml --verbose README.md CONTRIBUTING.md SECURITY.md CHANGELOG.md
+          fail: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Everywhere else a dead link is a defect and fails the build, so rot on
+      # main stays loud. lychee.toml holds the retry and rate-limit settings that
+      # keep that from being flaky.
       # Pinned to a commit rather than a moving tag: this is a third-party action
       # and `v2` can be repointed at new code without the reference changing.
       # Renovate bumps the SHA and the trailing comment together.
       - name: Link Checker
+        if: github.event_name != 'pull_request'
         uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
           args: --config lychee.toml --verbose README.md CONTRIBUTING.md SECURITY.md CHANGELOG.md
