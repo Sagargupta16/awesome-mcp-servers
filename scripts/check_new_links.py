@@ -117,8 +117,48 @@ def check(url: str, timeout: int) -> tuple[str, object]:
             return url, response.status
     except urllib.error.HTTPError as exc:
         return url, exc.code
-    except (urllib.error.URLError, TimeoutError, OSError) as exc:
+    # URLError and TimeoutError both derive from OSError, so this covers all three.
+    except OSError as exc:
         return url, f"unreachable: {type(exc).__name__}"
+
+
+def partition_new(base_ref: str, excludes) -> tuple[list[str], list[str]]:
+    """Split the links this change adds into (to check, skipped by lychee.toml)."""
+    before = links_at_ref(base_ref)
+    if before is None:
+        print("Treating every link as new, since the base ref could not be read.")
+        before = set()
+
+    new = sorted(links_at_head() - before)
+    skipped = [u for u in new if any(p.search(u) for p in excludes)]
+    excluded = set(skipped)
+    return [u for u in new if u not in excluded], skipped
+
+
+def check_all(urls, accept: set[int], timeout: int) -> list[tuple[object, str]]:
+    """Check every URL concurrently, printing each verdict, and return the dead."""
+    dead: list[tuple[object, str]] = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+        futures = [pool.submit(check, u, timeout) for u in urls]
+        for future in concurrent.futures.as_completed(futures):
+            url, status = future.result()
+            ok = isinstance(status, int) and status in accept
+            print(f"  {'ok  ' if ok else 'DEAD'}  {status}  {url}")
+            if not ok:
+                dead.append((status, url))
+    return dead
+
+
+def report_dead(dead) -> None:
+    print(f"\n{len(dead)} new link(s) are dead:", file=sys.stderr)
+    for status, url in dead:
+        print(f"  {status}  {url}", file=sys.stderr)
+    print(
+        "\nOnly links this change introduces are checked here. A dead link "
+        "already on the base branch is reported by the full sweep on main, "
+        "not charged to this pull request.",
+        file=sys.stderr,
+    )
 
 
 def main() -> int:
@@ -129,15 +169,7 @@ def main() -> int:
     args = ap.parse_args()
 
     accept, excludes, timeout = load_lychee_settings()
-
-    before = links_at_ref(args.base_ref)
-    if before is None:
-        print("Treating every link as new, since the base ref could not be read.")
-        before = set()
-
-    new = sorted(links_at_head() - before)
-    skipped = [u for u in new if any(p.search(u) for p in excludes)]
-    to_check = [u for u in new if u not in set(skipped)]
+    to_check, skipped = partition_new(args.base_ref, excludes)
 
     if not to_check:
         print(f"No new links to check against {args.base_ref}.")
@@ -146,15 +178,7 @@ def main() -> int:
         return 0
 
     print(f"Checking {len(to_check)} new link(s) against {args.base_ref}.\n")
-    dead = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
-        futures = [pool.submit(check, u, timeout) for u in to_check]
-        for future in concurrent.futures.as_completed(futures):
-            url, status = future.result()
-            ok = isinstance(status, int) and status in accept
-            print(f"  {'ok  ' if ok else 'DEAD'}  {status}  {url}")
-            if not ok:
-                dead.append((status, url))
+    dead = check_all(to_check, accept, timeout)
 
     if skipped:
         print(f"\n{len(skipped)} new link(s) on a host lychee.toml excludes:")
@@ -162,15 +186,7 @@ def main() -> int:
             print(f"  skipped  {url}")
 
     if dead:
-        print(f"\n{len(dead)} new link(s) are dead:", file=sys.stderr)
-        for status, url in dead:
-            print(f"  {status}  {url}", file=sys.stderr)
-        print(
-            "\nOnly links this change introduces are checked here. A dead link "
-            "already on the base branch is reported by the full sweep on main, "
-            "not charged to this pull request.",
-            file=sys.stderr,
-        )
+        report_dead(dead)
         return 1
 
     print("\nEvery new link resolves.")
