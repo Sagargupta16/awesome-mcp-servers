@@ -21,7 +21,6 @@ import base64
 import json
 import os
 import re
-import subprocess
 import sys
 import tomllib
 import urllib.error
@@ -29,6 +28,8 @@ import urllib.request
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
+
+import gitref
 
 API = "https://api.github.com"
 
@@ -112,9 +113,8 @@ POM_LICENCE_RE = re.compile(
     r"<licenses?>.*?<name>([^<]*)</name>", re.DOTALL | re.IGNORECASE
 )
 
-# Shape of an acceptable git ref. Must not start with a dash, or git would read
-# it as an option instead of a revision.
-REF_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._/~^@{}-]*$")
+# Re-exported so the pattern has one definition for all three gate scripts.
+REF_RE = gitref.REF_RE
 
 # Root filenames that count as install and usage documentation.
 README_NAMES = {"readme.md", "readme.rst", "readme", "readme.txt"}
@@ -291,28 +291,22 @@ def added_rows(base_ref: str) -> list:
     a git ref first. Nothing is run through a shell, but a value beginning with
     `-` would still be read by git as an option rather than a revision.
     """
-    if not REF_RE.match(base_ref):
+    if not gitref.is_valid_ref(base_ref):
         print(
             f"error: {base_ref!r} is not a valid git ref for --base-ref",
             file=sys.stderr,
         )
         return []
 
-    base = subprocess.run(
-        ["git", "show", f"{base_ref}:README.md"],
-        capture_output=True,
-        check=False,
-        shell=False,
-    )
-    if base.returncode != 0:
+    text, detail = gitref.show(base_ref, "README.md")
+    if text is None:
         print(
-            f"warning: could not read README.md at {base_ref}: "
-            f"{base.stderr.decode('utf-8', 'replace').strip()}",
+            f"warning: could not read README.md at {base_ref}: {detail}",
             file=sys.stderr,
         )
         return []
 
-    before = parse_rows(base.stdout.decode("utf-8", "replace"))
+    before = parse_rows(text)
     after = parse_rows(Path("README.md").read_text(encoding="utf-8"))
     return [sub for key, sub in after.items() if key not in before]
 
