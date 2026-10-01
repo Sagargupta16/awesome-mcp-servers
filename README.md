@@ -433,6 +433,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | Server | Description | Language |
 |--------|-------------|----------|
 | [Amazon MCP](https://github.com/rigwild/mcp-server-amazon) | Search and purchase Amazon products | TypeScript |
+| [BuyWhere MCP](https://github.com/BuyWhere/buywhere-mcp) | Hosted shopping MCP for product search and price comparison across 80+ countries | Remote |
 | [commercetools MCP Essentials](https://github.com/commercetools/mcp-essentials) | Official commercetools server for products, carts, orders and customers | TypeScript |
 | [eBay MCP](https://github.com/YosefHayim/ebay-mcp) | 325 tools for eBay Sell APIs | TypeScript |
 | [Packrift MCP](https://github.com/Packrift/packrift-mcp) | Packaging catalog search, pricing, inventory, and cart URLs | TypeScript |
