@@ -358,6 +358,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [OrkasVideoStudio](https://github.com/Orkas-AI/Orkas-VideoStudio) | Compose, edit, analyze, and render video from coding agents | TypeScript |
 | [Photoshop MCP](https://github.com/loonghao/photoshop-python-api-mcp-server) | Adobe Photoshop automation | Python |
 | [UpRes MCP](https://github.com/auroracapital/upres-cli) | Upscale images and videos up to 8K across 14 specialist models | TypeScript |
+| [VideoGen MCP](https://videogen.io/videogen-mcp) | Create and edit videos, images, voiceovers, music, and avatars | TypeScript |
 | [Webflow MCP](https://github.com/webflow/mcp-server) | Official Webflow server for sites, pages, CMS, and components | TypeScript |
 
 ### Testing & QA
