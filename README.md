@@ -150,6 +150,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Buildkite MCP](https://github.com/buildkite/buildkite-mcp-server) | Official Buildkite pipelines, builds, jobs and test runs | Go |
 | [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) | Official Chrome DevTools for coding agents - debug, trace and inspect pages | TypeScript |
 | [CircleCI MCP](https://github.com/CircleCI-Public/mcp-server-circleci) | Official CircleCI workflow integration | TypeScript |
+| [Codapult Guard](https://github.com/codapult/codapult-guard) | Architecture guardrails for AI coding agents | TypeScript |
 | [Codebase Memory MCP](https://github.com/DeusData/codebase-memory-mcp) | Code intelligence server that indexes repos into a queryable knowledge graph | C |
 | [Desktop Commander MCP](https://github.com/wonderwhy-er/DesktopCommanderMCP) | Terminal control, file search and diff-based file editing | TypeScript |
 | [Docker MCP](https://github.com/ckreiling/mcp-server-docker) | Docker container management | Python |
@@ -179,7 +180,6 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Serena](https://github.com/oraios/serena) | Semantic code retrieval and editing toolkit for coding agents | Python |
 | [Supergateway](https://github.com/supercorp-ai/supergateway) | Gateway that runs stdio MCP servers over SSE and HTTP | TypeScript |
 | [XcodeBuildMCP](https://github.com/cameroncooke/XcodeBuildMCP) | Build, run and debug Xcode iOS and macOS projects from an agent | TypeScript |
-| [Codapult Guard](https://github.com/codapult/codapult-guard) | Architecture guardrails for AI coding agents | TypeScript |
 
 ### Cloud & Infrastructure
 
@@ -212,6 +212,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [Aident Loadout](https://github.com/Aident-AI/aident-skill) | Connect agents to 1000+ apps via one remote MCP with Vault | Remote |
 | [Airtable MCP](https://github.com/domdomegg/airtable-mcp-server) | Airtable base read/write | TypeScript |
 | [Asana MCP](https://github.com/roychri/mcp-server-asana) | Asana tasks, projects, workspaces | TypeScript |
 | [Clera](https://www.getclera.com/mcp) | Search vetted startup candidates, review role matches and request intros | Remote |
@@ -397,8 +398,8 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | Server | Description | Language |
 |--------|-------------|----------|
 | [Bright Data MCP](https://github.com/brightdata/brightdata-mcp) | Official Bright Data web search, scraping, and browser automation | JavaScript |
-| [browser-buddy](https://github.com/hahahahahahahahah6/browser-buddy) | Let coding agents read your logged-in Chrome pages via MCP | Python |
 | [Browser Tools MCP](https://github.com/AgentDeskAI/browser-tools-mcp) | Read browser console logs, network traffic and DOM via a Chrome extension | TypeScript |
+| [browser-buddy](https://github.com/hahahahahahahahah6/browser-buddy) | Let coding agents read your logged-in Chrome pages via MCP | Python |
 | [Crawl4AI](https://github.com/unclecode/crawl4ai) | LLM-friendly web crawler and scraper with built-in MCP endpoints | Python |
 | [Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server) | Official Firecrawl web scraping and search | TypeScript |
 | [Jina AI MCP](https://github.com/jina-ai/MCP) | Official Jina AI web reader, search, and content reranking | TypeScript |
