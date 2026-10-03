@@ -231,6 +231,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Outlook MCP](https://github.com/ryaker/outlook-mcp) | Outlook email and calendar via MS Graph | JavaScript |
 | [Plane MCP](https://github.com/makeplane/plane-mcp-server) | Official Plane projects, work items and cycles automation | Python |
 | [Slack MCP](https://github.com/korotovsky/slack-mcp-server) | Slack workspace integration | Go |
+| [Tale](https://github.com/tale-project/tale) | Author and run Tale automations, inspect runs and query workspace knowledge | Built-in |
 | [Trello MCP](https://github.com/delorenj/mcp-server-trello) | Trello boards, lists, cards | TypeScript |
 
 ### Search & Knowledge
