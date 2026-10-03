@@ -478,6 +478,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Google Search Console MCP](https://github.com/AminForou/mcp-gsc) | Query Google Search Console search analytics, sitemaps and indexing | Python |
 | [Google Tag Manager MCP](https://github.com/stape-io/google-tag-manager-mcp-server) | Manage GTM containers, tags, triggers and variables | TypeScript |
 | [LLM Pulse MCP](https://github.com/LLM-Pulse/llmpulse-mcp) | AI visibility analytics for mentions, citations, sentiment, and AI traffic | JavaScript |
+| [LogNorm](https://lognorm.com) | Hosted SEO/GEO backlog: site audits, fixes, content and AI-visibility tracking | Remote |
 | [Meta Ads MCP (GoMarble)](https://github.com/gomarble-ai/facebook-ads-mcp-server) | Read and manage Meta and Instagram ad campaigns via the Meta Ads API | Python |
 | [NotFair](https://github.com/nowork-studio/NotFair) | Google Ads, Meta Ads, and SEO skills with human-approval gate | TypeScript |
 | [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp) | Official PostHog product analytics | TypeScript |
