@@ -429,6 +429,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Google Maps MCP](https://github.com/cablate/mcp-google-map) | Google Maps API with LLM processing | TypeScript |
 | [Mapbox MCP](https://github.com/mapbox/mcp-server) | Official Mapbox geocoding, POI search, directions, and isochrones | TypeScript |
 | [MAQAMI Travel](https://github.com/negm17111995/mcp-server) | Hotel and flight booking with 3M+ hotels: search live rates, prebook and book | JavaScript |
+| [SkyAccess](https://github.com/sky-access/skyaccess-mcp) | Search 5,000+ live empty leg flights, get charter estimates and booking links | Remote |
 | [StayingAPI](https://github.com/stayingapi/hotel-mcp) | Accommodation data from Airbnb, Booking.com, Vrbo, and Google Hotels | TypeScript |
 | [TomTom MCP](https://github.com/tomtom-international/tomtom-mcp) | Official TomTom maps, search, routing, and traffic APIs | TypeScript |
 
