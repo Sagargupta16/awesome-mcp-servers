@@ -562,6 +562,7 @@ but not all of resources and prompts.
 | [opencode](https://github.com/anomalyco/opencode) | Open-source terminal coding agent for any model | Standard |
 | [OpenHands](https://github.com/OpenHands/OpenHands) | Autonomous coding agent with a web UI | Tools only |
 | [Qwen Code](https://github.com/QwenLM/qwen-code) | Alibaba's open-source terminal coding agent | Standard |
+| [SCODE](https://github.com/sidra-ai-development/scode) | Open-source terminal coding runtime with persistent sessions and MCP tools | Tools only |
 | [VS Code + Claude](https://marketplace.visualstudio.com/items?itemName=Anthropic.claude-code) | Claude Code extension for VS Code | Full |
 | [Warp](https://www.warp.dev/) | AI terminal with an agent mode | Tools + resources |
 | [Windsurf](https://windsurf.com) | Windsurf AI IDE (formerly Codeium) | Standard |
