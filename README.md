@@ -218,6 +218,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Clera](https://www.getclera.com/mcp) | Search vetted startup candidates, review role matches and request intros | Remote |
 | [Coda MCP](https://github.com/orellazri/coda-mcp) | Coda documents and tables | TypeScript |
 | [Excel MCP](https://github.com/haris-musa/excel-mcp-server) | Read, write and format Excel workbooks without Excel installed | Python |
+| [fitlog-mcp](https://github.com/hahahahahahahahah6/fitlog-mcp) | Self-hosted MCP server giving Alexa+ a memory for training | Python |
 | [Google Calendar MCP](https://github.com/nspady/google-calendar-mcp) | Google Calendar management | TypeScript |
 | [Google Workspace MCP](https://github.com/taylorwilsdon/google_workspace_mcp) | Gmail, Calendar, Docs, Sheets, Slides, Chat, Forms and Tasks in one server | Python |
 | [iMCP](https://github.com/mattt/iMCP) | Exposes macOS Messages, Contacts, Calendar and Reminders to agents | Swift |
