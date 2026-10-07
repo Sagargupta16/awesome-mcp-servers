@@ -243,6 +243,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [arXiv MCP](https://github.com/blazickjp/arxiv-mcp-server) | Search arXiv papers and read full LaTeX sections | Python |
 | [Brave Search MCP](https://github.com/brave/brave-search-mcp-server) | Official Brave Search API | TypeScript |
 | [Context7 MCP](https://github.com/upstash/context7) | Up-to-date library documentation | TypeScript |
+| [Cluefinch MCP](https://github.com/cluefinch/mcp-server) | Web research with search, page reading, links, and source collection | Python |
 | [DeepWiki MCP](https://github.com/regenrek/deepwiki-mcp) | Fetch deepwiki.com repo docs as markdown | TypeScript |
 | [Docling MCP](https://github.com/docling-project/docling-mcp) | Official Docling document parsing and conversion to structured text | Python |
 | [Docs MCP Server](https://github.com/arabold/docs-mcp-server) | Index and semantically search third-party library documentation | TypeScript |
