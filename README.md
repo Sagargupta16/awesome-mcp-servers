@@ -298,6 +298,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Headroom MCP](https://github.com/headroomlabs-ai/headroom) | Token-compression proxy and MCP server for tool output and logs | Python |
 | [HuggingFace MCP](https://github.com/huggingface/hf-mcp-server) | Official HF Hub models, datasets, Spaces | TypeScript |
 | [LangChain MCP Adapters](https://github.com/langchain-ai/langchain-mcp-adapters) | Official LangChain / LangGraph MCP bridge | Python |
+| [Muse Bridge](https://github.com/buzhidaosm/muse-cli-bridge) | Read muse.ai identity, chats, goals, ideas and feed via local stdio MCP | Python |
 | [prompt-to-asset](https://github.com/MohamedAbdallah-14/prompt-to-asset) | Image generation across 30+ models via unified API | TypeScript |
 | [Replicate MCP](https://replicate.com/docs/reference/mcp) | Official Replicate hosted MCP server | Remote |
 | [RouterBase MCP](https://github.com/zenlee123/routerbase-mcp) | Model discovery, pricing lookup and OpenAI-compatible chat completions | TypeScript |
