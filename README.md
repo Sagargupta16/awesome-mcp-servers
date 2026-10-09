@@ -316,6 +316,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Equibles](https://equibles.com/mcp) | SEC filings, XBRL financials, earnings calls, insider trades and 13F holdings | Remote |
 | [Financial Modeling Prep MCP](https://github.com/imbenrabi/Financial-Modeling-Prep-MCP-Server) | FMP market data and fundamentals | TypeScript |
 | [Invoice MCP](https://github.com/theluckystrike/mcp-invoice-generator) | Create PDF invoices with VAT lines, sequential numbering and overdue tracking | JavaScript |
+| [Invompt](https://github.com/Invompt/invompt-mcp) | Create and review invoices from an AI assistant | TypeScript |
 | [Massive.com (Polygon.io) MCP](https://github.com/massive-com/mcp_massive) | Official Massive.com (formerly Polygon.io) market data for stocks and crypto | Python |
 | [MetaTrader MCP](https://github.com/ariadng/metatrader-mcp-server) | Place and manage MetaTrader 5 trades, positions and market data | Python |
 | [PayPal Agent Toolkit](https://github.com/paypal/agent-toolkit) | Official PayPal toolkit with an MCP server for payments and invoicing | TypeScript |
