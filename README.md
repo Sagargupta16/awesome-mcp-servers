@@ -470,6 +470,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 |--------|-------------|----------|
 | [Apache IoTDB MCP](https://github.com/apache/iotdb-mcp-server) | Official MCP server for the Apache IoTDB time-series database | Python |
 | [Bagel](https://github.com/Extelligence-ai/bagel) | Query robotics, drone, and IoT telemetry in plain English | Python |
+| [GenieACS MCP](https://github.com/GeiserX/genieacs-mcp) | Query and manage TR-069 routers, ONTs, and other CPE devices through GenieACS | Go |
 | [Hass MCP](https://github.com/voska/hass-mcp) | Minimal Home Assistant MCP | Python |
 | [Home Assistant MCP (ha-mcp)](https://github.com/homeassistant-ai/ha-mcp) | The unofficial awesome Home Assistant MCP | Python |
 | [HomeClaw](https://github.com/omarshahine/HomeClaw) | Control HomeKit lights, locks, thermostats, and scenes on macOS | Swift |
