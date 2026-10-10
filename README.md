@@ -273,6 +273,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Microsoft Teams MCP](https://github.com/InditexTech/mcp-teams-server) | Teams channels, messages, meetings | Python |
 | [Resend MCP](https://github.com/resend/resend-mcp) | Official Resend transactional email | TypeScript |
 | [SendRaven MCP](https://github.com/CommonNinja/sendraven-mcp-server) | Official SendRaven email sending, inbound reply threads and per-key send limits | TypeScript |
+| [Telegram Archive MCP](https://github.com/GeiserX/telegram-archive-mcp) | Search and read archived Telegram history from a Telegram-Archive instance | Go |
 | [Telegram MCP](https://github.com/chigwell/telegram-mcp) | Telegram messaging | Python |
 | [Zulip MCP](https://github.com/zulip/zulipmcp) | Official Zulip streams, messages and mentionable bot agents | Python |
 
