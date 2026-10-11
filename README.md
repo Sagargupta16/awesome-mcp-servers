@@ -142,6 +142,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 |--------|-------------|----------|
 | [Agentlas OS](https://github.com/agentlas-ai/Agentlas-OS) | Portable agent teams and cross-host orchestration over MCP | Python |
 | [Apollo MCP Server](https://github.com/apollographql/apollo-mcp-server) | Official Apollo server exposing GraphQL operations as MCP tools | Rust |
+| [Archcore](https://github.com/archcore-ai/archcore) | Spec-driven development and context engineering for AI coding agents | Go |
 | [Argo CD MCP](https://github.com/argoproj-labs/mcp-for-argocd) | Argo CD applications, syncs and GitOps state (argoproj-labs) | TypeScript |
 | [ast-grep MCP](https://github.com/ast-grep/ast-grep-mcp) | Structural code search and rewrite via ast-grep patterns | Python |
 | [Atlassian MCP (Jira + Confluence)](https://github.com/sooperset/mcp-atlassian) | Jira and Confluence integration | Python |
