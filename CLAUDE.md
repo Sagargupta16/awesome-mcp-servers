@@ -26,6 +26,7 @@ Curated awesome-list of MCP servers, frameworks, clients, and resources, maintai
 python scripts/validate.py          # structure, format, duplicates (ordering is a note)
 python scripts/validate.py --fix    # auto-repair ordering, whitespace, dashes
 GITHUB_TOKEN=$(gh auth token) python scripts/check_submission.py --base-ref origin/main
+python scripts/check_new_links.py --base-ref origin/main   # only the links a change adds
 GITHUB_TOKEN=$(gh auth token) python scripts/staleness_report.py
 GITHUB_TOKEN=$(gh auth token) python scripts/build_site.py      # site into _site/; without a token it builds with no stars
 python -m http.server 8766 --directory _site                   # preview it
@@ -63,14 +64,14 @@ Six workflows:
 
 - `README.md` -- single source of truth for all entries
 - `CONTRIBUTING.md` -- the format contract every entry must follow
-- `scripts/validate.py` / `check_submission.py` / `staleness_report.py` -- the enforcement
+- `scripts/validate.py` / `check_submission.py` / `check_new_links.py` / `staleness_report.py` -- the enforcement
 - `tests/` -- pytest suite covering all three scripts, plus a guard that CONTRIBUTING's category table matches `SERVER_CATEGORIES`
 - `ruff.toml` -- pins the lint rule set so a local run and CI agree
 - `.github/ISSUE_TEMPLATE/add-server.yml` -- structured server-submission form
 
 ## Gotchas
 
-- The link check runs with `fail: true`, so a broken link fails CI. `lychee.toml` excludes five hosts that hard-block automation (x.com, twitter.com, linkedin.com, discord.gg, smithery.ai) -- links to those are never verified by CI.
+- The link check is split by event. On a pull request only `scripts/check_new_links.py` can fail it, judging the links that change introduces against the base ref; the full lychee sweep still runs but with `fail: false`. On a push, the schedule or a dispatch, lychee sweeps the whole file with `fail: true`. A full sweep on pull requests charged authors for rot on the base branch and blocked six innocent submissions across three rotted entries before this split. `lychee.toml` is the single source of accept codes and host exclusions -- `check_new_links.py` reads it rather than restating them, so the two cannot drift. It excludes five hosts that hard-block automation (x.com, twitter.com, linkedin.com, discord.gg, smithery.ai), and links to those are never verified.
 - Auto-merge is the only merge path for content PRs and the checks are the only gate, so the required-check list on the `main` ruleset is load-bearing. Adding a `paths` filter to any required check, or renaming a job, silently breaks it: a required check that never reports leaves auto-merge waiting forever, and a renamed job means the old name never arrives. Change a job name and the ruleset in the same pass.
 - Ruleset bypass is granted to `repository_admin` on purpose. Without it, required checks would lock Sagar out of an emergency fix on `main`.
 - An auto-merged pull request produces **no push-to-main workflow run**. GitHub does not start a run from a `GITHUB_TOKEN` push, and auto-merge lands the commit as `github-actions[bot]`. Since the PR-side `Validate format` is baseline-scoped and only judges what that PR introduced, the daily 06:00 UTC `lint.yml` schedule is the only thing holding `main` to the full bar. Do not thin that schedule out, and do not assume a green PR means `main` is green.
