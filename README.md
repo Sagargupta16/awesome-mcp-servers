@@ -444,9 +444,8 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 ### E-commerce
 
 | Server | Description | Language |
-|--------|------------|----------|
+|--------|-------------|----------|
 | [Amazon MCP](https://github.com/rigwild/mcp-server-amazon) | Search and purchase Amazon products | TypeScript |
-
 | [brianbooms-mcp](https://github.com/brianbooms/brianbooms-mcp) | Buy digital products with USDC micropayments on Base, via x402 | Python |
 | [BuyWhere MCP](https://github.com/BuyWhere/buywhere-mcp) | Hosted shopping MCP for product search and price comparison across 80+ countries | Remote |
 | [commercetools MCP Essentials](https://github.com/commercetools/mcp-essentials) | Official commercetools server for products, carts, orders and customers | TypeScript |
