@@ -15,7 +15,9 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 - implements MCP for real -- not a README with a `server.json` next to it
 - states an open-source licence -- a `LICENSE` file, or a licence field in its package manifest
 - was pushed within the last 180 days, and is not archived
-- documents how to install and configure it, so someone else can actually run it- appears exactly once, in one category
+- documents how to install and configure it, so someone else can actually run it
+
+  - appears exactly once, in one category
 
 Those rules are enforced by [CI](.github/workflows/), not by good intentions: a pull request that breaks the format, adds a dead link, or submits an unlicensed repo fails its checks. A [monthly audit](.github/workflows/health.yml) re-checks every listed repository and files what has rotted.
 
@@ -442,7 +444,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 ### E-commerce
 
 | Server | Description | Language |
-|--------|-------------|----------|
+|--------|------------|----------|
 | [Amazon MCP](https://github.com/rigwild/mcp-server-amazon) | Search and purchase Amazon products | TypeScript |
 
 | [brianbooms-mcp](https://github.com/brianbooms/brianbooms-mcp) | Buy digital products with USDC micropayments on Base, via x402 | Python |
