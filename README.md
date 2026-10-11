@@ -1,4 +1,4 @@
-# Awesome MCP Servers
+Awesome MCP Servers
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 [![Lint](https://github.com/Sagargupta16/awesome-mcp-servers/actions/workflows/lint.yml/badge.svg)](https://github.com/Sagargupta16/awesome-mcp-servers/actions/workflows/lint.yml)
