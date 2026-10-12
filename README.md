@@ -118,6 +118,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [dbt MCP](https://github.com/dbt-labs/dbt-mcp) | Official dbt Labs server for dbt projects | Python |
 | [Elasticsearch MCP](https://github.com/elastic/mcp-server-elasticsearch) | Official Elasticsearch query interface | Rust |
 | [GCP MCP Toolbox](https://github.com/googleapis/mcp-toolbox) | Official Google DB toolbox (Postgres, MySQL, Spanner) | Go |
+| [Invokely MCP Connector](https://github.com/estevecastells/invokely-mcp-connector) | Local stdio adapter for Invokely's hosted official statistics MCP service | JavaScript |
 | [MCP Alchemy](https://github.com/runekaagaard/mcp-alchemy) | SQLAlchemy-backed access to SQLite, Postgres, MySQL, Oracle and MS-SQL | Python |
 | [Memgraph MCP](https://github.com/memgraph/ai-toolkit/tree/main/integrations/mcp-memgraph) | Official Memgraph graph database Cypher queries and schema | Python |
 | [Milvus MCP](https://github.com/zilliztech/mcp-server-milvus) | Official Milvus vector database search and collection management | Python |
