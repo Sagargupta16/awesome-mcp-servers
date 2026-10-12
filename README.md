@@ -116,6 +116,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Couchbase MCP](https://github.com/couchbase/mcp-server-couchbase) | Official Couchbase and Capella cluster, scope and query access | Python |
 | [DBHub](https://github.com/bytebase/dbhub) | Universal database server for Postgres, MySQL, SQL Server, MariaDB, SQLite | TypeScript |
 | [dbt MCP](https://github.com/dbt-labs/dbt-mcp) | Official dbt Labs server for dbt projects | Python |
+| [DC Hub](https://github.com/azmartone67/dchub-mcp-server) | Daily grid-power scores (DCPI) for data-center site selection in 300+ markets | JavaScript |
 | [Elasticsearch MCP](https://github.com/elastic/mcp-server-elasticsearch) | Official Elasticsearch query interface | Rust |
 | [GCP MCP Toolbox](https://github.com/googleapis/mcp-toolbox) | Official Google DB toolbox (Postgres, MySQL, Spanner) | Go |
 | [Invokely MCP Connector](https://github.com/estevecastells/invokely-mcp-connector) | Local stdio adapter for Invokely's hosted official statistics MCP service | JavaScript |
