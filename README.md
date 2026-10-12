@@ -132,6 +132,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [PostgreSQL MCP (Pro)](https://github.com/crystaldba/postgres-mcp) | Query, analyze and optimize PostgreSQL databases | Python |
 | [Qdrant MCP](https://github.com/qdrant/mcp-server-qdrant) | Official Qdrant vector database server | Python |
 | [Redis MCP](https://github.com/redis/mcp-redis) | Official Redis cache and data structures | Python |
+| [Scout Packs](https://github.com/tigerops-win/scout-packs) | Pay-per-call B2B data: lead lookup, domain intel and email checks | Remote |
 | [Snowflake MCP](https://github.com/Snowflake-Labs/mcp) | Official Snowflake Cortex AI + SQL orchestration | Python |
 | [StarRocks MCP](https://github.com/StarRocks/mcp-server-starrocks) | Official StarRocks OLAP database query and schema access | Python |
 | [Supabase MCP](https://github.com/supabase/mcp) | Supabase database, auth, and storage | TypeScript |
