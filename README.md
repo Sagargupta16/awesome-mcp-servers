@@ -253,6 +253,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [DuckDuckGo MCP](https://github.com/nickclyde/duckduckgo-mcp-server) | DuckDuckGo search with content fetching | Python |
 | [Exa MCP](https://github.com/exa-labs/exa-mcp-server) | Exa AI-powered search | TypeScript |
 | [Kagi MCP](https://github.com/kagisearch/kagimcp) | Official Kagi search API | Python |
+| [looot](https://github.com/loootai/looot-mcp) | One key for 2,500+ data endpoints: email, phone, company, SERP, web pages | TypeScript |
 | [MarkItDown MCP](https://github.com/microsoft/markitdown/tree/main/packages/markitdown-mcp) | Convert PDF, Office, HTML and audio files to Markdown for LLMs | Python |
 | [MCPDoc](https://github.com/langchain-ai/mcpdoc) | Official LangChain server for llms.txt documentation sources | Python |
 | [Meilisearch MCP](https://github.com/meilisearch/meilisearch-mcp) | Official Meilisearch index server | Python |
