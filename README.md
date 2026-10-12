@@ -505,6 +505,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [Anansi Haven](https://github.com/kburrus64-max/anansi-haven) | Free agent home base with memory, encrypted storage, jobs and directory | TypeScript |
 | [Anki MCP](https://github.com/ankimcp/anki-mcp-server) | Anki flashcards via AnkiConnect | TypeScript |
 | [Anytype MCP](https://github.com/anyproto/anytype-mcp) | Official MCP server for the Anytype local-first workspace | TypeScript |
 | [Basic Memory](https://github.com/basicmachines-co/basic-memory) | Local-first Markdown knowledge base with persistent agent memory | Python |
