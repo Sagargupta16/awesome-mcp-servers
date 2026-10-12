@@ -407,6 +407,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [2Captcha MCP](https://github.com/2captcha/2captcha-mcp) | Official 2Captcha web scraping, search, browser automation and CAPTCHA solving | JavaScript |
 | [Bright Data MCP](https://github.com/brightdata/brightdata-mcp) | Official Bright Data web search, scraping, and browser automation | JavaScript |
 | [Browser Tools MCP](https://github.com/AgentDeskAI/browser-tools-mcp) | Read browser console logs, network traffic and DOM via a Chrome extension | TypeScript |
 | [browser-buddy](https://github.com/hahahahahahahahah6/browser-buddy) | Let coding agents read your logged-in Chrome pages via MCP | Python |
