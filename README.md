@@ -318,6 +318,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | Server | Description | Language |
 |--------|-------------|----------|
 | [Adyen MCP](https://github.com/Adyen/adyen-mcp) | Official Adyen server for checkout, configuration and management APIs | TypeScript |
+| [aikstockdata](https://aikstockdata.com/en/mcp) | Korean listed-company closing prices, DART filings and earnings, no API key | JavaScript |
 | [Alpaca MCP](https://github.com/alpacahq/alpaca-mcp-server) | Official Alpaca stocks / ETF / crypto trading | Python |
 | [Coinbase MCP](https://github.com/coinbase/agentkit) | Coinbase crypto trading and wallet | TypeScript |
 | [Equibles](https://equibles.com/mcp) | SEC filings, XBRL financials, earnings calls, insider trades and 13F holdings | Remote |
