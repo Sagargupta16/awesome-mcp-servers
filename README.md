@@ -350,6 +350,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Noveum](https://noveum.ai/en/mcp) | AI agent traces, evaluation datasets and model comparisons | Remote |
 | [OpenTelemetry MCP](https://github.com/traceloop/opentelemetry-mcp-server) | Unified OTEL traces across backends | Python |
 | [Prometheus MCP](https://github.com/pab1it0/prometheus-mcp-server) | Prometheus metrics and PromQL queries | Python |
+| [SolidPing MCP](https://github.com/fclairamb/solidping) | Official SolidPing uptime checks, incidents and status pages | Go |
 | [VictoriaMetrics MCP](https://github.com/VictoriaMetrics/mcp-victoriametrics) | Official VictoriaMetrics metrics and logs queries | Go |
 | [Zabbix MCP](https://github.com/mpeirone/zabbix-mcp-server) | Zabbix monitoring hosts, triggers, problems and templates | Python |
 
