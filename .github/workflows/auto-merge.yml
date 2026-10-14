@@ -16,6 +16,13 @@ name: Auto merge
 # from `main` and cannot be altered by a fork. It reads the changed-file list
 # over the API and never checks out pull request code, so the writable token is
 # never exposed to anything a contributor controls.
+#
+# A pull request whose entries the submission check leaves to a maintainer --
+# every `Remote` entry, an unclassifiable licence, a link that is not a GitHub
+# repository -- is labelled `needs-review` and left for a person to merge. To
+# decide that, the job checks out `main`, fetches the pull request's commits as
+# data, and runs main's copy of check_submission.py over the README those
+# commits carry. Nothing from the pull request is checked out or executed.
 
 on:
   pull_request_target:
@@ -36,9 +43,21 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
     steps:
+      # `main`, not the pull request: on pull_request_target the default ref is
+      # the base branch. Full history so the merge base with the head is there.
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+
       - name: Decide eligibility and enable auto merge
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           PR: ${{ github.event.pull_request.number }}
           LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
@@ -96,6 +115,23 @@ jobs:
               exit 0
               ;;
           esac
+
+          # Compare against the merge base, not main's tip: rows main removed
+          # since the branch was cut would otherwise read as new submissions.
+          git fetch --no-tags origin "+refs/pull/$PR/head:refs/remotes/pull/head"
+          base=$(git merge-base HEAD refs/remotes/pull/head)
+          # Anything but a clean 0 waits for a person, a crash included.
+          if ! python scripts/check_submission.py --base-ref "$base" \
+              --head-ref refs/remotes/pull/head --review > /dev/null; then
+            gh api -X POST "repos/$REPO/issues/$PR/labels" -f "labels[]=needs-review" > /dev/null
+            {
+              echo
+              echo "Not enabled: the submission check leaves an entry to a maintainer."
+              echo "The report above says which and why. The pull request is labelled"
+              echo "\`needs-review\`, and a maintainer merges it by hand after reading it."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
 
           gh pr merge "$PR" --repo "$REPO" --auto --squash
 

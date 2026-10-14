@@ -12,7 +12,9 @@ name: Issue to pull request
 #    head, so the required checks are satisfied by name. GitGuardian is an app, not
 #    a workflow, and runs on its own.
 # 2. For the same reason auto-merge.yml never sees these pull requests, so this
-#    workflow switches auto-merge on itself. The checks stay the only gate.
+#    workflow switches auto-merge on itself, under the same rule: an entry the
+#    submission check leaves to a maintainer (every `Remote` one, for a start)
+#    gets the `needs-review` label instead and waits for a person.
 # 3. The issue body is untrusted. It is read from the event payload file by
 #    scripts/issue_to_pr.py and never interpolated into a command; the only value
 #    that comes back (the entry name) is passed through the environment.
@@ -127,15 +129,30 @@ jobs:
           NAME: ${{ steps.row.outputs.name }}
           SECTION: ${{ steps.row.outputs.section }}
           AUTHOR: ${{ github.event.issue.user.login }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
         run: |
+          # Same decision auto-merge.yml makes: anything but a clean 0, a crash
+          # included, waits for a maintainer. `main` is still the checkout's base.
+          if python scripts/check_submission.py --base-ref main --review > /dev/null; then
+            review=""
+            merges="It merges itself once the required checks pass"
+          else
+            review="yes"
+            merges="A maintainer reviews this kind of entry before it merges"
+          fi
           pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
           if [ -z "$pr" ]; then
-            printf 'Adds **%s** to %s, from the form in #%s by @%s.\n\nCloses #%s\n\nOpened by the issue-to-pr workflow. It merges itself once the required checks pass.\n' \
-              "$NAME" "$SECTION" "$ISSUE" "$AUTHOR" "$ISSUE" > pr-body.md
+            printf 'Adds **%s** to %s, from the form in #%s by @%s.\n\nCloses #%s\n\nOpened by the issue-to-pr workflow. %s.\n' \
+              "$NAME" "$SECTION" "$ISSUE" "$AUTHOR" "$ISSUE" "$merges" > pr-body.md
             gh pr create --base main --head "$BRANCH" --title "Add $NAME" --body-file pr-body.md
             pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
-            gh issue comment "$ISSUE" --body "Thanks! Opened #$pr with this entry. It merges itself when the checks pass and shows up on https://sagargupta.online/awesome-mcp-servers/ within the hour."
+            gh issue comment "$ISSUE" --body "Thanks! Opened #$pr with this entry. $merges, and it shows up on https://sagargupta.online/awesome-mcp-servers/ within the hour of merging."
           fi
           gh workflow run lint.yml --ref "$BRANCH"
           gh workflow run submission-check.yml --ref "$BRANCH"
-          gh pr merge "$pr" --auto --squash
+          if [ -n "$review" ]; then
+            gh api -X POST "repos/$REPO/issues/$pr/labels" -f "labels[]=needs-review" > /dev/null
+          else
+            gh pr merge "$pr" --auto --squash
+          fi

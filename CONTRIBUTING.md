@@ -12,6 +12,7 @@ Submissions are checked, and the checks are about whether the thing is real, not
 - [Format](#format)
 - [Categories](#categories)
 - [Quality standards](#quality-standards)
+- [Hosted servers](#hosted-servers)
 - [What is not accepted](#what-is-not-accepted)
 - [Submitting your own project](#submitting-your-own-project)
 - [Pull request process](#pull-request-process)
@@ -38,7 +39,7 @@ Server entries are table rows in this exact shape:
 - **Name** -- the project name, as a user would recognise it. Keep it short.
 - **URL** -- a direct `https://` link to the repository or official project page. No tracking parameters, no redirect shorteners.
 - **Description** -- what it does, in **80 characters or fewer**. Start with a capital letter. No trailing period. No em-dash or en-dash; write `--` or `-` instead. Describe the function, not the pitch: "Query and optimise PostgreSQL databases" rather than "The ultimate AI-powered database companion".
-- **Language** -- the primary implementation language, one of: `TypeScript`, `JavaScript`, `Python`, `Go`, `Rust`, `Java`, `Kotlin`, `C#`, `C++`, `C`, `Ruby`, `PHP`, `Swift`, `Elixir`, `Scala`, `Dart`, `Lua`, `Shell`, `Zig`, `Multiple` for a polyglot monorepo, `Remote` for a hosted endpoint with no public source, or `Built-in` for a server shipped inside another product.
+- **Language** -- the primary implementation language, one of: `TypeScript`, `JavaScript`, `Python`, `Go`, `Rust`, `Java`, `Kotlin`, `C#`, `C++`, `C`, `Ruby`, `PHP`, `Swift`, `Elixir`, `Scala`, `Dart`, `Lua`, `Shell`, `Zig`, `Multiple` for a polyglot monorepo, `Remote` for a hosted endpoint with no public source (see [hosted servers](#hosted-servers)), or `Built-in` for a server shipped inside another product.
 
 Example:
 
@@ -92,7 +93,7 @@ Tables are kept alphabetical by name, case-insensitively and ignoring leading pu
 
 ## Quality standards
 
-Every submission must meet all of these. CI checks the mechanical ones automatically and reports the rest for a maintainer.
+Every submission must meet all of these. CI checks the mechanical ones automatically and reports the rest for a maintainer. A hosted server with no public source follows the [hosted servers](#hosted-servers) rules instead of standards 1, 2 and 4.
 
 1. **It really is an MCP server.** The repository contains a working [MCP](https://modelcontextprotocol.io/) implementation -- server, client, or framework, matching the section. A repository holding only a README and a registry manifest such as `server.json` is rejected.
 2. **Open source with a stated licence.** The repository must state its licence somewhere a reader can find it: a `LICENSE` file at its root, or a licence field in its package manifest (`package.json`, `pyproject.toml`, `Cargo.toml`, `pom.xml`, `composer.json`, `deno.json`). A root `LICENSE` file is what GitHub reads for the sidebar, so it is still the better option, and a manifest-only declaration gets flagged for a maintainer to read. If GitHub cannot classify the file -- the sidebar reads "unknown" and the API reports `NOASSERTION` -- that is not an automatic rejection either, but a maintainer will read the terms by hand. It is common for a vendor repo with a customised header and suspicious for a small one. No licence anywhere is a rejection, and so is a manifest field that withholds open-source terms instead of granting them: npm's `UNLICENSED`, `SEE LICENSE IN <file>`, or `Proprietary`.
@@ -102,17 +103,28 @@ Every submission must meet all of these. CI checks the mechanical ones automatic
 6. **Not a duplicate.** Not already listed, and not a second server for a product already covered. If yours is genuinely better than the listed one, say why in the pull request and propose replacing it.
 7. **Not a fork.** Submit the upstream project.
 
-Entries that stop meeting these get removed. A monthly [health workflow](.github/workflows/health.yml) posts dead links, archived projects, missing licences, and stale entries into a tracking issue.
+Entries that stop meeting these get removed. A monthly [health workflow](.github/workflows/health.yml) posts dead links, archived projects, missing licences, stale entries, and hosted endpoints that stopped answering into a tracking issue.
+
+## Hosted servers
+
+A hosted MCP server whose source is not public can be listed too, with `Remote` in the Language column. With no source to read, the documentation and the endpoint carry the weight instead:
+
+1. **The link is the operator's own documentation.** A page on the operator's domain, or the README of a repository the operator owns. A registry or marketplace listing (Smithery, Glama, mcp.so and the like) is not documentation.
+2. **The documentation says how to connect.** It names the endpoint URL and how to authenticate, and says what the server's tools do, by name or as a list of what you can ask it for. Signing up or paying to get a key is fine; a reader just has to be able to follow it.
+3. **The endpoint answers.** CI finds the endpoint in the documentation and sends it an MCP `initialize`. Any HTTP answer counts, including the 401 a server gives a request with no token. A 404, a 410 or no answer at all does not.
+4. **A maintainer reviews it.** A `Remote` entry never merges itself: it gets the `needs-review` label, and a maintainer merges it after reading the documentation.
+
+Standards 3, 5, 6 and 7 apply as written. The licence standard does not, since nothing is distributed, and neither does the 180-day push rule: a documentation repository can sit untouched while the service runs, so for a hosted server "maintained" means the endpoint still answers. A repository that is archived still disqualifies the entry.
 
 ## What is not accepted
 
 Short list, and none of it is about how big your project is:
 
-- **Repositories with no implementation.** A README plus `server.json` or `glama.json` and nothing to run. Publish the source, or link the repository that holds it.
+- **Repositories with no implementation.** A README plus `server.json` or `glama.json` and nothing to run, listed under a programming language. Publish the source, link the repository that holds it, or, if the server is hosted, list it as `Remote` under the [hosted servers](#hosted-servers) rules.
 - **Undisclosed self-promotion.** Submitting your own work is welcome and common. Just tick the affiliation box.
 - **Nothing about how many servers you add at once.** One per pull request is preferred and CI will say so, but it does not fail the check, and a batch of genuinely good entries is not a reason to decline.
 - **Projects that are not really MCP servers**, where MCP is a passing mention in the README rather than something implemented.
-- **Hosted products with no MCP endpoint anyone can inspect or documentation describing it.**
+- **Hosted products without documentation of their own** that names the endpoint, the authentication and the tools, or whose endpoint does not answer. A registry listing on its own is not enough.
 - **Descriptions written as marketing copy.** Say what it does. This is usually a one-line fix, not a rejection.
 - **Changes that remove or reorder unrelated entries** alongside your addition.
 
@@ -142,9 +154,10 @@ Being new is not a reason to hold back. If you would rather not open a pull requ
    marked as pre-existing and does not count against you.
 5. **It merges itself.** If your pull request only touches `README.md` or `CHANGELOG.md`, auto-merge is switched on for you: GitHub squash-merges it the moment every required check passes. No approval, no waiting for a maintainer to be awake. It will not merge while any required check is red.
 
-A maintainer still reads what lands, and may follow up if a description reads promotionally or it is unclear what the server does. Two things opt a pull request out of auto-merge:
+A maintainer still reads what lands, and may follow up if a description reads promotionally or it is unclear what the server does. Three things opt a pull request out of auto-merge:
 
 - **It touches anything beyond the list** -- a workflow, a script, a test, tooling config. Those change what the checks verify, so a person looks first.
+- **The submission check leaves a decision to a maintainer.** Every `Remote` entry, and any entry the check cannot settle by itself: a licence GitHub cannot classify, a link that is not a GitHub repository, a repository with no build manifest. The check still passes, but the pull request gets the `needs-review` label and a maintainer merges it by hand once they have looked.
 - **It carries the `maintainer-override` label**, which bypasses the submission gate. That is a maintainer's judgement call, so whoever applied it merges by hand.
 
 Anyone can also stop auto-merge on a specific pull request by adding the `no-auto-merge` label.

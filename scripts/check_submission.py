@@ -6,8 +6,14 @@ and reports what the maintainer would otherwise have to check by hand: stars,
 licence, last push, archived state, repo age, and whether the repo actually
 contains an MCP implementation rather than just a manifest.
 
+A `Remote` row is a hosted server with no public source, so it is judged on its
+documentation and its endpoint instead: the endpoint the docs name is probed, and
+a maintainer confirms the rest.
+
 Hard failures block the pull request. Soft warnings are printed for a human to
-judge. Both land in the GitHub Actions step summary.
+judge. Both land in the GitHub Actions step summary. With `--review` the exit
+code says whether any entry needs that human, which is how the auto-merge
+workflows decide to wait for one.
 
     python scripts/check_submission.py --base-ref origin/main
 
@@ -18,12 +24,16 @@ from __future__ import annotations
 
 import argparse
 import base64
+import http.client
+import ipaddress
 import json
 import os
 import re
 import sys
+import threading
 import tomllib
 import urllib.error
+import urllib.parse
 import urllib.request
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -42,6 +52,55 @@ API = "https://api.github.com"
 MAX_SERVERS_PER_PR = 1
 STALE_DAYS = 180
 OVERRIDE_LABEL = "maintainer-override"
+
+# Exit code for `--review` when an entry passes the gate but a person has to
+# decide on it before it merges.
+NEEDS_REVIEW = 3
+
+# The Language value for a hosted server with no public source.
+REMOTE = "Remote"
+
+PROBE_TIMEOUT = 20  # seconds for one whole request
+SOCKET_TIMEOUT = 5  # seconds for each connect or read inside it
+MAX_PROBES = 3
+MAX_PAGE_BYTES = 2_000_000
+USER_AGENT = (
+    "Mozilla/5.0 (compatible; awesome-mcp-servers-submission-check; "
+    "+https://github.com/Sagargupta16/awesome-mcp-servers)"
+)
+# A probe accepts exactly what the MCP spec says a client must: a server on the
+# same host as its website served the website to an Accept that included HTML.
+MCP_ACCEPT = "application/json, text/event-stream"
+PAGE_ACCEPT = "text/html, */*;q=0.8"
+INITIALIZE = json.dumps(
+    {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+            "protocolVersion": "2025-06-18",
+            "capabilities": {},
+            "clientInfo": {
+                "name": "awesome-mcp-servers-submission-check",
+                "version": "1",
+            },
+        },
+    }
+).encode("utf-8")
+
+# Statuses that mean nothing is served at that URL, and the content types an MCP
+# server answers `initialize` with. See speaks_mcp().
+GONE = {404, 410}
+MCP_TYPES = {"application/json", "text/event-stream"}
+
+# Any https URL. Placeholders such as `https://{host}/mcp` fail the host part.
+URL_RE = re.compile(r"https://[\w.-]+(?::\d+)?(?:/[^\s\"'<>`(){}\[\]\\|]*)?")
+
+REMOTE_REVIEW = (
+    "Hosted server with no public source, so a maintainer reviews it before it "
+    "merges: the documentation is the operator's own, and it names the endpoint, "
+    "the authentication and the tools."
+)
 
 # Files that make a repo a manifest-only listing rather than a real project.
 MANIFEST_ONLY = {
@@ -152,7 +211,9 @@ def gh_api(path: str):
             return json.loads(resp.read().decode("utf-8")), None
     except urllib.error.HTTPError as exc:
         return None, exc.code
-    except (urllib.error.URLError, TimeoutError) as exc:
+    # OSError covers URLError, timeouts and a dropped connection, which used to
+    # escape as RemoteDisconnected and crash the run.
+    except (OSError, http.client.HTTPException) as exc:
         return None, f"network: {exc}"
 
 
@@ -247,17 +308,22 @@ def manifest_licence(slug: str) -> tuple[str | None, str | None]:
     manifest declaration, so look for one before blocking a submission.
     """
     for name in MANIFEST_LICENCE_FILES:
-        data, _ = gh_api(f"repos/{slug}/contents/{name}")
-        if not isinstance(data, dict) or not data.get("content"):
-            continue
-        try:
-            text = base64.b64decode(data["content"]).decode("utf-8", "replace")
-        except ValueError:
-            continue
-        licence = parse_manifest_licence(name, text)
+        text = file_text(f"repos/{slug}/contents/{name}")
+        licence = parse_manifest_licence(name, text) if text else None
         if licence:
             return name, licence
     return None, None
+
+
+def file_text(path: str) -> str | None:
+    """Decode a file from the contents API, or None when there is no such file."""
+    data, _ = gh_api(path)
+    if not isinstance(data, dict) or not data.get("content"):
+        return None
+    try:
+        return base64.b64decode(data["content"]).decode("utf-8", "replace")
+    except ValueError:
+        return None
 
 
 def parse_rows(text: str) -> dict:
@@ -279,8 +345,11 @@ def parse_rows(text: str) -> dict:
     return rows
 
 
-def added_rows(base_ref: str) -> list:
-    """Entries present at HEAD but not at the base.
+def added_rows(base_ref: str, head_ref: str | None = None) -> list:
+    """Entries present at the head but not at the base.
+
+    The head is the working copy unless `head_ref` names a revision, which is how
+    a `pull_request_target` job judges a pull request it must not check out.
 
     Compares the two parsed entry sets rather than reading `+` lines from the
     diff. Reordering a table rewrites every moved row, so a diff-based reading
@@ -291,27 +360,35 @@ def added_rows(base_ref: str) -> list:
     a git ref first. Nothing is run through a shell, but a value beginning with
     `-` would still be read by git as an option rather than a revision.
     """
-    if not gitref.is_valid_ref(base_ref):
-        print(
-            f"error: {base_ref!r} is not a valid git ref for --base-ref",
-            file=sys.stderr,
-        )
-        return []
+    refs = {"--base-ref": base_ref, "--head-ref": head_ref}
+    for flag, ref in refs.items():
+        if ref is not None and not gitref.is_valid_ref(ref):
+            print(f"error: {ref!r} is not a valid git ref for {flag}", file=sys.stderr)
+            return []
 
-    text, detail = gitref.show(base_ref, "README.md")
-    if text is None:
-        print(
-            f"warning: could not read README.md at {base_ref}: {detail}",
-            file=sys.stderr,
-        )
-        return []
+    texts = []
+    for ref in (base_ref, head_ref):
+        if ref is None:
+            texts.append(Path("README.md").read_text(encoding="utf-8"))
+            continue
+        text, detail = gitref.show(ref, "README.md")
+        if text is None:
+            print(
+                f"warning: could not read README.md at {ref}: {detail}",
+                file=sys.stderr,
+            )
+            return []
+        texts.append(text)
 
-    before = parse_rows(text)
-    after = parse_rows(Path("README.md").read_text(encoding="utf-8"))
+    before, after = (parse_rows(text) for text in texts)
     return [sub for key, sub in after.items() if key not in before]
 
 
 def inspect(sub: Submission) -> None:
+    if sub.third == REMOTE:
+        inspect_remote(sub)
+        return
+
     m = GH_REPO_RE.match(sub.url)
     if not m:
         sub.soft.append(
@@ -321,6 +398,37 @@ def inspect(sub: Submission) -> None:
         return
 
     slug = f"{m.group('owner')}/{m.group('repo')}"
+    data = lookup_repo(sub, slug)
+    if data is None:
+        return
+
+    licence = (data.get("license") or {}).get("spdx_id")
+    if licence in (None, "", "NOASSERTION"):
+        check_unclassified_licence(sub, slug)
+    stale_days = days_since(data["pushed_at"])
+    if stale_days > STALE_DAYS:
+        sub.hard.append(
+            f"Last push was {stale_days} days ago, over the {STALE_DAYS}-day "
+            f"maintenance threshold."
+        )
+
+    check_implementation(sub, slug)
+
+    # Star count and repo age are reported in the facts table above as context.
+    # Neither is a bar: popularity is not quality, and a new project that works,
+    # is licensed and is documented belongs on the list as much as a famous one.
+
+
+def days_since(stamp: str) -> int:
+    then = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+    return (datetime.now(timezone.utc) - then).days
+
+
+def lookup_repo(sub: Submission, slug: str) -> dict | None:
+    """Fetch a repository, record its facts, and block what no entry may be.
+
+    Returns None when there is nothing further to inspect.
+    """
     data, err = gh_api(f"repos/{slug}")
     if data is None:
         if err == 404:
@@ -329,13 +437,10 @@ def inspect(sub: Submission) -> None:
             )
         else:
             sub.soft.append(f"Could not reach the GitHub API for `{slug}` ({err}).")
-        return
+        return None
 
-    pushed = datetime.fromisoformat(data["pushed_at"].replace("Z", "+00:00"))
-    created = datetime.fromisoformat(data["created_at"].replace("Z", "+00:00"))
-    now = datetime.now(timezone.utc)
-    stale_days = (now - pushed).days
-    age_days = (now - created).days
+    stale_days = days_since(data["pushed_at"])
+    age_days = days_since(data["created_at"])
     licence = (data.get("license") or {}).get("spdx_id")
     stars = data["stargazers_count"]
 
@@ -358,19 +463,190 @@ def inspect(sub: Submission) -> None:
         sub.hard.append(
             "The repository is a fork. Submit the upstream project instead."
         )
-    if licence in (None, "", "NOASSERTION"):
-        check_unclassified_licence(sub, slug)
-    if stale_days > STALE_DAYS:
+    return data
+
+
+def inspect_remote(sub: Submission) -> None:
+    """Judge a hosted server on its documentation and its endpoint.
+
+    There is no source, so the licence, 180-day and implementation checks do not
+    apply: nothing is distributed to license, a documentation repository can sit
+    quiet while the service runs, and a README beside a `server.json` is exactly
+    what one looks like. A missing repository, an archive or a fork still blocks,
+    and every `Remote` entry waits for a maintainer.
+    """
+    sub.soft.append(REMOTE_REVIEW)
+
+    m = GH_REPO_RE.match(sub.url)
+    if not m:
+        status, _, page = request(sub.url, read=True)
+        if status is None or status >= 400:
+            sub.soft.append(
+                f"Could not read the documentation page "
+                f"({page or f'HTTP {status}'}), so no endpoint was looked for."
+            )
+            return
+        check_endpoint(sub, page)
+        return
+
+    slug = f"{m.group('owner')}/{m.group('repo')}"
+    if lookup_repo(sub, slug) is None:
+        return
+    readme = file_text(f"repos/{slug}/readme")
+    if readme is None:
         sub.hard.append(
-            f"Last push was {stale_days} days ago, over the {STALE_DAYS}-day "
-            f"maintenance threshold."
+            "No README in the repository. For a hosted server the README is the "
+            "documentation, so CONTRIBUTING.md requires one."
         )
+    manifest = file_text(f"repos/{slug}/contents/server.json") or ""
+    check_endpoint(sub, f"{readme or ''}\n{manifest}")
 
-    check_implementation(sub, slug)
 
-    # Star count and repo age are reported in the facts table above as context.
-    # Neither is a bar: popularity is not quality, and a new project that works,
-    # is licensed and is documented belongs on the list as much as a famous one.
+def request(url: str, method: str = "GET", read: bool = False) -> tuple:
+    """Send one unauthenticated request: (status, content type, text).
+
+    `text` is the body when `read` is set, and why there was no answer when the
+    status is None. A POST carries an MCP `initialize`. The body is only read when
+    asked for: an SSE endpoint streams for as long as it is held open, so a probe
+    closes the connection as soon as the status line arrives.
+
+    urllib's timeout applies to each socket operation and to each address a host
+    resolves to, so a host whose IPv6 addresses hang held one probe for over a
+    minute. The request runs on a daemon thread with one deadline for all of it.
+    """
+    result = [None, "", f"no answer within {PROBE_TIMEOUT}s"]
+
+    def run() -> None:
+        result[:] = _request(url, method, read)
+
+    worker = threading.Thread(target=run, daemon=True)
+    worker.start()
+    worker.join(PROBE_TIMEOUT)
+    return tuple(result)
+
+
+def _request(url: str, method: str, read: bool) -> tuple:
+    data = INITIALIZE if method == "POST" else None
+    headers = {"User-Agent": USER_AGENT, "Accept": PAGE_ACCEPT if read else MCP_ACCEPT}
+    if data:
+        headers["Content-Type"] = "application/json"
+    req = urllib.request.Request(url, data=data, method=method, headers=headers)
+    try:
+        with urllib.request.urlopen(req, timeout=SOCKET_TIMEOUT) as resp:
+            body = resp.read(MAX_PAGE_BYTES).decode("utf-8", "replace") if read else ""
+            return resp.status, resp.headers.get_content_type(), body
+    except urllib.error.HTTPError as exc:
+        ctype = exc.headers.get_content_type() if exc.headers else ""
+        return exc.code, ctype, ""
+    except (OSError, ValueError, http.client.HTTPException) as exc:
+        return None, "", str(getattr(exc, "reason", exc))
+
+
+def probe(url: str) -> tuple:
+    """How an endpoint answers, as `request` returns it.
+
+    A POST-only route answers GET with 404 and an SSE route answers POST with
+    405, so a 404 or 405 to the POST is retried as a GET before it counts.
+    """
+    answer = request(url, "POST")
+    if answer[0] in (404, 405):
+        answer = request(url)
+    return answer
+
+
+def speaks_mcp(status: int | None, ctype: str) -> bool:
+    """True when an answer came from a server rather than a 404 or a web page.
+
+    An error other than 404 or 410 counts: 401 is what a server says to a request
+    with no token. A success counts only as JSON or an event stream, since a 200
+    in HTML is a web page that happens to sit at an `/mcp` path.
+    """
+    if status is None or status in GONE:
+        return False
+    return status >= 300 or ctype in MCP_TYPES
+
+
+def _public_host(host: str) -> bool:
+    """False for placeholders and addresses no hosted server would publish."""
+    if "." not in host or "example" in host.split("."):
+        return False
+    try:
+        ipaddress.ip_address(host)
+    except ValueError:
+        return True
+    return False
+
+
+def _endpoint_rank(host: str, path: str) -> int:
+    """Lower is likelier: an `mcp.` host, then an API host or path, then the rest.
+
+    An `mcp.` host has to be a subdomain. `mcp.so` is a registry, and a README's
+    badge linking it would otherwise use up the probes before the endpoint.
+    """
+    if host.startswith("mcp.") and host.count(".") >= 2:
+        return 0
+    if host.startswith("api.") or "/api/" in path.lower():
+        return 1
+    return 2
+
+
+def find_endpoints(text: str, own_url: str) -> list:
+    """MCP endpoint URLs the documentation names, likeliest first.
+
+    A hosted endpoint usually lives on an `mcp.` host or at a path ending in
+    `/mcp` or `/sse`. The entry's own URL is the documentation, not the endpoint,
+    even when its path also ends in `/mcp`. Ranking matters because only the
+    first few are probed, and Noveum's page names its locale copies at `/de/mcp`
+    before its endpoint at `/api/mcp`.
+    """
+    own = own_url.rstrip("/").lower()
+    found: dict = {}
+    for match in URL_RE.finditer(text):
+        # A fragment names a spot on a page, not a different URL to probe.
+        url = match.group(0).split("#")[0].rstrip(".,;:!?")
+        parts = urllib.parse.urlsplit(url)
+        host = (parts.hostname or "").lower()
+        last = parts.path.rstrip("/").rsplit("/", 1)[-1].lower()
+        if url.rstrip("/").lower() == own or not _public_host(host):
+            continue
+        rank = _endpoint_rank(host, parts.path)
+        # Docs often name just the host. Replicate's root is a landing page while
+        # its server answers at /sse and /mcp, so try those paths first.
+        if rank == 0 and parts.path in ("", "/"):
+            base = url.rstrip("/")
+            for path in ("/mcp", "/sse"):
+                found.setdefault(f"{base}{path}", rank)
+        if rank == 0 or last in ("mcp", "sse"):
+            found.setdefault(url, rank)
+    return sorted(found, key=found.__getitem__)
+
+
+def check_endpoint(sub: Submission, docs: str) -> None:
+    """Probe the endpoint the documentation names, and say what answered."""
+    endpoints = find_endpoints(docs, sub.url)[:MAX_PROBES]
+    if not endpoints:
+        sub.soft.append(
+            "No MCP endpoint URL found in the documentation. A `Remote` entry's "
+            "docs must name it; confirm by hand, since a page rendered by "
+            "JavaScript hides it from this check."
+        )
+        return
+
+    tried = []
+    for url in endpoints:
+        status, ctype, why = probe(url)
+        answer = (
+            f"HTTP {status}, {ctype}" if status is not None else f"no answer: {why}"
+        )
+        if speaks_mcp(status, ctype):
+            sub.facts["endpoint"] = f"{url} ({answer})"
+            return
+        tried.append(f"`{url}` ({answer})")
+    sub.soft.append(
+        f"No URL the documentation names answered like an MCP server: "
+        f"{', '.join(tried)}. A listed hosted server must be live; confirm the "
+        f"endpoint by hand."
+    )
 
 
 def check_unclassified_licence(sub: Submission, slug: str) -> None:
@@ -445,7 +721,9 @@ def check_implementation(sub: Submission, slug: str) -> None:
         sub.hard.append(
             f"The repository root contains only {sorted(payload)} -- a README plus "
             f"registry manifests, with no MCP implementation. Publish the server "
-            f"source, or submit the repository that holds it."
+            f"source, or submit the repository that holds it. If the server is "
+            f"hosted and its source is closed, list it with `{REMOTE}` as the "
+            f"language instead, which CONTRIBUTING.md covers."
         )
         return
 
@@ -535,10 +813,18 @@ def main() -> int:
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     ap.add_argument("--base-ref", default="origin/main", help="ref to diff against")
+    ap.add_argument(
+        "--head-ref", help="read README.md from this ref instead of the working copy"
+    )
     ap.add_argument("--labels", default="", help="comma-separated pull request labels")
+    ap.add_argument(
+        "--review",
+        action="store_true",
+        help=f"exit {NEEDS_REVIEW} if any entry needs a maintainer decision, else 0",
+    )
     args = ap.parse_args()
 
-    subs = added_rows(args.base_ref)
+    subs = added_rows(args.base_ref, args.head_ref)
     for s in subs:
         inspect(s)
 
@@ -548,8 +834,12 @@ def main() -> int:
     print(report)
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
-        Path(summary).write_text(report, encoding="utf-8")
+        with Path(summary).open("a", encoding="utf-8") as fh:
+            fh.write(report)
 
+    # A blocking problem needs no review flag: the required check is already red.
+    if args.review:
+        return NEEDS_REVIEW if any(s.soft for s in subs) else 0
     return 1 if failing else 0
 
 

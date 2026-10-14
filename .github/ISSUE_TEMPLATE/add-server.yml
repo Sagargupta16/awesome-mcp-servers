@@ -13,6 +13,10 @@ body:
         Other sections are added by a maintainer. There is no star or age
         requirement, so a brand-new project is welcome here.
 
+        A hosted server with no public source is welcome too: give its Language
+        as Remote and link the operator's own documentation. Those are reviewed by
+        a maintainer before they merge.
+
         Please check [CONTRIBUTING.md](https://github.com/Sagargupta16/awesome-mcp-servers/blob/main/CONTRIBUTING.md#quality-standards) first.
         Suggestions that clearly miss the bar get closed without much discussion.
 
@@ -28,6 +32,7 @@ body:
     id: url
     attributes:
       label: Repository or project URL
+      description: For a hosted server with no public source, the operator's documentation page.
       placeholder: "https://github.com/org/repo"
     validations:
       required: true
@@ -115,13 +120,13 @@ body:
     attributes:
       label: Quality standards
       options:
-        - label: The repository holds a working MCP implementation, not just a README and a manifest
+        - label: The repository holds a working MCP implementation, or it is a hosted server whose own documentation names the endpoint, the authentication and the tools
           required: true
-        - label: It states an open-source licence, in a LICENSE file at the root or in its package manifest
+        - label: It states an open-source licence, in a LICENSE file at the root or in its package manifest, or it is a hosted server with no public source
           required: true
-        - label: Its README documents installation and usage
+        - label: Its README or documentation covers installation and usage
           required: true
-        - label: It was pushed within the last 180 days and is not archived
+        - label: It was pushed within the last 180 days and is not archived, or, for a hosted server, its endpoint answers
           required: true
         - label: It is not already on the list, and no other server for the same product is
           required: true

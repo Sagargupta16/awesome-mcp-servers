@@ -87,6 +87,25 @@ def test_added_rows_reports_one_row_when_a_table_is_both_sorted_and_extended(
     assert [sub.name for sub in added] == ["Gamma"]
 
 
+def test_added_rows_reads_the_head_from_a_ref_instead_of_the_working_copy(
+    repo: Path, monkeypatch
+):
+    """How auto-merge.yml judges a pull request it must never check out."""
+    commit_readme(repo, f"{ROW_A}\n{ROW_B}\n{ROW_C}\n", message="head")
+    (repo / "README.md").write_text(f"{ROW_A}\n", encoding="utf-8")
+    monkeypatch.chdir(repo)
+
+    added = check_submission.added_rows("HEAD~1", "HEAD")
+
+    assert [sub.name for sub in added] == ["Gamma"]
+
+
+def test_added_rows_rejects_a_head_ref_shaped_like_an_option(repo: Path, monkeypatch):
+    monkeypatch.chdir(repo)
+
+    assert check_submission.added_rows("HEAD", "--output=x") == []
+
+
 # --- manifest licence detection ----------------------------------------------
 
 
@@ -393,7 +412,9 @@ def test_render_passes_a_clean_single_entry():
 # --- implementation detection -----------------------------------------------
 
 
-def _inspected_with_tree(tree: list, monkeypatch) -> check_submission.Submission:
+def _inspected_with_tree(
+    tree: list, monkeypatch, language: str = "TypeScript"
+) -> check_submission.Submission:
     """Inspect a repository whose root contains exactly `tree`."""
     fresh = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
@@ -417,7 +438,7 @@ def _inspected_with_tree(tree: list, monkeypatch) -> check_submission.Submission
         name="Alpha",
         url="https://github.com/acme/alpha",
         desc="Alpha widget",
-        third="Remote",
+        third=language,
     )
     check_submission.inspect(sub)
     return sub
@@ -467,3 +488,273 @@ def test_a_build_manifest_clears_the_stub_check(monkeypatch):
     )
 
     assert not any("registry manifests" in problem for problem in sub.hard)
+
+
+def test_the_stub_message_points_a_hosted_server_at_remote(monkeypatch):
+    sub = _inspected_with_tree(_stub_tree([]), monkeypatch)
+
+    assert any("`Remote`" in problem for problem in sub.hard)
+
+
+# --- Remote entries ----------------------------------------------------------
+
+
+def _remote_api(repo: dict, files: dict):
+    """Serve one repository's metadata plus the README and files given."""
+    contents = _fake_api(files)
+
+    def fake(path: str):
+        if path == "repos/acme/alpha":
+            return repo, None
+        if path == "repos/acme/alpha/readme" and "README.md" in files:
+            return contents("repos/acme/alpha/contents/README.md")
+        return contents(path)
+
+    return fake
+
+
+def _remote(url: str = "https://github.com/acme/alpha") -> check_submission.Submission:
+    return check_submission.Submission(
+        name="Alpha", url=url, desc="Alpha widget", third="Remote"
+    )
+
+
+STALE_UNLICENSED = {
+    "pushed_at": "2020-01-01T00:00:00Z",
+    "created_at": "2020-01-01T00:00:00Z",
+    "license": None,
+    "stargazers_count": 0,
+    "archived": False,
+    "fork": False,
+    "language": None,
+}
+DOCS = "Connect to `https://mcp.acme.dev/mcp` with an API key.\n"
+
+
+def test_a_remote_stub_repository_waits_for_review_instead_of_failing(monkeypatch):
+    """A README and a server.json is what a hosted server's repository looks like."""
+    monkeypatch.setattr(
+        check_submission, "gh_api", _remote_api(STALE_UNLICENSED, {"README.md": DOCS})
+    )
+    monkeypatch.setattr(
+        check_submission, "probe", lambda url: (401, "application/json", "")
+    )
+    sub = _remote()
+
+    check_submission.inspect(sub)
+
+    assert sub.hard == []
+    assert check_submission.REMOTE_REVIEW in sub.soft
+    assert (
+        sub.facts["endpoint"] == "https://mcp.acme.dev/mcp (HTTP 401, application/json)"
+    )
+
+
+def test_an_archived_remote_repository_still_blocks(monkeypatch):
+    archived = STALE_UNLICENSED | {"archived": True}
+    monkeypatch.setattr(
+        check_submission, "gh_api", _remote_api(archived, {"README.md": DOCS})
+    )
+    monkeypatch.setattr(
+        check_submission, "probe", lambda url: (200, "text/event-stream", "")
+    )
+    sub = _remote()
+
+    check_submission.inspect(sub)
+
+    assert any("archived" in problem for problem in sub.hard)
+
+
+def test_a_remote_repository_without_a_readme_blocks(monkeypatch):
+    monkeypatch.setattr(check_submission, "gh_api", _remote_api(STALE_UNLICENSED, {}))
+    sub = _remote()
+
+    check_submission.inspect(sub)
+
+    assert any("No README" in problem for problem in sub.hard)
+
+
+def test_the_endpoint_can_come_from_server_json(monkeypatch):
+    manifest = '{"remotes": [{"type": "streamable-http", "url": "https://api.acme.dev/v1/mcp"}]}'
+    monkeypatch.setattr(
+        check_submission,
+        "gh_api",
+        _remote_api(
+            STALE_UNLICENSED, {"README.md": "Hosted.", "server.json": manifest}
+        ),
+    )
+    monkeypatch.setattr(
+        check_submission, "probe", lambda url: (200, "text/event-stream", "")
+    )
+    sub = _remote()
+
+    check_submission.inspect(sub)
+
+    assert sub.facts["endpoint"].startswith("https://api.acme.dev/v1/mcp")
+
+
+def test_a_remote_docs_page_is_read_for_its_endpoint(monkeypatch):
+    page = '<a href="https://mcp.acme.dev/sse">endpoint</a>'
+    monkeypatch.setattr(
+        check_submission,
+        "request",
+        lambda url, method="GET", read=False: (200, "text/html", page),
+    )
+    monkeypatch.setattr(check_submission, "probe", lambda url: (405, "text/plain", ""))
+    sub = _remote("https://acme.dev/docs/mcp")
+
+    check_submission.inspect(sub)
+
+    assert sub.facts["endpoint"] == "https://mcp.acme.dev/sse (HTTP 405, text/plain)"
+
+
+def test_an_endpoint_that_is_gone_is_reported(monkeypatch):
+    monkeypatch.setattr(check_submission, "probe", lambda url: (404, "text/plain", ""))
+    sub = _remote()
+
+    check_submission.check_endpoint(sub, DOCS)
+
+    assert any("answered like an MCP server" in note for note in sub.soft)
+    assert "endpoint" not in sub.facts
+
+
+def test_documentation_naming_no_endpoint_is_reported(monkeypatch):
+    sub = _remote()
+
+    check_submission.check_endpoint(sub, "Sign up on our website.")
+
+    assert any("No MCP endpoint URL found" in note for note in sub.soft)
+
+
+def test_find_endpoints_prefers_an_mcp_host():
+    text = "Docs at https://acme.dev/api/mcp and the server at https://mcp.acme.dev/v2."
+
+    assert check_submission.find_endpoints(text, "https://acme.dev/docs") == [
+        "https://mcp.acme.dev/v2",
+        "https://acme.dev/api/mcp",
+    ]
+
+
+def test_find_endpoints_expands_a_bare_mcp_host_to_the_usual_paths():
+    assert check_submission.find_endpoints(
+        "Connect to https://mcp.acme.dev", "https://acme.dev/docs"
+    ) == [
+        "https://mcp.acme.dev/mcp",
+        "https://mcp.acme.dev/sse",
+        "https://mcp.acme.dev",
+    ]
+
+
+def test_a_registry_on_an_mcp_domain_is_not_taken_for_an_endpoint_host():
+    text = "Listed on https://mcp.so/server/acme. Endpoint: https://acme.dev/api/mcp"
+
+    assert check_submission.find_endpoints(text, "https://acme.dev/docs") == [
+        "https://acme.dev/api/mcp"
+    ]
+
+
+def test_find_endpoints_ranks_an_api_path_above_another_docs_page():
+    text = "https://acme.dev/de/mcp https://acme.dev/fr/mcp https://acme.dev/api/mcp"
+
+    assert check_submission.find_endpoints(text, "https://acme.dev/en/mcp")[0] == (
+        "https://acme.dev/api/mcp"
+    )
+
+
+def test_find_endpoints_skips_the_entrys_own_page():
+    """A docs URL ending in /mcp is the documentation, not the endpoint."""
+    url = "https://docs.acme.dev/integrations/mcp/"
+
+    assert check_submission.find_endpoints(f"See {url}", url) == []
+
+
+def test_find_endpoints_drops_fragments():
+    """Clera's page linked `/mcp#application`, its own URL plus an anchor."""
+    text = "https://acme.dev/mcp#application https://mcp.acme.dev/mcp#tools"
+
+    assert check_submission.find_endpoints(text, "https://acme.dev/mcp") == [
+        "https://mcp.acme.dev/mcp"
+    ]
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "https://{your-host}/mcp",
+        "https://mcp.example.com/mcp",
+        "https://localhost/mcp",
+        "https://127.0.0.1/mcp",
+        "https://acme.dev/pricing",
+    ],
+)
+def test_find_endpoints_ignores_placeholders_and_other_pages(text: str):
+    assert check_submission.find_endpoints(text, "https://acme.dev/docs") == []
+
+
+def test_probe_retries_a_post_only_404_as_a_get(monkeypatch):
+    calls = []
+
+    def fake(url, method="GET", read=False):
+        calls.append(method)
+        return (404, "", "") if method == "POST" else (200, "text/event-stream", "")
+
+    monkeypatch.setattr(check_submission, "request", fake)
+
+    assert check_submission.probe("https://mcp.acme.dev/sse")[0] == 200
+    assert calls == ["POST", "GET"]
+
+
+@pytest.mark.parametrize(
+    ("status", "ctype", "expected"),
+    [
+        (401, "application/json", True),
+        (200, "text/event-stream", True),
+        (200, "application/json", True),
+        (405, "text/html", True),
+        (200, "text/html", False),
+        (404, "application/json", False),
+        (None, "", False),
+    ],
+)
+def test_speaks_mcp(status, ctype: str, expected: bool):
+    assert check_submission.speaks_mcp(status, ctype) is expected
+
+
+def test_a_web_page_at_an_mcp_path_is_not_taken_for_the_endpoint(monkeypatch):
+    """Noveum's docs linked their own German copy at `/de/mcp`, which answers 200."""
+    monkeypatch.setattr(check_submission, "probe", lambda url: (200, "text/html", ""))
+    sub = _remote()
+
+    check_submission.check_endpoint(sub, DOCS)
+
+    assert "endpoint" not in sub.facts
+    assert any("text/html" in note for note in sub.soft)
+
+
+# --- --review: whether auto-merge waits for a person -------------------------
+
+
+def _main_with(subs: list, monkeypatch, *flags: str) -> int:
+    monkeypatch.setattr(check_submission, "added_rows", lambda base, head: subs)
+    monkeypatch.setattr(check_submission, "inspect", lambda sub: None)
+    monkeypatch.delenv("GITHUB_STEP_SUMMARY", raising=False)
+    monkeypatch.setattr("sys.argv", ["check_submission.py", *flags])
+    return check_submission.main()
+
+
+def test_review_mode_flags_an_entry_with_a_maintainer_note(monkeypatch):
+    sub = _remote()
+    sub.soft.append(check_submission.REMOTE_REVIEW)
+
+    assert _main_with([sub], monkeypatch, "--review") == check_submission.NEEDS_REVIEW
+
+
+def test_review_mode_lets_a_clean_entry_through(monkeypatch):
+    assert _main_with(_clean_subs("alpha"), monkeypatch, "--review") == 0
+
+
+def test_without_review_a_maintainer_note_does_not_fail_the_check(monkeypatch):
+    sub = _remote()
+    sub.soft.append(check_submission.REMOTE_REVIEW)
+
+    assert _main_with([sub], monkeypatch) == 0

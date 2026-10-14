@@ -26,9 +26,15 @@ Submitting your own work is welcome. Hiding that you did is not: undisclosed sel
 Confirming these against [CONTRIBUTING.md](../CONTRIBUTING.md#quality-standards):
 
 - [ ] The repository contains a working MCP implementation, not just a README and a `server.json` manifest
-- [ ] It has a `LICENSE` file at the repository root
+- [ ] It states an open-source licence, in a `LICENSE` file at the root or in its package manifest
 - [ ] Its README documents installation, configuration, and basic usage
 - [ ] It was pushed within the last 180 days and is not archived
+
+For a hosted server with no public source (Language `Remote`), the first, second and fourth boxes are replaced by the [hosted-server rules](../CONTRIBUTING.md#hosted-servers):
+
+- [ ] The link is the operator's own documentation, not a registry listing
+- [ ] That documentation names the endpoint URL, the authentication and the tools
+- [ ] The endpoint is live
 - [ ] It is not already listed, and not a second server for a product already covered
 - [ ] It is not a fork of another project
 

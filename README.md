@@ -18,6 +18,8 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 - documents how to install and configure it, so someone else can actually run it
 - appears exactly once, in one category
 
+Hosted servers with no public source are the one exception, marked `Remote`. Instead of a licence and a push date, each links the operator's own documentation naming the endpoint, the authentication and the tools; CI checks the endpoint answers; and a maintainer reviews every one before it merges.
+
 Those rules are enforced by [CI](.github/workflows/), not by good intentions: a pull request that breaks the format, adds a dead link, or submits an unlicensed repo fails its checks. A [monthly audit](.github/workflows/health.yml) re-checks every listed repository and files what has rotted.
 
 An MCP server runs as a trusted extension of your assistant, with your files and your credentials. Read the source before you configure one -- a place on this list is a filter, not an audit. See [SECURITY.md](SECURITY.md).
@@ -132,7 +134,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [PostgreSQL MCP (Pro)](https://github.com/crystaldba/postgres-mcp) | Query, analyze and optimize PostgreSQL databases | Python |
 | [Qdrant MCP](https://github.com/qdrant/mcp-server-qdrant) | Official Qdrant vector database server | Python |
 | [Redis MCP](https://github.com/redis/mcp-redis) | Official Redis cache and data structures | Python |
-| [Scout Packs](https://github.com/tigerops-win/scout-packs) | Pay-per-call B2B data: lead lookup, domain intel and email checks | Remote |
+| [Scout Packs](https://github.com/tigerops-win/scout-packs) | Pay-per-call B2B data: lead lookup, domain intel and email checks | Python |
 | [Snowflake MCP](https://github.com/Snowflake-Labs/mcp) | Official Snowflake Cortex AI + SQL orchestration | Python |
 | [StarRocks MCP](https://github.com/StarRocks/mcp-server-starrocks) | Official StarRocks OLAP database query and schema access | Python |
 | [Supabase MCP](https://github.com/supabase/mcp) | Supabase database, auth, and storage | TypeScript |
@@ -219,6 +221,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Aident Loadout](https://github.com/Aident-AI/aident-skill) | Connect agents to 1000+ apps via one remote MCP with Vault | Remote |
 | [Airtable MCP](https://github.com/domdomegg/airtable-mcp-server) | Airtable base read/write | TypeScript |
 | [Asana MCP](https://github.com/roychri/mcp-server-asana) | Asana tasks, projects, workspaces | TypeScript |
+| [CareClinic](https://careclinic.io/careclinic-mcp/) | Read medication schedules, symptoms and moods, and save confirmed check-ins | Remote |
 | [Clera](https://www.getclera.com/mcp) | Search vetted startup candidates, review role matches and request intros | Remote |
 | [Excel MCP](https://github.com/haris-musa/excel-mcp-server) | Read, write and format Excel workbooks without Excel installed | Python |
 | [fitlog-mcp](https://github.com/hahahahahahahahah6/fitlog-mcp) | Self-hosted MCP server giving Alexa+ a memory for training | Python |
@@ -236,6 +239,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Slack MCP](https://github.com/korotovsky/slack-mcp-server) | Slack workspace integration | Go |
 | [Tale](https://github.com/tale-project/tale) | Author and run Tale automations, inspect runs and query workspace knowledge | Built-in |
 | [Trello MCP](https://github.com/delorenj/mcp-server-trello) | Trello boards, lists, cards | TypeScript |
+| [Worklittle Jobs](https://docs.worklittle.com/mcp) | Search 4M+ jobs with visa, salary and distance filters, and apply from chat | Remote |
 
 ### Search & Knowledge
 
@@ -265,6 +269,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [CosVoice](https://github.com/CosVoice/cosvoice-mcp) | Real US phone number and email for agents: calls, texts, bookings, summaries | Remote |
 | [Discourse MCP](https://github.com/discourse/discourse-mcp) | Official Discourse forum search, topic reading and posting | TypeScript |
 | [Joinly](https://github.com/joinly-ai/joinly) | Join Zoom, Google Meet and Teams calls to transcribe and act live | Python |
 | [LINE Bot MCP](https://github.com/line/line-bot-mcp-server) | Official LINE Messaging API server for sending and managing messages | TypeScript |
@@ -327,7 +332,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [SEC EDGAR MCP](https://github.com/stefanoamorelli/sec-edgar-mcp) | Query SEC EDGAR filings, XBRL financials and company facts | Python |
 | [Square MCP](https://developer.squareup.com/docs/mcp) | Official hosted Square server for payments, catalog and orders, OAuth login | Remote |
 | [Stripe MCP](https://github.com/stripe/ai) | Stripe payments and billing | TypeScript |
-| [TWZRD Agent Intel](https://smithery.ai/servers/wzrd/twzrd-agent-intel) | Solana on-chain wallet trust scoring for agents before x402 micropayments | Remote |
+| [TWZRD Agent Intel](https://github.com/twzrd-sol/twzrd-trust) | Solana on-chain wallet trust scoring for agents before x402 micropayments | Remote |
 | [Xero MCP](https://github.com/XeroAPI/xero-mcp-server) | Official Xero server for invoices, contacts, accounts and payroll | TypeScript |
 | [Yahoo Finance MCP](https://github.com/Alex2Yang97/yahoo-finance-mcp) | Stock data and financial info | Python |
 | [Zerodha Kite MCP](https://github.com/zerodha/kite-mcp-server) | Official Zerodha Kite server for Indian holdings, orders and quotes | Go |
@@ -338,9 +343,9 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 |--------|-------------|----------|
 | [ax](https://github.com/Necmttn/ax) | Agent session telemetry and cost analytics | TypeScript |
 | [Datadog MCP](https://github.com/winor30/mcp-server-datadog) | Datadog metrics, logs, monitors | TypeScript |
-| [Dynatrace MCP](https://www.dynatrace.com/hub/detail/dynatrace-mcp-server/) | Official hosted Dynatrace server for problems, logs, traces and metrics | Remote |
+| [Dynatrace MCP](https://docs.dynatrace.com/docs/dynatrace-intelligence/dynatrace-mcp) | Official hosted Dynatrace server for problems, logs, traces and metrics | Remote |
 | [Grafana MCP](https://github.com/grafana/mcp-grafana) | Official Grafana dashboards and alerts | Go |
-| [Honeycomb MCP](https://docs.honeycomb.io/integrations/mcp/) | Official Honeycomb trace queries | Remote |
+| [Honeycomb MCP](https://docs.honeycomb.io/integrations/mcp/configuration-guide/) | Official Honeycomb trace queries | Remote |
 | [Logfire MCP](https://logfire.pydantic.dev/docs/how-to-guides/mcp-server/) | Official Pydantic Logfire observability | Remote |
 | [Netdata MCP](https://github.com/netdata/netdata) | Official Netdata observability with a built-in MCP server | C |
 | [Noveum](https://noveum.ai/en/mcp) | AI agent traces, evaluation datasets and model comparisons | Remote |
@@ -488,7 +493,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Google Search Console MCP](https://github.com/AminForou/mcp-gsc) | Query Google Search Console search analytics, sitemaps and indexing | Python |
 | [Google Tag Manager MCP](https://github.com/stape-io/google-tag-manager-mcp-server) | Manage GTM containers, tags, triggers and variables | TypeScript |
 | [LLM Pulse MCP](https://github.com/LLM-Pulse/llmpulse-mcp) | AI visibility analytics for mentions, citations, sentiment, and AI traffic | JavaScript |
-| [LogNorm](https://lognorm.com) | Hosted SEO/GEO backlog: site audits, fixes, content and AI-visibility tracking | Remote |
+| [LogNorm](https://lognorm.com/connect) | Hosted SEO/GEO backlog: site audits, fixes, content and AI-visibility tracking | Remote |
 | [Meta Ads MCP (GoMarble)](https://github.com/gomarble-ai/facebook-ads-mcp-server) | Read and manage Meta and Instagram ad campaigns via the Meta Ads API | Python |
 | [NotFair](https://github.com/nowork-studio/notfair-plugin) | Google Ads, Meta Ads, and SEO skills with human-approval gate | TypeScript |
 | [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp) | Official PostHog product analytics | TypeScript |
@@ -612,7 +617,7 @@ but not all of resources and prompts.
 
 ## Contributing
 
-**Anyone can contribute, including your own server.** There is no star requirement and no minimum project age -- if it works, is licensed and is documented, it qualifies. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the details.
+**Anyone can contribute, including your own server.** There is no star requirement and no minimum project age -- if it works, is licensed and is documented, it qualifies. A hosted server with closed source qualifies too, under the [hosted-server rules](CONTRIBUTING.md#hosted-servers). Read [CONTRIBUTING.md](CONTRIBUTING.md) for the details.
 
 To add a server:
 

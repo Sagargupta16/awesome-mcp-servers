@@ -2,6 +2,30 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.7.0] - 2026-10-14
+
+Hosted MCP servers with no public source get a written bar. Six submissions had hit the gap and gone four different ways.
+
+### Added
+
+- A "Hosted servers" section in CONTRIBUTING.md for `Remote` entries: the link is the operator's own documentation, not a registry listing; that documentation names the endpoint, the authentication and what the tools do; the endpoint answers; and a maintainer reviews every one before it merges. The licence and 180-day rules do not apply to them, since there is no source.
+- `check_submission.py` judges `Remote` rows on those terms. It reads the documentation page, or the README and `server.json` of the operator's repository, finds the endpoint and sends it an MCP `initialize`. A 401 from a server that wants a token counts as live; a 404, no answer, or a web page served at an `/mcp` path does not. Each request has one overall deadline, so a host with unreachable IPv6 addresses cannot hold the check for minutes.
+- `--review` and `--head-ref` for `check_submission.py`. `auto-merge.yml` and `issue-to-pr.yml` use them to hold any pull request the gate leaves to a maintainer: every `Remote` entry, and any entry with a finding the gate cannot settle itself, such as a licence GitHub cannot classify or a link that is not a GitHub repository. Those get the new `needs-review` label instead of auto-merge. The check itself still passes.
+- A hosted section in the monthly health report, which probes every `Remote` entry's endpoint with the gate's own code.
+- Worklittle Jobs (#74), CareClinic (#97) and CosVoice (#123), re-judged under the new rule. All three name their endpoint, authentication and tools in their own documentation, and all three endpoints answered.
+
+### Changed
+
+- `Remote` entries with a repository no longer appear as unlicensed or stale in the health report.
+- Scout Packs is listed as `Python`: its repository holds the server source under an MIT licence, so it was never a closed-source entry.
+- TWZRD Agent Intel links the operator's repository instead of a Smithery listing. Dynatrace MCP, Honeycomb MCP and LogNorm link the page of their own documentation that names the endpoint.
+- Statsnet (#98), Clera (#110) and Noveum (#111) meet the rule as written, so Statsnet no longer depends on a `maintainer-override`.
+- A dropped connection to the GitHub API is reported as a network error instead of crashing the gate.
+
+### Fixed
+
+- 2.6.1 said the hosted rule covers Axe MCP. It does not: Axe is a closed-source container you run yourself, not a hosted server. It stays listed while that case is decided.
+
 ## [2.6.1] - 2026-10-14
 
 Acting on the monthly health report, re-measured against the API on 2026-10-14 rather than the 2026-10-01 snapshot.

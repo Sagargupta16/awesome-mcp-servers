@@ -63,3 +63,70 @@ def test_collect_finds_a_subdirectory_entry_from_the_real_readme():
     collected = {f"{owner}/{repo}" for _, owner, repo, _ in staleness_report.collect()}
 
     assert "getzep/graphiti" in collected
+
+
+# --- hosted (`Remote`) entries ---------------------------------------------------
+
+STALE_UNLICENSED = {
+    "nameWithOwner": "acme/docs",
+    "stargazerCount": 0,
+    "pushedAt": "2020-01-01T00:00:00Z",
+    "isArchived": False,
+    "licenseInfo": None,
+}
+ENTRY = ("Acme", "acme", "docs", "Productivity")
+
+
+def test_a_hosted_entrys_repository_is_not_judged_on_licence_or_push():
+    """The gate skips both checks for `Remote` rows, so the report must too."""
+    now = staleness_report.datetime.now(staleness_report.timezone.utc)
+
+    buckets = staleness_report.classify({ENTRY: STALE_UNLICENSED}, now, {"acme/docs"})
+
+    assert buckets["stale"] == []
+    assert buckets["no_licence"] == []
+
+
+def test_an_ordinary_entry_is_still_judged_on_licence_and_push():
+    now = staleness_report.datetime.now(staleness_report.timezone.utc)
+
+    buckets = staleness_report.classify({ENTRY: STALE_UNLICENSED}, now)
+
+    assert len(buckets["stale"]) == 1
+    assert len(buckets["no_licence"]) == 1
+
+
+def test_an_archived_hosted_repository_is_still_reported():
+    now = staleness_report.datetime.now(staleness_report.timezone.utc)
+    archived = STALE_UNLICENSED | {"isArchived": True}
+
+    buckets = staleness_report.classify({ENTRY: archived}, now, {"acme/docs"})
+
+    assert len(buckets["archived"]) == 1
+
+
+def test_the_real_readme_has_hosted_entries_and_their_slugs_resolve():
+    hosted = staleness_report.remote_entries()
+
+    assert hosted
+    assert all(sub.third == "Remote" for sub in hosted)
+    assert "usenetstate/statsnet-mcp" in staleness_report.remote_slugs(hosted)
+
+
+def test_check_hosted_reports_findings_but_not_the_standing_review_note(monkeypatch):
+    import check_submission
+
+    def fake_inspect(sub):
+        sub.soft.append(check_submission.REMOTE_REVIEW)
+        if sub.name == "Dead":
+            sub.soft.append("No URL the documentation names answered.")
+
+    monkeypatch.setattr(staleness_report, "inspect", fake_inspect)
+    subs = [
+        check_submission.Submission("Live", "https://a.dev", "", "Remote"),
+        check_submission.Submission("Dead", "https://b.dev", "", "Remote"),
+    ]
+
+    assert staleness_report.check_hosted(subs) == [
+        ("Dead", "https://b.dev", ["No URL the documentation names answered."])
+    ]

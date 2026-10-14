@@ -2,8 +2,10 @@
 """Health report for every GitHub repository on the list.
 
 Groups entries into what needs action: gone (404), moved, archived, unlicensed,
-and stale. Written to be run on a schedule and piped into a single tracking issue,
-so the report replaces itself instead of accumulating noise.
+and stale. Hosted (`Remote`) entries skip the licence and stale buckets, as they
+skip those checks at submission, and have their endpoint probed instead. Written
+to be run on a schedule and piped into a single tracking issue, so the report
+replaces itself instead of accumulating noise.
 
     python scripts/staleness_report.py > report.md
 
@@ -23,8 +25,17 @@ from pathlib import Path
 # Same directory, so this resolves when the script is run as `python
 # scripts/staleness_report.py`. The licence rule lives in one place: a report that
 # judged a manifest licence differently from the submission gate would send the
-# maintainer after entries the gate accepts.
-from check_submission import is_open_source, manifest_licence
+# maintainer after entries the gate accepts. The hosted-server rule is shared the
+# same way: an endpoint probe here is the submission gate's own.
+from check_submission import (
+    GH_REPO_RE,
+    REMOTE,
+    REMOTE_REVIEW,
+    inspect,
+    is_open_source,
+    manifest_licence,
+    parse_rows,
+)
 
 README = Path(__file__).resolve().parent.parent / "README.md"
 API = "https://api.github.com/graphql"
@@ -100,8 +111,42 @@ def fetch(entries):
     return results
 
 
-def classify(results, now) -> dict:
-    """Sort the API results into the buckets the report is organised around."""
+def remote_entries() -> list:
+    """Every `Remote` row, parsed the way the submission gate parses it."""
+    rows = parse_rows(README.read_text(encoding="utf-8"))
+    return [sub for sub in rows.values() if sub.third == REMOTE]
+
+
+def remote_slugs(subs: list) -> set:
+    """Lowercased `owner/repo` for the hosted entries that link a repository."""
+    return {
+        f"{m.group('owner')}/{m.group('repo')}".lower()
+        for sub in subs
+        if (m := GH_REPO_RE.match(sub.url))
+    }
+
+
+def check_hosted(subs: list) -> list:
+    """(name, url, findings) for each hosted entry the gate would not pass cleanly.
+
+    The standing note that every `Remote` entry gets a maintainer's review is left
+    out: it is the rule itself, not something wrong with an entry.
+    """
+    flagged = []
+    for sub in subs:
+        inspect(sub)
+        findings = sub.hard + [note for note in sub.soft if note != REMOTE_REVIEW]
+        if findings:
+            flagged.append((sub.name, sub.url, findings))
+    return flagged
+
+
+def classify(results, now, remote: frozenset | set = frozenset()) -> dict:
+    """Sort the API results into the buckets the report is organised around.
+
+    A repository in `remote` is a hosted server's documentation, so it is not
+    judged on its licence or its last push.
+    """
     buckets = {"gone": [], "archived": [], "stale": [], "moved": [], "no_licence": []}
     for entry, info in results.items():
         name, owner, repo, section = entry
@@ -118,6 +163,8 @@ def classify(results, now) -> dict:
         licence = (info.get("licenseInfo") or {}).get("spdxId")
         if info["isArchived"]:
             buckets["archived"].append((name, slug, section, days))
+        if slug.lower() in remote:
+            continue
         if licence in (None, "", "NOASSERTION"):
             buckets["no_licence"].append(
                 (name, slug, section, licence or "none", info["stargazerCount"])
@@ -162,18 +209,21 @@ def main() -> int:
     entries = collect()
     results = fetch(entries)
     now = datetime.now(timezone.utc)
+    hosted_subs = remote_entries()
 
-    buckets = classify(results, now)
+    buckets = classify(results, now, remote_slugs(hosted_subs))
     gone = buckets["gone"]
     archived = buckets["archived"]
     stale = buckets["stale"]
     moved = buckets["moved"]
     manifest_licensed, unlicensed = resolve_manifest_licences(buckets["no_licence"])
+    hosted = check_hosted(hosted_subs)
 
     checked = len(entries)
     out = [
         f"Automated health check of the {checked} GitHub repositories behind the entries "
-        f"in `README.md`. Entries hosted elsewhere are covered only by the lychee link "
+        f"in `README.md`, plus the endpoints of the {len(hosted_subs)} hosted (`Remote`) "
+        f"entries. Other entries hosted elsewhere are covered only by the lychee link "
         f"check in `.github/workflows/lint.yml`.",
         "",
         f"- **{len(gone)}** gone (404 -- deleted or made private)",
@@ -181,6 +231,7 @@ def main() -> int:
         f"- **{len(archived)}** archived upstream",
         f"- **{len(unlicensed)}** with no licence the automated checks can find",
         f"- **{len(stale)}** not pushed in over {STALE_DAYS} days",
+        f"- **{len(hosted)}** hosted entries whose endpoint or documentation needs a look",
         f"- **{len(manifest_licensed)}** licensed in a package manifest rather than a "
         f"root `LICENSE` file, which CONTRIBUTING.md accepts (listed for information, "
         f"no action needed)",
@@ -248,6 +299,18 @@ def main() -> int:
     )
 
     out += section_block(
+        "Hosted: endpoint or documentation needs a look",
+        "These `Remote` entries are held to the hosted-server rules in CONTRIBUTING.md "
+        "instead of the licence and 180-day ones, and were probed the way the "
+        "submission check probes a new one. An endpoint that stopped answering is a "
+        "removal. Documentation the check could not read for an endpoint needs a "
+        "person to open it.",
+        "| Entry | Link | Findings |",
+        "|-------|------|----------|",
+        [f"| {n} | {u} | {'<br>'.join(f)} |" for n, u, f in sorted(hosted)],
+    )
+
+    out += section_block(
         "Licensed in a package manifest",
         "No action needed. GitHub's licence API reads the root `LICENSE` file only, "
         "so these report as unlicensed in the sidebar while declaring real terms in "
@@ -260,7 +323,7 @@ def main() -> int:
         ],
     )
 
-    if not (gone or moved or archived or stale or unlicensed):
+    if not (gone or moved or archived or stale or unlicensed or hosted):
         out.append(
             "Every entry is live, licensed, maintained, and unarchived. Nothing to do."
         )
