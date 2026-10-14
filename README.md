@@ -252,6 +252,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Brave Search MCP](https://github.com/brave/brave-search-mcp-server) | Official Brave Search API | TypeScript |
 | [Cluefinch MCP](https://github.com/cluefinch/mcp-server) | Web research with search, page reading, links, and source collection | Python |
 | [Context7 MCP](https://github.com/upstash/context7) | Up-to-date library documentation | TypeScript |
+| [DiPlay Helper](https://github.com/UllrAI/diplay-helper) | Query live DiPlay packages, compatibility reports and setup guides | TypeScript |
 | [Docling MCP](https://github.com/docling-project/docling-mcp) | Official Docling document parsing and conversion to structured text | Python |
 | [Docs MCP Server](https://github.com/arabold/docs-mcp-server) | Index and semantically search third-party library documentation | TypeScript |
 | [DuckDuckGo MCP](https://github.com/nickclyde/duckduckgo-mcp-server) | DuckDuckGo search with content fetching | Python |
