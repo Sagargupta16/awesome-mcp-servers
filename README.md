@@ -408,7 +408,6 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [radare2 MCP](https://github.com/radareorg/radare2-mcp) | Official radare2 reverse engineering stdio server | C |
 | [Semgrep MCP](https://github.com/semgrep/semgrep/tree/develop/cli/src/semgrep/mcp) | Official Semgrep static analysis for vulnerabilities | Python |
 | [Shodan MCP](https://github.com/w0h1v/mcp-shodan) | Shodan device search, IP recon, DNS and CVE intelligence | TypeScript |
-| [Tanod](https://github.com/tanod-labs/tanod-mcp) | 165 pay-per-call tools: contract and package scans, PDF, OCR, web, chain | Remote |
 | [vet](https://github.com/safedep/vet) | Dependency and malicious package scanning with an MCP server | Go |
 
 ### Web Browsing & Scraping
@@ -431,7 +430,6 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 |--------|-------------|----------|
 | [Ableton MCP](https://github.com/ahujasid/ableton-mcp) | Control Ableton Live sessions, tracks, clips, and MIDI from an agent | Python |
 | [Arr MCP](https://github.com/aplaceforallmystuff/mcp-arr) | Manage Sonarr, Radarr, and other arr media library services | TypeScript |
-| [Live Tennis API MCP](https://github.com/livetennisapi/livetennisapi-mcp) | Live tennis scores, match state, and model win-probability | TypeScript |
 | [MiniMax MCP](https://github.com/MiniMax-AI/MiniMax-MCP) | Generate speech, music, images, and video with MiniMax models | Python |
 | [TMDB MCP](https://github.com/Laksh-star/mcp-server-tmdb) | The Movie Database (TMDB) | TypeScript |
 | [YouTube MCP](https://github.com/ZubeidHendricks/youtube-mcp-server) | YouTube API videos and analytics | TypeScript |
