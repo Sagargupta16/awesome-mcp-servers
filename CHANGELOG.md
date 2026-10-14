@@ -2,6 +2,20 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.6.0] - 2026-10-14
+
+Of 43 people whose entries merged since 2026-09-01, one had starred the repository. This asks after the merge rather than making a star a condition of it.
+
+### Added
+
+- `thanks.yml` and `scripts/thank_contributors.py`. Once a contributor's entry merges, one comment on their pull request links to the entry on the website, offers a "Listed in Awesome MCP Servers" badge for their README, and asks for a star while saying plainly that it is optional. Form submissions get the same text when their issue closes. Edits to an existing entry, bot pull requests and the maintainer's own get nothing.
+- `site/badge.svg`, served at `https://sagargupta.online/awesome-mcp-servers/badge.svg` and linked to the repository.
+- An "Already listed? Show it." block on the website with the badge and its snippet.
+
+### Changed
+
+- The website header's GitHub link is now a Star button, and it stays visible on phones. Below 640px it used to be hidden entirely, so mobile readers had no way to the repository.
+
 ## [2.5.1] - 2026-09-26
 
 ### Added

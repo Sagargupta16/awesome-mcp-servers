@@ -1,0 +1,57 @@
+name: Thank contributors
+
+# Posts one thank-you on a contributor's pull request after its entry merges,
+# with the "Listed in" badge for their README and a star ask that says plainly it
+# is optional. Nothing is ever conditioned on a star: the ask comes after the
+# merge. Form submissions are thanked on their issue by issue-to-pr.yml instead,
+# with the same text.
+#
+# Hourly as well as on `closed`: auto-merge lands contributor pull requests using
+# GITHUB_TOKEN, and a merge made that way starts no workflow run, so `closed`
+# never fires for exactly the pull requests this is for. The event still catches
+# a maintainer's manual merge straight away. A hidden marker in the comment keeps
+# the two paths from posting twice.
+#
+# pull_request_target runs this file from main and checks out main, so nothing
+# from the pull request executes. The script reads the pull request over the API.
+# Not a required check.
+on:
+  pull_request_target:
+    types: [closed]
+    branches: [main]
+  schedule:
+    - cron: "27 * * * *" # hourly
+  workflow_dispatch:
+
+# nothing by default; the job asks for exactly what it writes
+permissions: {}
+
+concurrency:
+  group: thank-contributors
+  cancel-in-progress: false
+
+jobs:
+  thank:
+    name: Thank merged contributors
+    if: github.event_name != 'pull_request_target' || github.event.pull_request.merged
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write # comment on the merged pull request
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+
+      - name: Thank the contributor
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          if [ -n "$PR" ]; then
+            python scripts/thank_contributors.py --pr "$PR"
+          else
+            python scripts/thank_contributors.py
+          fi

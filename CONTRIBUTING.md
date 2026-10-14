@@ -151,6 +151,16 @@ Anyone can also stop auto-merge on a specific pull request by adding the `no-aut
 
 Maintainers can apply the `maintainer-override` label when a submission is genuinely fine but trips a threshold.
 
+### After it merges
+
+Within the hour, a bot comments once on your pull request (or on your issue, if you used the form) with a link to your entry on the [website](https://sagargupta.online/awesome-mcp-servers/) and a badge for your project's README:
+
+```markdown
+[![Listed in Awesome MCP Servers](https://sagargupta.online/awesome-mcp-servers/badge.svg)](https://github.com/Sagargupta16/awesome-mcp-servers)
+```
+
+The badge links back to the list, so people who find your server can find the others. If the list is useful to you, a star on the repository helps other people find it too. Both are optional: neither is checked, and neither affects whether or how your entry is listed. Edits to an existing entry, such as a reworded description, get no comment.
+
 ## Running the checks locally
 
 ```bash

@@ -32,6 +32,12 @@ OUT = ROOT / "_site"
 REPO = "Sagargupta16/awesome-mcp-servers"
 REPO_URL = f"https://github.com/{REPO}"
 SUBMIT_URL = f"{REPO_URL}/issues/new?template=add-server.yml"
+SITE_URL = "https://sagargupta.online/awesome-mcp-servers/"
+# The badge listed projects can show. It links to the repository rather than the
+# site because the repository is where a reader can star the list, and this one
+# definition is shared with scripts/thank_contributors.py.
+BADGE_URL = f"{SITE_URL}badge.svg"
+BADGE_MARKDOWN = f"[![Listed in Awesome MCP Servers]({BADGE_URL})]({REPO_URL})"
 
 # The page's tabs: (key, label, README sections in it). Servers are split by category.
 TABS = [
@@ -188,6 +194,7 @@ def render_page(items: list[Item], template: str, built: datetime) -> str:
         "{{CARDS}}": "\n".join(render_card(i) for i in items),
         "{{REPO_URL}}": REPO_URL,
         "{{SUBMIT_URL}}": escape(SUBMIT_URL, quote=True),
+        "{{BADGE_MARKDOWN}}": escape(BADGE_MARKDOWN),
     }
     page = template
     for key, value in values.items():
@@ -208,7 +215,7 @@ def build(token: str | None) -> Path:
     (OUT / "index.html").write_text(
         render_page(items, template, built), encoding="utf-8"
     )
-    for name in ("styles.css", "app.js", "favicon.svg"):
+    for name in ("styles.css", "app.js", "favicon.svg", "badge.svg"):
         shutil.copy2(SITE_SRC / name, OUT / name)
     (OUT / "servers.json").write_text(
         json.dumps([asdict(i) for i in items], indent=1) + "\n", encoding="utf-8"

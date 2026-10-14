@@ -161,6 +161,34 @@ kbd { font: 500 12px var(--mono); color: var(--faint); border: 1px solid var(--l
 .submit h2 { margin: 0; font: 600 clamp(26px, 4vw, 36px)/1.1 var(--sans); letter-spacing: -0.03em; }
 .submit p { max-width: 62ch; color: var(--muted); margin: 14px 0 24px; }
 .submit-links { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Listed projects can show the badge; it links back to the repository */
+.listed { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--line); }
+.listed h3 { margin: 0; font: 600 18px var(--sans); letter-spacing: -0.01em; }
+.listed p { margin: 10px 0 16px; }
+.listed img { display: block; max-width: 100%; height: auto; }
+.snippet {
+  margin: 14px 0 0; padding: 12px 14px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  font: 12.5px/1.5 var(--mono); color: var(--text);
+  /* wrap rather than scroll, so it can be selected and copied on a phone */
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.listed .aside { margin-bottom: 0; font-size: 14px; }
+.listed .aside a { color: var(--accent); }
+
+/* Star button: the icon fills and tilts on hover, and twinkles once on load */
+.star { gap: 7px; padding: 0 14px; }
+.star svg {
+  width: 15px; height: 15px; color: #f5c542;
+  transition: transform 260ms var(--ease), fill 200ms var(--ease);
+  animation: twinkle 900ms 1100ms var(--ease) both;
+}
+.star:hover svg, .star:focus-visible svg { fill: #f5c542; transform: rotate(-14deg) scale(1.18); }
+@keyframes twinkle {
+  0%, 100% { transform: none; }
+  40% { transform: rotate(-18deg) scale(1.3); fill: #f5c542; }
+}
 .foot { max-width: 1200px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 40px) 48px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
 .foot p { margin: 6px 0; }
 .foot a { color: var(--muted); }
@@ -169,7 +197,8 @@ kbd { font: 500 12px var(--mono); color: var(--faint); border: 1px solid var(--l
 
 @media (max-width: 640px) {
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .bar-links .ghost { display: none; }
+  /* keep the Star button on phones, where most readers are; drop only its long label */
+  .star .wide { display: none; }
   .search { top: 61px; }
   kbd { display: none; }
   .grid { grid-template-columns: 1fr; }

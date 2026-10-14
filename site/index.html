@@ -22,7 +22,10 @@
     <span>awesome-mcp-servers</span>
   </a>
   <nav class="bar-links">
-    <a class="ghost" href="{{REPO_URL}}" target="_blank" rel="noopener">GitHub</a>
+    <a class="ghost star" href="{{REPO_URL}}" target="_blank" rel="noopener" aria-label="Star awesome-mcp-servers on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5l1.9 4 4.4.5-3.3 3 .9 4.3L8 11.2 4.1 13.3 5 9 1.7 6l4.4-.5z"/></svg>
+      <span>Star<span class="wide"> on GitHub</span></span>
+    </a>
     <a class="pill" href="{{SUBMIT_URL}}" target="_blank" rel="noopener">Add a server</a>
   </nav>
 </header>
@@ -76,6 +79,13 @@
     <div class="submit-links">
       <a class="pill" href="{{SUBMIT_URL}}" target="_blank" rel="noopener">Submit with the form</a>
       <a class="ghost" href="{{REPO_URL}}/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing guide</a>
+    </div>
+    <div class="listed">
+      <h3>Already listed? Show it.</h3>
+      <p>Paste this into your README. It links back here, so people who find your server can find the rest of the list.</p>
+      <img src="badge.svg" alt="Listed in Awesome MCP Servers" width="206" height="20">
+      <pre class="snippet"><code>{{BADGE_MARKDOWN}}</code></pre>
+      <p class="aside">If the list is useful to you, a <a href="{{REPO_URL}}" target="_blank" rel="noopener">star on GitHub</a> helps other people find it. It is never a condition for being listed.</p>
     </div>
   </section>
 </main>

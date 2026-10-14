@@ -46,19 +46,33 @@ jobs:
     if: github.event_name != 'issues'
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       issues: write
       pull-requests: read
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       REPO: ${{ github.repository }}
     steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+
+      # The thank-you text, badge and star ask come from scripts/thank_contributors.py,
+      # the same source thanks.yml uses for contributor pull requests.
       - name: Close each open form issue with a merged pull request
         run: |
           for n in $(gh issue list -R "$REPO" --label addition --state open --limit 200 --json number --jq '.[].number'); do
             pr=$(gh pr list -R "$REPO" --head "submission/issue-$n" --state merged --json number --jq '.[0].number')
             if [ -n "$pr" ]; then
-              gh issue close "$n" -R "$REPO" --reason completed \
-                --comment "Merged in #$pr, so it is on the list and at https://sagargupta.online/awesome-mcp-servers/ now. Thanks!"
+              if python scripts/thank_contributors.py --issue "$n" --pr "$pr" > thanks.md; then
+                gh issue comment "$n" -R "$REPO" --body-file thanks.md
+              else
+                gh issue comment "$n" -R "$REPO" --body "Merged in #$pr, so it is on the list and at https://sagargupta.online/awesome-mcp-servers/ now. Thanks!"
+              fi
+              gh issue close "$n" -R "$REPO" --reason completed
               echo "closed #$n (merged in #$pr)"
             fi
           done

@@ -636,6 +636,14 @@ To add a server:
 4. Run `python scripts/validate.py` and fix what it reports.
 5. Open a pull request and answer the affiliation question. Submitting your own project is welcome; not disclosing it is not.
 
+Once it merges, a bot thanks you on the pull request with a badge for your project's README. It links back here, so people who find your server can find the rest of the list:
+
+```markdown
+[![Listed in Awesome MCP Servers](https://sagargupta.online/awesome-mcp-servers/badge.svg)](https://github.com/Sagargupta16/awesome-mcp-servers)
+```
+
+If the list is useful to you, a star helps other people find it. It is never a condition for being listed.
+
 Other ways to help, no pull request needed:
 
 - **Report rot.** Dead link, archived upstream, project that no longer speaks MCP -- [open an issue](https://github.com/Sagargupta16/awesome-mcp-servers/issues/new/choose). Pruning is as useful as adding.
