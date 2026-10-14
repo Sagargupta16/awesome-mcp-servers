@@ -155,6 +155,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [CircleCI MCP](https://github.com/CircleCI-Public/mcp-server-circleci) | Official CircleCI workflow integration | TypeScript |
 | [Codapult Guard](https://github.com/codapult/codapult-guard) | Architecture guardrails for AI coding agents | TypeScript |
 | [Codebase Memory MCP](https://github.com/DeusData/codebase-memory-mcp) | Code intelligence server that indexes repos into a queryable knowledge graph | C |
+| [Dedicated Mac Mini AI Bot Setup MCP](https://github.com/eibrahim/dedicated-mac-mini-ai-bot-setup-mcp) | Read-only lookup of a Mac mini AI bot setup service: its offer and queue | JavaScript |
 | [Desktop Commander MCP](https://github.com/wonderwhy-er/DesktopCommanderMCP) | Terminal control, file search and diff-based file editing | TypeScript |
 | [Docker MCP](https://github.com/ckreiling/mcp-server-docker) | Docker container management | Python |
 | [Docker MCP Gateway](https://github.com/docker/mcp-gateway) | Official Docker MCP gateway and catalog CLI plugin | Go |
