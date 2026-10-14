@@ -466,6 +466,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 |--------|-------------|----------|
 | [Cocos Creator MCP](https://github.com/FunplayAI/funplay-cocos-mcp) | Automate the Cocos Creator editor: scenes, assets, and scripts | JavaScript |
 | [Godot MCP](https://github.com/Coding-Solo/godot-mcp) | Godot game engine integration | JavaScript |
+| [Playable Gift](https://playablegift.com/agents) | Generate browser games from personal details and manage private drafts | Remote |
 | [Roblox Studio MCP](https://create.roblox.com/docs/studio/mcp) | Official MCP server built into Roblox Studio | Built-in |
 | [STS2MCP](https://github.com/Gennadiyev/STS2MCP) | Read Slay the Spire 2 game state and play runs through a mod | C# |
 | [Unity MCP Server](https://github.com/AnkleBreaker-Studio/unity-mcp-server) | 268 tools for Unity Editor / Hub | JavaScript |
