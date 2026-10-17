@@ -251,6 +251,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Apify MCP](https://github.com/apify/apify-mcp-server) | Web scraping actors and automation | TypeScript |
 | [arXiv MCP](https://github.com/blazickjp/arxiv-mcp-server) | Search arXiv papers and read full LaTeX sections | Python |
 | [Brave Search MCP](https://github.com/brave/brave-search-mcp-server) | Official Brave Search API | TypeScript |
+| [CareJobs.Now Healthcare Jobs MCP](https://github.com/yumaheymans/carejobs-mcp) | Search open US healthcare jobs and posted pay from 270 employers' career sites | Remote |
 | [Cluefinch MCP](https://github.com/cluefinch/mcp-server) | Web research with search, page reading, links, and source collection | Python |
 | [Context7 MCP](https://github.com/upstash/context7) | Up-to-date library documentation | TypeScript |
 | [DiPlay Helper](https://github.com/UllrAI/diplay-helper) | Query live DiPlay packages, compatibility reports and setup guides | TypeScript |
