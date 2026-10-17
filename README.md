@@ -499,6 +499,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Google Tag Manager MCP](https://github.com/stape-io/google-tag-manager-mcp-server) | Manage GTM containers, tags, triggers and variables | TypeScript |
 | [LLM Pulse MCP](https://github.com/LLM-Pulse/llmpulse-mcp) | AI visibility analytics for mentions, citations, sentiment, and AI traffic | JavaScript |
 | [LogNorm](https://lognorm.com/connect) | Hosted SEO/GEO backlog: site audits, fixes, content and AI-visibility tracking | Remote |
+| [MentionsAPI MCP](https://github.com/mukul-dutt/mentionsapi-mcp) | Brand mentions, rank, sentiment and citations across ChatGPT, Claude, Gemini and Perplexity | TypeScript |
 | [Meta Ads MCP (GoMarble)](https://github.com/gomarble-ai/facebook-ads-mcp-server) | Read and manage Meta and Instagram ad campaigns via the Meta Ads API | Python |
 | [NotFair](https://github.com/nowork-studio/notfair-plugin) | Google Ads, Meta Ads, and SEO skills with human-approval gate | TypeScript |
 | [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp) | Official PostHog product analytics | TypeScript |
