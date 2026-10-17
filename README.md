@@ -220,7 +220,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 
 | Server | Description | Language |
 |--------|-------------|----------|
-| [Aident Loadout](https://github.com/Aident-AI/aident-skill) | Connect agents to 1000+ apps via one remote MCP with Vault | Remote |
+| [Aident Loadout](https://aident.ai) | Remote MCP for agents: 400+ Skills, Vault + Audit | Remote |
 | [Airtable MCP](https://github.com/domdomegg/airtable-mcp-server) | Airtable base read/write | TypeScript |
 | [Asana MCP](https://github.com/roychri/mcp-server-asana) | Asana tasks, projects, workspaces | TypeScript |
 | [CareClinic](https://careclinic.io/careclinic-mcp/) | Read medication schedules, symptoms and moods, and save confirmed check-ins | Remote |
