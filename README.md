@@ -502,6 +502,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Meta Ads MCP (GoMarble)](https://github.com/gomarble-ai/facebook-ads-mcp-server) | Read and manage Meta and Instagram ad campaigns via the Meta Ads API | Python |
 | [NotFair](https://github.com/nowork-studio/notfair-plugin) | Google Ads, Meta Ads, and SEO skills with human-approval gate | TypeScript |
 | [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp) | Official PostHog product analytics | TypeScript |
+| [RestoSignals](https://github.com/paperandbeyond23-gif/restosignals-mcp) | Pre-opening US restaurant and bar leads from liquor, permit and business filings | Remote |
 | [Salesforce MCP](https://github.com/salesforcecli/mcp) | Official Salesforce CLI MCP | TypeScript |
 | [UnrealUGC MCP](https://github.com/UnrealUGC/mcp) | Create AI UGC video ads through the UnrealUGC platform | TypeScript |
 
