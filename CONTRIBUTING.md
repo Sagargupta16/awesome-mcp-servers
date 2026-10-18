@@ -112,7 +112,7 @@ A hosted MCP server whose source is not public can be listed too, with `Remote` 
 1. **The link is the operator's own documentation.** A page on the operator's domain, or the README of a repository the operator owns. A registry or marketplace listing (Smithery, Glama, mcp.so and the like) is not documentation.
 2. **The documentation says how to connect.** It names the endpoint URL and how to authenticate, and says what the server's tools do, by name or as a list of what you can ask it for. Signing up or paying to get a key is fine; a reader just has to be able to follow it.
 3. **The endpoint answers.** CI finds the endpoint in the documentation and sends it an MCP `initialize`. Any HTTP answer counts, including the 401 a server gives a request with no token. A 404, a 410 or no answer at all does not.
-4. **A maintainer reviews it.** A `Remote` entry never merges itself: it gets the `needs-review` label, and a maintainer merges it after reading the documentation.
+4. **A maintainer reviews it, unless you have starred the repository.** A `Remote` entry gets the `needs-review` label, and a maintainer merges it after reading the documentation. If its author has starred the repository, it merges itself once the checks pass instead, like any other entry.
 
 Standards 3, 5, 6 and 7 apply as written. The licence standard does not, since nothing is distributed, and neither does the 180-day push rule: a documentation repository can sit untouched while the service runs, so for a hosted server "maintained" means the endpoint still answers. A repository that is archived still disqualifies the entry.
 
@@ -157,12 +157,16 @@ Being new is not a reason to hold back. If you would rather not open a pull requ
 A maintainer still reads what lands, and may follow up if a description reads promotionally or it is unclear what the server does. Three things opt a pull request out of auto-merge:
 
 - **It touches anything beyond the list** -- a workflow, a script, a test, tooling config. Those change what the checks verify, so a person looks first.
-- **The submission check leaves a decision to a maintainer.** Every `Remote` entry, and any entry the check cannot settle by itself: a licence GitHub cannot classify, a link that is not a GitHub repository, a repository with no build manifest. The check still passes, but the pull request gets the `needs-review` label and a maintainer merges it by hand once they have looked.
+- **The submission check leaves a decision to a maintainer.** Every `Remote` entry, and any entry the check cannot settle by itself: a licence GitHub cannot classify, a link that is not a GitHub repository, a repository with no build manifest. The check still passes, but the pull request gets the `needs-review` label and a maintainer merges it by hand once they have looked. **If you have starred the repository, this one does not apply:** the pull request merges itself once the checks pass, and starring later releases one that is already waiting. A star never gets an entry past a failing check.
 - **It carries the `maintainer-override` label**, which bypasses the submission gate. That is a maintainer's judgement call, so whoever applied it merges by hand.
 
 Anyone can also stop auto-merge on a specific pull request by adding the `no-auto-merge` label.
 
 Maintainers can apply the `maintainer-override` label when a submission is genuinely fine but trips a threshold.
+
+### When you open it
+
+If you have not starred the repository, a bot adds the `missing-star` label and comments once to ask. The label comes off by itself when you star, and the comment turns into a thank-you. A star is never required: without one, an entry the checks pass still merges itself, and one the checks leave to a maintainer waits for a review instead of merging straight away.
 
 ### After it merges
 
@@ -172,7 +176,7 @@ Within the hour, a bot comments once on your pull request (or on your issue, if 
 [![Listed in Awesome MCP Servers](https://sagargupta.online/awesome-mcp-servers/badge.svg)](https://github.com/Sagargupta16/awesome-mcp-servers)
 ```
 
-The badge links back to the list, so people who find your server can find the others. If the list is useful to you, a star on the repository helps other people find it too. Both are optional: neither is checked, and neither affects whether or how your entry is listed. Edits to an existing entry, such as a reworded description, get no comment.
+The badge links back to the list, so people who find your server can find the others. If the list is useful to you, a star on the repository helps other people find it too. The badge is optional, and so is the star. Edits to an existing entry, such as a reworded description, get no comment.
 
 ## Running the checks locally
 

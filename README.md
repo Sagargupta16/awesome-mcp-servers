@@ -18,7 +18,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 - documents how to install and configure it, so someone else can actually run it
 - appears exactly once, in one category
 
-Hosted servers with no public source are the one exception, marked `Remote`. Instead of a licence and a push date, each links the operator's own documentation naming the endpoint, the authentication and the tools; CI checks the endpoint answers; and a maintainer reviews every one before it merges.
+Hosted servers with no public source are the one exception, marked `Remote`. Instead of a licence and a push date, each links the operator's own documentation naming the endpoint, the authentication and the tools; CI checks the endpoint answers; and a maintainer reviews every one before it merges, unless its author has starred the repository.
 
 Those rules are enforced by [CI](.github/workflows/), not by good intentions: a pull request that breaks the format, adds a dead link, or submits an unlicensed repo fails its checks. A [monthly audit](.github/workflows/health.yml) re-checks every listed repository and files what has rotted.
 
@@ -645,7 +645,7 @@ Once it merges, a bot thanks you on the pull request with a badge for your proje
 [![Listed in Awesome MCP Servers](https://sagargupta.online/awesome-mcp-servers/badge.svg)](https://github.com/Sagargupta16/awesome-mcp-servers)
 ```
 
-If the list is useful to you, a star helps other people find it. It is never a condition for being listed.
+If the list is useful to you, a star helps other people find it. It is never a condition for being listed, though it does let an entry that would wait for a maintainer merge itself once the checks pass.
 
 Other ways to help, no pull request needed:
 

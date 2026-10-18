@@ -4,7 +4,8 @@
 The list gets plenty of contributions and few stars: of 43 people whose entries
 merged between 2026-09-01 and 2026-10-14, one had starred the repository. Making
 a star a condition of merging would buy worthless stars and contradict the
-"anyone can contribute" promise, so this asks afterwards instead, and only once.
+"anyone can contribute" promise, so this asks once more, after the merge;
+scripts/star_check.py asks when the pull request opens.
 The badge is the part that matters more: a contributor wants their project seen,
 and the badge in their README sends readers back to the list.
 
@@ -47,8 +48,8 @@ NOT_BEFORE = datetime(2026, 10, 14, tzinfo=timezone.utc)
 LOOKBACK = timedelta(days=3)
 
 
-def api(method: str, path: str, payload: dict | None = None):
-    """Call the GitHub REST API. Returns (data, error)."""
+def api(method: str, path: str, payload: dict | None = None, token: str | None = None):
+    """Call the GitHub REST API as GITHUB_TOKEN, or `token`. Returns (data, error)."""
     data = json.dumps(payload).encode("utf-8") if payload is not None else None
     req = urllib.request.Request(
         f"{API}/{path}",
@@ -59,7 +60,7 @@ def api(method: str, path: str, payload: dict | None = None):
             "User-Agent": "awesome-mcp-servers-thanks",
         },
     )
-    token = os.environ.get("GITHUB_TOKEN")
+    token = token or os.environ.get("GITHUB_TOKEN")
     if token:
         req.add_header("Authorization", f"Bearer {token}")
     if data is not None:
@@ -125,7 +126,7 @@ def render_thanks(login: str, entries: list[tuple[str, str]], lead: str = "") ->
             "```",
             "",
             f"And if the list is useful to you, a [star]({build_site.REPO_URL}) helps "
-            "other people find it. Neither is required, and neither affects your entry.",
+            "other people find it. Neither is required.",
         ]
     )
 

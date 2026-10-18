@@ -2,6 +2,19 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.8.0] - 2026-10-18
+
+Since the post-merge thank-you went live on 2026-10-14 it had thanked 11 outside contributors 16 times, and none had starred. This asks when the pull request opens, the way Piebald-AI/awesome-gemini-cli-extensions does, and lets a star skip the maintainer review.
+
+### Added
+
+- `star-check.yml` and `scripts/star_check.py`. A pull request from someone who has not starred gets the `missing-star` label and one comment asking. When they star, the label comes off and the comment becomes a thank-you. Bots and the maintainer are never asked.
+
+### Changed
+
+- A starred author skips `needs-review`: `auto-merge.yml` and `issue-to-pr.yml` switch on auto-merge where they would have held the pull request for a maintainer, and starring later releases a held one, under the same file allowlist and stop labels as before. A star never gets an entry past a failing check, and an unstarred entry that passes still merges itself.
+- CONTRIBUTING's hosted-server rule 4, the README, the site, the issue form, the submission check's note and the post-merge thank-you say what a star does now, instead of that it does nothing.
+
 ## [2.7.0] - 2026-10-14
 
 Hosted MCP servers with no public source get a written bar. Six submissions had hit the gap and gone four different ways.

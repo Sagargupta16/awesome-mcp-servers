@@ -15,7 +15,7 @@ body:
 
         A hosted server with no public source is welcome too: give its Language
         as Remote and link the operator's own documentation. Those are reviewed by
-        a maintainer before they merge.
+        a maintainer before they merge, unless you have starred the repository.
 
         Please check [CONTRIBUTING.md](https://github.com/Sagargupta16/awesome-mcp-servers/blob/main/CONTRIBUTING.md#quality-standards) first.
         Suggestions that clearly miss the bar get closed without much discussion.

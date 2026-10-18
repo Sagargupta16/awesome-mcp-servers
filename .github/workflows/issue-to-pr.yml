@@ -130,16 +130,21 @@ jobs:
           SECTION: ${{ steps.row.outputs.section }}
           AUTHOR: ${{ github.event.issue.user.login }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STARGAZERS_TOKEN: ${{ secrets.STARGAZERS_TOKEN }}
           REPO: ${{ github.repository }}
         run: |
           # Same decision auto-merge.yml makes: anything but a clean 0, a crash
-          # included, waits for a maintainer. `main` is still the checkout's base.
+          # included, waits for a maintainer unless the submitter has starred.
+          # `main` is still the checkout's base.
           if python scripts/check_submission.py --base-ref main --review > /dev/null; then
             review=""
             merges="It merges itself once the required checks pass"
+          elif python scripts/star_check.py --starred "$AUTHOR"; then
+            review=""
+            merges="This kind of entry usually waits for a maintainer, but you have starred the repository, so it merges itself once the required checks pass"
           else
             review="yes"
-            merges="A maintainer reviews this kind of entry before it merges"
+            merges="A maintainer reviews this kind of entry before it merges, unless you star the repository and edit the issue to retry"
           fi
           pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
           if [ -z "$pr" ]; then
@@ -154,5 +159,7 @@ jobs:
           if [ -n "$review" ]; then
             gh api -X POST "repos/$REPO/issues/$pr/labels" -f "labels[]=needs-review" > /dev/null
           else
+            # an edit after starring releases a pull request held on the first try
+            gh api -X DELETE "repos/$REPO/issues/$pr/labels/needs-review" > /dev/null 2>&1 || true
             gh pr merge "$pr" --auto --squash
           fi

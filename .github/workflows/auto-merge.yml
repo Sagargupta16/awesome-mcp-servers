@@ -19,7 +19,8 @@ name: Auto merge
 #
 # A pull request whose entries the submission check leaves to a maintainer --
 # every `Remote` entry, an unclassifiable licence, a link that is not a GitHub
-# repository -- is labelled `needs-review` and left for a person to merge. To
+# repository -- is labelled `needs-review` and left for a person to merge,
+# unless its author has starred the repository (scripts/star_check.py). To
 # decide that, the job checks out `main`, fetches the pull request's commits as
 # data, and runs main's copy of check_submission.py over the README those
 # commits carry. Nothing from the pull request is checked out or executed.
@@ -61,6 +62,9 @@ jobs:
           REPO: ${{ github.repository }}
           PR: ${{ github.event.pull_request.number }}
           LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          # optional: lets star_check.py read the stargazer list directly
+          STARGAZERS_TOKEN: ${{ secrets.STARGAZERS_TOKEN }}
         run: |
           set -euo pipefail
 
@@ -120,17 +124,31 @@ jobs:
           # since the branch was cut would otherwise read as new submissions.
           git fetch --no-tags origin "+refs/pull/$PR/head:refs/remotes/pull/head"
           base=$(git merge-base HEAD refs/remotes/pull/head)
-          # Anything but a clean 0 waits for a person, a crash included.
+          # Anything but a clean 0 waits for a person, a crash included, unless
+          # the author has starred: a star skips the maintainer review, never a
+          # failing check, which still blocks the merge on its own.
           if ! python scripts/check_submission.py --base-ref "$base" \
               --head-ref refs/remotes/pull/head --review > /dev/null; then
-            gh api -X POST "repos/$REPO/issues/$PR/labels" -f "labels[]=needs-review" > /dev/null
-            {
-              echo
-              echo "Not enabled: the submission check leaves an entry to a maintainer."
-              echo "The report above says which and why. The pull request is labelled"
-              echo "\`needs-review\`, and a maintainer merges it by hand after reading it."
-            } >> "$GITHUB_STEP_SUMMARY"
-            exit 0
+            if python scripts/star_check.py --starred "$AUTHOR"; then
+              case ",$LABELS," in
+                *,needs-review,*) gh api -X DELETE "repos/$REPO/issues/$PR/labels/needs-review" > /dev/null ;;
+              esac
+              {
+                echo
+                echo "The submission check leaves an entry to a maintainer, but @$AUTHOR"
+                echo "has starred the repository, so it merges once the checks pass."
+              } >> "$GITHUB_STEP_SUMMARY"
+            else
+              gh api -X POST "repos/$REPO/issues/$PR/labels" -f "labels[]=needs-review" > /dev/null
+              {
+                echo
+                echo "Not enabled: the submission check leaves an entry to a maintainer."
+                echo "The report above says which and why. The pull request is labelled"
+                echo "\`needs-review\`, and a maintainer merges it by hand after reading it,"
+                echo "unless @$AUTHOR stars the repository first."
+              } >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
           fi
 
           gh pr merge "$PR" --repo "$REPO" --auto --squash

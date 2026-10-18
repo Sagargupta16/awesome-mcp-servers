@@ -98,8 +98,9 @@ URL_RE = re.compile(r"https://[\w.-]+(?::\d+)?(?:/[^\s\"'<>`(){}\[\]\\|]*)?")
 
 REMOTE_REVIEW = (
     "Hosted server with no public source, so a maintainer reviews it before it "
-    "merges: the documentation is the operator's own, and it names the endpoint, "
-    "the authentication and the tools."
+    "merges, unless its author has starred the repository: the documentation is "
+    "the operator's own, and it names the endpoint, the authentication and the "
+    "tools."
 )
 
 # Files that make a repo a manifest-only listing rather than a real project.
