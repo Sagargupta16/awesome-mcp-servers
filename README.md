@@ -232,6 +232,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Google Workspace MCP](https://github.com/taylorwilsdon/google_workspace_mcp) | Gmail, Calendar, Docs, Sheets, Slides, Chat, Forms and Tasks in one server | Python |
 | [iMCP](https://github.com/mattt/iMCP) | Exposes macOS Messages, Contacts, Calendar and Reminders to agents | Swift |
 | [Make MCP](https://github.com/integromat/make-mcp-server) | Official Make server turning scenarios into callable agent tools | TypeScript |
+| [Muslim Prayer Reminder MCP](https://github.com/tareq7/muslim-prayer-mcp) | Calculate regional prayer times and next-prayer countdowns | TypeScript |
 | [Microsoft 365 MCP](https://github.com/Softeria/ms-365-mcp-server) | Full M365 suite (Outlook, OneDrive, Teams, Excel) | TypeScript |
 | [MindMap AI](https://github.com/MindMap-AI/mcp) | Create and edit visual mind maps from MCP-compatible AI assistants | TypeScript |
 | [monday.com MCP](https://github.com/mondaycom/mcp) | Official monday.com boards, items and workspace automation | TypeScript |
