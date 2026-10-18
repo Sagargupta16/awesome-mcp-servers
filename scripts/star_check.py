@@ -177,7 +177,9 @@ def labels_of(pr: dict) -> set[str]:
 
 
 def flag(pr: dict, dry_run: bool) -> None:
-    number, login = pr["number"], pr["user"]["login"]
+    # int() everywhere a number becomes part of an API path: the event file is
+    # data, and only an integer cannot redirect the request (SonarCloud S7044)
+    number, login = int(pr["number"]), pr["user"]["login"]
     print(f"  #{number}: {login} has not starred, labelling {LABEL}")
     if dry_run:
         return
@@ -186,7 +188,7 @@ def flag(pr: dict, dry_run: bool) -> None:
 
 
 def clear(pr: dict, dry_run: bool) -> None:
-    number = pr["number"]
+    number = int(pr["number"])
     print(f"  #{number}: {pr['user']['login']} has starred")
     if dry_run:
         return
@@ -201,16 +203,17 @@ def may_auto_merge(pr: dict) -> bool:
     """The same file and label rules auto-merge.yml applies."""
     if labels_of(pr) & STOP_LABELS:
         return False
-    files, err = api("GET", f"repos/{REPO}/pulls/{pr['number']}/files?per_page=100")
+    number = int(pr["number"])
+    files, err = api("GET", f"repos/{REPO}/pulls/{number}/files?per_page=100")
     if err:
-        print(f"  #{pr['number']}: could not list files ({err})", file=sys.stderr)
+        print(f"  #{number}: could not list files ({err})", file=sys.stderr)
         return False
     return {f["filename"] for f in files} <= AUTO_MERGE_FILES
 
 
 def release(pr: dict, dry_run: bool) -> None:
     """Swap `needs-review` for auto-merge on a starrer's held pull request."""
-    number = pr["number"]
+    number = int(pr["number"])
     if not may_auto_merge(pr):
         print(f"  #{number}: stays with a maintainer (files or labels)")
         return
