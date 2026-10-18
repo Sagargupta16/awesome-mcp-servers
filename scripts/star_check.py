@@ -31,7 +31,9 @@ import argparse
 import functools
 import json
 import os
+import re
 import sys
+import urllib.parse
 from pathlib import Path
 
 from thank_contributors import OWNER, REPO, api
@@ -49,6 +51,9 @@ STOP_LABELS = {"no-auto-merge", "maintainer-override"}
 
 # The fallback reads newest stars first; past this many pages it gives up.
 MAX_PAGES = 20
+
+# GitHub's own rule for usernames: letters, digits and single hyphens, at most 39.
+LOGIN_RE = re.compile(r"[A-Za-z0-9](?:-?[A-Za-z0-9]){0,38}")
 
 
 @functools.cache
@@ -79,15 +84,24 @@ def repo_id() -> int | None:
 
 
 def has_starred(login: str) -> bool:
-    """Whether `login` has starred the repository, as far as the API can tell."""
+    """Whether `login` has starred the repository, as far as the API can tell.
+
+    `login` reaches this from the command line, so anything that is not a GitHub
+    login is refused before it can become part of an API path: `../` in it would
+    walk the request somewhere else under the workflow's token.
+    """
+    if not LOGIN_RE.fullmatch(login):
+        print(f"  {login!r} is not a GitHub login", file=sys.stderr)
+        return False
     names = stargazers()
     if names is not None:
         return login.lower() in names
     target = repo_id()
+    user = urllib.parse.quote(login, safe="")
     for page in range(1, MAX_PAGES + 1):
         starred, err = api(
             "GET",
-            f"users/{login}/starred?sort=created&direction=desc&per_page=100&page={page}",
+            f"users/{user}/starred?sort=created&direction=desc&per_page=100&page={page}",
         )
         if err:
             print(f"  could not read {login}'s stars ({err})", file=sys.stderr)

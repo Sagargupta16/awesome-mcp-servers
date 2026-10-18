@@ -110,6 +110,17 @@ def test_an_unreadable_starred_list_counts_as_not_starred(fake):
     assert star_check.has_starred("someone") is False
 
 
+@pytest.mark.parametrize(
+    "login", ["../../repos/x/y", "a/b", "-lead", "trail-", "a--b", ""]
+)
+def test_anything_but_a_github_login_is_refused_before_any_request(fake, login):
+    """The login becomes part of an API path; `../` would walk it elsewhere."""
+    api = fake({STARGAZERS: ([], None)})
+
+    assert star_check.has_starred(login) is False
+    assert api.calls == []
+
+
 # --- the ask -----------------------------------------------------------------------
 
 
@@ -197,7 +208,8 @@ def test_a_held_readme_only_pull_request_is_released(fake):
         f"repos/{star_check.REPO}/issues/7/labels/needs-review",
     ) in api.writes()
     graphql = [payload for m, p, payload in api.calls if p == "graphql"]
-    assert graphql and graphql[0]["variables"] == {"id": "PR_7"}
+    assert len(graphql) == 1
+    assert graphql[0]["variables"] == {"id": "PR_7"}
 
 
 def test_a_pull_request_touching_a_workflow_is_never_released(fake):
