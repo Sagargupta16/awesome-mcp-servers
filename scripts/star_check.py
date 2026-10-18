@@ -56,6 +56,15 @@ MAX_PAGES = 20
 LOGIN_RE = re.compile(r"[A-Za-z0-9](?:-?[A-Za-z0-9]){0,38}")
 
 
+def seg(value: object) -> str:
+    """One URL path segment, with anything that could end or climb it escaped.
+
+    Pull request numbers come from the event file, which is data: quoting them
+    means no value can turn `issues/N/labels` into a different API path.
+    """
+    return urllib.parse.quote(str(value), safe="")
+
+
 @functools.cache
 def stargazers() -> frozenset[str] | None:
     """Lowercased logins from the repository's own list, or None if it is closed."""
@@ -143,7 +152,9 @@ THANKS_BODY = "\n".join(
 
 def our_comment(number: int) -> dict | None:
     """The comment this script posted on a pull request, if any."""
-    comments, err = api("GET", f"repos/{REPO}/issues/{number}/comments?per_page=100")
+    comments, err = api(
+        "GET", f"repos/{REPO}/issues/{seg(number)}/comments?per_page=100"
+    )
     if err:
         print(f"  #{number}: could not read comments ({err})", file=sys.stderr)
         return None
@@ -165,11 +176,11 @@ def upsert_comment(number: int, body: str, create: bool) -> None:
         if existing.get("body") != body:
             api(
                 "PATCH",
-                f"repos/{REPO}/issues/comments/{existing['id']}",
+                f"repos/{REPO}/issues/comments/{seg(existing['id'])}",
                 {"body": body},
             )
     elif create:
-        api("POST", f"repos/{REPO}/issues/{number}/comments", {"body": body})
+        api("POST", f"repos/{REPO}/issues/{seg(number)}/comments", {"body": body})
 
 
 def labels_of(pr: dict) -> set[str]:
@@ -177,24 +188,22 @@ def labels_of(pr: dict) -> set[str]:
 
 
 def flag(pr: dict, dry_run: bool) -> None:
-    # int() everywhere a number becomes part of an API path: the event file is
-    # data, and only an integer cannot redirect the request (SonarCloud S7044)
-    number, login = int(pr["number"]), pr["user"]["login"]
+    number, login = pr["number"], pr["user"]["login"]
     print(f"  #{number}: {login} has not starred, labelling {LABEL}")
     if dry_run:
         return
-    api("POST", f"repos/{REPO}/issues/{number}/labels", {"labels": [LABEL]})
+    api("POST", f"repos/{REPO}/issues/{seg(number)}/labels", {"labels": [LABEL]})
     upsert_comment(number, ask_body(login), create=True)
 
 
 def clear(pr: dict, dry_run: bool) -> None:
-    number = int(pr["number"])
+    number = pr["number"]
     print(f"  #{number}: {pr['user']['login']} has starred")
     if dry_run:
         return
     if LABEL in labels_of(pr):
         # a 404 means someone removed it by hand already, which is the goal
-        api("DELETE", f"repos/{REPO}/issues/{number}/labels/{LABEL}")
+        api("DELETE", f"repos/{REPO}/issues/{seg(number)}/labels/{LABEL}")
     # only a pull request that was asked gets the thank-you
     upsert_comment(number, THANKS_BODY, create=False)
 
@@ -203,8 +212,8 @@ def may_auto_merge(pr: dict) -> bool:
     """The same file and label rules auto-merge.yml applies."""
     if labels_of(pr) & STOP_LABELS:
         return False
-    number = int(pr["number"])
-    files, err = api("GET", f"repos/{REPO}/pulls/{number}/files?per_page=100")
+    number = pr["number"]
+    files, err = api("GET", f"repos/{REPO}/pulls/{seg(number)}/files?per_page=100")
     if err:
         print(f"  #{number}: could not list files ({err})", file=sys.stderr)
         return False
@@ -213,14 +222,14 @@ def may_auto_merge(pr: dict) -> bool:
 
 def release(pr: dict, dry_run: bool) -> None:
     """Swap `needs-review` for auto-merge on a starrer's held pull request."""
-    number = int(pr["number"])
+    number = pr["number"]
     if not may_auto_merge(pr):
         print(f"  #{number}: stays with a maintainer (files or labels)")
         return
     print(f"  #{number}: starred, so auto-merge replaces {REVIEW_LABEL}")
     if dry_run:
         return
-    api("DELETE", f"repos/{REPO}/issues/{number}/labels/{REVIEW_LABEL}")
+    api("DELETE", f"repos/{REPO}/issues/{seg(number)}/labels/{REVIEW_LABEL}")
     data, err = api(
         "POST",
         "graphql",
