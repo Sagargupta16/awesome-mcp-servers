@@ -3,10 +3,10 @@ name: Star check
 # Asks a pull request author who has not starred the repository to star it: the
 # `missing-star` label and one comment, both from scripts/star_check.py. When the
 # author stars, the label comes off, the comment turns into a thank-you, and any
-# of their pull requests held with `needs-review` switch to auto-merge, under the
-# same file and label rules auto-merge.yml applies. A star skips the maintainer
-# review only; the required checks still block a broken entry. Not a required
-# check.
+# of their pull requests auto-merge.yml held back merge once the checks pass,
+# under the same draft, file and label rules auto-merge.yml applies. A star skips
+# the maintainer review only; the required checks still block a broken entry.
+# Not a required check.
 #
 # pull_request_target runs this file from main and checks out main, so nothing
 # from the pull request executes; the script reads the author's login from the

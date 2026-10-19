@@ -23,10 +23,16 @@ class FakeAPI:
 
     def __call__(self, method, path, payload=None, token=None):
         self.calls.append((method, path, payload))
-        for (m, prefix), answer in self.routes.items():
-            if m == method and path.startswith(prefix):
-                return answer(path) if callable(answer) else answer
-        return None, None
+        # longest prefix wins, so `pulls/7` never shadows `pulls/7/files`
+        matches = [
+            (prefix, answer)
+            for (m, prefix), answer in self.routes.items()
+            if m == method and path.startswith(prefix)
+        ]
+        if not matches:
+            return None, None
+        _, answer = max(matches, key=lambda match: len(match[0]))
+        return answer(path) if callable(answer) else answer
 
     def writes(self) -> list[tuple[str, str]]:
         return [(m, p) for m, p, _ in self.calls if m != "GET"]
@@ -59,6 +65,7 @@ def _pr(login="someone", labels=(), kind="User", number=7) -> dict:
 
 STARGAZERS = ("GET", f"repos/{star_check.REPO}/stargazers")
 CLOSED_LIST = {STARGAZERS: (None, 403)}
+NO_COMMENTS = ("GET", f"repos/{star_check.REPO}/issues/7/comments")
 
 
 # --- who has starred -------------------------------------------------------------
@@ -130,7 +137,7 @@ def test_the_ask_carries_the_marker_command_and_what_a_star_does():
     assert body.startswith(star_check.MARKER)
     assert "@someone" in body
     assert f"gh api -X PUT /user/starred/{star_check.REPO}" in body
-    assert star_check.REVIEW_LABEL in body
+    assert "merges itself" in body
 
 
 @pytest.mark.parametrize(
@@ -198,62 +205,121 @@ def _files(*names):
     return ([{"filename": n} for n in names], None)
 
 
-def test_a_held_readme_only_pull_request_is_released(fake):
-    api = fake({("GET", f"repos/{star_check.REPO}/pulls/7/files"): _files("README.md")})
+def _release_routes(state: str, *files: str) -> dict:
+    return {
+        ("GET", f"repos/{star_check.REPO}/pulls/7/files"): _files(
+            *(files or ("README.md",))
+        ),
+        ("GET", f"repos/{star_check.REPO}/pulls/7"): ({"mergeable_state": state}, None),
+    }
 
-    star_check.release(_pr(labels=["needs-review"]), dry_run=False)
 
-    assert (
-        "DELETE",
-        f"repos/{star_check.REPO}/issues/7/labels/needs-review",
-    ) in api.writes()
+def test_a_held_pull_request_with_pending_checks_gets_auto_merge(fake):
+    api = fake(_release_routes("blocked"))
+
+    star_check.release(_pr(labels=["missing-star"]), dry_run=False)
+
     graphql = [payload for m, p, payload in api.calls if p == "graphql"]
     assert len(graphql) == 1
     assert graphql[0]["variables"] == {"id": "PR_7"}
+    assert not any(m == "PUT" for m, _ in api.writes())
+
+
+@pytest.mark.parametrize("state", sorted(star_check.MERGEABLE_NOW))
+def test_a_held_pull_request_that_can_merge_now_is_merged(fake, state):
+    """GitHub refuses auto-merge once every required check has passed."""
+    api = fake(_release_routes(state))
+
+    star_check.release(_pr(labels=["missing-star"]), dry_run=False)
+
+    assert api.writes() == [("PUT", f"repos/{star_check.REPO}/pulls/7/merge")]
+    assert api.calls[-1][2] == {"merge_method": "squash"}
 
 
 def test_a_pull_request_touching_a_workflow_is_never_released(fake):
     """A star must not open the door auto-merge.yml keeps shut."""
-    api = fake(
-        {
-            ("GET", f"repos/{star_check.REPO}/pulls/7/files"): _files(
-                "README.md", ".github/workflows/x.yml"
-            )
-        }
-    )
+    api = fake(_release_routes("clean", "README.md", ".github/workflows/x.yml"))
 
-    star_check.release(_pr(labels=["needs-review"]), dry_run=False)
+    star_check.release(_pr(), dry_run=False)
 
     assert api.writes() == []
 
 
 @pytest.mark.parametrize("stop", sorted(star_check.STOP_LABELS))
 def test_a_maintainer_stop_label_keeps_a_pull_request_held(fake, stop):
-    api = fake({("GET", f"repos/{star_check.REPO}/pulls/7/files"): _files("README.md")})
+    api = fake(_release_routes("clean"))
 
-    star_check.release(_pr(labels=["needs-review", stop]), dry_run=False)
+    star_check.release(_pr(labels=[stop]), dry_run=False)
+
+    assert api.writes() == []
+
+
+def test_a_draft_is_never_released(fake):
+    api = fake(_release_routes("clean"))
+
+    star_check.release(_pr() | {"draft": True}, dry_run=False)
 
     assert api.writes() == []
 
 
 def test_a_star_clears_and_releases_only_the_starrers_pull_requests(fake):
-    theirs = _pr(login="Fan", labels=["missing-star", "needs-review"], number=7)
-    other = _pr(login="other", labels=["missing-star", "needs-review"], number=8)
+    theirs = _pr(login="Fan", labels=["missing-star"], number=7) | {"auto_merge": None}
+    other = _pr(login="other", labels=["missing-star"], number=8) | {"auto_merge": None}
     api = fake(
         {
             ("GET", f"repos/{star_check.REPO}/pulls?"): ([theirs, other], None),
             ("GET", f"repos/{star_check.REPO}/issues/7/comments"): ([], None),
-            ("GET", f"repos/{star_check.REPO}/pulls/7/files"): _files("README.md"),
         }
+        | _release_routes("clean")
     )
 
     star_check.on_star("fan", dry_run=False)
 
-    touched = {p for _, p in api.writes() if p != "graphql"}
-    assert touched == {
-        f"repos/{star_check.REPO}/issues/7/labels/missing-star",
-        f"repos/{star_check.REPO}/issues/7/labels/needs-review",
-    }
+    assert api.writes() == [
+        ("DELETE", f"repos/{star_check.REPO}/issues/7/labels/missing-star"),
+        ("PUT", f"repos/{star_check.REPO}/pulls/7/merge"),
+    ]
+
+
+def test_a_pull_request_event_leaves_the_merge_decision_to_auto_merge(fake):
+    """auto-merge.yml decides on the event; only a sweep releases held ones."""
+    api = fake(
+        {STARGAZERS: ([{"login": "someone"}], None), NO_COMMENTS: ([], None)}
+        | _release_routes("clean")
+    )
+
+    star_check.check(_pr() | {"auto_merge": None}, dry_run=False)
+
+    assert not any(m == "PUT" for m, _ in api.writes())
+
+
+def test_a_sweep_releases_a_starrers_held_pull_request(fake):
+    api = fake(
+        {
+            STARGAZERS: ([{"login": "someone"}], None),
+            ("GET", f"repos/{star_check.REPO}/issues/7/comments"): ([], None),
+        }
+        | _release_routes("clean")
+    )
+
+    star_check.check(_pr() | {"auto_merge": None}, dry_run=False, release_held=True)
+
+    assert ("PUT", f"repos/{star_check.REPO}/pulls/7/merge") in api.writes()
+
+
+def test_a_sweep_leaves_a_pull_request_already_auto_merging_alone(fake):
+    api = fake(
+        {STARGAZERS: ([{"login": "someone"}], None), NO_COMMENTS: ([], None)}
+        | _release_routes("blocked")
+    )
+
+    star_check.check(
+        _pr() | {"auto_merge": {"merge_method": "squash"}},
+        dry_run=False,
+        release_held=True,
+    )
+
+    assert api.writes() == []
 
 
 def test_dry_run_writes_nothing(fake):

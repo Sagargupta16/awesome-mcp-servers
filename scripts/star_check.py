@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""Ask pull request authors to star the repository, and let a star skip the wait.
+"""Ask pull request authors to star the repository, and let a star release a hold.
 
 A pull request from someone who has not starred gets the `missing-star` label
-and one comment asking. When that person stars, the label comes off, the
-comment turns into a thank-you, and any of their pull requests that were held
-with `needs-review` switch to auto-merge instead. auto-merge.yml and
-issue-to-pr.yml ask `--starred` the same question before they hold one.
+and one comment asking. That label is the only one: an entry the submission
+check would leave to a maintainer (every `Remote` row, for a start) simply does
+not auto-merge while its author has not starred. When that person stars, the
+label comes off, the comment turns into a thank-you, and their held pull
+requests merge once the checks pass. auto-merge.yml and issue-to-pr.yml ask
+`--starred` before they hold one.
 
-A star never gets an entry past a failing check. It only skips the maintainer
-review that the submission check asks for on `Remote` entries and on findings
-it cannot settle itself.
+A star never gets an entry past a failing check, and an entry the checks pass
+outright merges itself whether or not its author starred.
 
     python scripts/star_check.py                   # the triggering event, or else
                                                    # every open pull request
@@ -39,7 +40,6 @@ from pathlib import Path
 from thank_contributors import OWNER, REPO, api
 
 LABEL = "missing-star"
-REVIEW_LABEL = "needs-review"
 MARKER = "<!-- awesome-mcp-servers:star-check -->"
 BOT = "github-actions[bot]"
 REPO_URL = f"https://github.com/{REPO}"
@@ -137,10 +137,9 @@ def ask_body(login: str) -> str:
             f"gh api -X PUT /user/starred/{REPO}",
             "```",
             "",
-            f"Once you have, the `{LABEL}` label comes off by itself, and if this "
-            f"pull request is waiting for a maintainer (`{REVIEW_LABEL}`) it merges "
-            "itself as soon as the checks pass instead. If you already starred and "
-            "this has not noticed, a maintainer will sort it out.",
+            f"Once you have, the `{LABEL}` label comes off by itself, and this pull "
+            "request merges itself as soon as the checks pass. If you already "
+            "starred and this has not noticed, a maintainer will sort it out.",
         ]
     )
 
@@ -209,8 +208,8 @@ def clear(pr: dict, dry_run: bool) -> None:
 
 
 def may_auto_merge(pr: dict) -> bool:
-    """The same file and label rules auto-merge.yml applies."""
-    if labels_of(pr) & STOP_LABELS:
+    """The same draft, file and label rules auto-merge.yml applies."""
+    if pr.get("draft") or labels_of(pr) & STOP_LABELS:
         return False
     number = pr["number"]
     files, err = api("GET", f"repos/{REPO}/pulls/{seg(number)}/files?per_page=100")
@@ -220,30 +219,41 @@ def may_auto_merge(pr: dict) -> bool:
     return {f["filename"] for f in files} <= AUTO_MERGE_FILES
 
 
+# Merge states in which every required check has passed, so GitHub refuses to
+# switch auto-merge on and the pull request has to be merged directly.
+MERGEABLE_NOW = {"clean", "unstable", "has_hooks"}
+
+AUTO_MERGE_QUERY = (
+    "mutation($id: ID!) { enablePullRequestAutoMerge("
+    "input: {pullRequestId: $id, mergeMethod: SQUASH}) { clientMutationId } }"
+)
+
+
 def release(pr: dict, dry_run: bool) -> None:
-    """Swap `needs-review` for auto-merge on a starrer's held pull request."""
+    """Let a starrer's held pull request merge once its checks pass."""
     number = pr["number"]
     if not may_auto_merge(pr):
-        print(f"  #{number}: stays with a maintainer (files or labels)")
+        print(f"  #{number}: stays with a maintainer (draft, files or labels)")
         return
-    print(f"  #{number}: starred, so auto-merge replaces {REVIEW_LABEL}")
+    print(f"  #{number}: starred, so it merges once the checks pass")
     if dry_run:
         return
-    api("DELETE", f"repos/{REPO}/issues/{seg(number)}/labels/{REVIEW_LABEL}")
-    data, err = api(
-        "POST",
-        "graphql",
-        {
-            "query": "mutation($id: ID!) { enablePullRequestAutoMerge("
-            "input: {pullRequestId: $id, mergeMethod: SQUASH}) { clientMutationId } }",
-            "variables": {"id": pr["node_id"]},
-        },
-    )
-    if err or (data or {}).get("errors"):
-        print(
-            f"  #{number}: could not enable auto-merge ({err or data['errors']})",
-            file=sys.stderr,
+    full, err = api("GET", f"repos/{REPO}/pulls/{seg(number)}")
+    if not err and full.get("mergeable_state") in MERGEABLE_NOW:
+        _, err = api(
+            "PUT",
+            f"repos/{REPO}/pulls/{seg(number)}/merge",
+            {"merge_method": "squash"},
         )
+    else:
+        data, err = api(
+            "POST",
+            "graphql",
+            {"query": AUTO_MERGE_QUERY, "variables": {"id": pr["node_id"]}},
+        )
+        err = err or (data or {}).get("errors")
+    if err:
+        print(f"  #{number}: could not release it ({err})", file=sys.stderr)
 
 
 def skip_reason(pr: dict) -> str | None:
@@ -255,14 +265,19 @@ def skip_reason(pr: dict) -> str | None:
     return None
 
 
-def check(pr: dict, dry_run: bool) -> None:
+def check(pr: dict, dry_run: bool, release_held: bool = False) -> None:
+    """Ask or thank the author. A sweep also releases a starrer's held one.
+
+    On a pull request event auto-merge.yml makes the merge decision itself, so
+    only the sweep, which sees pull requests held before a star, releases them.
+    """
     reason = skip_reason(pr)
     if reason:
         print(f"  #{pr['number']}: skipped, {reason}")
         return
     if has_starred(pr["user"]["login"]):
         clear(pr, dry_run)
-        if REVIEW_LABEL in labels_of(pr):
+        if release_held and pr.get("auto_merge") is None:
             release(pr, dry_run)
     else:
         flag(pr, dry_run)
@@ -287,7 +302,7 @@ def on_star(login: str, dry_run: bool) -> None:
     for pr in theirs:
         if LABEL in labels_of(pr):
             clear(pr, dry_run)
-        if REVIEW_LABEL in labels_of(pr):
+        if pr.get("auto_merge") is None:
             release(pr, dry_run)
 
 
@@ -315,7 +330,7 @@ def main() -> int:
     else:
         # a dispatch, or a local run, has no pull request: check every open one
         for pr in open_prs():
-            check(pr, args.dry_run)
+            check(pr, args.dry_run, release_held=True)
     return 0
 
 

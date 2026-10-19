@@ -2,6 +2,16 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.8.1] - 2026-10-19
+
+### Changed
+
+- `missing-star` is the only label. An entry the submission check leaves to a maintainer no longer gets `needs-review`: auto-merge just stays off while its author has not starred, and a star releases it. A held pull request that already passes every check is merged directly on the star, since GitHub refuses to switch auto-merge on for one. Form submissions from someone who has not starred get `missing-star` instead.
+
+### Removed
+
+- The `needs-review` label.
+
 ## [2.8.0] - 2026-10-18
 
 Since the post-merge thank-you went live on 2026-10-14 it had thanked 11 outside contributors 16 times, and none had starred. This asks when the pull request opens, the way Piebald-AI/awesome-gemini-cli-extensions does, and lets a star skip the maintainer review.

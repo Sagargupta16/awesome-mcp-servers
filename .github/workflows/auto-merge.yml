@@ -19,8 +19,9 @@ name: Auto merge
 #
 # A pull request whose entries the submission check leaves to a maintainer --
 # every `Remote` entry, an unclassifiable licence, a link that is not a GitHub
-# repository -- is labelled `needs-review` and left for a person to merge,
-# unless its author has starred the repository (scripts/star_check.py). To
+# repository -- is not armed while its author has not starred the repository:
+# star-check.yml's `missing-star` label shows why, and starring releases it
+# (scripts/star_check.py). A maintainer can still merge it by hand. To
 # decide that, the job checks out `main`, fetches the pull request's commits as
 # data, and runs main's copy of check_submission.py over the README those
 # commits carry. Nothing from the pull request is checked out or executed.
@@ -130,22 +131,17 @@ jobs:
           if ! python scripts/check_submission.py --base-ref "$base" \
               --head-ref refs/remotes/pull/head --review > /dev/null; then
             if python scripts/star_check.py --starred "$AUTHOR"; then
-              case ",$LABELS," in
-                *,needs-review,*) gh api -X DELETE "repos/$REPO/issues/$PR/labels/needs-review" > /dev/null ;;
-              esac
               {
                 echo
                 echo "The submission check leaves an entry to a maintainer, but @$AUTHOR"
                 echo "has starred the repository, so it merges once the checks pass."
               } >> "$GITHUB_STEP_SUMMARY"
             else
-              gh api -X POST "repos/$REPO/issues/$PR/labels" -f "labels[]=needs-review" > /dev/null
               {
                 echo
-                echo "Not enabled: the submission check leaves an entry to a maintainer."
-                echo "The report above says which and why. The pull request is labelled"
-                echo "\`needs-review\`, and a maintainer merges it by hand after reading it,"
-                echo "unless @$AUTHOR stars the repository first."
+                echo "Not enabled: the submission check leaves an entry to a maintainer,"
+                echo "and @$AUTHOR has not starred the repository (\`missing-star\`)."
+                echo "Starring releases it to auto-merge; a maintainer can also merge it."
               } >> "$GITHUB_STEP_SUMMARY"
               exit 0
             fi
