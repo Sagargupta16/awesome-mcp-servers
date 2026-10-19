@@ -126,7 +126,7 @@ def render_thanks(login: str, entries: list[tuple[str, str]], lead: str = "") ->
             "```",
             "",
             f"And if the list is useful to you, a [star]({build_site.REPO_URL}) helps "
-            "other people find it. Neither is required.",
+            "other people find it. The badge is optional.",
         ]
     )
 

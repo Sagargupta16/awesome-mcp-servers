@@ -10,7 +10,7 @@
 
 MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, etc.) connect to local and remote data sources through standardized server implementations.
 
-**This list is curated, not exhaustive, and open to anyone.** Bigger MCP lists exist. The point of this one is that everything on it has been checked. Curated does not mean famous: there is no star or age requirement, and submitting your own server is welcome. Every entry:
+**This list is curated, not exhaustive, and open to anyone.** Bigger MCP lists exist. The point of this one is that everything on it has been checked. Curated does not mean famous: your project needs no minimum star count or age, and submitting your own server is welcome. Every entry:
 
 - implements MCP for real -- not a README with a `server.json` next to it
 - states an open-source licence -- a `LICENSE` file, or a licence field in its package manifest
@@ -18,7 +18,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 - documents how to install and configure it, so someone else can actually run it
 - appears exactly once, in one category
 
-Hosted servers with no public source are the one exception, marked `Remote`. Instead of a licence and a push date, each links the operator's own documentation naming the endpoint, the authentication and the tools; CI checks the endpoint answers; and a maintainer reviews every one before it merges, unless its author has starred the repository.
+Hosted servers with no public source are the one exception, marked `Remote`. Instead of a licence and a push date, each links the operator's own documentation naming the endpoint, the authentication and the tools; CI checks the endpoint answers; and, like every entry, it merges itself only once its author has starred the repository.
 
 Those rules are enforced by [CI](.github/workflows/), not by good intentions: a pull request that breaks the format, adds a dead link, or submits an unlicensed repo fails its checks. A [monthly audit](.github/workflows/health.yml) re-checks every listed repository and files what has rotted.
 
@@ -629,7 +629,7 @@ but not all of resources and prompts.
 
 ## Contributing
 
-**Anyone can contribute, including your own server.** There is no star requirement and no minimum project age -- if it works, is licensed and is documented, it qualifies. A hosted server with closed source qualifies too, under the [hosted-server rules](CONTRIBUTING.md#hosted-servers). Read [CONTRIBUTING.md](CONTRIBUTING.md) for the details.
+**Anyone can contribute, including your own server.** Your project needs no minimum star count and no minimum age -- if it works, is licensed and is documented, it qualifies. A hosted server with closed source qualifies too, under the [hosted-server rules](CONTRIBUTING.md#hosted-servers). Read [CONTRIBUTING.md](CONTRIBUTING.md) for the details.
 
 To add a server:
 
@@ -637,7 +637,8 @@ To add a server:
 2. Add **one** row to the most appropriate existing category. Alphabetical order is preferred, not required.
 3. Follow the format: `| [Name](URL) | Description | Language |` with the description at 80 characters or fewer.
 4. Run `python scripts/validate.py` and fix what it reports.
-5. Open a pull request and answer the affiliation question. Submitting your own project is welcome; not disclosing it is not.
+5. Star the repository. A pull request only merges itself once its author has starred.
+6. Open a pull request and answer the affiliation question. Submitting your own project is welcome; not disclosing it is not.
 
 Once it merges, a bot thanks you on the pull request with a badge for your project's README. It links back here, so people who find your server can find the rest of the list:
 
@@ -645,7 +646,7 @@ Once it merges, a bot thanks you on the pull request with a badge for your proje
 [![Listed in Awesome MCP Servers](https://sagargupta.online/awesome-mcp-servers/badge.svg)](https://github.com/Sagargupta16/awesome-mcp-servers)
 ```
 
-If the list is useful to you, a star helps other people find it. It is never a condition for being listed, though it does let an entry that would wait for a maintainer merge itself once the checks pass.
+A star is what lets your pull request merge itself. Without one it waits, labelled `missing-star`, until you star or a maintainer merges it by hand.
 
 Other ways to help, no pull request needed:
 

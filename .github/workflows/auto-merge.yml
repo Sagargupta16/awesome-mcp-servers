@@ -17,14 +17,11 @@ name: Auto merge
 # over the API and never checks out pull request code, so the writable token is
 # never exposed to anything a contributor controls.
 #
-# A pull request whose entries the submission check leaves to a maintainer --
-# every `Remote` entry, an unclassifiable licence, a link that is not a GitHub
-# repository -- is not armed while its author has not starred the repository:
-# star-check.yml's `missing-star` label shows why, and starring releases it
-# (scripts/star_check.py). A maintainer can still merge it by hand. To
-# decide that, the job checks out `main`, fetches the pull request's commits as
-# data, and runs main's copy of check_submission.py over the README those
-# commits carry. Nothing from the pull request is checked out or executed.
+# A star is required: a pull request is only armed when its author has starred
+# the repository (scripts/star_check.py --starred). Without one it waits, marked
+# `missing-star` by star-check.yml, until they star, which releases it, or until
+# a maintainer merges it by hand. A star never gets past a failing check: GitHub
+# still waits for every required one before it merges.
 
 on:
   pull_request_target:
@@ -46,10 +43,9 @@ jobs:
     if: github.event.pull_request.draft == false
     steps:
       # `main`, not the pull request: on pull_request_target the default ref is
-      # the base branch. Full history so the merge base with the head is there.
+      # the base branch. Only main's star_check.py runs.
       - uses: actions/checkout@v7
         with:
-          fetch-depth: 0
           persist-credentials: false
 
       - uses: actions/setup-python@v7
@@ -121,38 +117,21 @@ jobs:
               ;;
           esac
 
-          # Compare against the merge base, not main's tip: rows main removed
-          # since the branch was cut would otherwise read as new submissions.
-          git fetch --no-tags origin "+refs/pull/$PR/head:refs/remotes/pull/head"
-          base=$(git merge-base HEAD refs/remotes/pull/head)
-          # Anything but a clean 0 waits for a person, a crash included, unless
-          # the author has starred: a star skips the maintainer review, never a
-          # failing check, which still blocks the merge on its own.
-          if ! python scripts/check_submission.py --base-ref "$base" \
-              --head-ref refs/remotes/pull/head --review > /dev/null; then
-            if python scripts/star_check.py --starred "$AUTHOR"; then
-              {
-                echo
-                echo "The submission check leaves an entry to a maintainer, but @$AUTHOR"
-                echo "has starred the repository, so it merges once the checks pass."
-              } >> "$GITHUB_STEP_SUMMARY"
-            else
-              {
-                echo
-                echo "Not enabled: the submission check leaves an entry to a maintainer,"
-                echo "and @$AUTHOR has not starred the repository (\`missing-star\`)."
-                echo "Starring releases it to auto-merge; a maintainer can also merge it."
-              } >> "$GITHUB_STEP_SUMMARY"
-              exit 0
-            fi
+          if ! python scripts/star_check.py --starred "$AUTHOR"; then
+            {
+              echo "Not enabled: @$AUTHOR has not starred the repository (\`missing-star\`)."
+              echo "A star is required before a pull request merges itself. Starring"
+              echo "releases this one; a maintainer can also merge it by hand."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
           fi
 
           gh pr merge "$PR" --repo "$REPO" --auto --squash
 
           {
-            echo "Enabled. This pull request only touches list content, so GitHub will"
-            echo "squash-merge it as soon as every required check passes. No approval"
-            echo "is needed, and it will not merge while any required check is red."
+            echo "Enabled. @$AUTHOR has starred and this pull request only touches list"
+            echo "content, so GitHub will squash-merge it as soon as every required check"
+            echo "passes. It will not merge while any required check is red."
             echo
             echo "To stop it, add the \`no-auto-merge\` label."
           } >> "$GITHUB_STEP_SUMMARY"

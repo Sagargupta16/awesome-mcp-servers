@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
-"""Ask pull request authors to star the repository, and let a star release a hold.
+"""Ask pull request authors to star the repository; a star is what lets one merge.
 
-A pull request from someone who has not starred gets the `missing-star` label
-and one comment asking. That label is the only one: an entry the submission
-check would leave to a maintainer (every `Remote` row, for a start) simply does
-not auto-merge while its author has not starred. When that person stars, the
-label comes off, the comment turns into a thank-you, and their held pull
-requests merge once the checks pass. auto-merge.yml and issue-to-pr.yml ask
-`--starred` before they hold one.
+A star is required before a pull request merges itself: auto-merge.yml and
+issue-to-pr.yml ask `--starred` and only arm a pull request whose author has
+starred. One from someone who has not gets the `missing-star` label and one
+comment asking. When that person stars, the label comes off, the comment turns
+into a thank-you, and their held pull requests merge once the checks pass. A
+maintainer can still merge any of them by hand.
 
-A star never gets an entry past a failing check, and an entry the checks pass
-outright merges itself whether or not its author starred.
+A star never gets an entry past a failing check.
 
     python scripts/star_check.py                   # the triggering event, or else
                                                    # every open pull request
@@ -128,10 +126,10 @@ def ask_body(login: str) -> str:
             MARKER,
             f"Thanks for the submission, @{login}!",
             "",
-            "It looks like you haven't starred this repository yet. Every entry is "
-            "checked by CI and by hand, and a star is the one thing the list asks "
-            "for in return: it is how other people find it. You can star it at the "
-            f"top of {REPO_URL}, or from a terminal:",
+            "It looks like you haven't starred this repository yet. A star is "
+            "required before a pull request here merges itself: it is the one "
+            "thing the list asks for in return, and it is how other people find "
+            f"it. You can star it at the top of {REPO_URL}, or from a terminal:",
             "",
             "```bash",
             f"gh api -X PUT /user/starred/{REPO}",

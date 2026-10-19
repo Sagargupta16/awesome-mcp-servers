@@ -110,7 +110,7 @@ def test_the_comment_carries_the_marker_badge_and_a_search_link():
 def test_the_star_ask_says_it_is_optional():
     body = thank_contributors.render_thanks("someone", [("Acme MCP", "https://x")])
 
-    assert "Neither is required" in body
+    assert "The badge is optional" in body
 
 
 def test_several_entries_are_named_together():

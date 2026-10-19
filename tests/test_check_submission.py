@@ -87,25 +87,6 @@ def test_added_rows_reports_one_row_when_a_table_is_both_sorted_and_extended(
     assert [sub.name for sub in added] == ["Gamma"]
 
 
-def test_added_rows_reads_the_head_from_a_ref_instead_of_the_working_copy(
-    repo: Path, monkeypatch
-):
-    """How auto-merge.yml judges a pull request it must never check out."""
-    commit_readme(repo, f"{ROW_A}\n{ROW_B}\n{ROW_C}\n", message="head")
-    (repo / "README.md").write_text(f"{ROW_A}\n", encoding="utf-8")
-    monkeypatch.chdir(repo)
-
-    added = check_submission.added_rows("HEAD~1", "HEAD")
-
-    assert [sub.name for sub in added] == ["Gamma"]
-
-
-def test_added_rows_rejects_a_head_ref_shaped_like_an_option(repo: Path, monkeypatch):
-    monkeypatch.chdir(repo)
-
-    assert check_submission.added_rows("HEAD", "--output=x") == []
-
-
 # --- manifest licence detection ----------------------------------------------
 
 
@@ -731,30 +712,16 @@ def test_a_web_page_at_an_mcp_path_is_not_taken_for_the_endpoint(monkeypatch):
     assert any("text/html" in note for note in sub.soft)
 
 
-# --- --review: whether auto-merge waits for a person -------------------------
+# --- exit code --------------------------------------------------------------
 
 
-def _main_with(subs: list, monkeypatch, *flags: str) -> int:
-    monkeypatch.setattr(check_submission, "added_rows", lambda base, head: subs)
+def test_a_maintainer_note_does_not_fail_the_check(monkeypatch):
+    """Soft findings are for a person to read; only a hard one turns it red."""
+    sub = _remote()
+    sub.soft.append(check_submission.REMOTE_REVIEW)
+    monkeypatch.setattr(check_submission, "added_rows", lambda base: [sub])
     monkeypatch.setattr(check_submission, "inspect", lambda sub: None)
     monkeypatch.delenv("GITHUB_STEP_SUMMARY", raising=False)
-    monkeypatch.setattr("sys.argv", ["check_submission.py", *flags])
-    return check_submission.main()
+    monkeypatch.setattr("sys.argv", ["check_submission.py"])
 
-
-def test_review_mode_flags_an_entry_with_a_maintainer_note(monkeypatch):
-    sub = _remote()
-    sub.soft.append(check_submission.REMOTE_REVIEW)
-
-    assert _main_with([sub], monkeypatch, "--review") == check_submission.NEEDS_REVIEW
-
-
-def test_review_mode_lets_a_clean_entry_through(monkeypatch):
-    assert _main_with(_clean_subs("alpha"), monkeypatch, "--review") == 0
-
-
-def test_without_review_a_maintainer_note_does_not_fail_the_check(monkeypatch):
-    sub = _remote()
-    sub.soft.append(check_submission.REMOTE_REVIEW)
-
-    assert _main_with([sub], monkeypatch) == 0
+    assert check_submission.main() == 0

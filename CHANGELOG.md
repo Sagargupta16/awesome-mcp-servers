@@ -2,6 +2,17 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.9.0] - 2026-10-19
+
+### Changed
+
+- A star is required before any pull request merges itself. `auto-merge.yml` and `issue-to-pr.yml` arm a pull request only when its author (for a form submission, the issue author) has starred the repository; every other one waits with `missing-star` until they star, which releases it, or a maintainer merges it by hand. A star still never gets an entry past a failing check.
+- CONTRIBUTING, the README, the site, the issue form and the pull request template say so, and the template gains a "starred the repository" box. "No star requirement" lines now say "your project needs no minimum stars", which is what they always meant.
+
+### Removed
+
+- `check_submission.py --review` and `--head-ref`, and the merge-base fetch in `auto-merge.yml`. With the star deciding every merge they no longer changed anything. The submission check's maintainer notes still appear in its job summary.
+
 ## [2.8.1] - 2026-10-19
 
 ### Changed
