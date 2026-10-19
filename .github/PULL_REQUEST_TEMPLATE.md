@@ -44,6 +44,7 @@ For a hosted server with no public source (Language `Remote`), the first, second
 - [ ] Description states what it does rather than selling it
 - [ ] Added in alphabetical order within its table (preferred, but it will not fail any check)
 - [ ] `python scripts/validate.py` passes locally
+- [ ] I have starred the repository (required before a pull request merges itself)
 - [ ] I have not changed any unrelated entry
 
 ## Anything else
@@ -53,6 +54,6 @@ Optional. Useful things to mention: what makes your server different from a
 similar one already listed, or which existing entry you are proposing to replace
 and why yours is better.
 
-There is no star or age requirement, so please do not feel you need to justify a
+Your project needs no minimum stars or age, so please do not feel you need to justify a
 new or small project. If it works, is licensed and is documented, it qualifies.
 -->
