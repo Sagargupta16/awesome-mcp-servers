@@ -529,6 +529,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Hyperconsciousness](https://github.com/louis030195/hyperconsciousness) | Developer-alpha encrypted knowledge store with grant-scoped search and retrieval | Rust |
 | [Joplin MCP](https://github.com/alondmnt/joplin-mcp) | Read, search, and write Joplin notes and notebooks | Python |
 | [Karakeep MCP](https://github.com/karakeep-app/karakeep/tree/main/apps/mcp) | Official server for the Karakeep bookmark and read-later app | TypeScript |
+| [Koru MCP](https://github.com/koruworks/mono) | Search, read and edit notes and docs in the local-first Koru app | Built-in |
 | [Logseq MCP](https://github.com/ergut/mcp-logseq) | Read / write / manage LogSeq graph | Python |
 | [Neither](https://github.com/stonianua/neither-mcp) | Selected project notes/docs for Cursor and Claude Desktop via stdio MCP | TypeScript |
 | [Obsidian MCP](https://github.com/MarkusPfundstein/mcp-obsidian) | Obsidian via REST API community plugin | Python |
