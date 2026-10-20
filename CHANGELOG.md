@@ -2,6 +2,12 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.9.1] - 2026-10-20
+
+### Fixed
+
+- The thank-you comment, the website rebuild and the form-issue closer waited on "hourly" schedules that GitHub ran only every 3 to 7 hours, so #196 got its thank-you 2 hours 12 minutes after it merged and reached the website 4 hours 22 minutes after. An auto-merge made with `GITHUB_TOKEN` fires no event of its own, so all three now also run when Lint, Submission check, Auto merge or Star check finishes, the runs that come just before a merge, after a 30-second wait for the merge to land. The website only rebuilds when `main` has moved past the commit it last published. The schedules stay as a fallback.
+
 ## [2.9.0] - 2026-10-19
 
 ### Changed

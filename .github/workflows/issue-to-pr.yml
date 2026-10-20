@@ -25,12 +25,20 @@ name: Issue to pull request
 # `labeled` together and ran this twice (two identical comments on #117). To retry
 # an older issue, edit it.
 #
-# The hourly run closes the issue once its pull request has merged. "Closes #N"
+# The sweep (after the runs that precede a merge, and on the schedule as a
+# fallback) closes the issue once its pull request has merged. "Closes #N"
 # does not fire here: GitHub skips closing keywords when the merge is made by
 # auto-merge on GITHUB_TOKEN (#119 stayed open after #120 merged).
 on:
   issues:
     types: [opened, edited]
+  # An auto-merge made with GITHUB_TOKEN starts no workflow, so the merge itself
+  # cannot trigger this. The runs that come just before a merge can: the last
+  # required check finishing, or Auto merge / Star check merging in the run. The
+  # schedule stays as a fallback; GitHub ran the "hourly" one every 3 to 6 hours.
+  workflow_run:
+    workflows: [Lint, Submission check, Auto merge, Star check]
+    types: [completed]
   schedule:
     - cron: "47 * * * *" # hourly
   workflow_dispatch:
@@ -56,6 +64,11 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       REPO: ${{ github.repository }}
     steps:
+      # a merge started by the run that just finished can take a few seconds
+      - name: Let a pending merge land
+        if: github.event_name == 'workflow_run'
+        run: sleep 30
+
       - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v7
