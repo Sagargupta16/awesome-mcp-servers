@@ -2,6 +2,12 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.9.2] - 2026-10-21
+
+### Added
+
+- A diagram of the submission pipeline in the README's Contributing section: a fork pull request or the issue form, the required checks and the star gate, auto merge, then the website rebuild and the thank-you, with the monthly health audit beside them. It is drawn with [orrery](https://github.com/Sagargupta16/orrery) from `docs/diagrams/submission-pipeline.yaml`, whose nodes point at the workflow lines they come from, in light and dark versions.
+
 ## [2.9.1] - 2026-10-20
 
 ### Fixed

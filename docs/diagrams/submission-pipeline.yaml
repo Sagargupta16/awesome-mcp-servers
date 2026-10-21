@@ -1,0 +1,99 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Sagargupta16/orrery/main/skills/orrery/references/diagram.schema.json
+# Rendered with orrery (github.com/Sagargupta16/orrery):
+#   orrery render docs/diagrams/submission-pipeline.yaml -o docs/diagrams/submission-pipeline -f svg --theme both
+# Reviewed at README width: orrery review docs/diagrams/submission-pipeline.yaml --width 880
+title: How a submission gets listed
+subtitle: From a fork pull request or the issue form to the website, plus a monthly audit of every entry
+direction: right
+layout: { spacing: compact, aspect: 1.2 }
+legend:
+  dashed: Monthly schedule
+# The stage skin's packet walks the form path, the one with no human step after the form.
+story: [contributor, form, issue2pr, pr, star, automerge, main, site]
+
+groups:
+  # The main ruleset's required status checks (Validate format, Lint and test the gate
+  # scripts, Check links, Check submitted entries): auto-merge waits for all of them.
+  required: { type: box, label: Required checks }
+
+nodes:
+  contributor: { icon: github:person, label: Contributor, evidence: CONTRIBUTING.md:26#Fork }
+  form:
+    icon: github:issue-opened
+    label: Suggest a server
+    note: Issue form
+    align: contributor
+    evidence: .github/ISSUE_TEMPLATE/add-server.yml:4#addition
+  pr:
+    icon: github:git-pull-request
+    label: Pull request
+    note: One README row
+    evidence: CONTRIBUTING.md:30#pull
+  issue2pr:
+    icon: github:workflow
+    label: Issue to PR
+    note: issue_to_pr.py
+    align: pr
+    evidence: [.github/workflows/issue-to-pr.yml:120#issue_to_pr, .github/workflows/issue-to-pr.yml:162#create]
+  lint:
+    icon: github:checklist
+    label: Lint
+    note: validate.py, ruff, pytest, links
+    in: required
+    evidence: [.github/workflows/lint.yml:50#validate, .github/workflows/lint.yml:79#Lint, .github/workflows/lint.yml:85#Test, .github/workflows/lint.yml:92#links]
+  submission:
+    icon: github:shield-check
+    label: Submission check
+    note: Licence, last push, real MCP
+    in: required
+    evidence: .github/workflows/submission-check.yml:35#entries
+  star:
+    icon: github:star
+    label: Star gate
+    note: missing-star until the author stars
+    evidence: [.github/workflows/star-check.yml:55#star_check, .github/workflows/auto-merge.yml:120#star_check]
+  automerge:
+    icon: github:git-merge
+    label: Auto merge
+    note: README or CHANGELOG only
+    evidence: .github/workflows/auto-merge.yml:129#squash
+  main:
+    icon: github:git-branch
+    label: main
+    note: README.md
+    evidence: .github/workflows/auto-merge.yml:28#main
+  site:
+    icon: github:globe
+    label: Website
+    note: GitHub Pages, live stars
+    evidence: [.github/workflows/pages.yml:89#build_site, .github/workflows/pages.yml:109#deploy-pages]
+  thanks:
+    icon: github:comment
+    label: Thank contributors
+    note: Comments a badge
+    evidence: .github/workflows/thanks.yml:66#thank_contributors
+  health:
+    icon: github:pulse
+    label: List health
+    note: staleness_report.py
+    evidence: .github/workflows/health.yml:30#staleness_report
+  report:
+    icon: github:issue-tracks
+    label: Health report
+    note: Issue labelled maintenance
+    evidence: .github/workflows/health.yml:45#maintenance
+
+edges:
+  - contributor -> pr: fork PR
+  - contributor -> form
+  - form -> issue2pr
+  - issue2pr -> pr
+  - pr -> required
+  - pr -> star
+  - required -> automerge: all green
+  - star -> automerge: starred
+  - automerge -> main
+  - main -> site
+  - main -> thanks
+  - main --> health
+  - health -> report

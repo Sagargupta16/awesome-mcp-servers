@@ -74,6 +74,7 @@ Eight workflows:
 - `tests/` -- pytest suite covering all three scripts, plus a guard that CONTRIBUTING's category table matches `SERVER_CATEGORIES`
 - `ruff.toml` -- pins the lint rule set so a local run and CI agree
 - `.github/ISSUE_TEMPLATE/add-server.yml` -- structured server-submission form
+- `docs/diagrams/submission-pipeline.yaml` -- orrery spec for the pipeline figure in the README's Contributing section, with `evidence:` on each node; when a workflow it shows changes, re-render both SVGs with the command in its header
 
 ## Gotchas
 

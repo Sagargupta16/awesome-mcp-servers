@@ -645,6 +645,16 @@ To add a server:
 5. Star the repository. A pull request only merges itself once its author has starred.
 6. Open a pull request and answer the affiliation question. Submitting your own project is welcome; not disclosing it is not.
 
+What happens after that, from the checks to the website:
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/submission-pipeline-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="docs/diagrams/submission-pipeline-light.svg">
+  <img width="880" src="docs/diagrams/submission-pipeline-light.svg" alt="How a submission gets listed. A contributor opens a fork pull request, or fills in the Suggest a server issue form, which the Issue to PR workflow turns into a one-row pull request. The pull request runs the required checks, Lint and Submission check, and the star gate, which holds it as missing-star until its author stars the repository. When the checks are all green and the author has starred, auto merge squash merges it into main. From main the website rebuilds on GitHub Pages with live stars and the contributor gets a thank-you comment with a badge. Once a month the List health workflow audits every entry and files a health report issue labelled maintenance.">
+</picture>
+
+The spec behind the picture is [`docs/diagrams/submission-pipeline.yaml`](docs/diagrams/submission-pipeline.yaml), rendered with [orrery](https://github.com/Sagargupta16/orrery).
+
 Once it merges, a bot thanks you on the pull request with a badge for your project's README. It links back here, so people who find your server can find the rest of the list:
 
 ```markdown
