@@ -220,6 +220,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [AI Tasker](https://ai-tasker.theboomer.dev) | Hosted task, workspace, and agent coordination for AI teams | Remote |
 | [Aident Loadout](https://github.com/Aident-AI/aident-skill) | Connect agents to 1000+ apps via one remote MCP with Vault | Remote |
 | [Airtable MCP](https://github.com/domdomegg/airtable-mcp-server) | Airtable base read/write | TypeScript |
 | [Asana MCP](https://github.com/roychri/mcp-server-asana) | Asana tasks, projects, workspaces | TypeScript |
