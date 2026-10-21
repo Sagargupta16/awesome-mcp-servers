@@ -12,9 +12,9 @@ name: Issue to pull request
 #    head, so the required checks are satisfied by name. GitGuardian is an app, not
 #    a workflow, and runs on its own.
 # 2. For the same reason auto-merge.yml never sees these pull requests, so this
-#    workflow switches auto-merge on itself, under the same rule: an entry the
-#    submission check leaves to a maintainer (every `Remote` one, for a start)
-#    gets the `needs-review` label instead and waits for a person.
+#    workflow switches auto-merge on itself, under the same rule: only when the
+#    submitter has starred the repository. Otherwise the pull request gets
+#    `missing-star` here, since star-check.yml skips the bot that opens it.
 # 3. The issue body is untrusted. It is read from the event payload file by
 #    scripts/issue_to_pr.py and never interpolated into a command; the only value
 #    that comes back (the entry name) is passed through the environment.
@@ -25,12 +25,20 @@ name: Issue to pull request
 # `labeled` together and ran this twice (two identical comments on #117). To retry
 # an older issue, edit it.
 #
-# The hourly run closes the issue once its pull request has merged. "Closes #N"
+# The sweep (after the runs that precede a merge, and on the schedule as a
+# fallback) closes the issue once its pull request has merged. "Closes #N"
 # does not fire here: GitHub skips closing keywords when the merge is made by
 # auto-merge on GITHUB_TOKEN (#119 stayed open after #120 merged).
 on:
   issues:
     types: [opened, edited]
+  # An auto-merge made with GITHUB_TOKEN starts no workflow, so the merge itself
+  # cannot trigger this. The runs that come just before a merge can: the last
+  # required check finishing, or Auto merge / Star check merging in the run. The
+  # schedule stays as a fallback; GitHub ran the "hourly" one every 3 to 6 hours.
+  workflow_run:
+    workflows: [Lint, Submission check, Auto merge, Star check]
+    types: [completed]
   schedule:
     - cron: "47 * * * *" # hourly
   workflow_dispatch:
@@ -56,6 +64,11 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       REPO: ${{ github.repository }}
     steps:
+      # a merge started by the run that just finished can take a few seconds
+      - name: Let a pending merge land
+        if: github.event_name == 'workflow_run'
+        run: sleep 30
+
       - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v7
@@ -130,16 +143,17 @@ jobs:
           SECTION: ${{ steps.row.outputs.section }}
           AUTHOR: ${{ github.event.issue.user.login }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STARGAZERS_TOKEN: ${{ secrets.STARGAZERS_TOKEN }}
           REPO: ${{ github.repository }}
         run: |
-          # Same decision auto-merge.yml makes: anything but a clean 0, a crash
-          # included, waits for a maintainer. `main` is still the checkout's base.
-          if python scripts/check_submission.py --base-ref main --review > /dev/null; then
-            review=""
-            merges="It merges itself once the required checks pass"
+          # Same decision auto-merge.yml makes: a star is required before a
+          # pull request merges itself.
+          if python scripts/star_check.py --starred "$AUTHOR"; then
+            held=""
+            merges="You have starred the repository, so it merges itself once the required checks pass"
           else
-            review="yes"
-            merges="A maintainer reviews this kind of entry before it merges"
+            held="yes"
+            merges="It merges itself once you star the repository (then edit this issue to retry) and the checks pass, or when a maintainer merges it"
           fi
           pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
           if [ -z "$pr" ]; then
@@ -151,8 +165,10 @@ jobs:
           fi
           gh workflow run lint.yml --ref "$BRANCH"
           gh workflow run submission-check.yml --ref "$BRANCH"
-          if [ -n "$review" ]; then
-            gh api -X POST "repos/$REPO/issues/$pr/labels" -f "labels[]=needs-review" > /dev/null
+          if [ -n "$held" ]; then
+            gh api -X POST "repos/$REPO/issues/$pr/labels" -f "labels[]=missing-star" > /dev/null
           else
+            # an edit after starring releases a pull request held on the first try
+            gh api -X DELETE "repos/$REPO/issues/$pr/labels/missing-star" > /dev/null 2>&1 || true
             gh pr merge "$pr" --auto --squash
           fi

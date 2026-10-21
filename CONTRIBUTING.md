@@ -26,7 +26,8 @@ Submissions are checked, and the checks are about whether the thing is real, not
 2. Fork the repo and branch off `main`.
 3. Add **one** row to the most appropriate existing category in `README.md`. Alphabetical order is preferred but not required.
 4. Run `python scripts/validate.py` and fix anything it reports.
-5. Open a pull request and fill in the template, including the affiliation question.
+5. **Star the repository.** A pull request only merges itself once its author has starred.
+6. Open a pull request and fill in the template, including the affiliation question.
 
 ## Format
 
@@ -112,7 +113,7 @@ A hosted MCP server whose source is not public can be listed too, with `Remote` 
 1. **The link is the operator's own documentation.** A page on the operator's domain, or the README of a repository the operator owns. A registry or marketplace listing (Smithery, Glama, mcp.so and the like) is not documentation.
 2. **The documentation says how to connect.** It names the endpoint URL and how to authenticate, and says what the server's tools do, by name or as a list of what you can ask it for. Signing up or paying to get a key is fine; a reader just has to be able to follow it.
 3. **The endpoint answers.** CI finds the endpoint in the documentation and sends it an MCP `initialize`. Any HTTP answer counts, including the 401 a server gives a request with no token. A 404, a 410 or no answer at all does not.
-4. **A maintainer reviews it.** A `Remote` entry never merges itself: it gets the `needs-review` label, and a maintainer merges it after reading the documentation.
+4. **It merges the same way as every other entry.** Once its author has starred the repository and the checks pass, it merges itself. Without a star it waits, marked `missing-star`, until its author stars or a maintainer merges it after reading the documentation.
 
 Standards 3, 5, 6 and 7 apply as written. The licence standard does not, since nothing is distributed, and neither does the 180-day push rule: a documentation repository can sit untouched while the service runs, so for a hosted server "maintained" means the endpoint still answers. A repository that is archived still disqualifies the entry.
 
@@ -152,17 +153,21 @@ Being new is not a reason to hold back. If you would rather not open a pull requ
    On a pull request, **Validate format** only fails on problems your change
    introduces. If `main` already has a bad row, it is listed for the record but
    marked as pre-existing and does not count against you.
-5. **It merges itself.** If your pull request only touches `README.md` or `CHANGELOG.md`, auto-merge is switched on for you: GitHub squash-merges it the moment every required check passes. No approval, no waiting for a maintainer to be awake. It will not merge while any required check is red.
+5. **It merges itself once you have starred.** If your pull request only touches `README.md` or `CHANGELOG.md` and you have starred the repository, auto-merge is switched on for you: GitHub squash-merges it the moment every required check passes. No approval, no waiting for a maintainer to be awake. It will not merge while any required check is red, star or not.
 
-A maintainer still reads what lands, and may follow up if a description reads promotionally or it is unclear what the server does. Three things opt a pull request out of auto-merge:
+A maintainer still reads what lands, and may follow up if a description reads promotionally or it is unclear what the server does. Three things keep a pull request from merging itself:
 
 - **It touches anything beyond the list** -- a workflow, a script, a test, tooling config. Those change what the checks verify, so a person looks first.
-- **The submission check leaves a decision to a maintainer.** Every `Remote` entry, and any entry the check cannot settle by itself: a licence GitHub cannot classify, a link that is not a GitHub repository, a repository with no build manifest. The check still passes, but the pull request gets the `needs-review` label and a maintainer merges it by hand once they have looked.
+- **You have not starred the repository.** A star is required before a pull request merges itself. Without one it waits, marked `missing-star`, and starring releases it: the label comes off and it merges once the checks pass. A maintainer can also merge it by hand. A star never gets an entry past a failing check.
 - **It carries the `maintainer-override` label**, which bypasses the submission gate. That is a maintainer's judgement call, so whoever applied it merges by hand.
 
 Anyone can also stop auto-merge on a specific pull request by adding the `no-auto-merge` label.
 
 Maintainers can apply the `maintainer-override` label when a submission is genuinely fine but trips a threshold.
+
+### When you open it
+
+If you have not starred the repository, a bot adds the `missing-star` label and comments once to ask. A star is required before your pull request merges itself, so until you star it waits. The label comes off by itself when you do, the comment turns into a thank-you, and the pull request merges once the checks pass.
 
 ### After it merges
 
@@ -172,7 +177,7 @@ Within the hour, a bot comments once on your pull request (or on your issue, if 
 [![Listed in Awesome MCP Servers](https://sagargupta.online/awesome-mcp-servers/badge.svg)](https://github.com/Sagargupta16/awesome-mcp-servers)
 ```
 
-The badge links back to the list, so people who find your server can find the others. If the list is useful to you, a star on the repository helps other people find it too. Both are optional: neither is checked, and neither affects whether or how your entry is listed. Edits to an existing entry, such as a reworded description, get no comment.
+The badge links back to the list, so people who find your server can find the others. The badge is optional. Edits to an existing entry, such as a reworded description, get no comment.
 
 ## Running the checks locally
 

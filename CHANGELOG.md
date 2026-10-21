@@ -2,6 +2,52 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.9.2] - 2026-10-21
+
+### Added
+
+- A diagram of the submission pipeline in the README's Contributing section: a fork pull request or the issue form, the required checks and the star gate, auto merge, then the website rebuild and the thank-you, with the monthly health audit beside them. It is drawn with [orrery](https://github.com/Sagargupta16/orrery) from `docs/diagrams/submission-pipeline.yaml`, whose nodes point at the workflow lines they come from, in light and dark versions.
+
+## [2.9.1] - 2026-10-20
+
+### Fixed
+
+- The thank-you comment, the website rebuild and the form-issue closer waited on "hourly" schedules that GitHub ran only every 3 to 7 hours, so #196 got its thank-you 2 hours 12 minutes after it merged and reached the website 4 hours 22 minutes after. An auto-merge made with `GITHUB_TOKEN` fires no event of its own, so all three now also run when Lint, Submission check, Auto merge or Star check finishes, the runs that come just before a merge, after a 30-second wait for the merge to land. The website only rebuilds when `main` has moved past the commit it last published. The schedules stay as a fallback.
+
+## [2.9.0] - 2026-10-19
+
+### Changed
+
+- A star is required before any pull request merges itself. `auto-merge.yml` and `issue-to-pr.yml` arm a pull request only when its author (for a form submission, the issue author) has starred the repository; every other one waits with `missing-star` until they star, which releases it, or a maintainer merges it by hand. A star still never gets an entry past a failing check.
+- CONTRIBUTING, the README, the site, the issue form and the pull request template say so, and the template gains a "starred the repository" box. "No star requirement" lines now say "your project needs no minimum stars", which is what they always meant.
+
+### Removed
+
+- `check_submission.py --review` and `--head-ref`, and the merge-base fetch in `auto-merge.yml`. With the star deciding every merge they no longer changed anything. The submission check's maintainer notes still appear in its job summary.
+
+## [2.8.1] - 2026-10-19
+
+### Changed
+
+- `missing-star` is the only label. An entry the submission check leaves to a maintainer no longer gets `needs-review`: auto-merge just stays off while its author has not starred, and a star releases it. A held pull request that already passes every check is merged directly on the star, since GitHub refuses to switch auto-merge on for one. Form submissions from someone who has not starred get `missing-star` instead.
+
+### Removed
+
+- The `needs-review` label.
+
+## [2.8.0] - 2026-10-18
+
+Since the post-merge thank-you went live on 2026-10-14 it had thanked 11 outside contributors 16 times, and none had starred. This asks when the pull request opens, the way Piebald-AI/awesome-gemini-cli-extensions does, and lets a star skip the maintainer review.
+
+### Added
+
+- `star-check.yml` and `scripts/star_check.py`. A pull request from someone who has not starred gets the `missing-star` label and one comment asking. When they star, the label comes off and the comment becomes a thank-you. Bots and the maintainer are never asked.
+
+### Changed
+
+- A starred author skips `needs-review`: `auto-merge.yml` and `issue-to-pr.yml` switch on auto-merge where they would have held the pull request for a maintainer, and starring later releases a held one, under the same file allowlist and stop labels as before. A star never gets an entry past a failing check, and an unstarred entry that passes still merges itself.
+- CONTRIBUTING's hosted-server rule 4, the README, the site, the issue form, the submission check's note and the post-merge thank-you say what a star does now, instead of that it does nothing.
+
 ## [2.7.0] - 2026-10-14
 
 Hosted MCP servers with no public source get a written bar. Six submissions had hit the gap and gone four different ways.

@@ -10,7 +10,7 @@
 
 MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, etc.) connect to local and remote data sources through standardized server implementations.
 
-**This list is curated, not exhaustive, and open to anyone.** Bigger MCP lists exist. The point of this one is that everything on it has been checked. Curated does not mean famous: there is no star or age requirement, and submitting your own server is welcome. Every entry:
+**This list is curated, not exhaustive, and open to anyone.** Bigger MCP lists exist. The point of this one is that everything on it has been checked. Curated does not mean famous: your project needs no minimum star count or age, and submitting your own server is welcome. Every entry:
 
 - implements MCP for real -- not a README with a `server.json` next to it
 - states an open-source licence -- a `LICENSE` file, or a licence field in its package manifest
@@ -18,7 +18,7 @@ MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, 
 - documents how to install and configure it, so someone else can actually run it
 - appears exactly once, in one category
 
-Hosted servers with no public source are the one exception, marked `Remote`. Instead of a licence and a push date, each links the operator's own documentation naming the endpoint, the authentication and the tools; CI checks the endpoint answers; and a maintainer reviews every one before it merges.
+Hosted servers with no public source are the one exception, marked `Remote`. Instead of a licence and a push date, each links the operator's own documentation naming the endpoint, the authentication and the tools; CI checks the endpoint answers; and, like every entry, it merges itself only once its author has starred the repository.
 
 Those rules are enforced by [CI](.github/workflows/), not by good intentions: a pull request that breaks the format, adds a dead link, or submits an unlicensed repo fails its checks. A [monthly audit](.github/workflows/health.yml) re-checks every listed repository and files what has rotted.
 
@@ -168,6 +168,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Jupyter MCP](https://github.com/datalayer/jupyter-mcp-server) | Jupyter notebook cell execution | Python |
 | [Klavis](https://github.com/Klavis-AI/klavis) | Self-hostable MCP server platform with OAuth and hosted integrations | Python |
 | [LynxPrompt MCP](https://github.com/GeiserX/lynxprompt-mcp) | Search and manage AI config blueprints (AGENTS.md, CLAUDE.md) on LynxPrompt | Go |
+| [Mac MCP](https://github.com/bulutarkan/mac-mcp) | Control macOS apps, files and browser tabs from MCP clients | Python |
 | [MartinLoop MCP](https://github.com/Keesan12/martin-loop/tree/main/packages/mcp) | Governed agent runtime with budget caps, verifier gates and inspectable runs | TypeScript |
 | [MCP Context Forge](https://github.com/IBM/mcp-context-forge) | Official IBM MCP gateway federating MCP, A2A and REST tools | Python |
 | [mcp-proxy](https://github.com/sparfenyuk/mcp-proxy) | Bridge between Streamable HTTP and stdio MCP transports | Python |
@@ -219,6 +220,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [AI Tasker](https://ai-tasker.theboomer.dev) | Hosted task, workspace, and agent coordination for AI teams | Remote |
 | [Aident Loadout](https://docs.aident.ai/loadout/mcp) | Run app actions from one remote MCP, with Vault credentials and an audit log | Remote |
 | [Airtable MCP](https://github.com/domdomegg/airtable-mcp-server) | Airtable base read/write | TypeScript |
 | [Asana MCP](https://github.com/roychri/mcp-server-asana) | Asana tasks, projects, workspaces | TypeScript |
@@ -226,7 +228,6 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Clera](https://www.getclera.com/mcp) | Search vetted startup candidates, review role matches and request intros | Remote |
 | [Excel MCP](https://github.com/haris-musa/excel-mcp-server) | Read, write and format Excel workbooks without Excel installed | Python |
 | [fitlog-mcp](https://github.com/hahahahahahahahah6/fitlog-mcp) | Self-hosted MCP server giving Alexa+ a memory for training | Python |
-| [Zovo Time Tracker](https://github.com/theluckystrike/mcp-servers/tree/main/servers/time-tracker) | Log hours per client and project, with daily and weekly reports and CSV export | TypeScript |
 | [Google Calendar MCP](https://github.com/nspady/google-calendar-mcp) | Google Calendar management | TypeScript |
 | [Google Workspace MCP](https://github.com/taylorwilsdon/google_workspace_mcp) | Gmail, Calendar, Docs, Sheets, Slides, Chat, Forms and Tasks in one server | Python |
 | [iMCP](https://github.com/mattt/iMCP) | Exposes macOS Messages, Contacts, Calendar and Reminders to agents | Swift |
@@ -234,6 +235,8 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Microsoft 365 MCP](https://github.com/Softeria/ms-365-mcp-server) | Full M365 suite (Outlook, OneDrive, Teams, Excel) | TypeScript |
 | [MindMap AI](https://github.com/MindMap-AI/mcp) | Create and edit visual mind maps from MCP-compatible AI assistants | TypeScript |
 | [monday.com MCP](https://github.com/mondaycom/mcp) | Official monday.com boards, items and workspace automation | TypeScript |
+| [Muslim Prayer Reminder MCP](https://github.com/tareq7/muslim-prayer-mcp) | Calculate regional prayer times and next-prayer countdowns | TypeScript |
+| [NeverApply](https://neverapply.co/features/mcp) | Search jobs, tailor resumes and apply to jobs with your approval over OAuth | Remote |
 | [Nextcloud MCP](https://github.com/cbcoutinho/nextcloud-mcp-server) | Nextcloud Notes, Files, Calendar, Tasks, Deck and Talk access | Python |
 | [Notion MCP](https://github.com/makenotion/notion-mcp-server) | Official Notion API integration | TypeScript |
 | [Orbit MCP](https://github.com/Noveum/orbit) | Manage issues, projects, sprints and docs with workspace-scoped OAuth | TypeScript |
@@ -242,6 +245,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Tale](https://github.com/tale-project/tale) | Author and run Tale automations, inspect runs and query workspace knowledge | Built-in |
 | [Trello MCP](https://github.com/delorenj/mcp-server-trello) | Trello boards, lists, cards | TypeScript |
 | [Worklittle Jobs](https://docs.worklittle.com/mcp) | Search 4M+ jobs with visa, salary and distance filters, and apply from chat | Remote |
+| [Zovo Time Tracker](https://github.com/theluckystrike/mcp-servers/tree/main/servers/time-tracker) | Log hours per client and project, with daily and weekly reports and CSV export | TypeScript |
 
 ### Search & Knowledge
 
@@ -250,6 +254,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Apify MCP](https://github.com/apify/apify-mcp-server) | Web scraping actors and automation | TypeScript |
 | [arXiv MCP](https://github.com/blazickjp/arxiv-mcp-server) | Search arXiv papers and read full LaTeX sections | Python |
 | [Brave Search MCP](https://github.com/brave/brave-search-mcp-server) | Official Brave Search API | TypeScript |
+| [CareJobs.Now Healthcare Jobs MCP](https://github.com/yumaheymans/carejobs-mcp) | Search open US healthcare jobs and posted pay from 270 employers' career sites | Remote |
 | [Cluefinch MCP](https://github.com/cluefinch/mcp-server) | Web research with search, page reading, links, and source collection | Python |
 | [Context7 MCP](https://github.com/upstash/context7) | Up-to-date library documentation | TypeScript |
 | [DiPlay Helper](https://github.com/UllrAI/diplay-helper) | Query live DiPlay packages, compatibility reports and setup guides | TypeScript |
@@ -280,6 +285,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Mailtrap MCP](https://github.com/mailtrap/mailtrap-mcp) | Official Mailtrap email sending and sandbox testing | TypeScript |
 | [MeetStream](https://github.com/meetstream-ai/meetstream-mcp) | Official meeting bots for Zoom, Meet and Teams: record and transcribe | TypeScript |
 | [Microsoft Teams MCP](https://github.com/InditexTech/mcp-teams-server) | Teams channels, messages, meetings | Python |
+| [needhave](https://github.com/PrivateAISystems/needhave) | Public need/have list agents read and post to over remote MCP, no key | JavaScript |
 | [Resend MCP](https://github.com/resend/resend-mcp) | Official Resend transactional email | TypeScript |
 | [SendRaven MCP](https://github.com/CommonNinja/sendraven-mcp-server) | Official SendRaven email sending, inbound reply threads and per-key send limits | TypeScript |
 | [Telegram Archive MCP](https://github.com/GeiserX/telegram-archive-mcp) | Search and read archived Telegram history from a Telegram-Archive instance | Go |
@@ -303,6 +309,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 |--------|-------------|----------|
 | [AISOTools MCP](https://aisotools.com/mcp) | AI-tool catalog search, comparison, and alternatives lookup | Remote |
 | [Cognee MCP](https://github.com/topoteretes/cognee) | Memory and knowledge-graph engine with an MCP server | Python |
+| [Dreamtune MCP](https://docs.dreamtunelabs.com/connect/mcp) | Model requests, tool APIs, GPU jobs and request traces with a workspace key | Remote |
 | [Graphiti MCP](https://github.com/getzep/graphiti/tree/main/mcp_server) | Temporal knowledge-graph memory for agents, by Zep | Python |
 | [Groq MCP](https://github.com/groq/groq-mcp-server) | Official Groq inference, audio, and vision tools | Python |
 | [Headroom MCP](https://github.com/headroomlabs-ai/headroom) | Token-compression proxy and MCP server for tool output and logs | Python |
@@ -321,6 +328,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | Server | Description | Language |
 |--------|-------------|----------|
 | [Adyen MCP](https://github.com/Adyen/adyen-mcp) | Official Adyen server for checkout, configuration and management APIs | TypeScript |
+| [Agent Payment Node](https://github.com/nuanu-ai/agent-payment-node) | Local MCP payments on Apple Silicon macOS with foreground owner approval | TypeScript |
 | [aikstockdata](https://aikstockdata.com/en/mcp) | Korean listed-company closing prices, DART filings and earnings, no API key | JavaScript |
 | [Alpaca MCP](https://github.com/alpacahq/alpaca-mcp-server) | Official Alpaca stocks / ETF / crypto trading | Python |
 | [Coinbase MCP](https://github.com/coinbase/agentkit) | Coinbase crypto trading and wallet | TypeScript |
@@ -419,6 +427,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Crawl4AI](https://github.com/unclecode/crawl4ai) | LLM-friendly web crawler and scraper with built-in MCP endpoints | Python |
 | [Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server) | Official Firecrawl web scraping and search | TypeScript |
 | [Jina AI MCP](https://github.com/jina-ai/MCP) | Official Jina AI web reader, search, and content reranking | TypeScript |
+| [ScraperSocial](https://scrapersocial.com/mcp/) | Public social media profiles, posts, comments and transcripts from 30+ platforms | Remote |
 | [Skyvern](https://github.com/Skyvern-AI/skyvern/tree/main/integrations/mcp) | Browser workflow automation via LLMs and computer vision, over MCP | Python |
 | [Xquik MCP](https://github.com/Xquik-dev/x-twitter-scraper) | X/Twitter search, profile tweets, posting, and media tools | TypeScript |
 
@@ -444,6 +453,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Mapbox MCP](https://github.com/mapbox/mcp-server) | Official Mapbox geocoding, POI search, directions, and isochrones | TypeScript |
 | [MAQAMI Travel](https://github.com/negm17111995/mcp-server) | Search 3M+ hotels and flights with live rates, then check out on book.maqami.co | JavaScript |
 | [Pumperly MCP](https://github.com/GeiserX/pumperly-mcp) | Fuel prices, nearby stations and route planning via Pumperly | Go |
+| [Rolês em SP](https://rolesemsp.com.br/connect.md) | Discover cultural outings, events, and leisure activities across São Paulo | Remote |
 | [SkyAccess](https://github.com/sky-access/skyaccess-mcp) | Search 5,000+ live empty leg flights, get charter estimates and booking links | Remote |
 | [StayingAPI](https://github.com/stayingapi/hotel-mcp) | Accommodation data from Airbnb, Booking.com, Vrbo, and Google Hotels | TypeScript |
 | [TomTom MCP](https://github.com/tomtom-international/tomtom-maps-mcp) | Official TomTom maps, search, routing, and traffic APIs | TypeScript |
@@ -466,6 +476,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 |--------|-------------|----------|
 | [Cocos Creator MCP](https://github.com/FunplayAI/funplay-cocos-mcp) | Automate the Cocos Creator editor: scenes, assets, and scripts | JavaScript |
 | [Godot MCP](https://github.com/Coding-Solo/godot-mcp) | Godot game engine integration | JavaScript |
+| [Playable Gift](https://playablegift.com/agents) | Generate browser games from personal details and manage private drafts | Remote |
 | [Roblox Studio MCP](https://create.roblox.com/docs/studio/mcp) | Official MCP server built into Roblox Studio | Built-in |
 | [STS2MCP](https://github.com/Gennadiyev/STS2MCP) | Read Slay the Spire 2 game state and play runs through a mod | C# |
 | [Unity MCP Server](https://github.com/AnkleBreaker-Studio/unity-mcp-server) | 268 tools for Unity Editor / Hub | JavaScript |
@@ -489,6 +500,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [AltoRank](https://github.com/AltoRank/altorank) | SEO audits, Search Console, keyword research and drafts into a review queue | TypeScript |
 | [BulkPublish MCP](https://github.com/azeemkafridi/bulkpublish-api) | AI-agent API and MCP server for multi-platform social publishing and analytics | TypeScript |
 | [DataForSEO MCP](https://github.com/dataforseo/mcp-server-typescript) | Official DataForSEO server for SERP, keyword and backlink data | TypeScript |
 | [FalcoScan MCP](https://github.com/nyachisn/falcoscan-mcp) | Look up AI products, markets, rivals and shutdowns (FalcoScan API key) | JavaScript |
@@ -497,9 +509,11 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [Google Tag Manager MCP](https://github.com/stape-io/google-tag-manager-mcp-server) | Manage GTM containers, tags, triggers and variables | TypeScript |
 | [LLM Pulse MCP](https://github.com/LLM-Pulse/llmpulse-mcp) | AI visibility analytics for mentions, citations, sentiment, and AI traffic | JavaScript |
 | [LogNorm](https://lognorm.com/connect) | Hosted SEO/GEO backlog: site audits, fixes, content and AI-visibility tracking | Remote |
+| [MentionsAPI MCP](https://github.com/mukul-dutt/mentionsapi-mcp) | Brand mentions, rank and sentiment across ChatGPT, Claude, Gemini and Perplexity | TypeScript |
 | [Meta Ads MCP (GoMarble)](https://github.com/gomarble-ai/facebook-ads-mcp-server) | Read and manage Meta and Instagram ad campaigns via the Meta Ads API | Python |
 | [NotFair](https://github.com/nowork-studio/notfair-plugin) | Google Ads, Meta Ads, and SEO skills with human-approval gate | TypeScript |
 | [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp) | Official PostHog product analytics | TypeScript |
+| [RestoSignals](https://github.com/paperandbeyond23-gif/restosignals-mcp) | Pre-opening US restaurant and bar leads from liquor, permit and business filings | Remote |
 | [Salesforce MCP](https://github.com/salesforcecli/mcp) | Official Salesforce CLI MCP | TypeScript |
 | [UnrealUGC MCP](https://github.com/UnrealUGC/mcp) | Create AI UGC video ads through the UnrealUGC platform | TypeScript |
 
@@ -620,7 +634,7 @@ but not all of resources and prompts.
 
 ## Contributing
 
-**Anyone can contribute, including your own server.** There is no star requirement and no minimum project age -- if it works, is licensed and is documented, it qualifies. A hosted server with closed source qualifies too, under the [hosted-server rules](CONTRIBUTING.md#hosted-servers). Read [CONTRIBUTING.md](CONTRIBUTING.md) for the details.
+**Anyone can contribute, including your own server.** Your project needs no minimum star count and no minimum age -- if it works, is licensed and is documented, it qualifies. A hosted server with closed source qualifies too, under the [hosted-server rules](CONTRIBUTING.md#hosted-servers). Read [CONTRIBUTING.md](CONTRIBUTING.md) for the details.
 
 To add a server:
 
@@ -628,7 +642,18 @@ To add a server:
 2. Add **one** row to the most appropriate existing category. Alphabetical order is preferred, not required.
 3. Follow the format: `| [Name](URL) | Description | Language |` with the description at 80 characters or fewer.
 4. Run `python scripts/validate.py` and fix what it reports.
-5. Open a pull request and answer the affiliation question. Submitting your own project is welcome; not disclosing it is not.
+5. Star the repository. A pull request only merges itself once its author has starred.
+6. Open a pull request and answer the affiliation question. Submitting your own project is welcome; not disclosing it is not.
+
+What happens after that, from the checks to the website:
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/submission-pipeline-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="docs/diagrams/submission-pipeline-light.svg">
+  <img width="880" src="docs/diagrams/submission-pipeline-light.svg" alt="How a submission gets listed. A contributor opens a fork pull request, or fills in the Suggest a server issue form, which the Issue to PR workflow turns into a one-row pull request. The pull request runs the required checks, Lint and Submission check, and the star gate, which holds it as missing-star until its author stars the repository. When the checks are all green and the author has starred, auto merge squash merges it into main. From main the website rebuilds on GitHub Pages with live stars and the contributor gets a thank-you comment with a badge. Once a month the List health workflow audits every entry and files a health report issue labelled maintenance.">
+</picture>
+
+The spec behind the picture is [`docs/diagrams/submission-pipeline.yaml`](docs/diagrams/submission-pipeline.yaml), rendered with [orrery](https://github.com/Sagargupta16/orrery).
 
 Once it merges, a bot thanks you on the pull request with a badge for your project's README. It links back here, so people who find your server can find the rest of the list:
 
@@ -636,7 +661,7 @@ Once it merges, a bot thanks you on the pull request with a badge for your proje
 [![Listed in Awesome MCP Servers](https://sagargupta.online/awesome-mcp-servers/badge.svg)](https://github.com/Sagargupta16/awesome-mcp-servers)
 ```
 
-If the list is useful to you, a star helps other people find it. It is never a condition for being listed.
+A star is what lets your pull request merge itself. Without one it waits, labelled `missing-star`, until you star or a maintainer merges it by hand.
 
 Other ways to help, no pull request needed:
 
