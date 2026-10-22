@@ -197,6 +197,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 | [AWS MCP Servers](https://github.com/awslabs/mcp) | Official AWS MCP servers (S3, Lambda, CDK, Bedrock, etc.) | Multiple |
 | [Azure MCP](https://github.com/microsoft/mcp) | Official Azure cloud services | C# |
 | [Cloudflare MCP](https://github.com/cloudflare/mcp-server-cloudflare) | Cloudflare Workers, KV, R2, D1 | TypeScript |
+| [deed.page](https://deed.page/docs) | Publish static HTML or folders to permanent subdomain URLs with no account | Remote |
 | [DigitalOcean MCP](https://github.com/digitalocean-labs/mcp-digitalocean) | Official DO droplets, apps, databases | Go |
 | [Firebase MCP](https://github.com/firebase/firebase-tools) | Official Firebase MCP server built into the Firebase CLI | TypeScript |
 | [Fly.io MCP](https://github.com/superfly/flyctl) | Official Fly.io MCP server built into the flyctl CLI | Go |
