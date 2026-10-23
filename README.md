@@ -308,6 +308,7 @@ Where that JSON lives, and which extra keys it takes, differs per client -- chec
 
 | Server | Description | Language |
 |--------|-------------|----------|
+| [AI Model Watch](https://artificialwatch.com/mcp) | Lists models each AI provider API serves and flags new ones since the last run | JavaScript |
 | [AISOTools MCP](https://aisotools.com/mcp) | AI-tool catalog search, comparison, and alternatives lookup | Remote |
 | [Cognee MCP](https://github.com/topoteretes/cognee) | Memory and knowledge-graph engine with an MCP server | Python |
 | [Dreamtune MCP](https://docs.dreamtunelabs.com/connect/mcp) | Model requests, tool APIs, GPU jobs and request traces with a workspace key | Remote |
