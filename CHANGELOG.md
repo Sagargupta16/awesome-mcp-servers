@@ -2,6 +2,12 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.9.3] - 2026-10-23
+
+### Changed
+
+- The submission pipeline diagram is redrawn with orrery 0.12.0, which draws icons at 64 px instead of 48 px. Its `layout.aspect` goes from 1.2 to 1.0, so the bigger tiles keep the figure 1000 px wide, as before, instead of widening it to 1096 px and shrinking every label in the 880 px README column.
+
 ## [2.9.2] - 2026-10-21
 
 ### Added
