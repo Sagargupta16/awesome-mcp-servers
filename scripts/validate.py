@@ -527,7 +527,7 @@ def check_link_target(
 
 
 # The lines git writes around each side of an unresolved conflict.
-CONFLICT_MARKER_RE = re.compile(r"^(<<<<<<< |>>>>>>> |=======$)")
+CONFLICT_MARKER_RE = re.compile(r"^(?:<<<<<<< .*|>>>>>>> .*|=======)$")
 
 
 def check_conflict_markers(lines, rep: Report) -> None:
