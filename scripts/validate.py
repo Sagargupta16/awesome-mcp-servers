@@ -526,6 +526,27 @@ def check_link_target(
         rep.err(lineno, f"link target '{path}' does not exist")
 
 
+# The lines git writes around each side of an unresolved conflict.
+CONFLICT_MARKER_RE = re.compile(r"^(<<<<<<< |>>>>>>> |=======$)")
+
+
+def check_conflict_markers(lines, rep: Report) -> None:
+    """Flag the marker lines of a merge conflict nobody resolved.
+
+    A marker parses as nothing, so every other check reads straight past it: a
+    README with both sides of a conflict between a table header and its rows
+    passed as valid (2026-10-24, merging main into #207's branch). A marker
+    inside a fenced block is an illustration, so only prose lines count.
+    """
+    for i, line in prose_lines(lines):
+        if CONFLICT_MARKER_RE.match(line):
+            rep.err(
+                i,
+                "unresolved merge conflict marker; keep the side you want and "
+                "delete the marker lines",
+            )
+
+
 def check_whitespace_and_dashes(lines, rep: Report) -> None:
     for i, raw in enumerate(lines, 1):
         line = raw.rstrip("\n")
@@ -650,6 +671,7 @@ def run_checks(lines) -> tuple:
     """Return (errors, entry_count, notes) for a README given as a list of lines."""
     rep = Report()
     entries, heading_lines, order = parse(lines)
+    check_conflict_markers(lines, rep)
     check_structure(lines, order, heading_lines, rep)
     check_toc(lines, heading_lines, rep)
     check_table_headers(lines, heading_lines, rep)
@@ -727,6 +749,8 @@ def main() -> int:
 
     if args.fix:
         lines = apply_fixes(lines)
+        if lines is None:
+            return 1
 
     errors, total, notes = run_checks(lines)
     inherited = split_inherited(errors, args.baseline)
@@ -755,7 +779,24 @@ def print_notes(notes) -> None:
 
 
 def apply_fixes(lines):
-    """Write the auto-repairable fixes back to README.md and return the result."""
+    """Write the auto-repairable fixes back to README.md and return the result.
+
+    Returns None, writing nothing, when the file still holds conflict markers.
+    A marker cuts a table in two, so the sort would move rows across it and the
+    alignment would re-pad a header stranded above it as a one-row table.
+    """
+    conflicts = Report()
+    check_conflict_markers(lines, conflicts)
+    if conflicts.errors:
+        for e in conflicts.errors:
+            print(f"  {e}", file=sys.stderr)
+        print(
+            "\nREADME.md: not fixing a file with unresolved merge conflicts. "
+            "Resolve them, then run --fix again.",
+            file=sys.stderr,
+        )
+        return None
+
     fixed = fix(lines)
     if fixed == lines:
         print("README.md: nothing to fix")

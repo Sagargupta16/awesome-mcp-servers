@@ -23,8 +23,8 @@ Curated awesome-list of MCP servers, frameworks, clients, and resources, maintai
 ## Run
 
 ```bash
-python scripts/validate.py          # structure, format, duplicates (ordering is a note)
-python scripts/validate.py --fix    # auto-repair ordering, table alignment, whitespace, dashes
+python scripts/validate.py          # structure, format, duplicates, conflict markers (ordering is a note)
+python scripts/validate.py --fix    # auto-repair ordering, table alignment, whitespace, dashes; refuses a file with conflict markers
 npx --yes awesome-lint README.md     # sindresorhus/awesome's linter; pass the RELATIVE name (an absolute C:\ path reads as a URL)
 GITHUB_TOKEN=$(gh auth token) python scripts/check_submission.py --base-ref origin/main
 python scripts/check_new_links.py --base-ref origin/main   # only the links a change adds

@@ -511,3 +511,74 @@ def test_an_entry_shaped_line_inside_a_fence_is_ignored():
     body = "### Security\n```\n- [Example](https://x.dev) - not a real entry\n```\n"
 
     assert syntax_errors(body) == []
+
+
+# --- merge conflict markers --------------------------------------------------
+
+# The shape that passed as valid on 2026-10-24: each side of the conflict keeps
+# its own separator, so the header above the markers is stranded on its own.
+CONFLICTED = (
+    "### Security\n\n"
+    "| Server | Description | Language |\n"
+    "<<<<<<< HEAD\n"
+    "|---|---|---|\n"
+    "| [Zeta](https://x.dev/z) | Zeta widget | Go |\n"
+    "=======\n"
+    "|---|---|---|\n"
+    "| [Alpha](https://x.dev/a) | Alpha widget | Go |\n"
+    ">>>>>>> origin/main\n"
+)
+
+
+def conflict_errors(body: str) -> list[str]:
+    rep = validate.Report()
+    validate.check_conflict_markers(_lines(body), rep)
+    return rep.errors
+
+
+def run_fix_flag(readme: Path, monkeypatch) -> int:
+    """Run `validate.py --fix` against `readme` instead of the real README."""
+    monkeypatch.setattr(validate, "README", readme)
+    monkeypatch.setattr(sys, "argv", ["validate.py", "--fix"])
+    return validate.main()
+
+
+def test_each_conflict_marker_line_is_reported():
+    errors = conflict_errors(CONFLICTED)
+
+    assert [e.split(":")[1] for e in errors] == ["4", "7", "10"]
+    assert all("unresolved merge conflict marker" in e for e in errors)
+
+
+def test_run_checks_reports_a_conflict_marker():
+    errors, _, _ = validate.run_checks(_lines(CONFLICTED))
+
+    assert any("unresolved merge conflict marker" in e for e in errors)
+
+
+def test_a_conflict_marker_inside_a_fence_is_ignored():
+    body = "## Footnotes\n```\n<<<<<<< HEAD\n=======\n>>>>>>> origin/main\n```\n"
+
+    assert conflict_errors(body) == []
+
+
+def test_fix_flag_refuses_a_file_with_conflict_markers(tmp_path, monkeypatch, capsys):
+    """Any small fixture fails structure checks, so the exit code alone proves nothing."""
+    readme = tmp_path / "README.md"
+    readme.write_text(CONFLICTED, encoding="utf-8", newline="")
+
+    code = run_fix_flag(readme, monkeypatch)
+
+    assert code == 1
+    assert (
+        "not fixing a file with unresolved merge conflicts" in capsys.readouterr().err
+    )
+
+
+def test_fix_flag_leaves_a_file_with_conflict_markers_unwritten(tmp_path, monkeypatch):
+    readme = tmp_path / "README.md"
+    readme.write_text(CONFLICTED, encoding="utf-8", newline="")
+
+    run_fix_flag(readme, monkeypatch)
+
+    assert readme.read_text(encoding="utf-8") == CONFLICTED

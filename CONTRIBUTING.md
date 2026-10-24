@@ -37,7 +37,7 @@ Server entries are table rows in this exact shape:
 | [Name](URL) | Description | Language |
 ```
 
-You do not need to line up the pipes with the rows around yours. The tables are padded so the list passes [awesome-lint](https://github.com/sindresorhus/awesome-lint), and a bot re-pads them after new rows land. When a row wider than the rest widens its table, that re-padding can leave an open pull request in conflict with `main`; merging `main` into your branch and running `python scripts/validate.py --fix` clears it, or a maintainer can.
+You do not need to line up the pipes with the rows around yours. The tables are padded so the list passes [awesome-lint](https://github.com/sindresorhus/awesome-lint), and a bot re-pads them after new rows land. When a row wider than the rest widens its table, that re-padding can leave an open pull request in conflict with `main`; merging `main` into your branch, keeping `main`'s version of the table plus your row, and running `python scripts/validate.py --fix` clears it, or a maintainer can.
 
 - **Name** -- the project name, as a user would recognise it. Keep it short.
 - **URL** -- a direct `https://` link to the repository or official project page. No tracking parameters, no redirect shorteners.
@@ -191,7 +191,7 @@ python scripts/validate.py
 python scripts/validate.py --fix
 ```
 
-`--fix` repairs alphabetical order, table alignment, trailing whitespace, and dashes. Everything else -- an over-long description, a duplicate, an unknown category -- needs a real edit.
+`--fix` repairs alphabetical order, table alignment, trailing whitespace, and dashes. Everything else -- an over-long description, a duplicate, an unknown category -- needs a real edit. It will not touch a file that still has merge conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`), because re-padding would mangle the table around them: resolve the conflict first. `validate.py` reports any marker left behind as an error.
 
 To preview the submission gate the way CI runs it:
 

@@ -2,6 +2,13 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.10.1] - 2026-10-24
+
+### Fixed
+
+- `validate.py` called a README with git's conflict markers in it valid. Merging main into #207's branch left `<<<<<<< HEAD`, `=======` and `>>>>>>> origin/main` between a table header and its rows, and a marker line parses as nothing, so every check read straight past it and the validator reported 406 valid entries, with or without `--baseline origin/main`. A marker line outside a fenced block is now an error.
+- `validate.py --fix` over such a file re-padded the stranded header as a one-row table and sorted rows across the markers. It now refuses: it lists the markers, writes nothing and exits 1. CONTRIBUTING says to resolve the conflict before running it.
+
 ## [2.10.0] - 2026-10-24
 
 The list now passes [awesome-lint](https://github.com/sindresorhus/awesome-lint), the linter sindresorhus/awesome runs on every list it accepts. It reported 1,191 errors and 6 warnings; it now reports none.
