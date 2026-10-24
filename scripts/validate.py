@@ -3,7 +3,8 @@
 
 Enforces every rule CONTRIBUTING.md promises, so a pull request cannot merge
 while it breaks the list's format. Run with no arguments to check, or with
---fix to auto-repair the mechanical problems (ordering, whitespace, dashes).
+--fix to auto-repair the mechanical problems (ordering, table alignment,
+whitespace, dashes).
 
     python scripts/validate.py
     python scripts/validate.py --fix
@@ -68,6 +69,7 @@ PROSE_SECTIONS = (
     "Using a server from this list",
     "Contributing",
     "License",
+    "Footnotes",
 )
 
 # Sections the entry checks skip: the prose sections above, plus "Servers",
@@ -299,7 +301,12 @@ def check_structure(lines, order, heading_lines, rep: Report) -> None:
             f"top-level sections {top} do not match the canonical order {TOP_SECTIONS}",
         )
 
-    subs = [h for h in order if lines[heading_lines[h] - 1].startswith("### ")]
+    # a prose subsection, such as the usage guide under Footnotes, is not a category
+    subs = [
+        h
+        for h in order
+        if lines[heading_lines[h] - 1].startswith("### ") and h not in PROSE_SECTIONS
+    ]
     if subs != SERVER_CATEGORIES:
         extra = [c for c in subs if c not in SERVER_CATEGORIES]
         missing = [c for c in SERVER_CATEGORIES if c not in subs]
@@ -531,8 +538,95 @@ def check_whitespace_and_dashes(lines, rep: Report) -> None:
         rep.err(len(lines), "file must end with a newline")
 
 
+# A separator cell: dashes, optionally with alignment colons.
+SEPARATOR_CELL_RE = re.compile(r"^:?-+:?$")
+# A cell boundary. GFM reads `\|` as a literal pipe inside the cell.
+CELL_PIPE_RE = re.compile(r"(?<!\\)\|")
+
+
+def _cells(line: str) -> list:
+    inner = line.strip().removeprefix("|")
+    if inner.endswith("|") and not inner.endswith("\\|"):
+        inner = inner[:-1]
+    return [c.strip() for c in CELL_PIPE_RE.split(inner)]
+
+
+def _width(text: str) -> int:
+    """Length in UTF-16 code units, which is what the lint rule counts."""
+    return len(text.encode("utf-16-le")) // 2
+
+
+def _alignment(separator: str) -> str:
+    if separator.startswith(":") and separator.endswith(":"):
+        return "center"
+    return "right" if separator.endswith(":") else "left"
+
+
+def _pad(cell: str, width: int, align: str) -> str:
+    gap = width - _width(cell)
+    if align == "right":
+        return " " * gap + cell
+    if align == "center":
+        return " " * (gap // 2) + cell + " " * (gap - gap // 2)
+    return cell + " " * gap
+
+
+def _separator_cell(cell: str, width: int) -> str:
+    left = ":" if cell.startswith(":") else "-"
+    right = ":" if cell.endswith(":") else "-"
+    return left + "-" * (width - 2) + right
+
+
+def align_tables(lines):
+    """Pad every table cell so each column's pipes line up.
+
+    awesome-lint, which sindresorhus/awesome runs on every list it takes, rejects
+    a table whose pipes do not align or whose cells lack one space of padding.
+    Contributors write rows unpadded, so this is part of --fix rather than a rule
+    anyone has to follow by hand. Widths are UTF-16 code units, as the lint rule
+    measures them, and a column's separator colons set how its cells justify.
+    Lines inside fenced code blocks are examples, not tables, and stay as written.
+    """
+    out, i, in_fence = [], 0, False
+    while i < len(lines):
+        if lines[i].lstrip().startswith("```"):
+            in_fence = not in_fence
+        if in_fence or not lines[i].startswith("|"):
+            out.append(lines[i])
+            i += 1
+            continue
+        block = []
+        while i < len(lines) and lines[i].startswith("|"):
+            block.append(_cells(lines[i]))
+            i += 1
+        is_separator = [all(SEPARATOR_CELL_RE.match(c) for c in row) for row in block]
+        widths = [3] * max(len(row) for row in block)
+        aligns = next(
+            (
+                [_alignment(c) for c in row]
+                for row, sep in zip(block, is_separator)
+                if sep
+            ),
+            [],
+        )
+        aligns += ["left"] * (len(widths) - len(aligns))
+        for row, sep in zip(block, is_separator):
+            if not sep:
+                for col, cell in enumerate(row):
+                    widths[col] = max(widths[col], _width(cell))
+        for row, sep in zip(block, is_separator):
+            if sep:
+                padded = [_separator_cell(c, widths[col]) for col, c in enumerate(row)]
+            else:
+                padded = [
+                    _pad(cell, widths[col], aligns[col]) for col, cell in enumerate(row)
+                ]
+            out.append("| " + " | ".join(padded) + " |\n")
+    return out
+
+
 def fix(lines):
-    """Repair the mechanical problems: table ordering, whitespace, dashes."""
+    """Repair the mechanical problems: ordering, alignment, whitespace, dashes."""
     out = list(lines)
     entries, _, _ = parse(out)
 
@@ -551,7 +645,7 @@ def fix(lines):
         out = [ln.replace(ch, "--") for ln in out]
     while len(out) > 1 and out[-1].strip() == "":
         out.pop()
-    return out
+    return align_tables(out)
 
 
 def run_checks(lines) -> tuple:
@@ -614,7 +708,9 @@ def main() -> int:
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     ap.add_argument(
-        "--fix", action="store_true", help="auto-repair ordering, whitespace and dashes"
+        "--fix",
+        action="store_true",
+        help="auto-repair ordering, alignment, whitespace and dashes",
     )
     ap.add_argument(
         "--baseline",
@@ -668,7 +764,9 @@ def apply_fixes(lines):
         return lines
     with README.open("w", encoding="utf-8", newline="") as fh:
         fh.writelines(fixed)
-    print("README.md: applied automatic fixes (ordering, whitespace, dashes)")
+    print(
+        "README.md: applied automatic fixes (ordering, alignment, whitespace, dashes)"
+    )
     return fixed
 
 
@@ -694,8 +792,8 @@ def print_problems(errors, inherited, total: int, baseline) -> None:
             file=sys.stderr,
         )
     print(
-        "\nRun 'python scripts/validate.py --fix' to repair ordering, whitespace and "
-        "dashes automatically. Everything else needs a human edit.",
+        "\nRun 'python scripts/validate.py --fix' to repair ordering, alignment, "
+        "whitespace and dashes automatically. Everything else needs a human edit.",
         file=sys.stderr,
     )
 

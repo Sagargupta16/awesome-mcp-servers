@@ -5,12 +5,13 @@ name: Issue to pull request
 #
 # Three GitHub rules shape this workflow:
 #
-# 1. A pull request opened with GITHUB_TOKEN starts no `pull_request` workflow run,
-#    so lint.yml and submission-check.yml would never report and auto-merge would
-#    wait forever. This workflow dispatches both on the submission branch instead:
-#    their check runs land on the branch head commit, which is the pull request's
-#    head, so the required checks are satisfied by name. GitGuardian is an app, not
-#    a workflow, and runs on its own.
+# 1. A pull request opened with GITHUB_TOKEN gets its `pull_request` runs created
+#    as action_required, and auto-merge waits until a maintainer approves them
+#    (#120 and #198 each merged minutes after that approval, not before). This
+#    workflow also dispatches lint.yml and submission-check.yml on the submission
+#    branch: their check runs land on the branch head commit, which is the pull
+#    request's head, so the results are there to read before approving.
+#    GitGuardian is an app, not a workflow, and runs on its own.
 # 2. For the same reason auto-merge.yml never sees these pull requests, so this
 #    workflow switches auto-merge on itself, under the same rule: only when the
 #    submitter has starred the repository. Otherwise the pull request gets
@@ -80,7 +81,9 @@ jobs:
       - name: Close each open form issue with a merged pull request
         run: |
           for n in $(gh issue list -R "$REPO" --label addition --state open --limit 200 --json number --jq '.[].number'); do
-            pr=$(gh pr list -R "$REPO" --head "submission/issue-$n" --state merged --json number --jq '.[0].number')
+            # owner-qualified: `gh pr list --head` would also match a fork's branch
+            pr=$(gh api "repos/$REPO/pulls?state=closed&head=$GITHUB_REPOSITORY_OWNER:submission/issue-$n" \
+              --jq '[.[] | select(.merged_at)][0].number // empty')
             if [ -n "$pr" ]; then
               if python scripts/thank_contributors.py --issue "$n" --pr "$pr" > thanks.md; then
                 gh issue comment "$n" -R "$REPO" --body-file thanks.md
@@ -155,12 +158,19 @@ jobs:
             held="yes"
             merges="It merges itself once you star the repository (then edit this issue to retry) and the checks pass, or when a maintainer merges it"
           fi
-          pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
+          # Owner-qualified: `gh pr list --head` matches the branch name alone, so
+          # a fork's pull request from submission/issue-N would match, and this
+          # would arm auto-merge on it.
+          submission_pr() {
+            gh api "repos/$REPO/pulls?state=open&head=$GITHUB_REPOSITORY_OWNER:$BRANCH" \
+              --jq '.[0].number // empty'
+          }
+          pr=$(submission_pr)
           if [ -z "$pr" ]; then
             printf 'Adds **%s** to %s, from the form in #%s by @%s.\n\nCloses #%s\n\nOpened by the issue-to-pr workflow. %s.\n' \
               "$NAME" "$SECTION" "$ISSUE" "$AUTHOR" "$ISSUE" "$merges" > pr-body.md
             gh pr create --base main --head "$BRANCH" --title "Add $NAME" --body-file pr-body.md
-            pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
+            pr=$(submission_pr)
             gh issue comment "$ISSUE" --body "Thanks! Opened #$pr with this entry. $merges, and it shows up on https://sagargupta.online/awesome-mcp-servers/ within the hour of merging."
           fi
           gh workflow run lint.yml --ref "$BRANCH"

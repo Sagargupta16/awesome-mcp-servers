@@ -1,0 +1,107 @@
+name: Tidy
+
+# Keeps README.md in the shape awesome-lint wants (sindresorhus/awesome runs it on
+# every list it takes): every table's pipes aligned, rows sorted. Contributors
+# write rows unpadded, and nobody should have to pad them by hand, so this runs
+# `validate.py --fix` on main and, if that changed README.md, opens one pull
+# request with the result. Only main's own README and scripts are involved;
+# nothing from a contributor runs here.
+#
+# That pull request comes from GITHUB_TOKEN, so GitHub creates its `pull_request`
+# runs as action_required and auto-merge waits until a maintainer approves them,
+# as it did on #120 and #198. This dispatches lint.yml and submission-check.yml on
+# the branch, so the checks are already green to read, and arms auto-merge, so
+# approving those runs (or merging by hand) lands it.
+#
+# workflow_run fires after the runs that precede a contributor's merge, as in
+# pages.yml, which keeps an open tidy pull request current with main. It does not
+# fire for runs GITHUB_TOKEN started, so a row merged through the issue form
+# waits for the next contributor's runs or the daily schedule. A tidy branch that
+# already carries the same README is left alone, so a repeat trigger costs no
+# force-push and no second approval.
+on:
+  workflow_run:
+    workflows: [Lint, Submission check, Auto merge, Star check]
+    types: [completed]
+  schedule:
+    - cron: "37 6 * * *" # daily, after lint.yml's 06:00 sweep
+  workflow_dispatch:
+
+# nothing by default; the job asks for exactly what it writes
+permissions: {}
+
+concurrency:
+  group: tidy
+  cancel-in-progress: false
+
+jobs:
+  tidy:
+    name: Align tables on main
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # push the tidy branch
+      pull-requests: write # open it and switch on auto-merge
+      actions: write # dispatch lint.yml and submission-check.yml
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      BRANCH: chore/tidy-readme
+    steps:
+      # a merge started by the run that just finished can take a few seconds
+      - name: Let a pending merge land
+        if: github.event_name == 'workflow_run'
+        run: sleep 30
+
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+
+      - name: Tidy README.md and open a pull request if it changed
+        run: |
+          # --fix still rewrites what it can when main has a problem it cannot
+          # repair, such as an over-long description, and then exits 1
+          python scripts/validate.py --fix ||
+            echo "::warning::README.md on main has problems --fix cannot repair; tidying the rest"
+          if git diff --quiet -- README.md; then
+            echo "README.md on main is already tidy"
+            exit 0
+          fi
+          if git fetch --no-tags --depth=1 origin "$BRANCH" 2> /dev/null; then
+            if git diff --quiet FETCH_HEAD -- README.md; then
+              echo "the tidy branch already carries this README.md"
+              exit 0
+            fi
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
+          git add README.md
+          git commit -m "chore: align tables and sort rows in README.md" \
+            -m "Made by tidy.yml with scripts/validate.py --fix."
+          # the branch belongs to this workflow; each run replaces its one commit
+          git push --force origin "$BRANCH"
+
+          # Owner-qualified: `gh pr list --head` matches the branch name alone,
+          # so a fork's pull request from a branch of the same name would match,
+          # and this would arm auto-merge on it.
+          tidy_pr() {
+            gh api "repos/$GITHUB_REPOSITORY/pulls?state=open&head=$GITHUB_REPOSITORY_OWNER:$BRANCH" \
+              --jq '.[0].number // empty'
+          }
+          pr=$(tidy_pr)
+          if [ -z "$pr" ]; then
+            printf '%s\n\n%s\n\n%s\n' \
+              "Aligns every table and sorts rows in README.md with \`scripts/validate.py --fix\`, so the list keeps passing awesome-lint after contributions land unpadded." \
+              "Opened by tidy.yml. Whitespace and row order only. GitHub holds this pull request's own runs for approval because a bot opened it; approve them and auto-merge lands it." \
+              "An open pull request that adds a row to a table this re-pads may need main merged into it afterwards." > pr-body.md
+            gh pr create --base main --head "$BRANCH" \
+              --title "chore: align tables and sort rows in README.md" --body-file pr-body.md
+            pr=$(tidy_pr)
+          fi
+          gh workflow run lint.yml --ref "$BRANCH"
+          gh workflow run submission-check.yml --ref "$BRANCH"
+          gh pr merge "$pr" --auto --squash

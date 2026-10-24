@@ -2,6 +2,25 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.10.0] - 2026-10-24
+
+The list now passes [awesome-lint](https://github.com/sindresorhus/awesome-lint), the linter sindresorhus/awesome runs on every list it accepts. It reported 1,191 errors and 6 warnings; it now reports none.
+
+### Added
+
+- `validate.py --fix` aligns every table: one space of padding in each cell and every column's pipes lined up, as awesome-lint requires. 1,181 of the 1,191 errors were alignment. Widths count UTF-16 code units, as the lint rule does, an escaped `\|` stays inside its cell, a column's separator colons set how it justifies, and fenced examples are left alone.
+- `tidy.yml`. Contributors keep writing unpadded rows, so after a contributor's checks finish, and daily, it runs `--fix` on main and, if README.md changed, opens one pull request with auto-merge armed. GitHub holds the runs of a pull request a bot opens until a maintainer approves them, so approving those runs lands it. It leaves an open tidy pull request alone when it already carries the same result. A tidy that widens a table can put an open pull request adding to that table in conflict with main, which CONTRIBUTING now says how to clear.
+
+### Changed
+
+- The Awesome badge sits on the title line, and the CI badge is gone. The table of contents is the first section. The usage guide moved to a Footnotes section at the end, and the License section is gone, with LICENSE and the badge at the top carrying it. The "other ways to help" list became a paragraph, since awesome-lint reads every list as entries.
+- Postgres reads PostgreSQL in four descriptions, git reads Git, and HuggingFace MCP is Hugging Face MCP.
+
+### Fixed
+
+- `issue-to-pr.yml` found its pull request with `gh pr list --head`, which matches the branch name alone, so a fork's pull request from a branch named `submission/issue-N` would have been picked up and had auto-merge armed by the bot. It now asks for `Sagargupta16:submission/issue-N` only, and `tidy.yml` does the same.
+- `issue-to-pr.yml` and CLAUDE.md said a pull request opened with `GITHUB_TOKEN` starts no `pull_request` runs. It does, as action_required, and auto-merge waits for a maintainer to approve them: #120 and #198 each merged minutes after that approval, not when their dispatched checks went green.
+
 ## [2.9.3] - 2026-10-23
 
 ### Changed

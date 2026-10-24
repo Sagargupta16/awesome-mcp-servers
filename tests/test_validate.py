@@ -247,11 +247,84 @@ def test_fix_reorders_rows_without_adding_or_dropping_any():
 
     fixed = validate.fix(lines)
 
-    assert sorted(fixed) == sorted(line.rstrip() + "\n" for line in lines)
-    assert fixed[-2:] == [
-        "| [Alpha](https://x.dev/a) | Alpha widget | Go |\n",
-        "| [Zeta](https://x.dev/z) | Zeta widget | Go |\n",
+    assert len(fixed) == len(lines)
+    assert [validate._cells(row)[0] for row in fixed[-2:]] == [
+        "[Alpha](https://x.dev/a)",
+        "[Zeta](https://x.dev/z)",
     ]
+
+
+def test_align_tables_lines_up_every_pipe():
+    """awesome-lint rejects a table whose pipes do not line up."""
+    lines = _lines(
+        "| Server | Description | Language |\n"
+        "|--------|-------------|----------|\n"
+        "| [Alpha](https://x.dev/a) | Alpha widget | Go |\n"
+        "| [B](https://x.dev/b) | B | TypeScript |"
+    )
+
+    aligned = validate.align_tables(lines)
+
+    pipes = {tuple(i for i, ch in enumerate(row) if ch == "|") for row in aligned}
+    assert len(pipes) == 1
+    assert aligned[1].startswith("| ---")
+
+
+def test_align_tables_keeps_alignment_colons():
+    lines = _lines("| A | B |\n|:---|---:|\n| x | y |")
+
+    aligned = validate.align_tables(lines)
+
+    assert validate._cells(aligned[1]) == [":--", "--:"]
+
+
+def test_align_tables_justifies_right_and_centred_columns():
+    lines = _lines(
+        "| L | C | R |\n|:---|:---:|---:|\n| left | mid | right |\n| a | b | c |"
+    )
+
+    aligned = validate.align_tables(lines)
+
+    assert aligned[3] == "| a    |  b  |     c |\n"
+
+
+def test_align_tables_keeps_an_escaped_pipe_inside_its_cell():
+    lines = _lines("| A | B |\n|---|---|\n| [x \\| y](https://x.dev) | Wide cell |")
+
+    aligned = validate.align_tables(lines)
+
+    assert validate._cells(aligned[2]) == ["[x \\| y](https://x.dev)", "Wide cell"]
+
+
+def test_align_tables_counts_an_astral_character_as_two_units():
+    lines = _lines("| A |\n|---|\n| x\U0001f50d |\n| abc |")
+
+    aligned = validate.align_tables(lines)
+
+    assert aligned[3] == "| abc |\n"
+    assert aligned[2] == "| x\U0001f50d |\n"
+
+
+def test_align_tables_leaves_prose_alone():
+    lines = _lines("Some prose.\n\n- [Item](https://x.dev) - A thing.")
+
+    assert validate.align_tables(lines) == lines
+
+
+def test_align_tables_leaves_fenced_examples_alone():
+    lines = _lines("```\n| not | a table |\n|x|\n```")
+
+    assert validate.align_tables(lines) == lines
+
+
+def test_aligned_rows_still_parse_as_entries():
+    """The gate scripts read padded rows the same as unpadded ones."""
+    row = "| [Alpha](https://x.dev/a)    | Alpha widget | Go         |"
+
+    match = validate.ROW_RE.match(row)
+
+    assert match.group("name") == "Alpha"
+    assert match.group("url") == "https://x.dev/a"
 
 
 def test_fix_is_idempotent():
