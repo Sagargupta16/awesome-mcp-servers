@@ -1,12 +1,8 @@
 # Awesome MCP Servers [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-[![License: CC0-1.0](https://img.shields.io/badge/License-CC0--1.0-lightgrey.svg)](LICENSE)
-
-> A curated list of [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers, tools, frameworks, and resources.
+> [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) is an open protocol that lets AI applications such as Claude, ChatGPT, Cursor and Windsurf connect to local and remote tools and data through servers.
 
 **Browse it as a searchable site: [sagargupta.online/awesome-mcp-servers](https://sagargupta.online/awesome-mcp-servers/)**, with search, category and language filters, and live stars. It is rebuilt from this README every hour.
-
-MCP is an open protocol that lets AI assistants (Claude, GPT, Cursor, Windsurf, etc.) connect to local and remote data sources through standardized server implementations.
 
 **This list is curated, not exhaustive, and open to anyone.** Bigger MCP lists exist. The point of this one is that everything on it has been checked. Curated does not mean famous: your project needs no minimum star count or age, and submitting your own server is welcome. Every entry:
 

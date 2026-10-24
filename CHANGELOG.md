@@ -13,7 +13,7 @@ The list now passes [awesome-lint](https://github.com/sindresorhus/awesome-lint)
 
 ### Changed
 
-- The Awesome badge sits on the title line, and the CI badge is gone. The table of contents is the first section. The usage guide moved to a Footnotes section at the end, and the License section is gone, with LICENSE and the badge at the top carrying it. The "other ways to help" list became a paragraph, since awesome-lint reads every list as entries.
+- The Awesome badge sits on the title line, and the CI and licence badges are gone. The line under the title now says what MCP is rather than what the list is, as sindresorhus/awesome asks. The table of contents is the first section. The usage guide moved to a Footnotes section at the end, and the License section is gone: sindresorhus/awesome asks that the readme not name the licence, since GitHub shows LICENSE at the top of the repo. The "other ways to help" list became a paragraph, since awesome-lint reads every list as entries.
 - Postgres reads PostgreSQL in four descriptions, git reads Git, and HuggingFace MCP is Hugging Face MCP.
 
 ### Fixed

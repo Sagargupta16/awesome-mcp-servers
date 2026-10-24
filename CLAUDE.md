@@ -61,7 +61,7 @@ Nine workflows:
 
 ## Entry points
 
-- `README.md` -- the entire list: Official, Servers (21 categories), Frameworks, Clients, Tutorials, Videos, Community, then Contributing and Footnotes. awesome-lint shapes it: the Awesome badge sits on the H1, no CI badge, the Contents block is the first `##` section, there is no License section (LICENSE and the top badge carry it), every list item is `[link](url) - description`, and every table is pipe-aligned (`validate.py --fix`). Prose that is not part of the list (the usage guide) lives under `## Footnotes`, which awesome-lint and the validator keep out of the table of contents; `###` headings under a prose section are not categories
+- `README.md` -- the entire list: Official, Servers (21 categories), Frameworks, Clients, Tutorials, Videos, Community, then Contributing and Footnotes. awesome-lint shapes it: the Awesome badge sits on the H1, no CI or licence badge, the blockquote under the H1 describes MCP rather than the list (sindresorhus/awesome's rule), the Contents block is the first `##` section, there is no License section (LICENSE and the top badge carry it), every list item is `[link](url) - description`, and every table is pipe-aligned (`validate.py --fix`). Prose that is not part of the list (the usage guide) lives under `## Footnotes`, which awesome-lint and the validator keep out of the table of contents; `###` headings under a prose section are not categories
 - `CONTRIBUTING.md` -- entry format, category list, quality standards, PR process
 - `scripts/validate.py` -- the format contract, in code. `SERVER_CATEGORIES` is the canonical category list.
 
