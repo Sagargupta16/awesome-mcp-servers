@@ -599,29 +599,27 @@ def align_tables(lines):
         while i < len(lines) and lines[i].startswith("|"):
             block.append(_cells(lines[i]))
             i += 1
-        is_separator = [all(SEPARATOR_CELL_RE.match(c) for c in row) for row in block]
-        widths = [3] * max(len(row) for row in block)
-        aligns = next(
-            (
-                [_alignment(c) for c in row]
-                for row, sep in zip(block, is_separator)
-                if sep
-            ),
-            [],
-        )
-        aligns += ["left"] * (len(widths) - len(aligns))
-        for row, sep in zip(block, is_separator):
-            if not sep:
-                for col, cell in enumerate(row):
-                    widths[col] = max(widths[col], _width(cell))
-        for row, sep in zip(block, is_separator):
-            if sep:
-                padded = [_separator_cell(c, widths[col]) for col, c in enumerate(row)]
-            else:
-                padded = [
-                    _pad(cell, widths[col], aligns[col]) for col, cell in enumerate(row)
-                ]
-            out.append("| " + " | ".join(padded) + " |\n")
+        out.extend(_align_block(block))
+    return out
+
+
+def _align_block(block: list) -> list:
+    """Render one table, given as rows of cells, with its pipes lined up."""
+    is_separator = [all(SEPARATOR_CELL_RE.match(c) for c in row) for row in block]
+    widths = [3] * max(len(row) for row in block)
+    separators = [row for row, sep in zip(block, is_separator) if sep]
+    aligns = [_alignment(c) for c in separators[0]] if separators else []
+    aligns += ["left"] * (len(widths) - len(aligns))
+    for row in (r for r, sep in zip(block, is_separator) if not sep):
+        for col, cell in enumerate(row):
+            widths[col] = max(widths[col], _width(cell))
+    out = []
+    for row, sep in zip(block, is_separator):
+        if sep:
+            padded = [_separator_cell(c, widths[col]) for col, c in enumerate(row)]
+        else:
+            padded = [_pad(c, widths[col], aligns[col]) for col, c in enumerate(row)]
+        out.append("| " + " | ".join(padded) + " |\n")
     return out
 
 

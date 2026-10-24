@@ -52,8 +52,6 @@ jobs:
         run: sleep 30
 
       - uses: actions/checkout@v7
-        with:
-          ref: main
 
       - uses: actions/setup-python@v7
         with:
@@ -61,6 +59,10 @@ jobs:
 
       - name: Tidy README.md and open a pull request if it changed
         run: |
+          # The checkout is GITHUB_SHA, fixed when the event fired, which can be
+          # just before the merge the sleep waited for. Tidy main as it is now.
+          git fetch --no-tags --depth=1 origin main
+          git checkout --detach FETCH_HEAD
           # --fix still rewrites what it can when main has a problem it cannot
           # repair, such as an over-long description, and then exits 1
           python scripts/validate.py --fix ||
