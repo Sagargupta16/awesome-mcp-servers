@@ -264,23 +264,24 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 ### AI & ML
 
-| Server                                                                                                 | Description                                                                 | Language   |
-| ------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- | ---------- |
-| [AISOTools MCP](https://aisotools.com/mcp)                                                             | AI-tool catalog search, comparison, and alternatives lookup                 | Remote     |
-| [Cognee MCP](https://github.com/topoteretes/cognee)                                                    | Memory and knowledge-graph engine with an MCP server                        | Python     |
-| [Dreamtune MCP](https://docs.dreamtunelabs.com/connect/mcp)                                            | Model requests, tool APIs, GPU jobs and request traces with a workspace key | Remote     |
-| [Graphiti MCP](https://github.com/getzep/graphiti/tree/main/mcp_server)                                | Temporal knowledge-graph memory for agents, by Zep                          | Python     |
-| [Groq MCP](https://github.com/groq/groq-mcp-server)                                                    | Official Groq inference, audio, and vision tools                            | Python     |
-| [Headroom MCP](https://github.com/headroomlabs-ai/headroom)                                            | Token-compression proxy and MCP server for tool output and logs             | Python     |
-| [Hugging Face MCP](https://github.com/huggingface/hf-mcp-server)                                       | Official HF Hub models, datasets, Spaces                                    | TypeScript |
-| [LangChain MCP](https://github.com/langchain-ai/langchain/tree/master/libs/langchain_v1/langchain/mcp) | Official MCP tool support built into LangChain as langchain.mcp             | Python     |
-| [Muse Bridge](https://github.com/buzhidaosm/muse-cli-bridge)                                           | Read muse.ai identity, chats, goals, ideas and feed via local stdio MCP     | Python     |
-| [prompt-to-asset](https://github.com/MohamedAbdallah-14/prompt-to-asset)                               | Image generation across 30+ models via unified API                          | TypeScript |
-| [Replicate MCP](https://replicate.com/docs/reference/mcp)                                              | Official Replicate hosted MCP server                                        | Remote     |
-| [RouterBase MCP](https://github.com/zenlee123/routerbase-mcp)                                          | Model discovery, pricing lookup and OpenAI-compatible chat completions      | TypeScript |
-| [RunAPI MCP](https://github.com/runapi-ai/mcp)                                                         | Model discovery, pricing lookup, task creation, and LLM chat                | TypeScript |
-| [SandBase CLI](https://github.com/sandbaseai/cli)                                                      | Local MCP gateway for discovering and running 2,000+ AI models via one API  | TypeScript |
-| [Weights & Biases MCP](https://github.com/wandb/wandb-mcp-server)                                      | Official W&B Models + Weave                                                 | Python     |
+| Server                                                                                                 | Description                                                                    | Language   |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ---------- |
+| [AI Model Watch](https://artificialwatch.com/mcp)                                                      | Lists models each AI provider API serves and flags new ones since the last run | JavaScript |
+| [AISOTools MCP](https://aisotools.com/mcp)                                                             | AI-tool catalog search, comparison, and alternatives lookup                    | Remote     |
+| [Cognee MCP](https://github.com/topoteretes/cognee)                                                    | Memory and knowledge-graph engine with an MCP server                           | Python     |
+| [Dreamtune MCP](https://docs.dreamtunelabs.com/connect/mcp)                                            | Model requests, tool APIs, GPU jobs and request traces with a workspace key    | Remote     |
+| [Graphiti MCP](https://github.com/getzep/graphiti/tree/main/mcp_server)                                | Temporal knowledge-graph memory for agents, by Zep                             | Python     |
+| [Groq MCP](https://github.com/groq/groq-mcp-server)                                                    | Official Groq inference, audio, and vision tools                               | Python     |
+| [Headroom MCP](https://github.com/headroomlabs-ai/headroom)                                            | Token-compression proxy and MCP server for tool output and logs                | Python     |
+| [Hugging Face MCP](https://github.com/huggingface/hf-mcp-server)                                       | Official HF Hub models, datasets, Spaces                                       | TypeScript |
+| [LangChain MCP](https://github.com/langchain-ai/langchain/tree/master/libs/langchain_v1/langchain/mcp) | Official MCP tool support built into LangChain as langchain.mcp                | Python     |
+| [Muse Bridge](https://github.com/buzhidaosm/muse-cli-bridge)                                           | Read muse.ai identity, chats, goals, ideas and feed via local stdio MCP        | Python     |
+| [prompt-to-asset](https://github.com/MohamedAbdallah-14/prompt-to-asset)                               | Image generation across 30+ models via unified API                             | TypeScript |
+| [Replicate MCP](https://replicate.com/docs/reference/mcp)                                              | Official Replicate hosted MCP server                                           | Remote     |
+| [RouterBase MCP](https://github.com/zenlee123/routerbase-mcp)                                          | Model discovery, pricing lookup and OpenAI-compatible chat completions         | TypeScript |
+| [RunAPI MCP](https://github.com/runapi-ai/mcp)                                                         | Model discovery, pricing lookup, task creation, and LLM chat                   | TypeScript |
+| [SandBase CLI](https://github.com/sandbaseai/cli)                                                      | Local MCP gateway for discovering and running 2,000+ AI models via one API     | TypeScript |
+| [Weights & Biases MCP](https://github.com/wandb/wandb-mcp-server)                                      | Official W&B Models + Weave                                                    | Python     |
 
 ### Finance
 
