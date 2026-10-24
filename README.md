@@ -384,6 +384,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Browser Tools MCP](https://github.com/AgentDeskAI/browser-tools-mcp)       | Read browser console logs, network traffic and DOM via a Chrome extension        | TypeScript |
 | [browser-buddy](https://github.com/hahahahahahahahah6/browser-buddy)        | Let coding agents read your logged-in Chrome pages via MCP                       | Python     |
 | [Crawl4AI](https://github.com/unclecode/crawl4ai)                           | LLM-friendly web crawler and scraper with built-in MCP endpoints                 | Python     |
+| [CurlShot](https://curlshot.com/docs/guides/ai-agents)                      | Screenshot URLs as PNG, JPEG, WebP, PDF or scrolling video, full page or element | Remote     |
 | [Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server)          | Official Firecrawl web scraping and search                                       | TypeScript |
 | [Jina AI MCP](https://github.com/jina-ai/MCP)                               | Official Jina AI web reader, search, and content reranking                       | TypeScript |
 | [ScraperSocial](https://scrapersocial.com/mcp/)                             | Public social media profiles, posts, comments and transcripts from 30+ platforms | Remote     |
