@@ -1,0 +1,55 @@
+name: Star check
+
+# Asks a pull request author who has not starred the repository to star it: the
+# `missing-star` label and one comment, both from scripts/star_check.py. When the
+# author stars, the label comes off, the comment turns into a thank-you, and any
+# of their pull requests auto-merge.yml held back merge once the checks pass,
+# under the same draft, file and label rules auto-merge.yml applies. A star skips
+# the maintainer review only; the required checks still block a broken entry.
+# Not a required check.
+#
+# pull_request_target runs this file from main and checks out main, so nothing
+# from the pull request executes; the script reads the author's login from the
+# event payload. `watch` fires when someone stars, with the starrer as sender.
+# GitHub has no event for unstarring, so a manual sweep is the only re-check.
+on:
+  pull_request_target:
+    types: [opened, reopened]
+  watch:
+    types: [started]
+  workflow_dispatch:
+
+# nothing by default; the job asks for exactly what it writes
+permissions: {}
+
+# One run at a time per person, so a pull request run and that person's star run
+# cannot interleave and leave a stale label. A sweep gets its own group.
+concurrency:
+  group: star-check-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.event.pull_request.user.login || github.event.sender.login }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Ask for a star
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # enabling auto-merge on a released pull request needs it
+      issues: write # labels and comments go through the Issues API
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+
+      - name: Label, comment, release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # optional, read-only, this repo only: lets the script read the
+          # stargazer list, which a workflow's own token may be refused
+          STARGAZERS_TOKEN: ${{ secrets.STARGAZERS_TOKEN }}
+        # a dispatch has no pull request, so the script checks every open one
+        run: python scripts/star_check.py

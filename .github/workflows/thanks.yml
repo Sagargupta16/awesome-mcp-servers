@@ -19,6 +19,13 @@ on:
   pull_request_target:
     types: [closed]
     branches: [main]
+  # An auto-merge made with GITHUB_TOKEN starts no workflow, so the merge itself
+  # cannot trigger this. The runs that come just before a merge can: the last
+  # required check finishing, or Auto merge / Star check merging in the run. The
+  # schedule stays as a fallback; GitHub ran the "hourly" one every 3 to 6 hours.
+  workflow_run:
+    workflows: [Lint, Submission check, Auto merge, Star check]
+    types: [completed]
   schedule:
     - cron: "27 * * * *" # hourly
   workflow_dispatch:
@@ -39,6 +46,11 @@ jobs:
       contents: read
       pull-requests: write # comment on the merged pull request
     steps:
+      # a merge started by the run that just finished can take a few seconds
+      - name: Let a pending merge land
+        if: github.event_name == 'workflow_run'
+        run: sleep 30
+
       - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v7

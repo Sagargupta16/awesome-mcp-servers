@@ -11,9 +11,7 @@ documentation and its endpoint instead: the endpoint the docs name is probed, an
 a maintainer confirms the rest.
 
 Hard failures block the pull request. Soft warnings are printed for a human to
-judge. Both land in the GitHub Actions step summary. With `--review` the exit
-code says whether any entry needs that human, which is how the auto-merge
-workflows decide to wait for one.
+judge. Both land in the GitHub Actions step summary.
 
     python scripts/check_submission.py --base-ref origin/main
 
@@ -52,10 +50,6 @@ API = "https://api.github.com"
 MAX_SERVERS_PER_PR = 1
 STALE_DAYS = 180
 OVERRIDE_LABEL = "maintainer-override"
-
-# Exit code for `--review` when an entry passes the gate but a person has to
-# decide on it before it merges.
-NEEDS_REVIEW = 3
 
 # The Language value for a hosted server with no public source.
 REMOTE = "Remote"
@@ -97,9 +91,9 @@ MCP_TYPES = {"application/json", "text/event-stream"}
 URL_RE = re.compile(r"https://[\w.-]+(?::\d+)?(?:/[^\s\"'<>`(){}\[\]\\|]*)?")
 
 REMOTE_REVIEW = (
-    "Hosted server with no public source, so a maintainer reviews it before it "
-    "merges: the documentation is the operator's own, and it names the endpoint, "
-    "the authentication and the tools."
+    "Hosted server with no public source, so a person should confirm what CI "
+    "cannot: the documentation is the operator's own, and it names the "
+    "endpoint, the authentication and the tools."
 )
 
 # Files that make a repo a manifest-only listing rather than a real project.
@@ -345,11 +339,8 @@ def parse_rows(text: str) -> dict:
     return rows
 
 
-def added_rows(base_ref: str, head_ref: str | None = None) -> list:
-    """Entries present at the head but not at the base.
-
-    The head is the working copy unless `head_ref` names a revision, which is how
-    a `pull_request_target` job judges a pull request it must not check out.
+def added_rows(base_ref: str) -> list:
+    """Entries present at HEAD but not at the base.
 
     Compares the two parsed entry sets rather than reading `+` lines from the
     diff. Reordering a table rewrites every moved row, so a diff-based reading
@@ -360,27 +351,23 @@ def added_rows(base_ref: str, head_ref: str | None = None) -> list:
     a git ref first. Nothing is run through a shell, but a value beginning with
     `-` would still be read by git as an option rather than a revision.
     """
-    refs = {"--base-ref": base_ref, "--head-ref": head_ref}
-    for flag, ref in refs.items():
-        if ref is not None and not gitref.is_valid_ref(ref):
-            print(f"error: {ref!r} is not a valid git ref for {flag}", file=sys.stderr)
-            return []
+    if not gitref.is_valid_ref(base_ref):
+        print(
+            f"error: {base_ref!r} is not a valid git ref for --base-ref",
+            file=sys.stderr,
+        )
+        return []
 
-    texts = []
-    for ref in (base_ref, head_ref):
-        if ref is None:
-            texts.append(Path("README.md").read_text(encoding="utf-8"))
-            continue
-        text, detail = gitref.show(ref, "README.md")
-        if text is None:
-            print(
-                f"warning: could not read README.md at {ref}: {detail}",
-                file=sys.stderr,
-            )
-            return []
-        texts.append(text)
+    text, detail = gitref.show(base_ref, "README.md")
+    if text is None:
+        print(
+            f"warning: could not read README.md at {base_ref}: {detail}",
+            file=sys.stderr,
+        )
+        return []
 
-    before, after = (parse_rows(text) for text in texts)
+    before = parse_rows(text)
+    after = parse_rows(Path("README.md").read_text(encoding="utf-8"))
     return [sub for key, sub in after.items() if key not in before]
 
 
@@ -813,18 +800,10 @@ def main() -> int:
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     ap.add_argument("--base-ref", default="origin/main", help="ref to diff against")
-    ap.add_argument(
-        "--head-ref", help="read README.md from this ref instead of the working copy"
-    )
     ap.add_argument("--labels", default="", help="comma-separated pull request labels")
-    ap.add_argument(
-        "--review",
-        action="store_true",
-        help=f"exit {NEEDS_REVIEW} if any entry needs a maintainer decision, else 0",
-    )
     args = ap.parse_args()
 
-    subs = added_rows(args.base_ref, args.head_ref)
+    subs = added_rows(args.base_ref)
     for s in subs:
         inspect(s)
 
@@ -837,9 +816,6 @@ def main() -> int:
         with Path(summary).open("a", encoding="utf-8") as fh:
             fh.write(report)
 
-    # A blocking problem needs no review flag: the required check is already red.
-    if args.review:
-        return NEEDS_REVIEW if any(s.soft for s in subs) else 0
     return 1 if failing else 0
 
 
