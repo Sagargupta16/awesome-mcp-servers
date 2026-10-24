@@ -37,6 +37,8 @@ Server entries are table rows in this exact shape:
 | [Name](URL) | Description | Language |
 ```
 
+You do not need to line up the pipes with the rows around yours. The tables are padded so the list passes [awesome-lint](https://github.com/sindresorhus/awesome-lint), and a bot re-pads them after new rows land. When a row wider than the rest widens its table, that re-padding can leave an open pull request in conflict with `main`; merging `main` into your branch and running `python scripts/validate.py --fix` clears it, or a maintainer can.
+
 - **Name** -- the project name, as a user would recognise it. Keep it short.
 - **URL** -- a direct `https://` link to the repository or official project page. No tracking parameters, no redirect shorteners.
 - **Description** -- what it does, in **80 characters or fewer**. Start with a capital letter. No trailing period. No em-dash or en-dash; write `--` or `-` instead. Describe the function, not the pitch: "Query and optimise PostgreSQL databases" rather than "The ultimate AI-powered database companion".
@@ -189,7 +191,7 @@ python scripts/validate.py
 python scripts/validate.py --fix
 ```
 
-`--fix` repairs alphabetical order, trailing whitespace, and dashes. Everything else -- an over-long description, a duplicate, an unknown category -- needs a real edit.
+`--fix` repairs alphabetical order, table alignment, trailing whitespace, and dashes. Everything else -- an over-long description, a duplicate, an unknown category -- needs a real edit.
 
 To preview the submission gate the way CI runs it:
 
