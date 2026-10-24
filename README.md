@@ -219,6 +219,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [DiPlay Helper](https://github.com/UllrAI/diplay-helper)                                    | Query live DiPlay packages, compatibility reports and setup guides             | TypeScript |
 | [Docling MCP](https://github.com/docling-project/docling-mcp)                               | Official Docling document parsing and conversion to structured text            | Python     |
 | [Docs MCP Server](https://github.com/arabold/docs-mcp-server)                               | Index and semantically search third-party library documentation                | TypeScript |
+| [Docsy](https://docsy.remcp.site/docs) | Versioned developer docs with source links; OAuth 2.1 MCP | Remote |
 | [DuckDuckGo MCP](https://github.com/nickclyde/duckduckgo-mcp-server)                        | DuckDuckGo search with content fetching                                        | Python     |
 | [Exa MCP](https://github.com/exa-labs/exa-mcp-server)                                       | Exa AI-powered search                                                          | TypeScript |
 | [Kagi MCP](https://github.com/kagisearch/kagimcp)                                           | Official Kagi search API                                                       | Python     |
