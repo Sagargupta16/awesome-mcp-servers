@@ -5,7 +5,7 @@
 title: How a submission gets listed
 subtitle: From a fork pull request or the issue form to the website, plus a monthly audit of every entry
 direction: right
-layout: { spacing: compact, aspect: 1.2 }
+layout: { spacing: compact, aspect: 1.0 }
 legend:
   dashed: Monthly schedule
 # The stage skin's packet walks the form path, the one with no human step after the form.
