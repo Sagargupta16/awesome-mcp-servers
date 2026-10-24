@@ -228,6 +228,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Meilisearch MCP](https://github.com/meilisearch/meilisearch-mcp)                           | Official Meilisearch index server                                              | Python     |
 | [Perplexity MCP](https://github.com/perplexityai/modelcontextprotocol)                      | Official Perplexity search API                                                 | TypeScript |
 | [Ref MCP](https://github.com/ref-tools/ref-tools-mcp)                                       | Token-efficient search over public and private technical docs                  | TypeScript |
+| [ReMCP](https://github.com/getremcp/remcp) | OAuth access to paired computers; terminal, files, browser and desktop control | Remote |
 | [SearXNG MCP](https://github.com/ihor-sokoliuk/mcp-searxng)                                 | Metasearch across engines via a self-hosted SearXNG instance                   | TypeScript |
 | [SerpAPI MCP](https://github.com/serpapi/serpapi-mcp)                                       | Official SerpAPI Google search results                                         | Python     |
 | [Statsnet](https://github.com/usenetstate/statsnet-mcp)                                     | Company background checks: registration, executives, courts and finances       | Remote     |
