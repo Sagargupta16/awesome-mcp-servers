@@ -414,6 +414,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Google Maps MCP](https://github.com/cablate/mcp-google-map)                   | Google Maps API with LLM processing                                             | TypeScript |
 | [Mapbox MCP](https://github.com/mapbox/mcp-server)                             | Official Mapbox geocoding, POI search, directions, and isochrones               | TypeScript |
 | [MAQAMI Travel](https://github.com/negm17111995/mcp-server)                    | Search 3M+ hotels and flights with live rates, then check out on book.maqami.co | JavaScript |
+| [Mubboo Flights MCP](https://github.com/Mubboo-Ai/mubboo-flights-mcp)          | Find airports and prepare flight-comparison links with no API key               | Remote     |
 | [Pumperly MCP](https://github.com/GeiserX/pumperly-mcp)                        | Fuel prices, nearby stations and route planning via Pumperly                    | Go         |
 | [Rolês em SP](https://rolesemsp.com.br/connect.md)                             | Discover cultural outings, events, and leisure activities across São Paulo      | Remote     |
 | [SkyAccess](https://github.com/sky-access/skyaccess-mcp)                       | Search 5,000+ live empty leg flights, get charter estimates and booking links   | Remote     |
