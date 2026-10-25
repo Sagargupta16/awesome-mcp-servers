@@ -2,6 +2,12 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.10.2] - 2026-10-25
+
+### Fixed
+
+- A star did not merge a pull request from an account new to GitHub. GitHub holds that author's `Lint` and `Submission check` runs for a maintainer's approval, and auto-merge waits on them, so #215 sat 7 hours 20 minutes after its author starred, until the runs were started by hand. `star_check.py` now approves those held runs when the author has starred and the pull request touches only README.md or CHANGELOG.md, the same rule auto-merge follows, so the runs execute main's own workflows against the entry. It approves only runs for the head commit whose files it checked, reading the head before and after, so a push in between leaves them held. star-check.yml gains `actions: write` and also runs on `synchronize`, so a fix-up push is not held again.
+
 ## [2.10.1] - 2026-10-24
 
 ### Fixed

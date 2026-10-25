@@ -8,13 +8,18 @@ name: Star check
 # the maintainer review only; the required checks still block a broken entry.
 # Not a required check.
 #
+# GitHub holds the runs of a pull request from an account new to GitHub until
+# someone approves them, and auto-merge waits on those runs (#215 sat 7h20m
+# after its author starred). For a starrer's list-only pull request the script
+# approves them; `synchronize` is here so a fix-up push is not held again.
+#
 # pull_request_target runs this file from main and checks out main, so nothing
 # from the pull request executes; the script reads the author's login from the
 # event payload. `watch` fires when someone stars, with the starrer as sender.
 # GitHub has no event for unstarring, so a manual sweep is the only re-check.
 on:
   pull_request_target:
-    types: [opened, reopened]
+    types: [opened, reopened, synchronize]
   watch:
     types: [started]
   workflow_dispatch:
@@ -36,6 +41,7 @@ jobs:
       contents: write # enabling auto-merge on a released pull request needs it
       issues: write # labels and comments go through the Issues API
       pull-requests: write
+      actions: write # approve the runs GitHub holds for an author new to GitHub
     steps:
       - uses: actions/checkout@v7
         with:

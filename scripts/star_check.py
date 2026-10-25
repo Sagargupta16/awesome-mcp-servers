@@ -6,7 +6,9 @@ issue-to-pr.yml ask `--starred` and only arm a pull request whose author has
 starred. One from someone who has not gets the `missing-star` label and one
 comment asking. When that person stars, the label comes off, the comment turns
 into a thank-you, and their held pull requests merge once the checks pass. A
-maintainer can still merge any of them by hand.
+maintainer can still merge any of them by hand. For an author new to GitHub,
+whose runs GitHub holds for approval, a starred list-only pull request also has
+those runs approved, since auto-merge would otherwise wait on them.
 
 A star never gets an entry past a failing check.
 
@@ -235,9 +237,11 @@ def release(pr: dict, dry_run: bool) -> None:
         return
     print(f"  #{number}: starred, so it merges once the checks pass")
     if dry_run:
+        approve_held(pr, dry_run)
         return
     full, err = api("GET", f"repos/{REPO}/pulls/{seg(number)}")
-    if not err and full.get("mergeable_state") in MERGEABLE_NOW:
+    merge_now = not err and full.get("mergeable_state") in MERGEABLE_NOW
+    if merge_now:
         _, err = api(
             "PUT",
             f"repos/{REPO}/pulls/{seg(number)}/merge",
@@ -252,6 +256,50 @@ def release(pr: dict, dry_run: bool) -> None:
         err = err or (data or {}).get("errors")
     if err:
         print(f"  #{number}: could not release it ({err})", file=sys.stderr)
+    if not merge_now:
+        # auto-merge now waits on the required checks, so start any GitHub holds
+        approve_held(pr, dry_run)
+
+
+def approve_held(pr: dict, dry_run: bool) -> None:
+    """Start the checks GitHub holds back for an author new to GitHub.
+
+    The repository asks for approval before running workflows on a pull request
+    from an account new to GitHub, and auto-merge waits on those runs, so a
+    starred pull request sat until a maintainer clicked (#215, 7h20m). Only one
+    that may merge unattended gets this: it touches list content alone, so the
+    held runs execute main's workflows and scripts against its README. The head
+    is read before and after the file check and only runs for that exact commit
+    are approved, so a push in between cannot slip a workflow change in.
+    """
+    number = pr["number"]
+    before, err = api("GET", f"repos/{REPO}/pulls/{seg(number)}")
+    sha = ((before or {}).get("head") or {}).get("sha")
+    if err or not sha or not may_auto_merge(before | {"number": number}):
+        return
+    after, err = api("GET", f"repos/{REPO}/pulls/{seg(number)}")
+    if err or ((after or {}).get("head") or {}).get("sha") != sha:
+        print(f"  #{number}: head moved during the file check; runs left held")
+        return
+    runs, err = api(
+        "GET",
+        f"repos/{REPO}/actions/runs?head_sha={seg(sha)}&status=action_required",
+    )
+    if err:
+        print(f"  #{number}: could not list held runs ({err})", file=sys.stderr)
+        return
+    for run in (runs or {}).get("workflow_runs", []):
+        if run.get("event") != "pull_request" or run.get("head_sha") != sha:
+            continue
+        print(f"  #{number}: approving held run {run['id']} ({run.get('name')})")
+        if dry_run:
+            continue
+        _, err = api("POST", f"repos/{REPO}/actions/runs/{seg(run['id'])}/approve")
+        if err:
+            print(
+                f"  #{number}: could not approve run {run['id']} ({err})",
+                file=sys.stderr,
+            )
 
 
 def skip_reason(pr: dict) -> str | None:
@@ -268,6 +316,7 @@ def check(pr: dict, dry_run: bool, release_held: bool = False) -> None:
 
     On a pull request event auto-merge.yml makes the merge decision itself, so
     only the sweep, which sees pull requests held before a star, releases them.
+    Either way a starrer's runs that GitHub holds for approval are started.
     """
     reason = skip_reason(pr)
     if reason:
@@ -277,6 +326,8 @@ def check(pr: dict, dry_run: bool, release_held: bool = False) -> None:
         clear(pr, dry_run)
         if release_held and pr.get("auto_merge") is None:
             release(pr, dry_run)
+        else:
+            approve_held(pr, dry_run)
     else:
         flag(pr, dry_run)
 
@@ -302,6 +353,8 @@ def on_star(login: str, dry_run: bool) -> None:
             clear(pr, dry_run)
         if pr.get("auto_merge") is None:
             release(pr, dry_run)
+        else:
+            approve_held(pr, dry_run)
 
 
 def main() -> int:

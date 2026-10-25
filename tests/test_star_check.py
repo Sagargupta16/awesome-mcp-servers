@@ -322,6 +322,75 @@ def test_a_sweep_leaves_a_pull_request_already_auto_merging_alone(fake):
     assert api.writes() == []
 
 
+def _held_routes(*files: str, heads=("abc",)) -> dict:
+    seen = iter(heads)
+    last = [heads[-1]]
+
+    def pull(_path):
+        last[0] = next(seen, last[0])
+        return {"head": {"sha": last[0]}, "labels": [], "draft": False}, None
+
+    runs = [
+        {"id": 11, "name": "Lint", "event": "pull_request", "head_sha": "abc"},
+        {"id": 12, "name": "Lint", "event": "pull_request", "head_sha": "older"},
+        {
+            "id": 13,
+            "name": "Auto merge",
+            "event": "pull_request_target",
+            "head_sha": "abc",
+        },
+    ]
+    return {
+        ("GET", f"repos/{star_check.REPO}/pulls/7"): pull,
+        ("GET", f"repos/{star_check.REPO}/pulls/7/files"): _files(
+            *(files or ("README.md",))
+        ),
+        ("GET", f"repos/{star_check.REPO}/actions/runs?"): (
+            {"workflow_runs": runs},
+            None,
+        ),
+    }
+
+
+def test_held_runs_for_the_exact_head_are_approved(fake):
+    """#215: auto-merge waited 7h20m on runs GitHub held for a new account."""
+    api = fake(_held_routes())
+
+    star_check.approve_held(_pr(), dry_run=False)
+
+    assert api.writes() == [
+        ("POST", f"repos/{star_check.REPO}/actions/runs/11/approve")
+    ]
+
+
+def test_held_runs_are_never_approved_for_a_pull_request_touching_a_workflow(fake):
+    api = fake(_held_routes("README.md", ".github/workflows/lint.yml"))
+
+    star_check.approve_held(_pr(), dry_run=False)
+
+    assert api.writes() == []
+
+
+def test_held_runs_are_left_when_the_head_moves_during_the_file_check(fake):
+    """A push between the two reads could carry a workflow change."""
+    api = fake(_held_routes(heads=("abc", "def")))
+
+    star_check.approve_held(_pr(), dry_run=False)
+
+    assert api.writes() == []
+
+
+def test_a_starrers_pull_request_event_approves_its_held_runs(fake):
+    api = fake(
+        {STARGAZERS: ([{"login": "someone"}], None), NO_COMMENTS: ([], None)}
+        | _held_routes()
+    )
+
+    star_check.check(_pr() | {"auto_merge": None}, dry_run=False)
+
+    assert ("POST", f"repos/{star_check.REPO}/actions/runs/11/approve") in api.writes()
+
+
 def test_dry_run_writes_nothing(fake):
     api = fake({STARGAZERS: ([], None)})
 
