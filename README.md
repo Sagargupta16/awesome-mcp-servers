@@ -365,6 +365,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Binary Ninja MCP](https://github.com/fosdickio/binary_ninja_mcp)                  | Binary Ninja plugin for LLM-driven binary analysis                        | Python     |
 | [Bitwarden MCP](https://github.com/bitwarden/mcp-server)                           | Official Bitwarden password manager                                       | TypeScript |
 | [BountyGuard MCP](https://github.com/doomsday-network/bounty-guard)                | Pre-flight prompt injection, CI secret exfiltration & escrow verification | Python     |
+- **[DoomPay MCP](https://github.com/doomsday-network/doom-pay)** - 2-line Stripe-like Web3 checkout widget (`pay.js`) and MCP server for accepting zero-fee `DOOM` (L1) and `wDOOM` (Base Mainnet) payments.
 | [Burp AI Agent](https://github.com/six2dez/burp-ai-agent)                          | Burp Suite extension with MCP tooling                                     | Kotlin     |
 | [CrowdStrike Falcon MCP](https://github.com/CrowdStrike/falcon-mcp)                | Official CrowdStrike Falcon threat hunting and detections                 | Python     |
 | [Dark-Moon](https://github.com/ASCIT31/Dark-Moon)                                  | Autonomous pentest platform for web, API, Active Directory and Kubernetes | Python     |
