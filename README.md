@@ -597,6 +597,7 @@ but not all of resources and prompts.
 - [MCP Contributors Discord](https://discord.gg/6CSzBmMkjX) - Official Discord for MCP spec, SDK and working group discussion.
 - [Glama MCP Registry](https://glama.ai/mcp/servers) - Searchable registry of open-source MCP servers.
 - [Smithery](https://smithery.ai/) - Hosted MCP server registry and marketplace for agent tool connections.
+- [Mode VC Radar MCP](https://modevc.com/api/mcp) - Read-only venture capital & AI market research MCP server (39 empirical AI charts, 3,650 VC firms, SEC Form D filings, and 18 founder financial calculators; free Streamable HTTP at https://modevc.com/api/mcp).
 
 ---
 
