@@ -425,6 +425,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [SkyAccess](https://github.com/sky-access/skyaccess-mcp)                       | Search 5,000+ live empty leg flights, get charter estimates and booking links   | Remote     |
 | [StayingAPI](https://github.com/stayingapi/hotel-mcp)                          | Accommodation data from Airbnb, Booking.com, Vrbo, and Google Hotels            | TypeScript |
 | [TomTom MCP](https://github.com/tomtom-international/tomtom-maps-mcp)          | Official TomTom maps, search, routing, and traffic APIs                         | TypeScript |
+| [Wheremind](https://wheremind.ai/maps-mcp)                                     | Hosted places search, geocoding, nearby search and directions for AI agents     | Remote     |
 
 ### E-commerce
 
