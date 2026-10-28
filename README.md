@@ -300,6 +300,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Financial Modeling Prep MCP](https://github.com/imbenrabi/Financial-Modeling-Prep-MCP-Server) | FMP market data and fundamentals                                              | TypeScript |
 | [Invoice MCP](https://github.com/theluckystrike/mcp-invoice-generator)                         | Create PDF invoices with VAT lines, sequential numbering and overdue tracking | JavaScript |
 | [Invompt](https://github.com/Invompt/invompt-mcp)                                              | Create and review invoices from an AI assistant                               | TypeScript |
+| [Lava](https://github.com/dustinliang666-blip/lava-mcp) | Read-only A-share news-flow heat via remote MCP/REST | TypeScript |
 | [Massive.com (Polygon.io) MCP](https://github.com/massive-com/mcp_massive)                     | Official Massive.com (formerly Polygon.io) market data for stocks and crypto  | Python     |
 | [PayPal Agent Toolkit](https://github.com/paypal/agent-toolkit)                                | Official PayPal toolkit with an MCP server for payments and invoicing         | TypeScript |
 | [QuickBooks MCP](https://github.com/intuit/quickbooks-online-mcp-server)                       | Official Intuit QuickBooks Online                                             | TypeScript |
