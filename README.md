@@ -506,6 +506,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Neither](https://github.com/stonianua/neither-mcp)                         | Selected project notes/docs for Cursor and Claude Desktop via stdio MCP          | TypeScript |
 | [Obsidian MCP](https://github.com/MarkusPfundstein/mcp-obsidian)            | Obsidian via REST API community plugin                                           | Python     |
 | [Obsidian MCP (alt)](https://github.com/StevenStavrakis/obsidian-mcp)       | Simple MCP server for Obsidian                                                   | TypeScript |
+| [SQLite Graph Memory](https://github.com/tonydzi/sqlite-graph-memory) | Graph RAG over Obsidian or markdown notes -- wikilinks as edges, SQLite store | Python |
 | [Zotero MCP](https://github.com/54yyyu/zotero-mcp)                          | Search and read your Zotero reference library                                    | Python     |
 
 ## Frameworks & Libraries
