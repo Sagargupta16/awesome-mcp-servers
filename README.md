@@ -111,6 +111,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Atlassian MCP (Jira + Confluence)](https://github.com/sooperset/mcp-atlassian)                        | Jira and Confluence integration                                              | Python     |
 | [Azure DevOps MCP](https://github.com/microsoft/azure-devops-mcp)                                      | Official Azure DevOps repos, pipelines, work items and wikis                 | TypeScript |
 | [Buildkite MCP](https://github.com/buildkite/buildkite-mcp-server)                                     | Official Buildkite pipelines, builds, jobs and test runs                     | Go         |
+| [Carbon Forge](https://carbonforge.dev/docs/p/guides/mcp-anonymous-access)                             | Source control and a shared record for agents, with lanes instead of clones  | Remote     |
 | [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp)                           | Official Chrome DevTools for coding agents - debug, trace and inspect pages  | TypeScript |
 | [CircleCI MCP](https://github.com/CircleCI-Public/mcp-server-circleci)                                 | Official CircleCI workflow integration                                       | TypeScript |
 | [Codapult Guard](https://github.com/codapult/codapult-guard)                                           | Architecture guardrails for AI coding agents                                 | TypeScript |
