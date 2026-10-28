@@ -130,6 +130,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Mac MCP](https://github.com/bulutarkan/mac-mcp)                                                       | Control macOS apps, files and browser tabs from MCP clients                  | Python     |
 | [MartinLoop MCP](https://github.com/Keesan12/martin-loop/tree/main/packages/mcp)                       | Governed agent runtime with budget caps, verifier gates and inspectable runs | TypeScript |
 | [MCP Context Forge](https://github.com/IBM/mcp-context-forge)                                          | Official IBM MCP gateway federating MCP, A2A and REST tools                  | Python     |
+| [mcp-probe-kit](https://github.com/mybolide/mcp-probe-kit)                                             | Spec-driven dev workflow with converge gate and session history              | TypeScript |
 | [mcp-proxy](https://github.com/sparfenyuk/mcp-proxy)                                                   | Bridge between Streamable HTTP and stdio MCP transports                      | Python     |
 | [mcp-remote](https://github.com/punkpeye/mcp-remote)                                                   | Bridge stdio-only MCP clients to remote HTTP or SSE servers                  | TypeScript |
 | [mcpo](https://github.com/open-webui/mcpo)                                                             | MCP-to-OpenAPI proxy that exposes MCP servers as REST endpoints              | Python     |
@@ -506,7 +507,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Neither](https://github.com/stonianua/neither-mcp)                         | Selected project notes/docs for Cursor and Claude Desktop via stdio MCP          | TypeScript |
 | [Obsidian MCP](https://github.com/MarkusPfundstein/mcp-obsidian)            | Obsidian via REST API community plugin                                           | Python     |
 | [Obsidian MCP (alt)](https://github.com/StevenStavrakis/obsidian-mcp)       | Simple MCP server for Obsidian                                                   | TypeScript |
-| [SQLite Graph Memory](https://github.com/tonydzi/sqlite-graph-memory) | Graph RAG over Obsidian or markdown notes -- wikilinks as edges, SQLite store | Python |
+| [SQLite Graph Memory](https://github.com/tonydzi/sqlite-graph-memory)       | Graph RAG over Obsidian or markdown notes -- wikilinks as edges, SQLite store    | Python     |
 | [Zotero MCP](https://github.com/54yyyu/zotero-mcp)                          | Search and read your Zotero reference library                                    | Python     |
 
 ## Frameworks & Libraries
