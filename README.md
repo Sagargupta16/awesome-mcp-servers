@@ -161,6 +161,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [DigitalOcean MCP](https://github.com/digitalocean-labs/mcp-digitalocean)                | Official DO droplets, apps, databases                                      | Go         |
 | [Firebase MCP](https://github.com/firebase/firebase-tools)                               | Official Firebase MCP server built into the Firebase CLI                   | TypeScript |
 | [Fly.io MCP](https://github.com/superfly/flyctl)                                         | Official Fly.io MCP server built into the flyctl CLI                       | Go         |
+| [FutureInfra](https://futureinfra.ai/docs/mcp/) | Manage Korean cloud VMs, snapshots, public IPs and firewall rules | Remote |
 | [Google Cloud MCP](https://github.com/googleapis/gcloud-mcp)                             | Official gcloud CLI wrapper for GCP services                               | TypeScript |
 | [Google Cloud Run MCP](https://github.com/GoogleCloudPlatform/cloud-run-mcp)             | Official Google Cloud Run app deployment and management                    | JavaScript |
 | [Helm MCP](https://github.com/zekker6/mcp-helm)                                          | Helm package manager for Kubernetes                                        | Go         |
