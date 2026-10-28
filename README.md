@@ -180,7 +180,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | Server                                                                                            | Description                                                                    | Language   |
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ---------- |
 | [AI Tasker](https://ai-tasker.theboomer.dev)                                                      | Hosted task, workspace, and agent coordination for AI teams                    | Remote     |
-| [Aident Loadout](https://github.com/Aident-AI/aident-skill)                                       | Connect agents to 1000+ apps via one remote MCP with Vault                     | Remote     |
+| [Aident Loadout](https://docs.aident.ai/loadout/mcp)                                              | Run app actions from one remote MCP, with Vault credentials and an audit log   | Remote     |
 | [Airtable MCP](https://github.com/domdomegg/airtable-mcp-server)                                  | Airtable base read/write                                                       | TypeScript |
 | [Asana MCP](https://github.com/roychri/mcp-server-asana)                                          | Asana tasks, projects, workspaces                                              | TypeScript |
 | [CareClinic](https://careclinic.io/careclinic-mcp/)                                               | Read medication schedules, symptoms and moods, and save confirmed check-ins    | Remote     |
