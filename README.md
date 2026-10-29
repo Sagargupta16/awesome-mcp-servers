@@ -229,6 +229,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [MarkItDown MCP](https://github.com/microsoft/markitdown/tree/main/packages/markitdown-mcp) | Convert PDF, Office, HTML and audio files to Markdown for LLMs                 | Python     |
 | [Meilisearch MCP](https://github.com/meilisearch/meilisearch-mcp)                           | Official Meilisearch index server                                              | Python     |
 | [Perplexity MCP](https://github.com/perplexityai/modelcontextprotocol)                      | Official Perplexity search API                                                 | TypeScript |
+| [Recall Kitchen](https://github.com/Recall-Kitchen/rk-mcp)                                 | Search U.S. CPSC, FDA, USDA and NHTSA product recalls by keyword or UPC        | Remote     |
 | [Ref MCP](https://github.com/ref-tools/ref-tools-mcp)                                       | Token-efficient search over public and private technical docs                  | TypeScript |
 | [ReMCP](https://github.com/getremcp/remcp)                                                  | OAuth access to paired computers; terminal, files, browser and desktop control | Remote     |
 | [Scento Perfume API](https://github.com/Scento-com/perfume-mcp-server)                      | Perfume notes, families and similar scents for 1,400+ perfumes, no API key     | JavaScript |
