@@ -254,6 +254,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [SendRaven MCP](https://github.com/CommonNinja/sendraven-mcp-server)    | Official SendRaven email sending, inbound reply threads and per-key send limits | TypeScript |
 | [Telegram Archive MCP](https://github.com/GeiserX/telegram-archive-mcp) | Search and read archived Telegram history from a Telegram-Archive instance      | Go         |
 | [Telegram MCP](https://github.com/chigwell/telegram-mcp)                | Telegram messaging                                                              | Python     |
+| [TextKit](https://jointextkit.com/docs/mcp)                             | Send and receive SMS, verify phone numbers, buy US and Canada numbers           | Remote     |
 | [Zulip MCP](https://github.com/zulip/zulipmcp)                          | Official Zulip streams, messages and mentionable bot agents                     | Python     |
 
 ### File Systems & Storage
