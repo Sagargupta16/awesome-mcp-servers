@@ -275,6 +275,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [AISOTools MCP](https://aisotools.com/mcp)                                                             | AI-tool catalog search, comparison, and alternatives lookup                 | Remote     |
 | [Cognee MCP](https://github.com/topoteretes/cognee)                                                    | Memory and knowledge-graph engine with an MCP server                        | Python     |
 | [Dreamtune MCP](https://docs.dreamtunelabs.com/connect/mcp)                                            | Model requests, tool APIs, GPU jobs and request traces with a workspace key | Remote     |
+| [FindAIforWork](https://findaiforwork.com/llms.txt)                                                    | Search and compare curated AI tools for work, with category browsing        | Remote     |
 | [Graphiti MCP](https://github.com/getzep/graphiti/tree/main/mcp_server)                                | Temporal knowledge-graph memory for agents, by Zep                          | Python     |
 | [Groq MCP](https://github.com/groq/groq-mcp-server)                                                    | Official Groq inference, audio, and vision tools                            | Python     |
 | [Headroom MCP](https://github.com/headroomlabs-ai/headroom)                                            | Token-compression proxy and MCP server for tool output and logs             | Python     |
