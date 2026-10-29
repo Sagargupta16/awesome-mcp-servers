@@ -437,6 +437,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | Server                                                                          | Description                                                                      | Language   |
 | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ---------- |
 | [Amazon MCP](https://github.com/rigwild/mcp-server-amazon)                      | Search and purchase Amazon products                                              | TypeScript |
+| [BestPrice Shopping](https://github.com/TheBestCo/bestprice-mcp)                | Read-only Greek shopping decisions, product search, offers, and price history    | Remote     |
 | [BirkinBagStock](https://birkinbagstock.com/mcp)                                | Search Hermès Birkin resale listings, asking prices and auction results          | Remote     |
 | [brianbooms-mcp](https://github.com/brianbooms/brianbooms-mcp)                  | Buy digital products with USDC micropayments on Base, via x402                   | Python     |
 | [BuyWhere MCP](https://github.com/BuyWhere/buywhere-mcp)                        | Hosted shopping MCP for product search and price comparison across 80+ countries | Remote     |
