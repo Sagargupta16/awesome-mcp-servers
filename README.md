@@ -411,6 +411,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Ableton MCP](https://github.com/ahujasid/ableton-mcp)                                  | Control Ableton Live sessions, tracks, clips, and MIDI from an agent | Python     |
 | [Arr MCP](https://github.com/aplaceforallmystuff/mcp-arr)                               | Manage Sonarr, Radarr, and other arr media library services          | TypeScript |
 | [MiniMax MCP](https://github.com/MiniMax-AI/MiniMax-MCP)                                | Generate speech, music, images, and video with MiniMax models        | Python     |
+| [Tera Studio](https://terastudio.co/ai-assistants/)                                     | Song key and tempo lookup by title, plus links to free key and BPM tools | Remote     |
 | [TMDB MCP](https://github.com/Laksh-star/mcp-server-tmdb)                               | The Movie Database (TMDB)                                            | TypeScript |
 | [YouTube MCP](https://github.com/ZubeidHendricks/youtube-mcp-server)                    | YouTube API videos and analytics                                     | TypeScript |
 | [YouTube Transcript MCP](https://github.com/kimtaeyoon83/mcp-server-youtube-transcript) | Download YouTube video transcripts                                   | TypeScript |
