@@ -500,6 +500,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp)          | Official PostHog product analytics                                               | TypeScript |
 | [RestoSignals](https://github.com/paperandbeyond23-gif/restosignals-mcp)            | Pre-opening US restaurant and bar leads from liquor, permit and business filings | Remote     |
 | [Salesforce MCP](https://github.com/salesforcecli/mcp)                              | Official Salesforce CLI MCP                                                      | TypeScript |
+| [Tera Ads](https://github.com/Teralabsx/meta-ads-mcp)                               | Meta Ads: approval before changes, undo for pauses and budgets, Shopify profit   | Remote     |
 | [UnrealUGC MCP](https://github.com/UnrealUGC/mcp)                                   | Create AI UGC video ads through the UnrealUGC platform                           | TypeScript |
 
 ### Knowledge Management
