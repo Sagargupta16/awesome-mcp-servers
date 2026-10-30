@@ -353,6 +353,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [MuAPI MCP](https://github.com/SamurAIGPT/muapi-mcp-server)                     | Image, video and audio generation across 100+ generative AI models    | Python     |
 | [OrkasVideoStudio](https://github.com/Orkas-AI/Orkas-VideoStudio)               | Compose, edit, analyze, and render video from coding agents           | TypeScript |
 | [Photoshop MCP](https://github.com/loonghao/photoshop-python-api-mcp-server)    | Adobe Photoshop automation                                            | Python     |
+| [Quady3D](https://github.com/quady3dai/quady3d-tools) | Generate text/image 3D assets, quote credits, recover tasks and save model files | TypeScript |
 | [UpRes MCP](https://github.com/auroracapital/upres-cli)                         | Upscale images and videos up to 8K across 14 specialist models        | TypeScript |
 | [VideoGen MCP](https://videogen.io/videogen-mcp)                                | Create and edit videos, images, voiceovers, music, and avatars        | TypeScript |
 | [Webflow MCP](https://github.com/webflow/mcp-server)                            | Official Webflow server for sites, pages, CMS, and components         | TypeScript |
