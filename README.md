@@ -213,6 +213,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 | Server                                                                                      | Description                                                                    | Language   |
 | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ---------- |
+| [AgentSearch MCP](https://github.com/agentsearchhq-coder/agentsearch-mcp) | Web search, URL-to-Markdown extraction and JS page rendering; keyless free tier | TypeScript |
 | [Apify MCP](https://github.com/apify/apify-mcp-server)                                      | Web scraping actors and automation                                             | TypeScript |
 | [arXiv MCP](https://github.com/blazickjp/arxiv-mcp-server)                                  | Search arXiv papers and read full LaTeX sections                               | Python     |
 | [BORME API](https://github.com/bormeapi/borme-mcp)                                          | Spain's company registry gazette (BORME): 9.6M+ events since 2009              | Remote     |
