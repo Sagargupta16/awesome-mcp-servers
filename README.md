@@ -70,6 +70,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | Server                                                                                     | Description                                                                   | Language   |
 | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- | ---------- |
 | [Apache Doris MCP](https://github.com/apache/doris-mcp-server)                             | Official Apache Doris analytics database queries and management               | Python     |
+| [BatchData](https://github.com/batchdataco/batchdata-mcp-server)                           | U.S. real estate data: property lookup, comps, search, skip tracing           | Remote     |
 | [BigQuery MCP](https://github.com/ergut/mcp-bigquery-server)                               | Query Google BigQuery datasets and tables                                     | TypeScript |
 | [ClickHouse MCP](https://github.com/ClickHouse/mcp-clickhouse)                             | Official ClickHouse columnar analytics                                        | Python     |
 | [Confluent MCP](https://github.com/confluentinc/mcp-confluent)                             | Official Confluent Cloud Kafka topics, connectors and Flink                   | TypeScript |
