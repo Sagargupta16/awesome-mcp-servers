@@ -116,6 +116,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [CircleCI MCP](https://github.com/CircleCI-Public/mcp-server-circleci)                                 | Official CircleCI workflow integration                                       | TypeScript |
 | [Codapult Guard](https://github.com/codapult/codapult-guard)                                           | Architecture guardrails for AI coding agents                                 | TypeScript |
 | [Codebase Memory MCP](https://github.com/DeusData/codebase-memory-mcp)                                 | Code intelligence server that indexes repos into a queryable knowledge graph | C          |
+| [ComputeFirst](https://computefirst.net/docs) | Free deterministic calculations, validation and data transforms; no API key | Remote |
 | [Dedicated Mac Mini AI Bot Setup MCP](https://github.com/eibrahim/dedicated-mac-mini-ai-bot-setup-mcp) | Read-only lookup of a Mac mini AI bot setup service: its offer and queue     | JavaScript |
 | [Desktop Commander MCP](https://github.com/wonderwhy-er/DesktopCommanderMCP)                           | Terminal control, file search and diff-based file editing                    | TypeScript |
 | [Docker MCP](https://github.com/ckreiling/mcp-server-docker)                                           | Docker container management                                                  | Python     |
