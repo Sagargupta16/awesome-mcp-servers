@@ -242,6 +242,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 | Server                                                                  | Description                                                                     | Language   |
 | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ---------- |
+| [Call Me](https://github.com/radres/call-me)                            | Agents ring or text your own phone and get your spoken answer back as text      | Remote     |
 | [CosVoice](https://github.com/CosVoice/cosvoice-mcp)                    | Real US phone number and email for agents: calls, texts, bookings, summaries    | Remote     |
 | [Discourse MCP](https://github.com/discourse/discourse-mcp)             | Official Discourse forum search, topic reading and posting                      | TypeScript |
 | [Joinly](https://github.com/joinly-ai/joinly)                           | Join Zoom, Google Meet and Teams calls to transcribe and act live               | Python     |
