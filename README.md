@@ -138,6 +138,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [n8n MCP](https://github.com/czlonkowski/n8n-mcp)                                                      | Node docs and workflow building for n8n automations                          | TypeScript |
 | [Nx MCP](https://github.com/nrwl/nx-console/tree/master/apps/nx-mcp)                                   | Official Nx monorepo workspace graph and generator context server            | TypeScript |
 | [octocode-mcp](https://github.com/bgauryy/octocode)                                                    | Code research across GitHub repos and packages for coding agents             | TypeScript |
+| [OpenPulse](https://openpulse.info/integrations) | Discover GitHub projects with measured growth, activity and AI index evidence | Remote |
 | [OrcaReplay](https://github.com/Continuum-AI-Corp/OrcaReplay)                                          | Read an agent's own recorded runs and replay them offline with no model call | TypeScript |
 | [Postman MCP](https://github.com/postmanlabs/postman-mcp-server)                                       | Official Postman API collections server                                      | TypeScript |
 | [Probe](https://github.com/probelabs/probe)                                                            | Semantic code search over large codebases with ripgrep and tree-sitter       | Rust       |
