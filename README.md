@@ -319,6 +319,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Xero MCP](https://github.com/XeroAPI/xero-mcp-server)                                         | Official Xero server for invoices, contacts, accounts and payroll             | TypeScript |
 | [Yahoo Finance MCP](https://github.com/Alex2Yang97/yahoo-finance-mcp)                          | Stock data and financial info                                                 | Python     |
 | [Zerodha Kite MCP](https://github.com/zerodha/kite-mcp-server)                                 | Official Zerodha Kite server for Indian holdings, orders and quotes           | Go         |
+| [Zovo Grant Finder](https://grant-finder.zovo.one/) | Search Grants.gov federal grants and export XLSX trackers and ICS deadlines | Remote |
 
 ### Monitoring & Observability
 
