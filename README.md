@@ -90,6 +90,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Neo4j MCP](https://github.com/neo4j-contrib/mcp-neo4j)                                    | Neo4j Labs Cypher, memory and Aura API graph database servers                 | Python     |
 | [Neon MCP](https://github.com/neondatabase/mcp-server-neon)                                | Neon serverless PostgreSQL branching and management                           | TypeScript |
 | [Pinecone MCP](https://github.com/pinecone-io/pinecone-mcp)                                | Official Pinecone vector database                                             | TypeScript |
+| [Polish MCP Servers](https://github.com/kamilkaczmareksolutions/polish-mcp-servers) | Polish public registers and law: NIP/REGON/KRS company lookup, tenders, permits | TypeScript |
 | [PostgreSQL MCP (Pro)](https://github.com/crystaldba/postgres-mcp)                         | Query, analyze and optimize PostgreSQL databases                              | Python     |
 | [Qdrant MCP](https://github.com/qdrant/mcp-server-qdrant)                                  | Official Qdrant vector database server                                        | Python     |
 | [Redis MCP](https://github.com/redis/mcp-redis)                                            | Official Redis cache and data structures                                      | Python     |
