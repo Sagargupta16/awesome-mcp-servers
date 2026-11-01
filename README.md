@@ -615,6 +615,7 @@ but not all of resources and prompts.
 - [MCP Contributors Discord](https://discord.gg/6CSzBmMkjX) - Official Discord for MCP spec, SDK and working group discussion.
 - [Glama MCP Registry](https://glama.ai/mcp/servers) - Searchable registry of open-source MCP servers.
 - [Smithery](https://smithery.ai/) - Hosted MCP server registry and marketplace for agent tool connections.
+- [Awesome Agent Skills](https://github.com/Sagargupta16/awesome-skills) - The sister list: Agent Skills, curated and checked by the same CI.
 
 ---
 
