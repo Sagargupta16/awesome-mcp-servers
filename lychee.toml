@@ -13,7 +13,9 @@ max_concurrency = 16
 
 # 429 means the host is rate limiting us, not that the link is dead.
 # 403 covers hosts that serve humans but reject automated requests.
-accept = [200, 206, 403, 429]
+# 405 is a remote MCP endpoint refusing a plain GET: the server answers MCP
+# POSTs (BirkinBagStock's /mcp returned 405 to GET and 200 to initialize).
+accept = [200, 206, 403, 405, 429]
 
 user_agent = "Mozilla/5.0 (compatible; awesome-mcp-servers link check; +https://github.com/Sagargupta16/awesome-mcp-servers)"
 
