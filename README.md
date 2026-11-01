@@ -233,6 +233,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [looot](https://github.com/loootai/looot-mcp)                                               | One key for 2,500+ data endpoints: email, phone, company, SERP, web pages      | TypeScript |
 | [MarkItDown MCP](https://github.com/microsoft/markitdown/tree/main/packages/markitdown-mcp) | Convert PDF, Office, HTML and audio files to Markdown for LLMs                 | Python     |
 | [Meilisearch MCP](https://github.com/meilisearch/meilisearch-mcp)                           | Official Meilisearch index server                                              | Python     |
+| [Nova Research (CIVAI)](https://github.com/civai-technologies/research-agent-mcp-by-nova-civai) | Deep research and report generation over live web search; Nova account required | Remote |
 | [Perplexity MCP](https://github.com/perplexityai/modelcontextprotocol)                      | Official Perplexity search API                                                 | TypeScript |
 | [Recall Kitchen](https://github.com/Recall-Kitchen/rk-mcp)                                  | Search U.S. CPSC, FDA, USDA and NHTSA product recalls by keyword or UPC        | Remote     |
 | [Ref MCP](https://github.com/ref-tools/ref-tools-mcp)                                       | Token-efficient search over public and private technical docs                  | TypeScript |
