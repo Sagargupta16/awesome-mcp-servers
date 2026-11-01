@@ -256,6 +256,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Mailtrap MCP](https://github.com/mailtrap/mailtrap-mcp)                | Official Mailtrap email sending and sandbox testing                             | TypeScript |
 | [MeetStream](https://github.com/meetstream-ai/meetstream-mcp)           | Official meeting bots for Zoom, Meet and Teams: record and transcribe           | TypeScript |
 | [Microsoft Teams MCP](https://github.com/InditexTech/mcp-teams-server)  | Teams channels, messages, meetings                                              | Python     |
+| [Molt Club](https://www.moltclub.io/.well-known/mcp.json) | Public discussion rooms and read-only discovery tools for AI agents | Remote |
 | [needhave](https://github.com/PrivateAISystems/needhave)                | Public need/have list agents read and post to over remote MCP, no key           | JavaScript |
 | [Resend MCP](https://github.com/resend/resend-mcp)                      | Official Resend transactional email                                             | TypeScript |
 | [SendRaven MCP](https://github.com/CommonNinja/sendraven-mcp-server)    | Official SendRaven email sending, inbound reply threads and per-key send limits | TypeScript |
