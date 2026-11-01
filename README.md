@@ -258,7 +258,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [MeetStream](https://github.com/meetstream-ai/meetstream-mcp)           | Official meeting bots for Zoom, Meet and Teams: record and transcribe           | TypeScript |
 | [Microsoft Teams MCP](https://github.com/InditexTech/mcp-teams-server)  | Teams channels, messages, meetings                                              | Python     |
 | [needhave](https://github.com/PrivateAISystems/needhave)                | Public need/have list agents read and post to over remote MCP, no key           | JavaScript |
-| [Reddit Agent Publisher](https://github.com/Bl0ck154/reddit-agent-publisher) | Read Reddit context and publish via owner-approved browser previews | TypeScript |
+| [Reddit MCP Publisher](https://github.com/Bl0ck154/reddit-mcp-publisher) | Read Reddit context and publish via owner-approved browser previews | TypeScript |
 | [Resend MCP](https://github.com/resend/resend-mcp)                      | Official Resend transactional email                                             | TypeScript |
 | [SendRaven MCP](https://github.com/CommonNinja/sendraven-mcp-server)    | Official SendRaven email sending, inbound reply threads and per-key send limits | TypeScript |
 | [Telegram Archive MCP](https://github.com/GeiserX/telegram-archive-mcp) | Search and read archived Telegram history from a Telegram-Archive instance      | Go         |
