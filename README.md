@@ -377,22 +377,23 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 ### Security
 
-| Server                                                                             | Description                                                               | Language   |
-| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ---------- |
-| [Binary Ninja MCP](https://github.com/fosdickio/binary_ninja_mcp)                  | Binary Ninja plugin for LLM-driven binary analysis                        | Python     |
-| [Bitwarden MCP](https://github.com/bitwarden/mcp-server)                           | Official Bitwarden password manager                                       | TypeScript |
-| [Burp AI Agent](https://github.com/six2dez/burp-ai-agent)                          | Burp Suite extension with MCP tooling                                     | Kotlin     |
-| [CrowdStrike Falcon MCP](https://github.com/CrowdStrike/falcon-mcp)                | Official CrowdStrike Falcon threat hunting and detections                 | Python     |
-| [Dark-Moon](https://github.com/ASCIT31/Dark-Moon)                                  | Autonomous pentest platform for web, API, Active Directory and Kubernetes | Python     |
-| [DomScan MCP](https://github.com/estevecastells/domscan-mcp)                       | Domain intelligence: DNS, WHOIS, SSL, subdomains and typosquatting checks | TypeScript |
-| [HashiCorp Vault MCP](https://github.com/hashicorp/vault-mcp-server)               | Official HashiCorp Vault secrets and mounts management                    | Go         |
-| [http-detection-agent](https://github.com/ai-blueteam/http-detection-agent)        | Capability-aware HTTP attack detection over a 76-rule catalog             | Rust       |
-| [IDA Pro MCP](https://github.com/mrexodia/ida-pro-mcp)                             | IDA Pro reverse engineering assistant for LLM clients                     | Python     |
-| [mcp-scan](https://github.com/snyk/agent-scan)                                     | Scans MCP servers for tool poisoning and prompt injection                 | Python     |
-| [radare2 MCP](https://github.com/radareorg/radare2-mcp)                            | Official radare2 reverse engineering stdio server                         | C          |
-| [Semgrep MCP](https://github.com/semgrep/semgrep/tree/develop/cli/src/semgrep/mcp) | Official Semgrep static analysis for vulnerabilities                      | Python     |
-| [Shodan MCP](https://github.com/w0h1v/mcp-shodan)                                  | Shodan device search, IP recon, DNS and CVE intelligence                  | TypeScript |
-| [vet](https://github.com/safedep/vet)                                              | Dependency and malicious package scanning with an MCP server              | Go         |
+| Server                                                                             | Description                                                                                                                                                | Language   |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| [Binary Ninja MCP](https://github.com/fosdickio/binary_ninja_mcp)                  | Binary Ninja plugin for LLM-driven binary analysis                                                                                                         | Python     |
+| [Bitwarden MCP](https://github.com/bitwarden/mcp-server)                           | Official Bitwarden password manager                                                                                                                        | TypeScript |
+| [Burp AI Agent](https://github.com/six2dez/burp-ai-agent)                          | Burp Suite extension with MCP tooling                                                                                                                      | Kotlin     |
+| [CrowdStrike Falcon MCP](https://github.com/CrowdStrike/falcon-mcp)                | Official CrowdStrike Falcon threat hunting and detections                                                                                                  | Python     |
+| [Dark-Moon](https://github.com/ASCIT31/Dark-Moon)                                  | Autonomous pentest platform for web, API, Active Directory and Kubernetes                                                                                  | Python     |
+| [DomScan MCP](https://github.com/estevecastells/domscan-mcp)                       | Domain intelligence: DNS, WHOIS, SSL, subdomains and typosquatting checks                                                                                  | TypeScript |
+| [HashiCorp Vault MCP](https://github.com/hashicorp/vault-mcp-server)               | Official HashiCorp Vault secrets and mounts management                                                                                                     | Go         |
+| [http-detection-agent](https://github.com/ai-blueteam/http-detection-agent)        | Capability-aware HTTP attack detection over a 76-rule catalog                                                                                              | Rust       |
+| [ichi-mcp](https://github.com/bernik-bot/ichi-mcp)                                 | Reads ICHI global threat score, band (NORMAL--CRITICAL), and advisories; no key | Python     |
+| [IDA Pro MCP](https://github.com/mrexodia/ida-pro-mcp)                             | IDA Pro reverse engineering assistant for LLM clients                                                                                                      | Python     |
+| [mcp-scan](https://github.com/snyk/agent-scan)                                     | Scans MCP servers for tool poisoning and prompt injection                                                                                                  | Python     |
+| [radare2 MCP](https://github.com/radareorg/radare2-mcp)                            | Official radare2 reverse engineering stdio server                                                                                                          | C          |
+| [Semgrep MCP](https://github.com/semgrep/semgrep/tree/develop/cli/src/semgrep/mcp) | Official Semgrep static analysis for vulnerabilities                                                                                                       | Python     |
+| [Shodan MCP](https://github.com/w0h1v/mcp-shodan)                                  | Shodan device search, IP recon, DNS and CVE intelligence                                                                                                   | TypeScript |
+| [vet](https://github.com/safedep/vet)                                              | Dependency and malicious package scanning with an MCP server                                                                                               | Go         |
 
 ### Web Browsing & Scraping
 
