@@ -2,6 +2,12 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.10.4] - 2026-11-01
+
+### Added
+
+- Community links the sister list, [Awesome Agent Skills](https://github.com/Sagargupta16/awesome-skills), which lists Agent Skills under the same checks. It already links back here.
+
 ## [2.10.3] - 2026-11-01
 
 ### Fixed
