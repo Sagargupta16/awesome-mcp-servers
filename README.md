@@ -144,6 +144,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [OrcaReplay](https://github.com/Continuum-AI-Corp/OrcaReplay)                                          | Read an agent's own recorded runs and replay them offline with no model call | TypeScript |
 | [Postman MCP](https://github.com/postmanlabs/postman-mcp-server)                                       | Official Postman API collections server                                      | TypeScript |
 | [Probe](https://github.com/probelabs/probe)                                                            | Semantic code search over large codebases with ripgrep and tree-sitter       | Rust       |
+| [remotify-mcp](https://github.com/onlsol/relay.remotify.run)                                           | Run remote shell commands without SSH, with optional human approval          | JavaScript |
 | [Repomix](https://github.com/yamadashy/repomix)                                                        | Packs a repository into an AI-friendly file, with built-in MCP server        | TypeScript |
 | [SandBase Harness](https://github.com/sandbaseai/sandbase-harness)                                     | Self-hosted MCP runtime with sandboxing, permissions and audit replay        | TypeScript |
 | [Sentry MCP](https://github.com/getsentry/toolkit)                                                     | Official Sentry error and performance tracking                               | TypeScript |
