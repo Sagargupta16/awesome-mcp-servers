@@ -379,12 +379,6 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | ------------------------------------------------------------------- | ------------------------------------------------------------------------- | ---------- |
 | [Binary Ninja MCP](https://github.com/fosdickio/binary_ninja_mcp)   | Binary Ninja plugin for LLM-driven binary analysis                        | Python     |
 | [Bitwarden MCP](https://github.com/bitwarden/mcp-server)            | Official Bitwarden password manager                                       | TypeScript |
-| [BountyGuard MCP](https://github.com/doomsday-network/bounty-guard) | Pre-flight prompt injection, CI secret exfiltration & escrow verification | Python     |
-- **[DoomPay MCP](https://github.com/doomsday-network/doom-pay)** - 2-line Stripe-like Web3 checkout widget (`pay.js`) and MCP server for accepting zero-fee `DOOM` (L1) and `wDOOM` (Base Mainnet) payments.
-- **[Web3 Agent Skills MCP](https://github.com/doomsday-network/web3-agent-skills)** - Modular `SKILL.md` skills and MCP tools for AI coding agents to verify Proof-of-Escrow bounties, settle non-custodial Web3 payments, and mine PoW rewards.
-- **[Doomsday Network MCP](https://github.com/doomsday-network/doomsday)** - Layer-1 PoW blockchain, Base Mainnet `wDOOM` (`0x623c84A5E04bF715018203334b0eFE41696eBC3E`) bridge, and Proof-of-Escrow MCP server for autonomous AI agents.
-- **[GitHub Bounty Scanner MCP](https://github.com/doomsday-network/github-bounty-scanner)** - Zero-dependency CLI & MCP tool that scans GitHub bounty repositories and verifies on-chain Proof-of-Escrow collateral before agents invest compute.
-- **[DoomHash GPU/CPU Miner](https://github.com/doomsday-network/cuda-gpu-miner)** - Open-source CUDA, OpenCL, and multi-core CPU Proof-of-Work miner for autonomous AI agents and GPU rigs on the Doomsday Network pool.
 | [Burp AI Agent](https://github.com/six2dez/burp-ai-agent)                          | Burp Suite extension with MCP tooling                                     | Kotlin     |
 | [CrowdStrike Falcon MCP](https://github.com/CrowdStrike/falcon-mcp)                | Official CrowdStrike Falcon threat hunting and detections                 | Python     |
 | [Dark-Moon](https://github.com/ASCIT31/Dark-Moon)                                  | Autonomous pentest platform for web, API, Active Directory and Kubernetes | Python     |
