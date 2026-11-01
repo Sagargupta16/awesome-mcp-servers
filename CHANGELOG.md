@@ -7,6 +7,7 @@ Version headings below are documentation milestones. No git tag or GitHub releas
 ### Fixed
 
 - Removed the 6 Security entries that linked to the `doomsday-network` GitHub account, which no longer exists (every link, and the account itself, answers 404). The dead links had failed the main Link Checker since 2026-10-30, and every submission branch inherited that failure. Five of the six were also bullet lines inside the Security table, which split it.
+- The link check accepts HTTP 405. A remote MCP endpoint refuses a plain GET, so BirkinBagStock's live `/mcp` (200 to an MCP `initialize` POST) failed the check as a dead link.
 
 ## [2.10.2] - 2026-10-25
 
