@@ -2,6 +2,12 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.10.3] - 2026-11-01
+
+### Fixed
+
+- Removed the 6 Security entries that linked to the `doomsday-network` GitHub account, which no longer exists (every link, and the account itself, answers 404). The dead links had failed the main Link Checker since 2026-10-30, and every submission branch inherited that failure. Five of the six were also bullet lines inside the Security table, which split it.
+
 ## [2.10.2] - 2026-10-25
 
 ### Fixed
