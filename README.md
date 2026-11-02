@@ -314,6 +314,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Coinbase MCP](https://github.com/coinbase/agentkit)                                           | Coinbase crypto trading and wallet                                            | TypeScript |
 | [DSCR Loan Calculator MCP](https://github.com/theluckystrike/dscr-loan-calculator-mcp) | DSCR, max loan, rent needed and amortization for rental property loans | TypeScript |
 | [Equibles](https://equibles.com/mcp)                                                           | SEC filings, XBRL financials, earnings calls, insider trades and 13F holdings | Remote     |
+| [Estate and Gift Tax Exemption Calculator MCP](https://github.com/theluckystrike/estate-gift-tax-exemption-calculator-mcp) | Federal estate and gift tax exemption 2025-2026, $15M amount, gift checks | TypeScript |
 | [Fair Value Calculator](https://www.fairvalue-calculator.com/integrations)                     | Stock fair values, quality scores, screening and watchlist alerts             | Remote     |
 | [Financial Modeling Prep MCP](https://github.com/imbenrabi/Financial-Modeling-Prep-MCP-Server) | FMP market data and fundamentals                                              | TypeScript |
 | [Gold Price Per Gram MCP](https://github.com/theluckystrike/gold-price-per-gram-mcp) | Live 24K to 9K gold price per gram in any currency, melt value and tola units | TypeScript |
@@ -335,6 +336,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Student Loan Repayment Assistance Plan Calculator MCP](https://github.com/theluckystrike/student-loan-repayment-assistance-plan-calculator-mcp) | Federal student loan RAP payments, loan limits and SAVE dates | TypeScript |
 | [TWZRD Agent Intel](https://github.com/twzrd-sol/twzrd-trust)                                  | Solana on-chain wallet trust scoring for agents before x402 micropayments     | Remote     |
 | [UK Income Tax Salary MCP](https://github.com/theluckystrike/uk-income-tax-salary-mcp) | UK take-home pay 2025/26 and 2026/27 with Scottish bands, NI and student loans | TypeScript |
+| [UK Statutory Sick Pay and Maternity Pay Calculator MCP](https://github.com/theluckystrike/uk-statutory-sick-pay-maternity-pay-calculator-mcp) | UK SSP after the April 2026 reform, maternity pay and minimum wage | TypeScript |
 | [Xero MCP](https://github.com/XeroAPI/xero-mcp-server)                                         | Official Xero server for invoices, contacts, accounts and payroll             | TypeScript |
 | [Yahoo Finance MCP](https://github.com/Alex2Yang97/yahoo-finance-mcp)                          | Stock data and financial info                                                 | Python     |
 | [Zerodha Kite MCP](https://github.com/zerodha/kite-mcp-server)                                 | Official Zerodha Kite server for Indian holdings, orders and quotes           | Go         |
