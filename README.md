@@ -337,6 +337,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [TWZRD Agent Intel](https://github.com/twzrd-sol/twzrd-trust)                                  | Solana on-chain wallet trust scoring for agents before x402 micropayments     | Remote     |
 | [UK Income Tax Salary MCP](https://github.com/theluckystrike/uk-income-tax-salary-mcp) | UK take-home pay 2025/26 and 2026/27 with Scottish bands, NI and student loans | TypeScript |
 | [UK Statutory Sick Pay and Maternity Pay Calculator MCP](https://github.com/theluckystrike/uk-statutory-sick-pay-maternity-pay-calculator-mcp) | UK SSP after the April 2026 reform, maternity pay and minimum wage | TypeScript |
+| [Verif Entreprise FR](https://github.com/YILDIZ-TOLGA/verif-entreprise-mcp) | French company KYB by SIREN: status, insolvency, RGE, LEI, asset freeze | JavaScript |
 | [Xero MCP](https://github.com/XeroAPI/xero-mcp-server)                                         | Official Xero server for invoices, contacts, accounts and payroll             | TypeScript |
 | [Yahoo Finance MCP](https://github.com/Alex2Yang97/yahoo-finance-mcp)                          | Stock data and financial info                                                 | Python     |
 | [Zerodha Kite MCP](https://github.com/zerodha/kite-mcp-server)                                 | Official Zerodha Kite server for Indian holdings, orders and quotes           | Go         |
