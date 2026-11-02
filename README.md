@@ -305,6 +305,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 | Server                                                                                         | Description                                                                   | Language   |
 | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------- |
+| [ACA Premium Tax Credit Calculator MCP](https://github.com/theluckystrike/aca-premium-tax-credit-calculator-mcp) | ACA premium tax credit 2025-2026, poverty lines and the 400% FPL cliff | TypeScript |
 | [Adyen MCP](https://github.com/Adyen/adyen-mcp)                                                | Official Adyen server for checkout, configuration and management APIs         | TypeScript |
 | [Agent Payment Node](https://github.com/nuanu-ai/agent-payment-node)                           | Local MCP payments on Apple Silicon macOS with foreground owner approval      | TypeScript |
 | [aikstockdata](https://aikstockdata.com/en/mcp)                                                | Korean listed-company closing prices, DART filings and earnings, no API key   | JavaScript |
@@ -331,6 +332,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Section 179 Deduction Calculator MCP](https://github.com/theluckystrike/section-179-deduction-calculator-mcp) | Section 179 deduction, 100% bonus depreciation, heavy SUV limits and loan cost | TypeScript |
 | [Square MCP](https://developer.squareup.com/docs/mcp)                                          | Official hosted Square server for payments, catalog and orders, OAuth login   | Remote     |
 | [Stripe MCP](https://github.com/stripe/ai)                                                     | Stripe payments and billing                                                   | TypeScript |
+| [Student Loan Repayment Assistance Plan Calculator MCP](https://github.com/theluckystrike/student-loan-repayment-assistance-plan-calculator-mcp) | Federal student loan RAP payments, loan limits and SAVE dates | TypeScript |
 | [TWZRD Agent Intel](https://github.com/twzrd-sol/twzrd-trust)                                  | Solana on-chain wallet trust scoring for agents before x402 micropayments     | Remote     |
 | [UK Income Tax Salary MCP](https://github.com/theluckystrike/uk-income-tax-salary-mcp) | UK take-home pay 2025/26 and 2026/27 with Scottish bands, NI and student loans | TypeScript |
 | [Xero MCP](https://github.com/XeroAPI/xero-mcp-server)                                         | Official Xero server for invoices, contacts, accounts and payroll             | TypeScript |
