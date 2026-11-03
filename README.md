@@ -318,6 +318,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [DSCR Loan Calculator MCP](https://github.com/theluckystrike/dscr-loan-calculator-mcp) | DSCR, max loan, rent needed and amortization for rental property loans | TypeScript |
 | [Equibles](https://equibles.com/mcp)                                                           | SEC filings, XBRL financials, earnings calls, insider trades and 13F holdings | Remote     |
 | [Estate and Gift Tax Exemption Calculator MCP](https://github.com/theluckystrike/estate-gift-tax-exemption-calculator-mcp) | Federal estate and gift tax exemption 2025-2026, $15M amount, gift checks | TypeScript |
+| [FactLot](https://github.com/9mp96ygnbk-alt/factlot) | Commercial real estate calculators with audit trails, IDs and fact validation | TypeScript |
 | [Fair Value Calculator](https://www.fairvalue-calculator.com/integrations)                     | Stock fair values, quality scores, screening and watchlist alerts             | Remote     |
 | [Financial Modeling Prep MCP](https://github.com/imbenrabi/Financial-Modeling-Prep-MCP-Server) | FMP market data and fundamentals                                              | TypeScript |
 | [Gold Price Per Gram MCP](https://github.com/theluckystrike/gold-price-per-gram-mcp) | Live 24K to 9K gold price per gram in any currency, melt value and tola units | TypeScript |
