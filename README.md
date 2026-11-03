@@ -80,6 +80,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [DC Hub](https://github.com/azmartone67/dchub-mcp-server)                                  | Daily grid-power scores (DCPI) for data-center site selection in 300+ markets   | JavaScript |
 | [Elasticsearch MCP](https://github.com/elastic/mcp-server-elasticsearch)                   | Official Elasticsearch query interface                                          | Rust       |
 | [GCP MCP Toolbox](https://github.com/googleapis/mcp-toolbox)                               | Official Google DB toolbox (PostgreSQL, MySQL, Spanner)                         | Go         |
+| [Gov Tenders MCP](https://github.com/GeminiGeorge22/gov-tenders-mcp)                       | Public tenders, grants and awards from SAM.gov, EU TED, Find a Tender and more  | JavaScript |
 | [Invokely MCP Connector](https://github.com/estevecastells/invokely-mcp-connector)         | Local stdio adapter for Invokely's hosted official statistics MCP service       | JavaScript |
 | [MCP Alchemy](https://github.com/runekaagaard/mcp-alchemy)                                 | SQLAlchemy-backed access to SQLite, PostgreSQL, MySQL, Oracle and MS-SQL        | Python     |
 | [Memgraph MCP](https://github.com/memgraph/ai-toolkit/tree/main/integrations/mcp-memgraph) | Official Memgraph graph database Cypher queries and schema                      | Python     |
