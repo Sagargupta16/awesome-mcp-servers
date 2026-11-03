@@ -426,6 +426,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Crawl4AI](https://github.com/unclecode/crawl4ai)                           | LLM-friendly web crawler and scraper with built-in MCP endpoints                 | Python     |
 | [Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server)          | Official Firecrawl web scraping and search                                       | TypeScript |
 | [Jina AI MCP](https://github.com/jina-ai/MCP)                               | Official Jina AI web reader, search, and content reranking                       | TypeScript |
+| [ReadGZH](https://github.com/sweesama/readgzh)                               | Turn public WeChat Official Account articles into AI-readable pages via MCP | TypeScript |
 | [ScraperSocial](https://scrapersocial.com/mcp/)                             | Public social media profiles, posts, comments and transcripts from 30+ platforms | Remote     |
 | [Skyvern](https://github.com/Skyvern-AI/skyvern/tree/main/integrations/mcp) | Browser workflow automation via LLMs and computer vision, over MCP               | Python     |
 | [Xquik MCP](https://github.com/Xquik-dev/x-twitter-scraper)                 | X/Twitter search, profile tweets, posting, and media tools                       | TypeScript |
@@ -714,3 +715,4 @@ A remote server. `type` is not optional here: an entry with a `url` and no `type
 ```
 
 Where that JSON lives, and which extra keys it takes, differs per client -- check your own client's docs. The protocol's [guide to connecting a local server](https://modelcontextprotocol.io/docs/develop/connect-local-servers) walks through the stdio case, and each server's README lists the arguments, tokens and environment variables it expects.
+
