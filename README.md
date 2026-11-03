@@ -372,6 +372,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Blender MCP](https://github.com/ahujasid/mcp-for-blender)                      | Control Blender 3D modeling from AI assistants                        | Python     |
 | [ComfyUI MCP](https://github.com/artokun/comfyui-mcp)                           | Run and author ComfyUI workflows for image, video, and audio          | TypeScript |
 | [DaVinci Resolve MCP](https://github.com/samuelgursky/davinci-resolve-mcp)      | Control DaVinci Resolve editing, color grading, and project media     | Python     |
+| [design:os 3D Blender MCP](https://github.com/jangtrinh/design-os-3d-blender) | Free, source-available (PolyForm Shield) MCP to model and render 3D in Blender | Python |
 | [designlang](https://github.com/Manavarya09/design-extract)                     | Extract a website's design system into DTCG tokens and framework code | JavaScript |
 | [Excalidraw MCP](https://github.com/yctimlin/mcp_excalidraw)                    | Create and edit Excalidraw diagrams on a live canvas                  | TypeScript |
 | [Figma Context MCP](https://github.com/GLips/Figma-Context-MCP)                 | Figma layouts for AI coding agents (Framelink)                        | TypeScript |
