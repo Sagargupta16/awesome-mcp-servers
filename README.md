@@ -472,6 +472,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [BuyWhere MCP](https://github.com/BuyWhere/buywhere-mcp)                        | Hosted shopping MCP for product search and price comparison across 80+ countries | Remote     |
 | [commercetools MCP Essentials](https://github.com/commercetools/mcp-essentials) | Official commercetools server for products, carts, orders and customers          | TypeScript |
 | [eBay MCP](https://github.com/YosefHayim/ebay-mcp)                              | 325 tools for eBay Sell APIs                                                     | TypeScript |
+| [Etsy Sales MCP](https://github.com/GeminiGeorge22/etsy-sales-mcp)              | Etsy search results plus daily sales counts and growth for Etsy shops            | JavaScript |
 | [Packrift MCP](https://github.com/Packrift/packrift-mcp)                        | Packaging catalog search, pricing, inventory, and cart URLs                      | TypeScript |
 | [Saleor MCP](https://github.com/saleor/saleor-mcp)                              | Official Saleor server for products, orders, customers and channels              | Python     |
 | [Zaptu](https://zaptu.ai/agents/)                                               | US home-service contact requests (cleaning, pest, plumbing calls), not a booking | Remote     |
