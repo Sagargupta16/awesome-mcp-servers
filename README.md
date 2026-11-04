@@ -537,6 +537,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Salesforce MCP](https://github.com/salesforcecli/mcp)                              | Official Salesforce CLI MCP                                                      | TypeScript |
 | [UnrealUGC MCP](https://github.com/UnrealUGC/mcp)                                   | Create AI UGC video ads through the UnrealUGC platform                           | TypeScript |
 | [Watchr](https://github.com/getwatchr/watchr-mcp) | Query competitor signals, insights and reports in a Watchr workspace | Remote |
+| [Vaneform](https://github.com/jiangqizheng/vaneform-mcp) | Free website traffic lookup (visits, trends, channel mix) via hosted MCP | Remote |
 
 ### Knowledge Management
 
