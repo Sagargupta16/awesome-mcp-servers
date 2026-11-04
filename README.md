@@ -221,6 +221,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [AgentSearch MCP](https://github.com/agentsearchhq-coder/agentsearch-mcp)                   | Web search, URL-to-Markdown extraction and JS page rendering; keyless free tier | TypeScript |
 | [AP Score Distributions MCP](https://github.com/theluckystrike/ap-score-distributions-mcp) | Official College Board AP score distributions, percentiles and pass rates | TypeScript |
 | [Apify MCP](https://github.com/apify/apify-mcp-server)                                      | Web scraping actors and automation                                              | TypeScript |
+| [Arcmira](https://arcmira.com/docs/mcp-server) | Search YouTube and podcast transcripts for timestamped quotes and speakers | Remote |
 | [arXiv MCP](https://github.com/blazickjp/arxiv-mcp-server)                                  | Search arXiv papers and read full LaTeX sections                                | Python     |
 | [ATS Jobs MCP](https://github.com/GeminiGeorge22/ats-jobs-mcp)                              | New job postings from Ashby, Greenhouse, Lever and SmartRecruiters boards       | JavaScript |
 | [BORME API](https://github.com/bormeapi/borme-mcp)                                          | Spain's company registry gazette (BORME): 9.6M+ events since 2009               | Remote     |
