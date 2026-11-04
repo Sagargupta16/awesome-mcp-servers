@@ -333,6 +333,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [QuickBooks MCP](https://github.com/intuit/quickbooks-online-mcp-server)                       | Official Intuit QuickBooks Online                                             | TypeScript |
 | [Razorpay MCP](https://github.com/razorpay/razorpay-mcp-server)                                | Official Razorpay server for payments, orders, refunds and settlements        | Go         |
 | [Retirement Contribution Limits 2027 MCP](https://github.com/theluckystrike/retirement-contribution-limits-2027-mcp) | 401k, IRA and HSA limits 2025-2027, age 60-63 catch-up and Social Security COLA | TypeScript |
+| [Rugsight](https://github.com/rugsightapp/rugsight) | Solana token rug-risk scores (free) and full reports paid per call via x402 | TypeScript |
 | [SEC EDGAR MCP](https://github.com/stefanoamorelli/sec-edgar-mcp)                              | Query SEC EDGAR filings, XBRL financials and company facts                    | Python     |
 | [Section 179 Deduction Calculator MCP](https://github.com/theluckystrike/section-179-deduction-calculator-mcp) | Section 179 deduction, 100% bonus depreciation, heavy SUV limits and loan cost | TypeScript |
 | [Square MCP](https://developer.squareup.com/docs/mcp)                                          | Official hosted Square server for payments, catalog and orders, OAuth login   | Remote     |
