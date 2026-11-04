@@ -477,6 +477,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [brianbooms-mcp](https://github.com/brianbooms/brianbooms-mcp)                  | Buy digital products with USDC micropayments on Base, via x402                   | Python     |
 | [BuyWhere MCP](https://github.com/BuyWhere/buywhere-mcp)                        | Hosted shopping MCP for product search and price comparison across 80+ countries | Remote     |
 | [commercetools MCP Essentials](https://github.com/commercetools/mcp-essentials) | Official commercetools server for products, carts, orders and customers          | TypeScript |
+| [E-commerce Sales MCP](https://github.com/GeminiGeorge22/ecommerce-sales-mcp) | Amazon bestsellers and reviews, eBay sold prices, TikTok Shop and Etsy sales | Python |
 | [eBay MCP](https://github.com/YosefHayim/ebay-mcp)                              | 325 tools for eBay Sell APIs                                                     | TypeScript |
 | [Etsy Sales MCP](https://github.com/GeminiGeorge22/etsy-sales-mcp)              | Etsy search results plus daily sales counts and growth for Etsy shops            | JavaScript |
 | [Packrift MCP](https://github.com/Packrift/packrift-mcp)                        | Packaging catalog search, pricing, inventory, and cart URLs                      | TypeScript |
