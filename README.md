@@ -518,6 +518,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Ahel](https://github.com/ahel-technologies/ahel) | Company, people, SEO, social and EU register data for agents, pay per call | Remote |
 | [AltoRank](https://github.com/AltoRank/altorank)                                    | SEO audits, Search Console, keyword research and drafts into a review queue      | TypeScript |
 | [BulkPublish MCP](https://github.com/azeemkafridi/bulkpublish-api)                  | AI-agent API and MCP server for multi-platform social publishing and analytics   | TypeScript |
+| [Company Social MCP](https://github.com/GeminiGeorge22/company-social-mcp)          | Company domain or name to LinkedIn, X, YouTube, Instagram and Facebook links     | Python     |
 | [CorpusIQ](https://docs.corpusiq.io/mcp) | Read-only queries across 40+ business platforms through one OAuth | Remote |
 | [DataForSEO MCP](https://github.com/dataforseo/mcp-server-typescript)               | Official DataForSEO server for SERP, keyword and backlink data                   | TypeScript |
 | [FalcoScan MCP](https://github.com/nyachisn/falcoscan-mcp)                          | Look up AI products, markets, rivals and shutdowns (FalcoScan API key)           | JavaScript |
