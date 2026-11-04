@@ -443,6 +443,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Ableton MCP](https://github.com/ahujasid/ableton-mcp)                                  | Control Ableton Live sessions, tracks, clips, and MIDI from an agent | Python     |
 | [Arr MCP](https://github.com/aplaceforallmystuff/mcp-arr)                               | Manage Sonarr, Radarr, and other arr media library services          | TypeScript |
 | [MiniMax MCP](https://github.com/MiniMax-AI/MiniMax-MCP)                                | Generate speech, music, images, and video with MiniMax models        | Python     |
+| [Sports Betting Stats MCP](https://github.com/GeminiGeorge22/sports-betting-stats-mcp) | Sportsbook odds, player props, scores, xG, closing lines and horse racing | Python |
 | [Sports Odds MCP](https://github.com/GeminiGeorge22/sports-odds-mcp)                    | Live odds from Kambi sportsbooks with every book's price per outcome | JavaScript |
 | [Spotify Play Count MCP](https://github.com/GeminiGeorge22/spotify-play-count-mcp)      | Spotify play counts per track, plus artist monthly listeners         | Python     |
 | [TMDB MCP](https://github.com/Laksh-star/mcp-server-tmdb)                               | The Movie Database (TMDB)                                            | TypeScript |
