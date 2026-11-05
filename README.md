@@ -138,6 +138,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [mcp-proxy](https://github.com/sparfenyuk/mcp-proxy)                                                   | Bridge between Streamable HTTP and stdio MCP transports                      | Python     |
 | [mcp-remote](https://github.com/punkpeye/mcp-remote)                                                   | Bridge stdio-only MCP clients to remote HTTP or SSE servers                  | TypeScript |
 | [mcpo](https://github.com/open-webui/mcpo)                                                             | MCP-to-OpenAPI proxy that exposes MCP servers as REST endpoints              | Python     |
+| [mcpserverlist-mcp](https://github.com/sudomichael/mcpserverlist-mcp) | Check if your MCP server is ready for MCP directories, then get it submitted | Remote |
 | [MetaMCP](https://github.com/metatool-ai/metamcp)                                                      | MCP aggregator, orchestrator and gateway in one container                    | TypeScript |
 | [n8n MCP](https://github.com/czlonkowski/n8n-mcp)                                                      | Node docs and workflow building for n8n automations                          | TypeScript |
 | [Nx MCP](https://github.com/nrwl/nx-console/tree/master/apps/nx-mcp)                                   | Official Nx monorepo workspace graph and generator context server            | TypeScript |
