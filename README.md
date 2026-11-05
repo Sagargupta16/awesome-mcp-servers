@@ -518,6 +518,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | Server                                                                              | Description                                                                      | Language   |
 | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ---------- |
 | [A/B Test Sample Size Calculator MCP](https://github.com/theluckystrike/ab-test-sample-size-calculator-mcp) | A/B test sample size, duration, z-test, chi-square and Fisher exact tests | TypeScript |
+| [AgentSEO](https://www.agentseo.dev/seo-mcp-server) | Keyword research, SERP analysis, rank tracking and AI visibility for SEO and AEO | Remote |
 | [Ahel](https://github.com/ahel-technologies/ahel) | Company, people, SEO, social and EU register data for agents, pay per call | Remote |
 | [AltoRank](https://github.com/AltoRank/altorank)                                    | SEO audits, Search Console, keyword research and drafts into a review queue      | TypeScript |
 | [BulkPublish MCP](https://github.com/azeemkafridi/bulkpublish-api)                  | AI-agent API and MCP server for multi-platform social publishing and analytics   | TypeScript |
