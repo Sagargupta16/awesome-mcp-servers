@@ -381,6 +381,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Houdini MCP](https://github.com/capoomgit/houdini-mcp)                         | Build and modify SideFX Houdini scenes and nodes                      | Python     |
 | [House AI](https://github.com/Apex-Byte-Technologies/house-ai-mcp)              | Redesign rooms, exteriors and yards from a photo, then shop the look  | Remote     |
 | [Kleap](https://github.com/kleaphq/cli)                                         | Official Kleap server for creating, editing and publishing websites   | JavaScript |
+| [Model Salt](https://github.com/modelsalt/model-salt) | Vary creative answers with outside randomness, same prompt | JavaScript |
 | [MuAPI MCP](https://github.com/SamurAIGPT/muapi-mcp-server)                     | Image, video and audio generation across 100+ generative AI models    | Python     |
 | [OrkasVideoStudio](https://github.com/Orkas-AI/Orkas-VideoStudio)               | Compose, edit, analyze, and render video from coding agents           | TypeScript |
 | [Photoshop MCP](https://github.com/loonghao/photoshop-python-api-mcp-server)    | Adobe Photoshop automation                                            | Python     |
