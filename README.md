@@ -316,6 +316,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [RunAPI MCP](https://github.com/runapi-ai/mcp)                                                         | Model discovery, pricing lookup, task creation, and LLM chat                | TypeScript |
 | [SandBase CLI](https://github.com/sandbaseai/cli)                                                      | Local MCP gateway for discovering and running 2,000+ AI models via one API  | TypeScript |
 | [Weights & Biases MCP](https://github.com/wandb/wandb-mcp-server)                                      | Official W&B Models + Weave                                                 | Python     |
+| [Zambo](https://zambo.dev/mcp) | Remote MCP server: 153 tools, cross-AI continuity, AER-1 receipt per job | Remote |
 
 ### Finance
 
