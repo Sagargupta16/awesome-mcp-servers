@@ -205,6 +205,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [NeverApply](https://neverapply.co/features/mcp)                                                  | Search jobs, tailor resumes and apply to jobs with your approval over OAuth    | Remote     |
 | [Nextcloud MCP](https://github.com/cbcoutinho/nextcloud-mcp-server)                               | Nextcloud Notes, Files, Calendar, Tasks, Deck and Talk access                  | Python     |
 | [Notion MCP](https://github.com/makenotion/notion-mcp-server)                                     | Official Notion API integration                                                | TypeScript |
+| [OpenFile](https://joinopenfile.com/docs/mcp)                                                     | Form U.S. companies and file U.S. trademarks, with live USPTO search           | Remote     |
 | [Orbit MCP](https://github.com/Noveum/orbit)                                                      | Manage issues, projects, sprints and docs with workspace-scoped OAuth          | TypeScript |
 | [Plane MCP](https://github.com/makeplane/plane-mcp-server)                                        | Official Plane projects, work items and cycles automation                      | Python     |
 | [Slack MCP](https://github.com/korotovsky/slack-mcp-server)                                       | Slack workspace integration                                                    | Go         |
