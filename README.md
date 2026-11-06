@@ -237,6 +237,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Exa MCP](https://github.com/exa-labs/exa-mcp-server)                                       | Exa AI-powered search                                                           | TypeScript |
 | [Kagi MCP](https://github.com/kagisearch/kagimcp)                                           | Official Kagi search API                                                        | Python     |
 | [Keenable MCP](https://github.com/keenableai/keenable-mcp) | Web search and page fetch as clean markdown, keyless public tier | JavaScript |
+| [JobsPipe](https://docs.jobspipe.dev/ai-agents/mcp) | Search live job postings from 30+ ATS feeds and job boards | Remote |
 | [looot](https://github.com/loootai/looot-mcp)                                               | One key for 2,500+ data endpoints: email, phone, company, SERP, web pages       | TypeScript |
 | [MarkItDown MCP](https://github.com/microsoft/markitdown/tree/main/packages/markitdown-mcp) | Convert PDF, Office, HTML and audio files to Markdown for LLMs                  | Python     |
 | [Meilisearch MCP](https://github.com/meilisearch/meilisearch-mcp)                           | Official Meilisearch index server                                               | Python     |
