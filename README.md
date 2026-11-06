@@ -474,6 +474,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [slonce.info.pl](https://slonce.info.pl/en/for-ai)                             | Sunrise, sunset, twilight, golden hour and moon phases for any place            | Remote     |
 | [StayingAPI](https://github.com/stayingapi/hotel-mcp)                          | Accommodation data from Airbnb, Booking.com, Vrbo, and Google Hotels            | TypeScript |
 | [TomTom MCP](https://github.com/tomtom-international/tomtom-maps-mcp)          | Official TomTom maps, search, routing, and traffic APIs                         | TypeScript |
+| [Wheremind](https://wheremind.ai/maps-mcp)                                     | Hosted places search, geocoding, nearby search and directions for AI agents     | Remote     |
 
 ### E-commerce
 
