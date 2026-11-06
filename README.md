@@ -210,6 +210,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Slack MCP](https://github.com/korotovsky/slack-mcp-server)                                       | Slack workspace integration                                                    | Go         |
 | [Tale](https://github.com/tale-project/tale)                                                      | Author and run Tale automations, inspect runs and query workspace knowledge    | Built-in   |
 | [Trello MCP](https://github.com/delorenj/mcp-server-trello)                                       | Trello boards, lists, cards                                                    | TypeScript |
+| [urlhub](https://urlhub.cloud/docs?lang=en)                                                       | Turn many links into one short shareable link with a QR code                   | Remote     |
 | [US Federal Holidays Business Days MCP](https://github.com/theluckystrike/us-federal-holidays-business-days-mcp) | Exact US business days, OPM and Federal Reserve holidays and invoice due dates | TypeScript |
 | [Worklittle Jobs](https://docs.worklittle.com/mcp)                                                | Search 4M+ jobs with visa, salary and distance filters, and apply from chat    | Remote     |
 | [Zovo Time Tracker](https://github.com/theluckystrike/mcp-servers/tree/main/servers/time-tracker) | Log hours per client and project, with daily and weekly reports and CSV export | TypeScript |
@@ -251,6 +252,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [SerpAPI MCP](https://github.com/serpapi/serpapi-mcp)                                       | Official SerpAPI Google search results                                          | Python     |
 | [Statsnet](https://github.com/usenetstate/statsnet-mcp)                                     | Company background checks: registration, executives, courts and finances        | Remote     |
 | [Tavily MCP](https://github.com/tavily-ai/tavily-mcp)                                       | Tavily AI search for agents                                                     | JavaScript |
+| [zodiak.info.pl](https://zodiak.info.pl/dla-ai)                                             | Astrology from astronomy: birth charts, transits, synastry, Vedic chart         | Remote     |
 
 ### Communication
 
@@ -460,6 +462,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Cesium MCP](https://github.com/CesiumGS/cesium-ai-integrations/tree/main/mcp) | Official Cesium 3D geospatial and geolocation MCP servers                       | TypeScript |
 | [GIS MCP](https://github.com/mahdin75/gis-mcp)                                 | Geospatial analysis via GDAL, Shapely, GeoPandas, and PyProj                    | Python     |
 | [Google Maps MCP](https://github.com/cablate/mcp-google-map)                   | Google Maps API with LLM processing                                             | TypeScript |
+| [kosmos.info.pl](https://kosmos.info.pl/en/for-ai)                             | Skywatching in Poland: clouds, ISS passes, aurora, planets, meteors, APOD       | Remote     |
 | [Lake Level MCP](https://github.com/theluckystrike/lake-level-mcp)             | Live US lake and reservoir levels from USGS, USACE, CDEC, USBR and TWDB gauges  | TypeScript |
 | [Mapbox MCP](https://github.com/mapbox/mcp-server)                             | Official Mapbox geocoding, POI search, directions, and isochrones               | TypeScript |
 | [MAQAMI Travel](https://github.com/negm17111995/mcp-server)                    | Search 3M+ hotels and flights with live rates, then check out on book.maqami.co | JavaScript |
@@ -467,6 +470,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Pumperly MCP](https://github.com/GeiserX/pumperly-mcp)                        | Fuel prices, nearby stations and route planning via Pumperly                    | Go         |
 | [Rolês em SP](https://rolesemsp.com.br/connect.md)                             | Discover cultural outings, events, and leisure activities across São Paulo      | Remote     |
 | [SkyAccess](https://github.com/sky-access/skyaccess-mcp)                       | Search 5,000+ live empty leg flights, get charter estimates and booking links   | Remote     |
+| [slonce.info.pl](https://slonce.info.pl/en/for-ai)                             | Sunrise, sunset, twilight, golden hour and moon phases for any place            | Remote     |
 | [StayingAPI](https://github.com/stayingapi/hotel-mcp)                          | Accommodation data from Airbnb, Booking.com, Vrbo, and Google Hotels            | TypeScript |
 | [TomTom MCP](https://github.com/tomtom-international/tomtom-maps-mcp)          | Official TomTom maps, search, routing, and traffic APIs                         | TypeScript |
 
