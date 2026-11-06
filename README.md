@@ -243,6 +243,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Drug Shortage List MCP](https://github.com/theluckystrike/drug-shortage-list-mcp)                   | FDA drug shortage lookup by name or NDC from openFDA                             | TypeScript |
 | [DuckDuckGo MCP](https://github.com/nickclyde/duckduckgo-mcp-server)                                 | DuckDuckGo search with content fetching                                          | Python     |
 | [Exa MCP](https://github.com/exa-labs/exa-mcp-server)                                                | Exa AI-powered search                                                            | TypeScript |
+| [Folklore MCP](https://github.com/helena-bioinformatics/folklore-mcp)                                | Folklore MCP 2.0.0 for ACMG/AMP classification, genes and literature             | Python     |
 | [JobsPipe](https://docs.jobspipe.dev/ai-agents/mcp)                                                  | Search live job postings from 30+ ATS feeds and job boards                       | Remote     |
 | [Kagi MCP](https://github.com/kagisearch/kagimcp)                                                    | Official Kagi search API                                                         | Python     |
 | [Keenable MCP](https://github.com/keenableai/keenable-mcp)                                           | Web search and page fetch as clean markdown, keyless public tier                 | JavaScript |
@@ -316,7 +317,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [RunAPI MCP](https://github.com/runapi-ai/mcp)                                                         | Model discovery, pricing lookup, task creation, and LLM chat                | TypeScript |
 | [SandBase CLI](https://github.com/sandbaseai/cli)                                                      | Local MCP gateway for discovering and running 2,000+ AI models via one API  | TypeScript |
 | [Weights & Biases MCP](https://github.com/wandb/wandb-mcp-server)                                      | Official W&B Models + Weave                                                 | Python     |
-| [Zambo](https://zambo.dev/mcp) | Remote MCP server: 153 tools, cross-AI continuity, AER-1 receipt per job | Remote |
+| [Zambo](https://zambo.dev/mcp)                                                                         | Remote MCP server: 153 tools, cross-AI continuity, AER-1 receipt per job    | Remote     |
 
 ### Finance
 
