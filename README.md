@@ -184,98 +184,98 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 ### Productivity
 
-| Server                                                                                            | Description                                                                    | Language   |
-| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ---------- |
-| [AI Tasker](https://ai-tasker.theboomer.dev)                                                      | Hosted task, workspace, and agent coordination for AI teams                    | Remote     |
-| [Aident Loadout](https://github.com/Aident-AI/aident-skill)                                       | Connect agents to 1000+ apps via one remote MCP with Vault                     | Remote     |
-| [Airtable MCP](https://github.com/domdomegg/airtable-mcp-server)                                  | Airtable base read/write                                                       | TypeScript |
-| [Asana MCP](https://github.com/roychri/mcp-server-asana)                                          | Asana tasks, projects, workspaces                                              | TypeScript |
-| [CareClinic](https://careclinic.io/careclinic-mcp/)                                               | Read medication schedules, symptoms and moods, and save confirmed check-ins    | Remote     |
-| [Clera](https://www.getclera.com/mcp)                                                             | Search vetted startup candidates, review role matches and request intros       | Remote     |
-| [Excel MCP](https://github.com/haris-musa/excel-mcp-server)                                       | Read, write and format Excel workbooks without Excel installed                 | Python     |
-| [fitlog-mcp](https://github.com/hahahahahahahahah6/fitlog-mcp)                                    | Self-hosted MCP server giving Alexa+ a memory for training                     | Python     |
-| [Google Calendar MCP](https://github.com/nspady/google-calendar-mcp)                              | Google Calendar management                                                     | TypeScript |
-| [Google Workspace MCP](https://github.com/taylorwilsdon/google_workspace_mcp)                     | Gmail, Calendar, Docs, Sheets, Slides, Chat, Forms and Tasks in one server     | Python     |
-| [iMCP](https://github.com/mattt/iMCP)                                                             | Exposes macOS Messages, Contacts, Calendar and Reminders to agents             | Swift      |
-| [Make MCP](https://github.com/integromat/make-mcp-server)                                         | Official Make server turning scenarios into callable agent tools               | TypeScript |
-| [Microsoft 365 MCP](https://github.com/Softeria/ms-365-mcp-server)                                | Full M365 suite (Outlook, OneDrive, Teams, Excel)                              | TypeScript |
-| [MindMap AI](https://github.com/MindMap-AI/mcp)                                                   | Create and edit visual mind maps from MCP-compatible AI assistants             | TypeScript |
-| [monday.com MCP](https://github.com/mondaycom/mcp)                                                | Official monday.com boards, items and workspace automation                     | TypeScript |
-| [Muslim Prayer Reminder MCP](https://github.com/tareq7/muslim-prayer-mcp)                         | Calculate regional prayer times and next-prayer countdowns                     | TypeScript |
-| [NeverApply](https://neverapply.co/features/mcp)                                                  | Search jobs, tailor resumes and apply to jobs with your approval over OAuth    | Remote     |
-| [Nextcloud MCP](https://github.com/cbcoutinho/nextcloud-mcp-server)                               | Nextcloud Notes, Files, Calendar, Tasks, Deck and Talk access                  | Python     |
-| [Notion MCP](https://github.com/makenotion/notion-mcp-server)                                     | Official Notion API integration                                                | TypeScript |
-| [OpenFile](https://joinopenfile.com/docs/mcp)                                                     | Form U.S. companies and file U.S. trademarks, with live USPTO search           | Remote     |
-| [Orbit MCP](https://github.com/Noveum/orbit)                                                      | Manage issues, projects, sprints and docs with workspace-scoped OAuth          | TypeScript |
-| [Plane MCP](https://github.com/makeplane/plane-mcp-server)                                        | Official Plane projects, work items and cycles automation                      | Python     |
-| [Slack MCP](https://github.com/korotovsky/slack-mcp-server)                                       | Slack workspace integration                                                    | Go         |
-| [Tale](https://github.com/tale-project/tale)                                                      | Author and run Tale automations, inspect runs and query workspace knowledge    | Built-in   |
-| [Trello MCP](https://github.com/delorenj/mcp-server-trello)                                       | Trello boards, lists, cards                                                    | TypeScript |
-| [urlhub](https://urlhub.cloud/docs?lang=en)                                                       | Turn many links into one short shareable link with a QR code                   | Remote     |
+| Server                                                                                                           | Description                                                                    | Language   |
+| ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ---------- |
+| [AI Tasker](https://ai-tasker.theboomer.dev)                                                                     | Hosted task, workspace, and agent coordination for AI teams                    | Remote     |
+| [Aident Loadout](https://github.com/Aident-AI/aident-skill)                                                      | Connect agents to 1000+ apps via one remote MCP with Vault                     | Remote     |
+| [Airtable MCP](https://github.com/domdomegg/airtable-mcp-server)                                                 | Airtable base read/write                                                       | TypeScript |
+| [Asana MCP](https://github.com/roychri/mcp-server-asana)                                                         | Asana tasks, projects, workspaces                                              | TypeScript |
+| [CareClinic](https://careclinic.io/careclinic-mcp/)                                                              | Read medication schedules, symptoms and moods, and save confirmed check-ins    | Remote     |
+| [Clera](https://www.getclera.com/mcp)                                                                            | Search vetted startup candidates, review role matches and request intros       | Remote     |
+| [Excel MCP](https://github.com/haris-musa/excel-mcp-server)                                                      | Read, write and format Excel workbooks without Excel installed                 | Python     |
+| [fitlog-mcp](https://github.com/hahahahahahahahah6/fitlog-mcp)                                                   | Self-hosted MCP server giving Alexa+ a memory for training                     | Python     |
+| [Google Calendar MCP](https://github.com/nspady/google-calendar-mcp)                                             | Google Calendar management                                                     | TypeScript |
+| [Google Workspace MCP](https://github.com/taylorwilsdon/google_workspace_mcp)                                    | Gmail, Calendar, Docs, Sheets, Slides, Chat, Forms and Tasks in one server     | Python     |
+| [iMCP](https://github.com/mattt/iMCP)                                                                            | Exposes macOS Messages, Contacts, Calendar and Reminders to agents             | Swift      |
+| [Make MCP](https://github.com/integromat/make-mcp-server)                                                        | Official Make server turning scenarios into callable agent tools               | TypeScript |
+| [Microsoft 365 MCP](https://github.com/Softeria/ms-365-mcp-server)                                               | Full M365 suite (Outlook, OneDrive, Teams, Excel)                              | TypeScript |
+| [MindMap AI](https://github.com/MindMap-AI/mcp)                                                                  | Create and edit visual mind maps from MCP-compatible AI assistants             | TypeScript |
+| [monday.com MCP](https://github.com/mondaycom/mcp)                                                               | Official monday.com boards, items and workspace automation                     | TypeScript |
+| [Muslim Prayer Reminder MCP](https://github.com/tareq7/muslim-prayer-mcp)                                        | Calculate regional prayer times and next-prayer countdowns                     | TypeScript |
+| [NeverApply](https://neverapply.co/features/mcp)                                                                 | Search jobs, tailor resumes and apply to jobs with your approval over OAuth    | Remote     |
+| [Nextcloud MCP](https://github.com/cbcoutinho/nextcloud-mcp-server)                                              | Nextcloud Notes, Files, Calendar, Tasks, Deck and Talk access                  | Python     |
+| [Notion MCP](https://github.com/makenotion/notion-mcp-server)                                                    | Official Notion API integration                                                | TypeScript |
+| [OpenFile](https://joinopenfile.com/docs/mcp)                                                                    | Form U.S. companies and file U.S. trademarks, with live USPTO search           | Remote     |
+| [Orbit MCP](https://github.com/Noveum/orbit)                                                                     | Manage issues, projects, sprints and docs with workspace-scoped OAuth          | TypeScript |
+| [Plane MCP](https://github.com/makeplane/plane-mcp-server)                                                       | Official Plane projects, work items and cycles automation                      | Python     |
+| [Slack MCP](https://github.com/korotovsky/slack-mcp-server)                                                      | Slack workspace integration                                                    | Go         |
+| [Tale](https://github.com/tale-project/tale)                                                                     | Author and run Tale automations, inspect runs and query workspace knowledge    | Built-in   |
+| [Trello MCP](https://github.com/delorenj/mcp-server-trello)                                                      | Trello boards, lists, cards                                                    | TypeScript |
+| [urlhub](https://urlhub.cloud/docs?lang=en)                                                                      | Turn many links into one short shareable link with a QR code                   | Remote     |
 | [US Federal Holidays Business Days MCP](https://github.com/theluckystrike/us-federal-holidays-business-days-mcp) | Exact US business days, OPM and Federal Reserve holidays and invoice due dates | TypeScript |
-| [Worklittle Jobs](https://docs.worklittle.com/mcp)                                                | Search 4M+ jobs with visa, salary and distance filters, and apply from chat    | Remote     |
-| [Zovo Time Tracker](https://github.com/theluckystrike/mcp-servers/tree/main/servers/time-tracker) | Log hours per client and project, with daily and weekly reports and CSV export | TypeScript |
+| [Worklittle Jobs](https://docs.worklittle.com/mcp)                                                               | Search 4M+ jobs with visa, salary and distance filters, and apply from chat    | Remote     |
+| [Zovo Time Tracker](https://github.com/theluckystrike/mcp-servers/tree/main/servers/time-tracker)                | Log hours per client and project, with daily and weekly reports and CSV export | TypeScript |
 
 ### Search & Knowledge
 
-| Server                                                                                      | Description                                                                     | Language   |
-| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ---------- |
-| [AgentSearch MCP](https://github.com/agentsearchhq-coder/agentsearch-mcp)                   | Web search, URL-to-Markdown extraction and JS page rendering; keyless free tier | TypeScript |
-| [AP Score Distributions MCP](https://github.com/theluckystrike/ap-score-distributions-mcp) | Official College Board AP score distributions, percentiles and pass rates | TypeScript |
-| [Apify MCP](https://github.com/apify/apify-mcp-server)                                      | Web scraping actors and automation                                              | TypeScript |
-| [arXiv MCP](https://github.com/blazickjp/arxiv-mcp-server)                                  | Search arXiv papers and read full LaTeX sections                                | Python     |
-| [ATS Jobs MCP](https://github.com/GeminiGeorge22/ats-jobs-mcp)                              | New job postings from Ashby, Greenhouse, Lever and SmartRecruiters boards       | JavaScript |
-| [BORME API](https://github.com/bormeapi/borme-mcp)                                          | Spain's company registry gazette (BORME): 9.6M+ events since 2009               | Remote     |
-| [Brave Search MCP](https://github.com/brave/brave-search-mcp-server)                        | Official Brave Search API                                                       | TypeScript |
-| [CareJobs.Now Healthcare Jobs MCP](https://github.com/yumaheymans/carejobs-mcp)             | Search open US healthcare jobs and posted pay from 270 employers' career sites  | Remote     |
-| [Cluefinch MCP](https://github.com/cluefinch/mcp-server)                                    | Web research with search, page reading, links, and source collection            | Python     |
-| [Context7 MCP](https://github.com/upstash/context7)                                         | Up-to-date library documentation                                                | TypeScript |
-| [Cups to Grams MCP](https://github.com/theluckystrike/cups-to-grams-mcp) | Ingredient-aware cups to grams conversion with USDA densities and recipe scaling | TypeScript |
-| [DiPlay Helper](https://github.com/UllrAI/diplay-helper)                                    | Query live DiPlay packages, compatibility reports and setup guides              | TypeScript |
-| [Docling MCP](https://github.com/docling-project/docling-mcp)                               | Official Docling document parsing and conversion to structured text             | Python     |
-| [Docs MCP Server](https://github.com/arabold/docs-mcp-server)                               | Index and semantically search third-party library documentation                 | TypeScript |
-| [Docsy](https://docsy.remcp.site/docs)                                                      | Versioned developer docs with source links; OAuth 2.1 MCP                       | Remote     |
-| [DuckDuckGo MCP](https://github.com/nickclyde/duckduckgo-mcp-server)                        | DuckDuckGo search with content fetching                                         | Python     |
-| [Exa MCP](https://github.com/exa-labs/exa-mcp-server)                                       | Exa AI-powered search                                                           | TypeScript |
-| [Kagi MCP](https://github.com/kagisearch/kagimcp)                                           | Official Kagi search API                                                        | Python     |
-| [Keenable MCP](https://github.com/keenableai/keenable-mcp) | Web search and page fetch as clean markdown, keyless public tier | JavaScript |
-| [JobsPipe](https://docs.jobspipe.dev/ai-agents/mcp) | Search live job postings from 30+ ATS feeds and job boards | Remote |
-| [looot](https://github.com/loootai/looot-mcp)                                               | One key for 2,500+ data endpoints: email, phone, company, SERP, web pages       | TypeScript |
-| [MarkItDown MCP](https://github.com/microsoft/markitdown/tree/main/packages/markitdown-mcp) | Convert PDF, Office, HTML and audio files to Markdown for LLMs                  | Python     |
-| [Meilisearch MCP](https://github.com/meilisearch/meilisearch-mcp)                           | Official Meilisearch index server                                               | Python     |
-| [Perplexity MCP](https://github.com/perplexityai/modelcontextprotocol)                      | Official Perplexity search API                                                  | TypeScript |
-| [Recall Kitchen](https://github.com/Recall-Kitchen/rk-mcp)                                  | Search U.S. CPSC, FDA, USDA and NHTSA product recalls by keyword or UPC         | Remote     |
-| [Recipe Nutrition Calculator MCP](https://github.com/theluckystrike/recipe-nutrition-calculator-mcp) | Recipe calories and macros per serving from USDA data with FDA label rounding | TypeScript |
-| [Ref MCP](https://github.com/ref-tools/ref-tools-mcp)                                       | Token-efficient search over public and private technical docs                   | TypeScript |
-| [ReMCP](https://github.com/getremcp/remcp)                                                  | OAuth access to paired computers; terminal, files, browser and desktop control  | Remote     |
-| [Scento Perfume API](https://github.com/Scento-com/perfume-mcp-server)                      | Perfume notes, families and similar scents for 1,400+ perfumes, no API key      | JavaScript |
-| [SearXNG MCP](https://github.com/ihor-sokoliuk/mcp-searxng)                                 | Metasearch across engines via a self-hosted SearXNG instance                    | TypeScript |
-| [SerpAPI MCP](https://github.com/serpapi/serpapi-mcp)                                       | Official SerpAPI Google search results                                          | Python     |
-| [Statsnet](https://github.com/usenetstate/statsnet-mcp)                                     | Company background checks: registration, executives, courts and finances        | Remote     |
-| [Tavily MCP](https://github.com/tavily-ai/tavily-mcp)                                       | Tavily AI search for agents                                                     | JavaScript |
-| [zodiak.info.pl](https://zodiak.info.pl/dla-ai)                                             | Astrology from astronomy: birth charts, transits, synastry, Vedic chart         | Remote     |
+| Server                                                                                               | Description                                                                      | Language   |
+| ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ---------- |
+| [AgentSearch MCP](https://github.com/agentsearchhq-coder/agentsearch-mcp)                            | Web search, URL-to-Markdown extraction and JS page rendering; keyless free tier  | TypeScript |
+| [AP Score Distributions MCP](https://github.com/theluckystrike/ap-score-distributions-mcp)           | Official College Board AP score distributions, percentiles and pass rates        | TypeScript |
+| [Apify MCP](https://github.com/apify/apify-mcp-server)                                               | Web scraping actors and automation                                               | TypeScript |
+| [arXiv MCP](https://github.com/blazickjp/arxiv-mcp-server)                                           | Search arXiv papers and read full LaTeX sections                                 | Python     |
+| [ATS Jobs MCP](https://github.com/GeminiGeorge22/ats-jobs-mcp)                                       | New job postings from Ashby, Greenhouse, Lever and SmartRecruiters boards        | JavaScript |
+| [BORME API](https://github.com/bormeapi/borme-mcp)                                                   | Spain's company registry gazette (BORME): 9.6M+ events since 2009                | Remote     |
+| [Brave Search MCP](https://github.com/brave/brave-search-mcp-server)                                 | Official Brave Search API                                                        | TypeScript |
+| [CareJobs.Now Healthcare Jobs MCP](https://github.com/yumaheymans/carejobs-mcp)                      | Search open US healthcare jobs and posted pay from 270 employers' career sites   | Remote     |
+| [Cluefinch MCP](https://github.com/cluefinch/mcp-server)                                             | Web research with search, page reading, links, and source collection             | Python     |
+| [Context7 MCP](https://github.com/upstash/context7)                                                  | Up-to-date library documentation                                                 | TypeScript |
+| [Cups to Grams MCP](https://github.com/theluckystrike/cups-to-grams-mcp)                             | Ingredient-aware cups to grams conversion with USDA densities and recipe scaling | TypeScript |
+| [DiPlay Helper](https://github.com/UllrAI/diplay-helper)                                             | Query live DiPlay packages, compatibility reports and setup guides               | TypeScript |
+| [Docling MCP](https://github.com/docling-project/docling-mcp)                                        | Official Docling document parsing and conversion to structured text              | Python     |
+| [Docs MCP Server](https://github.com/arabold/docs-mcp-server)                                        | Index and semantically search third-party library documentation                  | TypeScript |
+| [Docsy](https://docsy.remcp.site/docs)                                                               | Versioned developer docs with source links; OAuth 2.1 MCP                        | Remote     |
+| [DuckDuckGo MCP](https://github.com/nickclyde/duckduckgo-mcp-server)                                 | DuckDuckGo search with content fetching                                          | Python     |
+| [Exa MCP](https://github.com/exa-labs/exa-mcp-server)                                                | Exa AI-powered search                                                            | TypeScript |
+| [JobsPipe](https://docs.jobspipe.dev/ai-agents/mcp)                                                  | Search live job postings from 30+ ATS feeds and job boards                       | Remote     |
+| [Kagi MCP](https://github.com/kagisearch/kagimcp)                                                    | Official Kagi search API                                                         | Python     |
+| [Keenable MCP](https://github.com/keenableai/keenable-mcp)                                           | Web search and page fetch as clean markdown, keyless public tier                 | JavaScript |
+| [looot](https://github.com/loootai/looot-mcp)                                                        | One key for 2,500+ data endpoints: email, phone, company, SERP, web pages        | TypeScript |
+| [MarkItDown MCP](https://github.com/microsoft/markitdown/tree/main/packages/markitdown-mcp)          | Convert PDF, Office, HTML and audio files to Markdown for LLMs                   | Python     |
+| [Meilisearch MCP](https://github.com/meilisearch/meilisearch-mcp)                                    | Official Meilisearch index server                                                | Python     |
+| [Perplexity MCP](https://github.com/perplexityai/modelcontextprotocol)                               | Official Perplexity search API                                                   | TypeScript |
+| [Recall Kitchen](https://github.com/Recall-Kitchen/rk-mcp)                                           | Search U.S. CPSC, FDA, USDA and NHTSA product recalls by keyword or UPC          | Remote     |
+| [Recipe Nutrition Calculator MCP](https://github.com/theluckystrike/recipe-nutrition-calculator-mcp) | Recipe calories and macros per serving from USDA data with FDA label rounding    | TypeScript |
+| [Ref MCP](https://github.com/ref-tools/ref-tools-mcp)                                                | Token-efficient search over public and private technical docs                    | TypeScript |
+| [ReMCP](https://github.com/getremcp/remcp)                                                           | OAuth access to paired computers; terminal, files, browser and desktop control   | Remote     |
+| [Scento Perfume API](https://github.com/Scento-com/perfume-mcp-server)                               | Perfume notes, families and similar scents for 1,400+ perfumes, no API key       | JavaScript |
+| [SearXNG MCP](https://github.com/ihor-sokoliuk/mcp-searxng)                                          | Metasearch across engines via a self-hosted SearXNG instance                     | TypeScript |
+| [SerpAPI MCP](https://github.com/serpapi/serpapi-mcp)                                                | Official SerpAPI Google search results                                           | Python     |
+| [Statsnet](https://github.com/usenetstate/statsnet-mcp)                                              | Company background checks: registration, executives, courts and finances         | Remote     |
+| [Tavily MCP](https://github.com/tavily-ai/tavily-mcp)                                                | Tavily AI search for agents                                                      | JavaScript |
+| [zodiak.info.pl](https://zodiak.info.pl/dla-ai)                                                      | Astrology from astronomy: birth charts, transits, synastry, Vedic chart          | Remote     |
 
 ### Communication
 
-| Server                                                                  | Description                                                                     | Language   |
-| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ---------- |
-| [Call Me](https://github.com/radres/call-me)                            | Agents ring or text your own phone and get your spoken answer back as text      | Remote     |
-| [CosVoice](https://github.com/CosVoice/cosvoice-mcp)                    | Real US phone number and email for agents: calls, texts, bookings, summaries    | Remote     |
-| [Discourse MCP](https://github.com/discourse/discourse-mcp)             | Official Discourse forum search, topic reading and posting                      | TypeScript |
-| [Joinly](https://github.com/joinly-ai/joinly)                           | Join Zoom, Google Meet and Teams calls to transcribe and act live               | Python     |
-| [LINE Bot MCP](https://github.com/line/line-bot-mcp-server)             | Official LINE Messaging API server for sending and managing messages            | TypeScript |
-| [Mailgun MCP](https://github.com/mailgun/mailgun-mcp-server)            | Official Mailgun email sending, logs and analytics                              | TypeScript |
-| [Mailtrap MCP](https://github.com/mailtrap/mailtrap-mcp)                | Official Mailtrap email sending and sandbox testing                             | TypeScript |
-| [MeetStream](https://github.com/meetstream-ai/meetstream-mcp)           | Official meeting bots for Zoom, Meet and Teams: record and transcribe           | TypeScript |
-| [Microsoft Teams MCP](https://github.com/InditexTech/mcp-teams-server)  | Teams channels, messages, meetings                                              | Python     |
-| [needhave](https://github.com/PrivateAISystems/needhave)                | Public need/have list agents read and post to over remote MCP, no key           | JavaScript |
-| [Reddit MCP Publisher](https://github.com/Bl0ck154/reddit-mcp-publisher) | Read Reddit context and publish via owner-approved browser previews | TypeScript |
-| [Resend MCP](https://github.com/resend/resend-mcp)                      | Official Resend transactional email                                             | TypeScript |
-| [SendRaven MCP](https://github.com/CommonNinja/sendraven-mcp-server)    | Official SendRaven email sending, inbound reply threads and per-key send limits | TypeScript |
-| [Telegram Archive MCP](https://github.com/GeiserX/telegram-archive-mcp) | Search and read archived Telegram history from a Telegram-Archive instance      | Go         |
-| [Telegram MCP](https://github.com/chigwell/telegram-mcp)                | Telegram messaging                                                              | Python     |
-| [TextKit](https://jointextkit.com/docs/mcp)                             | Send and receive SMS, verify phone numbers, buy US and Canada numbers           | Remote     |
-| [Zulip MCP](https://github.com/zulip/zulipmcp)                          | Official Zulip streams, messages and mentionable bot agents                     | Python     |
+| Server                                                                   | Description                                                                     | Language   |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | ---------- |
+| [Call Me](https://github.com/radres/call-me)                             | Agents ring or text your own phone and get your spoken answer back as text      | Remote     |
+| [CosVoice](https://github.com/CosVoice/cosvoice-mcp)                     | Real US phone number and email for agents: calls, texts, bookings, summaries    | Remote     |
+| [Discourse MCP](https://github.com/discourse/discourse-mcp)              | Official Discourse forum search, topic reading and posting                      | TypeScript |
+| [Joinly](https://github.com/joinly-ai/joinly)                            | Join Zoom, Google Meet and Teams calls to transcribe and act live               | Python     |
+| [LINE Bot MCP](https://github.com/line/line-bot-mcp-server)              | Official LINE Messaging API server for sending and managing messages            | TypeScript |
+| [Mailgun MCP](https://github.com/mailgun/mailgun-mcp-server)             | Official Mailgun email sending, logs and analytics                              | TypeScript |
+| [Mailtrap MCP](https://github.com/mailtrap/mailtrap-mcp)                 | Official Mailtrap email sending and sandbox testing                             | TypeScript |
+| [MeetStream](https://github.com/meetstream-ai/meetstream-mcp)            | Official meeting bots for Zoom, Meet and Teams: record and transcribe           | TypeScript |
+| [Microsoft Teams MCP](https://github.com/InditexTech/mcp-teams-server)   | Teams channels, messages, meetings                                              | Python     |
+| [needhave](https://github.com/PrivateAISystems/needhave)                 | Public need/have list agents read and post to over remote MCP, no key           | JavaScript |
+| [Reddit MCP Publisher](https://github.com/Bl0ck154/reddit-mcp-publisher) | Read Reddit context and publish via owner-approved browser previews             | TypeScript |
+| [Resend MCP](https://github.com/resend/resend-mcp)                       | Official Resend transactional email                                             | TypeScript |
+| [SendRaven MCP](https://github.com/CommonNinja/sendraven-mcp-server)     | Official SendRaven email sending, inbound reply threads and per-key send limits | TypeScript |
+| [Telegram Archive MCP](https://github.com/GeiserX/telegram-archive-mcp)  | Search and read archived Telegram history from a Telegram-Archive instance      | Go         |
+| [Telegram MCP](https://github.com/chigwell/telegram-mcp)                 | Telegram messaging                                                              | Python     |
+| [TextKit](https://jointextkit.com/docs/mcp)                              | Send and receive SMS, verify phone numbers, buy US and Canada numbers           | Remote     |
+| [Zulip MCP](https://github.com/zulip/zulipmcp)                           | Official Zulip streams, messages and mentionable bot agents                     | Python     |
 
 ### File Systems & Storage
 
@@ -310,45 +310,45 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 ### Finance
 
-| Server                                                                                         | Description                                                                   | Language   |
-| ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------- |
-| [ACA Premium Tax Credit Calculator MCP](https://github.com/theluckystrike/aca-premium-tax-credit-calculator-mcp) | ACA premium tax credit 2025-2026, poverty lines and the 400% FPL cliff | TypeScript |
-| [Adyen MCP](https://github.com/Adyen/adyen-mcp)                                                | Official Adyen server for checkout, configuration and management APIs         | TypeScript |
-| [Agent Payment Node](https://github.com/nuanu-ai/agent-payment-node)                           | Local MCP payments on Apple Silicon macOS with foreground owner approval      | TypeScript |
-| [aikstockdata](https://aikstockdata.com/en/mcp)                                                | Korean listed-company closing prices, DART filings and earnings, no API key   | JavaScript |
-| [Alpaca MCP](https://github.com/alpacahq/alpaca-mcp-server)                                    | Official Alpaca stocks / ETF / crypto trading                                 | Python     |
-| [Car Loan Interest Deduction Calculator MCP](https://github.com/theluckystrike/car-loan-interest-deduction-calculator-mcp) | US car loan interest deduction, SALT cap, child tax credit and 2026 brackets | TypeScript |
-| [Coinbase MCP](https://github.com/coinbase/agentkit)                                           | Coinbase crypto trading and wallet                                            | TypeScript |
-| [DSCR Loan Calculator MCP](https://github.com/theluckystrike/dscr-loan-calculator-mcp) | DSCR, max loan, rent needed and amortization for rental property loans | TypeScript |
-| [Equibles](https://equibles.com/mcp)                                                           | SEC filings, XBRL financials, earnings calls, insider trades and 13F holdings | Remote     |
-| [Estate and Gift Tax Exemption Calculator MCP](https://github.com/theluckystrike/estate-gift-tax-exemption-calculator-mcp) | Federal estate and gift tax exemption 2025-2026, $15M amount, gift checks | TypeScript |
-| [FactLot](https://github.com/9mp96ygnbk-alt/factlot) | Commercial real estate calculators with audit trails, IDs and fact validation | TypeScript |
-| [Fair Value Calculator](https://www.fairvalue-calculator.com/integrations)                     | Stock fair values, quality scores, screening and watchlist alerts             | Remote     |
-| [Financial Modeling Prep MCP](https://github.com/imbenrabi/Financial-Modeling-Prep-MCP-Server) | FMP market data and fundamentals                                              | TypeScript |
-| [Gold Price Per Gram MCP](https://github.com/theluckystrike/gold-price-per-gram-mcp) | Live 24K to 9K gold price per gram in any currency, melt value and tola units | TypeScript |
-| [Invoice MCP](https://github.com/theluckystrike/mcp-invoice-generator)                         | Create PDF invoices with VAT lines, sequential numbering and overdue tracking | JavaScript |
-| [Invompt](https://github.com/Invompt/invompt-mcp)                                              | Create and review invoices from an AI assistant                               | TypeScript |
-| [Lava](https://github.com/dustinliang666-blip/lava-mcp)                                        | Read-only A-share news-flow heat via remote MCP/REST                          | TypeScript |
-| [Massive.com (Polygon.io) MCP](https://github.com/massive-com/mcp_massive)                     | Official Massive.com (formerly Polygon.io) market data for stocks and crypto  | Python     |
-| [Minimum Wage MCP](https://github.com/theluckystrike/minimum-wage-mcp) | US state minimum wage rates 2026-2027, tipped wages and scheduled increases | TypeScript |
-| [No Tax on Overtime MCP](https://github.com/theluckystrike/no-tax-on-overtime-mcp) | 2025-2028 overtime, tips and senior deduction calculator with IRS caps | TypeScript |
-| [Paycheck Calculator MCP](https://github.com/theluckystrike/paycheck-calculator-mcp) | US take-home pay with 2025-2026 IRS brackets, FICA wage base and state tax | TypeScript |
-| [PayPal Agent Toolkit](https://github.com/paypal/agent-toolkit)                                | Official PayPal toolkit with an MCP server for payments and invoicing         | TypeScript |
-| [QuickBooks MCP](https://github.com/intuit/quickbooks-online-mcp-server)                       | Official Intuit QuickBooks Online                                             | TypeScript |
-| [Razorpay MCP](https://github.com/razorpay/razorpay-mcp-server)                                | Official Razorpay server for payments, orders, refunds and settlements        | Go         |
-| [Retirement Contribution Limits 2027 MCP](https://github.com/theluckystrike/retirement-contribution-limits-2027-mcp) | 401k, IRA and HSA limits 2025-2027, age 60-63 catch-up and Social Security COLA | TypeScript |
-| [SEC EDGAR MCP](https://github.com/stefanoamorelli/sec-edgar-mcp)                              | Query SEC EDGAR filings, XBRL financials and company facts                    | Python     |
-| [Section 179 Deduction Calculator MCP](https://github.com/theluckystrike/section-179-deduction-calculator-mcp) | Section 179 deduction, 100% bonus depreciation, heavy SUV limits and loan cost | TypeScript |
-| [Square MCP](https://developer.squareup.com/docs/mcp)                                          | Official hosted Square server for payments, catalog and orders, OAuth login   | Remote     |
-| [Stripe MCP](https://github.com/stripe/ai)                                                     | Stripe payments and billing                                                   | TypeScript |
-| [Student Loan Repayment Assistance Plan Calculator MCP](https://github.com/theluckystrike/student-loan-repayment-assistance-plan-calculator-mcp) | Federal student loan RAP payments, loan limits and SAVE dates | TypeScript |
-| [TWZRD Agent Intel](https://github.com/twzrd-sol/twzrd-trust)                                  | Solana on-chain wallet trust scoring for agents before x402 micropayments     | Remote     |
-| [UK Income Tax Salary MCP](https://github.com/theluckystrike/uk-income-tax-salary-mcp) | UK take-home pay 2025/26 and 2026/27 with Scottish bands, NI and student loans | TypeScript |
-| [UK Statutory Sick Pay and Maternity Pay Calculator MCP](https://github.com/theluckystrike/uk-statutory-sick-pay-maternity-pay-calculator-mcp) | UK SSP after the April 2026 reform, maternity pay and minimum wage | TypeScript |
-| [Xero MCP](https://github.com/XeroAPI/xero-mcp-server)                                         | Official Xero server for invoices, contacts, accounts and payroll             | TypeScript |
-| [Yahoo Finance MCP](https://github.com/Alex2Yang97/yahoo-finance-mcp)                          | Stock data and financial info                                                 | Python     |
-| [Zerodha Kite MCP](https://github.com/zerodha/kite-mcp-server)                                 | Official Zerodha Kite server for Indian holdings, orders and quotes           | Go         |
-| [Zovo Grant Finder](https://grant-finder.zovo.one/)                                            | Search Grants.gov federal grants and export XLSX trackers and ICS deadlines   | Remote     |
+| Server                                                                                                                                           | Description                                                                     | Language   |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | ---------- |
+| [ACA Premium Tax Credit Calculator MCP](https://github.com/theluckystrike/aca-premium-tax-credit-calculator-mcp)                                 | ACA premium tax credit 2025-2026, poverty lines and the 400% FPL cliff          | TypeScript |
+| [Adyen MCP](https://github.com/Adyen/adyen-mcp)                                                                                                  | Official Adyen server for checkout, configuration and management APIs           | TypeScript |
+| [Agent Payment Node](https://github.com/nuanu-ai/agent-payment-node)                                                                             | Local MCP payments on Apple Silicon macOS with foreground owner approval        | TypeScript |
+| [aikstockdata](https://aikstockdata.com/en/mcp)                                                                                                  | Korean listed-company closing prices, DART filings and earnings, no API key     | JavaScript |
+| [Alpaca MCP](https://github.com/alpacahq/alpaca-mcp-server)                                                                                      | Official Alpaca stocks / ETF / crypto trading                                   | Python     |
+| [Car Loan Interest Deduction Calculator MCP](https://github.com/theluckystrike/car-loan-interest-deduction-calculator-mcp)                       | US car loan interest deduction, SALT cap, child tax credit and 2026 brackets    | TypeScript |
+| [Coinbase MCP](https://github.com/coinbase/agentkit)                                                                                             | Coinbase crypto trading and wallet                                              | TypeScript |
+| [DSCR Loan Calculator MCP](https://github.com/theluckystrike/dscr-loan-calculator-mcp)                                                           | DSCR, max loan, rent needed and amortization for rental property loans          | TypeScript |
+| [Equibles](https://equibles.com/mcp)                                                                                                             | SEC filings, XBRL financials, earnings calls, insider trades and 13F holdings   | Remote     |
+| [Estate and Gift Tax Exemption Calculator MCP](https://github.com/theluckystrike/estate-gift-tax-exemption-calculator-mcp)                       | Federal estate and gift tax exemption 2025-2026, $15M amount, gift checks       | TypeScript |
+| [FactLot](https://github.com/9mp96ygnbk-alt/factlot)                                                                                             | Commercial real estate calculators with audit trails, IDs and fact validation   | TypeScript |
+| [Fair Value Calculator](https://www.fairvalue-calculator.com/integrations)                                                                       | Stock fair values, quality scores, screening and watchlist alerts               | Remote     |
+| [Financial Modeling Prep MCP](https://github.com/imbenrabi/Financial-Modeling-Prep-MCP-Server)                                                   | FMP market data and fundamentals                                                | TypeScript |
+| [Gold Price Per Gram MCP](https://github.com/theluckystrike/gold-price-per-gram-mcp)                                                             | Live 24K to 9K gold price per gram in any currency, melt value and tola units   | TypeScript |
+| [Invoice MCP](https://github.com/theluckystrike/mcp-invoice-generator)                                                                           | Create PDF invoices with VAT lines, sequential numbering and overdue tracking   | JavaScript |
+| [Invompt](https://github.com/Invompt/invompt-mcp)                                                                                                | Create and review invoices from an AI assistant                                 | TypeScript |
+| [Lava](https://github.com/dustinliang666-blip/lava-mcp)                                                                                          | Read-only A-share news-flow heat via remote MCP/REST                            | TypeScript |
+| [Massive.com (Polygon.io) MCP](https://github.com/massive-com/mcp_massive)                                                                       | Official Massive.com (formerly Polygon.io) market data for stocks and crypto    | Python     |
+| [Minimum Wage MCP](https://github.com/theluckystrike/minimum-wage-mcp)                                                                           | US state minimum wage rates 2026-2027, tipped wages and scheduled increases     | TypeScript |
+| [No Tax on Overtime MCP](https://github.com/theluckystrike/no-tax-on-overtime-mcp)                                                               | 2025-2028 overtime, tips and senior deduction calculator with IRS caps          | TypeScript |
+| [Paycheck Calculator MCP](https://github.com/theluckystrike/paycheck-calculator-mcp)                                                             | US take-home pay with 2025-2026 IRS brackets, FICA wage base and state tax      | TypeScript |
+| [PayPal Agent Toolkit](https://github.com/paypal/agent-toolkit)                                                                                  | Official PayPal toolkit with an MCP server for payments and invoicing           | TypeScript |
+| [QuickBooks MCP](https://github.com/intuit/quickbooks-online-mcp-server)                                                                         | Official Intuit QuickBooks Online                                               | TypeScript |
+| [Razorpay MCP](https://github.com/razorpay/razorpay-mcp-server)                                                                                  | Official Razorpay server for payments, orders, refunds and settlements          | Go         |
+| [Retirement Contribution Limits 2027 MCP](https://github.com/theluckystrike/retirement-contribution-limits-2027-mcp)                             | 401k, IRA and HSA limits 2025-2027, age 60-63 catch-up and Social Security COLA | TypeScript |
+| [SEC EDGAR MCP](https://github.com/stefanoamorelli/sec-edgar-mcp)                                                                                | Query SEC EDGAR filings, XBRL financials and company facts                      | Python     |
+| [Section 179 Deduction Calculator MCP](https://github.com/theluckystrike/section-179-deduction-calculator-mcp)                                   | Section 179 deduction, 100% bonus depreciation, heavy SUV limits and loan cost  | TypeScript |
+| [Square MCP](https://developer.squareup.com/docs/mcp)                                                                                            | Official hosted Square server for payments, catalog and orders, OAuth login     | Remote     |
+| [Stripe MCP](https://github.com/stripe/ai)                                                                                                       | Stripe payments and billing                                                     | TypeScript |
+| [Student Loan Repayment Assistance Plan Calculator MCP](https://github.com/theluckystrike/student-loan-repayment-assistance-plan-calculator-mcp) | Federal student loan RAP payments, loan limits and SAVE dates                   | TypeScript |
+| [TWZRD Agent Intel](https://github.com/twzrd-sol/twzrd-trust)                                                                                    | Solana on-chain wallet trust scoring for agents before x402 micropayments       | Remote     |
+| [UK Income Tax Salary MCP](https://github.com/theluckystrike/uk-income-tax-salary-mcp)                                                           | UK take-home pay 2025/26 and 2026/27 with Scottish bands, NI and student loans  | TypeScript |
+| [UK Statutory Sick Pay and Maternity Pay Calculator MCP](https://github.com/theluckystrike/uk-statutory-sick-pay-maternity-pay-calculator-mcp)   | UK SSP after the April 2026 reform, maternity pay and minimum wage              | TypeScript |
+| [Xero MCP](https://github.com/XeroAPI/xero-mcp-server)                                                                                           | Official Xero server for invoices, contacts, accounts and payroll               | TypeScript |
+| [Yahoo Finance MCP](https://github.com/Alex2Yang97/yahoo-finance-mcp)                                                                            | Stock data and financial info                                                   | Python     |
+| [Zerodha Kite MCP](https://github.com/zerodha/kite-mcp-server)                                                                                   | Official Zerodha Kite server for Indian holdings, orders and quotes             | Go         |
+| [Zovo Grant Finder](https://grant-finder.zovo.one/)                                                                                              | Search Grants.gov federal grants and export XLSX trackers and ICS deadlines     | Remote     |
 
 ### Monitoring & Observability
 
@@ -370,28 +370,28 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 ### Design & Creative
 
-| Server                                                                          | Description                                                           | Language   |
-| ------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ---------- |
-| [Adobe Premiere Pro MCP](https://github.com/hetpatel-11/Adobe_Premiere_Pro_MCP) | Drive Adobe Premiere Pro timelines and edits from an agent            | TypeScript |
-| [AntV Chart MCP](https://github.com/antvis/mcp-server-chart)                    | Official AntV server generating 25+ chart types                       | TypeScript |
-| [Aseprite MCP](https://github.com/diivi/aseprite-mcp)                           | Create and edit pixel art through the Aseprite API                    | Python     |
-| [Blender MCP](https://github.com/ahujasid/mcp-for-blender)                      | Control Blender 3D modeling from AI assistants                        | Python     |
-| [ComfyUI MCP](https://github.com/artokun/comfyui-mcp)                           | Run and author ComfyUI workflows for image, video, and audio          | TypeScript |
-| [DaVinci Resolve MCP](https://github.com/samuelgursky/davinci-resolve-mcp)      | Control DaVinci Resolve editing, color grading, and project media     | Python     |
-| [design:os 3D Blender MCP](https://github.com/jangtrinh/design-os-3d-blender) | Free, source-available (PolyForm Shield) MCP to model and render 3D in Blender | Python |
-| [designlang](https://github.com/Manavarya09/design-extract)                     | Extract a website's design system into DTCG tokens and framework code | JavaScript |
-| [Excalidraw MCP](https://github.com/yctimlin/mcp_excalidraw)                    | Create and edit Excalidraw diagrams on a live canvas                  | TypeScript |
-| [Figma Context MCP](https://github.com/GLips/Figma-Context-MCP)                 | Figma layouts for AI coding agents (Framelink)                        | TypeScript |
-| [Houdini MCP](https://github.com/capoomgit/houdini-mcp)                         | Build and modify SideFX Houdini scenes and nodes                      | Python     |
-| [House AI](https://github.com/Apex-Byte-Technologies/house-ai-mcp)              | Redesign rooms, exteriors and yards from a photo, then shop the look  | Remote     |
-| [Kleap](https://github.com/kleaphq/cli)                                         | Official Kleap server for creating, editing and publishing websites   | JavaScript |
-| [MuAPI MCP](https://github.com/SamurAIGPT/muapi-mcp-server)                     | Image, video and audio generation across 100+ generative AI models    | Python     |
-| [OrkasVideoStudio](https://github.com/Orkas-AI/Orkas-VideoStudio)               | Compose, edit, analyze, and render video from coding agents           | TypeScript |
-| [Photoshop MCP](https://github.com/loonghao/photoshop-python-api-mcp-server)    | Adobe Photoshop automation                                            | Python     |
-| [UberLLM](https://uberllm.dev/docs/mcp) | Make images and videos, list models with prices and check balance -- needs key | Remote |
-| [UpRes MCP](https://github.com/auroracapital/upres-cli)                         | Upscale images and videos up to 8K across 14 specialist models        | TypeScript |
-| [VideoGen MCP](https://videogen.io/videogen-mcp)                                | Create and edit videos, images, voiceovers, music, and avatars        | TypeScript |
-| [Webflow MCP](https://github.com/webflow/mcp-server)                            | Official Webflow server for sites, pages, CMS, and components         | TypeScript |
+| Server                                                                          | Description                                                                    | Language   |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ---------- |
+| [Adobe Premiere Pro MCP](https://github.com/hetpatel-11/Adobe_Premiere_Pro_MCP) | Drive Adobe Premiere Pro timelines and edits from an agent                     | TypeScript |
+| [AntV Chart MCP](https://github.com/antvis/mcp-server-chart)                    | Official AntV server generating 25+ chart types                                | TypeScript |
+| [Aseprite MCP](https://github.com/diivi/aseprite-mcp)                           | Create and edit pixel art through the Aseprite API                             | Python     |
+| [Blender MCP](https://github.com/ahujasid/mcp-for-blender)                      | Control Blender 3D modeling from AI assistants                                 | Python     |
+| [ComfyUI MCP](https://github.com/artokun/comfyui-mcp)                           | Run and author ComfyUI workflows for image, video, and audio                   | TypeScript |
+| [DaVinci Resolve MCP](https://github.com/samuelgursky/davinci-resolve-mcp)      | Control DaVinci Resolve editing, color grading, and project media              | Python     |
+| [design:os 3D Blender MCP](https://github.com/jangtrinh/design-os-3d-blender)   | Free, source-available (PolyForm Shield) MCP to model and render 3D in Blender | Python     |
+| [designlang](https://github.com/Manavarya09/design-extract)                     | Extract a website's design system into DTCG tokens and framework code          | JavaScript |
+| [Excalidraw MCP](https://github.com/yctimlin/mcp_excalidraw)                    | Create and edit Excalidraw diagrams on a live canvas                           | TypeScript |
+| [Figma Context MCP](https://github.com/GLips/Figma-Context-MCP)                 | Figma layouts for AI coding agents (Framelink)                                 | TypeScript |
+| [Houdini MCP](https://github.com/capoomgit/houdini-mcp)                         | Build and modify SideFX Houdini scenes and nodes                               | Python     |
+| [House AI](https://github.com/Apex-Byte-Technologies/house-ai-mcp)              | Redesign rooms, exteriors and yards from a photo, then shop the look           | Remote     |
+| [Kleap](https://github.com/kleaphq/cli)                                         | Official Kleap server for creating, editing and publishing websites            | JavaScript |
+| [MuAPI MCP](https://github.com/SamurAIGPT/muapi-mcp-server)                     | Image, video and audio generation across 100+ generative AI models             | Python     |
+| [OrkasVideoStudio](https://github.com/Orkas-AI/Orkas-VideoStudio)               | Compose, edit, analyze, and render video from coding agents                    | TypeScript |
+| [Photoshop MCP](https://github.com/loonghao/photoshop-python-api-mcp-server)    | Adobe Photoshop automation                                                     | Python     |
+| [UberLLM](https://uberllm.dev/docs/mcp)                                         | Make images and videos, list models with prices and check balance -- needs key | Remote     |
+| [UpRes MCP](https://github.com/auroracapital/upres-cli)                         | Upscale images and videos up to 8K across 14 specialist models                 | TypeScript |
+| [VideoGen MCP](https://videogen.io/videogen-mcp)                                | Create and edit videos, images, voiceovers, music, and avatars                 | TypeScript |
+| [Webflow MCP](https://github.com/webflow/mcp-server)                            | Official Webflow server for sites, pages, CMS, and components                  | TypeScript |
 
 ### Testing & QA
 
@@ -405,25 +405,26 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 ### Security
 
-| Server                                                                             | Description                                                                                                                                                | Language   |
-| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| [Binary Ninja MCP](https://github.com/fosdickio/binary_ninja_mcp)                  | Binary Ninja plugin for LLM-driven binary analysis                                                                                                         | Python     |
-| [Bitwarden MCP](https://github.com/bitwarden/mcp-server)                           | Official Bitwarden password manager                                                                                                                        | TypeScript |
-| [Burp AI Agent](https://github.com/six2dez/burp-ai-agent)                          | Burp Suite extension with MCP tooling                                                                                                                      | Kotlin     |
-| [CrowdStrike Falcon MCP](https://github.com/CrowdStrike/falcon-mcp)                | Official CrowdStrike Falcon threat hunting and detections                                                                                                  | Python     |
-| [Dark-Moon](https://github.com/ASCIT31/Dark-Moon)                                  | Autonomous pentest platform for web, API, Active Directory and Kubernetes                                                                                  | Python     |
-| [DomScan MCP](https://github.com/estevecastells/domscan-mcp)                       | Domain intelligence: DNS, WHOIS, SSL, subdomains and typosquatting checks                                                                                  | TypeScript |
-| [HashiCorp Vault MCP](https://github.com/hashicorp/vault-mcp-server)               | Official HashiCorp Vault secrets and mounts management                                                                                                     | Go         |
-| [http-detection-agent](https://github.com/ai-blueteam/http-detection-agent)        | Capability-aware HTTP attack detection over a 76-rule catalog                                                                                              | Rust       |
+| Server                                                                             | Description                                                                     | Language   |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ---------- |
+| [Agency Check](https://github.com/CyberStrategy1/agency-check)                     | Second look before an agent buys, sends, books, shares or connects              | Remote     |
+| [Binary Ninja MCP](https://github.com/fosdickio/binary_ninja_mcp)                  | Binary Ninja plugin for LLM-driven binary analysis                              | Python     |
+| [Bitwarden MCP](https://github.com/bitwarden/mcp-server)                           | Official Bitwarden password manager                                             | TypeScript |
+| [Burp AI Agent](https://github.com/six2dez/burp-ai-agent)                          | Burp Suite extension with MCP tooling                                           | Kotlin     |
+| [CrowdStrike Falcon MCP](https://github.com/CrowdStrike/falcon-mcp)                | Official CrowdStrike Falcon threat hunting and detections                       | Python     |
+| [Dark-Moon](https://github.com/ASCIT31/Dark-Moon)                                  | Autonomous pentest platform for web, API, Active Directory and Kubernetes       | Python     |
+| [DomScan MCP](https://github.com/estevecastells/domscan-mcp)                       | Domain intelligence: DNS, WHOIS, SSL, subdomains and typosquatting checks       | TypeScript |
+| [HashiCorp Vault MCP](https://github.com/hashicorp/vault-mcp-server)               | Official HashiCorp Vault secrets and mounts management                          | Go         |
+| [http-detection-agent](https://github.com/ai-blueteam/http-detection-agent)        | Capability-aware HTTP attack detection over a 76-rule catalog                   | Rust       |
 | [ichi-mcp](https://github.com/bernik-bot/ichi-mcp)                                 | Reads ICHI global threat score, band (NORMAL--CRITICAL), and advisories; no key | Python     |
-| [IDA Pro MCP](https://github.com/mrexodia/ida-pro-mcp)                             | IDA Pro reverse engineering assistant for LLM clients                                                                                                      | Python     |
-| [Ironheights](https://github.com/Frank-Masciopinto/ironheights) | Checks AI agent skills and MCP configs for risky patterns before install | TypeScript |
-| [mcp-scan](https://github.com/snyk/agent-scan)                                     | Scans MCP servers for tool poisoning and prompt injection                                                                                                  | Python     |
-| [radare2 MCP](https://github.com/radareorg/radare2-mcp)                            | Official radare2 reverse engineering stdio server                                                                                                          | C          |
-| [Semgrep MCP](https://github.com/semgrep/semgrep/tree/develop/cli/src/semgrep/mcp) | Official Semgrep static analysis for vulnerabilities                                                                                                       | Python     |
-| [Shodan MCP](https://github.com/w0h1v/mcp-shodan)                                  | Shodan device search, IP recon, DNS and CVE intelligence                                                                                                   | TypeScript |
-| [Subdomain Finder MCP](https://github.com/theluckystrike/subdomain-finder-mcp) | Passive subdomain enumeration from certificate transparency logs and DNS | TypeScript |
-| [vet](https://github.com/safedep/vet)                                              | Dependency and malicious package scanning with an MCP server                                                                                               | Go         |
+| [IDA Pro MCP](https://github.com/mrexodia/ida-pro-mcp)                             | IDA Pro reverse engineering assistant for LLM clients                           | Python     |
+| [Ironheights](https://github.com/Frank-Masciopinto/ironheights)                    | Checks AI agent skills and MCP configs for risky patterns before install        | TypeScript |
+| [mcp-scan](https://github.com/snyk/agent-scan)                                     | Scans MCP servers for tool poisoning and prompt injection                       | Python     |
+| [radare2 MCP](https://github.com/radareorg/radare2-mcp)                            | Official radare2 reverse engineering stdio server                               | C          |
+| [Semgrep MCP](https://github.com/semgrep/semgrep/tree/develop/cli/src/semgrep/mcp) | Official Semgrep static analysis for vulnerabilities                            | Python     |
+| [Shodan MCP](https://github.com/w0h1v/mcp-shodan)                                  | Shodan device search, IP recon, DNS and CVE intelligence                        | TypeScript |
+| [Subdomain Finder MCP](https://github.com/theluckystrike/subdomain-finder-mcp)     | Passive subdomain enumeration from certificate transparency logs and DNS        | TypeScript |
+| [vet](https://github.com/safedep/vet)                                              | Dependency and malicious package scanning with an MCP server                    | Go         |
 
 ### Web Browsing & Scraping
 
@@ -436,24 +437,24 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Crawl4AI](https://github.com/unclecode/crawl4ai)                           | LLM-friendly web crawler and scraper with built-in MCP endpoints                 | Python     |
 | [Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server)          | Official Firecrawl web scraping and search                                       | TypeScript |
 | [Jina AI MCP](https://github.com/jina-ai/MCP)                               | Official Jina AI web reader, search, and content reranking                       | TypeScript |
-| [ReadGZH](https://github.com/sweesama/readgzh)                               | Turn public WeChat Official Account articles into AI-readable pages via MCP | TypeScript |
+| [ReadGZH](https://github.com/sweesama/readgzh)                              | Turn public WeChat Official Account articles into AI-readable pages via MCP      | TypeScript |
 | [ScraperSocial](https://scrapersocial.com/mcp/)                             | Public social media profiles, posts, comments and transcripts from 30+ platforms | Remote     |
 | [Skyvern](https://github.com/Skyvern-AI/skyvern/tree/main/integrations/mcp) | Browser workflow automation via LLMs and computer vision, over MCP               | Python     |
 | [Xquik MCP](https://github.com/Xquik-dev/x-twitter-scraper)                 | X/Twitter search, profile tweets, posting, and media tools                       | TypeScript |
 
 ### Media & Entertainment
 
-| Server                                                                                  | Description                                                          | Language   |
-| --------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ---------- |
-| [Ableton MCP](https://github.com/ahujasid/ableton-mcp)                                  | Control Ableton Live sessions, tracks, clips, and MIDI from an agent | Python     |
-| [Arr MCP](https://github.com/aplaceforallmystuff/mcp-arr)                               | Manage Sonarr, Radarr, and other arr media library services          | TypeScript |
-| [MiniMax MCP](https://github.com/MiniMax-AI/MiniMax-MCP)                                | Generate speech, music, images, and video with MiniMax models        | Python     |
-| [Sports Betting Stats MCP](https://github.com/GeminiGeorge22/sports-betting-stats-mcp) | Sportsbook odds, player props, scores, xG, closing lines and horse racing | Python |
-| [Sports Odds MCP](https://github.com/GeminiGeorge22/sports-odds-mcp)                    | Live odds from Kambi sportsbooks with every book's price per outcome | JavaScript |
-| [Spotify Play Count MCP](https://github.com/GeminiGeorge22/spotify-play-count-mcp)      | Spotify play counts per track, plus artist monthly listeners         | Python     |
-| [TMDB MCP](https://github.com/Laksh-star/mcp-server-tmdb)                               | The Movie Database (TMDB)                                            | TypeScript |
-| [YouTube MCP](https://github.com/ZubeidHendricks/youtube-mcp-server)                    | YouTube API videos and analytics                                     | TypeScript |
-| [YouTube Transcript MCP](https://github.com/kimtaeyoon83/mcp-server-youtube-transcript) | Download YouTube video transcripts                                   | TypeScript |
+| Server                                                                                  | Description                                                               | Language   |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ---------- |
+| [Ableton MCP](https://github.com/ahujasid/ableton-mcp)                                  | Control Ableton Live sessions, tracks, clips, and MIDI from an agent      | Python     |
+| [Arr MCP](https://github.com/aplaceforallmystuff/mcp-arr)                               | Manage Sonarr, Radarr, and other arr media library services               | TypeScript |
+| [MiniMax MCP](https://github.com/MiniMax-AI/MiniMax-MCP)                                | Generate speech, music, images, and video with MiniMax models             | Python     |
+| [Sports Betting Stats MCP](https://github.com/GeminiGeorge22/sports-betting-stats-mcp)  | Sportsbook odds, player props, scores, xG, closing lines and horse racing | Python     |
+| [Sports Odds MCP](https://github.com/GeminiGeorge22/sports-odds-mcp)                    | Live odds from Kambi sportsbooks with every book's price per outcome      | JavaScript |
+| [Spotify Play Count MCP](https://github.com/GeminiGeorge22/spotify-play-count-mcp)      | Spotify play counts per track, plus artist monthly listeners              | Python     |
+| [TMDB MCP](https://github.com/Laksh-star/mcp-server-tmdb)                               | The Movie Database (TMDB)                                                 | TypeScript |
+| [YouTube MCP](https://github.com/ZubeidHendricks/youtube-mcp-server)                    | YouTube API videos and analytics                                          | TypeScript |
+| [YouTube Transcript MCP](https://github.com/kimtaeyoon83/mcp-server-youtube-transcript) | Download YouTube video transcripts                                        | TypeScript |
 
 ### Travel & Location
 
@@ -485,7 +486,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [brianbooms-mcp](https://github.com/brianbooms/brianbooms-mcp)                  | Buy digital products with USDC micropayments on Base, via x402                   | Python     |
 | [BuyWhere MCP](https://github.com/BuyWhere/buywhere-mcp)                        | Hosted shopping MCP for product search and price comparison across 80+ countries | Remote     |
 | [commercetools MCP Essentials](https://github.com/commercetools/mcp-essentials) | Official commercetools server for products, carts, orders and customers          | TypeScript |
-| [E-commerce Sales MCP](https://github.com/GeminiGeorge22/ecommerce-sales-mcp) | Amazon bestsellers and reviews, eBay sold prices, TikTok Shop and Etsy sales | Python |
+| [E-commerce Sales MCP](https://github.com/GeminiGeorge22/ecommerce-sales-mcp)   | Amazon bestsellers and reviews, eBay sold prices, TikTok Shop and Etsy sales     | Python     |
 | [eBay MCP](https://github.com/YosefHayim/ebay-mcp)                              | 325 tools for eBay Sell APIs                                                     | TypeScript |
 | [Etsy Sales MCP](https://github.com/GeminiGeorge22/etsy-sales-mcp)              | Etsy search results plus daily sales counts and growth for Etsy shops            | JavaScript |
 | [Packrift MCP](https://github.com/Packrift/packrift-mcp)                        | Packaging catalog search, pricing, inventory, and cart URLs                      | TypeScript |
@@ -521,32 +522,32 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 ### Marketing & Analytics
 
-| Server                                                                              | Description                                                                      | Language   |
-| ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ---------- |
-| [A/B Test Sample Size Calculator MCP](https://github.com/theluckystrike/ab-test-sample-size-calculator-mcp) | A/B test sample size, duration, z-test, chi-square and Fisher exact tests | TypeScript |
-| [Ahel](https://github.com/ahel-technologies/ahel) | Company, people, SEO, social and EU register data for agents, pay per call | Remote |
-| [AltoRank](https://github.com/AltoRank/altorank)                                    | SEO audits, Search Console, keyword research and drafts into a review queue      | TypeScript |
-| [BulkPublish MCP](https://github.com/azeemkafridi/bulkpublish-api)                  | AI-agent API and MCP server for multi-platform social publishing and analytics   | TypeScript |
-| [Company Social MCP](https://github.com/GeminiGeorge22/company-social-mcp)          | Company domain or name to LinkedIn, X, YouTube, Instagram and Facebook links     | Python     |
-| [CorpusIQ](https://docs.corpusiq.io/mcp) | Read-only queries across 40+ business platforms through one OAuth | Remote |
-| [Datacircle](https://datacircle.dev/docs/mcp) | Find the best GTM APIs | Remote |
-| [DataForSEO MCP](https://github.com/dataforseo/mcp-server-typescript)               | Official DataForSEO server for SERP, keyword and backlink data                   | TypeScript |
-| [FalcoScan MCP](https://github.com/nyachisn/falcoscan-mcp)                          | Look up AI products, markets, rivals and shutdowns (FalcoScan API key)           | JavaScript |
-| [Fictura](https://github.com/Apex-Byte-Technologies/fictura-mcp)                    | App growth data for AI coding agents: funnels, paywalls, revenue and errors      | Remote     |
-| [Google Ads Transparency MCP](https://github.com/GeminiGeorge22/google-ads-transparency-mcp) | Competitor Google ads from the Ads Transparency Center: new, running, stopped | Python |
-| [Google Analytics MCP](https://github.com/surendranb/google-analytics-mcp)          | GA4 data for AI agents                                                           | Python     |
-| [Google Search Console MCP](https://github.com/AminForou/mcp-gsc)                   | Query Google Search Console search analytics, sitemaps and indexing              | Python     |
-| [Google Tag Manager MCP](https://github.com/stape-io/google-tag-manager-mcp-server) | Manage GTM containers, tags, triggers and variables                              | TypeScript |
-| [LLM Pulse MCP](https://github.com/LLM-Pulse/llmpulse-mcp)                          | AI visibility analytics for mentions, citations, sentiment, and AI traffic       | JavaScript |
-| [LogNorm](https://lognorm.com/connect)                                              | Hosted SEO/GEO backlog: site audits, fixes, content and AI-visibility tracking   | Remote     |
-| [MentionsAPI MCP](https://github.com/mukul-dutt/mentionsapi-mcp)                    | Brand mentions, rank and sentiment across ChatGPT, Claude, Gemini and Perplexity | TypeScript |
-| [Meta Ads MCP (GoMarble)](https://github.com/gomarble-ai/facebook-ads-mcp-server)   | Read and manage Meta and Instagram ad campaigns via the Meta Ads API             | Python     |
-| [NotFair](https://github.com/nowork-studio/notfair-plugin)                          | Google Ads, Meta Ads, and SEO skills with human-approval gate                    | TypeScript |
-| [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp)          | Official PostHog product analytics                                               | TypeScript |
-| [RestoSignals](https://github.com/paperandbeyond23-gif/restosignals-mcp)            | Pre-opening US restaurant and bar leads from liquor, permit and business filings | Remote     |
-| [Salesforce MCP](https://github.com/salesforcecli/mcp)                              | Official Salesforce CLI MCP                                                      | TypeScript |
-| [UnrealUGC MCP](https://github.com/UnrealUGC/mcp)                                   | Create AI UGC video ads through the UnrealUGC platform                           | TypeScript |
-| [Watchr](https://github.com/getwatchr/watchr-mcp) | Query competitor signals, insights and reports in a Watchr workspace | Remote |
+| Server                                                                                                      | Description                                                                      | Language   |
+| ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ---------- |
+| [A/B Test Sample Size Calculator MCP](https://github.com/theluckystrike/ab-test-sample-size-calculator-mcp) | A/B test sample size, duration, z-test, chi-square and Fisher exact tests        | TypeScript |
+| [Ahel](https://github.com/ahel-technologies/ahel)                                                           | Company, people, SEO, social and EU register data for agents, pay per call       | Remote     |
+| [AltoRank](https://github.com/AltoRank/altorank)                                                            | SEO audits, Search Console, keyword research and drafts into a review queue      | TypeScript |
+| [BulkPublish MCP](https://github.com/azeemkafridi/bulkpublish-api)                                          | AI-agent API and MCP server for multi-platform social publishing and analytics   | TypeScript |
+| [Company Social MCP](https://github.com/GeminiGeorge22/company-social-mcp)                                  | Company domain or name to LinkedIn, X, YouTube, Instagram and Facebook links     | Python     |
+| [CorpusIQ](https://docs.corpusiq.io/mcp)                                                                    | Read-only queries across 40+ business platforms through one OAuth                | Remote     |
+| [Datacircle](https://datacircle.dev/docs/mcp)                                                               | Find the best GTM APIs                                                           | Remote     |
+| [DataForSEO MCP](https://github.com/dataforseo/mcp-server-typescript)                                       | Official DataForSEO server for SERP, keyword and backlink data                   | TypeScript |
+| [FalcoScan MCP](https://github.com/nyachisn/falcoscan-mcp)                                                  | Look up AI products, markets, rivals and shutdowns (FalcoScan API key)           | JavaScript |
+| [Fictura](https://github.com/Apex-Byte-Technologies/fictura-mcp)                                            | App growth data for AI coding agents: funnels, paywalls, revenue and errors      | Remote     |
+| [Google Ads Transparency MCP](https://github.com/GeminiGeorge22/google-ads-transparency-mcp)                | Competitor Google ads from the Ads Transparency Center: new, running, stopped    | Python     |
+| [Google Analytics MCP](https://github.com/surendranb/google-analytics-mcp)                                  | GA4 data for AI agents                                                           | Python     |
+| [Google Search Console MCP](https://github.com/AminForou/mcp-gsc)                                           | Query Google Search Console search analytics, sitemaps and indexing              | Python     |
+| [Google Tag Manager MCP](https://github.com/stape-io/google-tag-manager-mcp-server)                         | Manage GTM containers, tags, triggers and variables                              | TypeScript |
+| [LLM Pulse MCP](https://github.com/LLM-Pulse/llmpulse-mcp)                                                  | AI visibility analytics for mentions, citations, sentiment, and AI traffic       | JavaScript |
+| [LogNorm](https://lognorm.com/connect)                                                                      | Hosted SEO/GEO backlog: site audits, fixes, content and AI-visibility tracking   | Remote     |
+| [MentionsAPI MCP](https://github.com/mukul-dutt/mentionsapi-mcp)                                            | Brand mentions, rank and sentiment across ChatGPT, Claude, Gemini and Perplexity | TypeScript |
+| [Meta Ads MCP (GoMarble)](https://github.com/gomarble-ai/facebook-ads-mcp-server)                           | Read and manage Meta and Instagram ad campaigns via the Meta Ads API             | Python     |
+| [NotFair](https://github.com/nowork-studio/notfair-plugin)                                                  | Google Ads, Meta Ads, and SEO skills with human-approval gate                    | TypeScript |
+| [PostHog MCP](https://github.com/PostHog/posthog/tree/master/services/mcp)                                  | Official PostHog product analytics                                               | TypeScript |
+| [RestoSignals](https://github.com/paperandbeyond23-gif/restosignals-mcp)                                    | Pre-opening US restaurant and bar leads from liquor, permit and business filings | Remote     |
+| [Salesforce MCP](https://github.com/salesforcecli/mcp)                                                      | Official Salesforce CLI MCP                                                      | TypeScript |
+| [UnrealUGC MCP](https://github.com/UnrealUGC/mcp)                                                           | Create AI UGC video ads through the UnrealUGC platform                           | TypeScript |
+| [Watchr](https://github.com/getwatchr/watchr-mcp)                                                           | Query competitor signals, insights and reports in a Watchr workspace             | Remote     |
 
 ### Knowledge Management
 
@@ -736,4 +737,3 @@ A remote server. `type` is not optional here: an entry with a `url` and no `type
 ```
 
 Where that JSON lives, and which extra keys it takes, differs per client -- check your own client's docs. The protocol's [guide to connecting a local server](https://modelcontextprotocol.io/docs/develop/connect-local-servers) walks through the stdio case, and each server's README lists the arguments, tokens and environment variables it expects.
-
