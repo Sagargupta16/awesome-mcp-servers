@@ -157,6 +157,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Serena](https://github.com/oraios/serena)                                                             | Semantic code retrieval and editing toolkit for coding agents                | Python     |
 | [Spinnaker MCP](https://github.com/GeiserX/spinnaker-mcp)                                              | Operate Spinnaker applications, pipelines and executions via the Gate API    | Go         |
 | [Supergateway](https://github.com/supercorp-ai/supergateway)                                           | Gateway that runs stdio MCP servers over SSE and HTTP                        | TypeScript |
+| [Vicem](https://github.com/RAKKUNN/vicem)                                                              | Context baton, 0-100% salience compaction, and lossless AST rehydration      | JavaScript |
 | [XcodeBuildMCP](https://github.com/getsentry/MobileBuildMCP)                                           | Build, run and debug Xcode iOS and macOS projects from an agent              | TypeScript |
 
 ### Cloud & Infrastructure
