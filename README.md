@@ -158,6 +158,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Spinnaker MCP](https://github.com/GeiserX/spinnaker-mcp)                                              | Operate Spinnaker applications, pipelines and executions via the Gate API    | Go         |
 | [Supergateway](https://github.com/supercorp-ai/supergateway)                                           | Gateway that runs stdio MCP servers over SSE and HTTP                        | TypeScript |
 | [Vicem](https://github.com/RAKKUNN/vicem)                                                              | Context baton, 0-100% salience compaction, and lossless AST rehydration      | JavaScript |
+| [Vulnify](https://github.com/vulnify/vulnify-mcp)                                                      | Runtime authorization for AI agent actions: ALLOW, REVIEW or BLOCK           | TypeScript |
 | [XcodeBuildMCP](https://github.com/getsentry/MobileBuildMCP)                                           | Build, run and debug Xcode iOS and macOS projects from an agent              | TypeScript |
 
 ### Cloud & Infrastructure
@@ -325,8 +326,8 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | ---------- |
 | [ACA Premium Tax Credit Calculator MCP](https://github.com/theluckystrike/aca-premium-tax-credit-calculator-mcp)                                 | ACA premium tax credit 2025-2026, poverty lines and the 400% FPL cliff          | TypeScript |
 | [Adyen MCP](https://github.com/Adyen/adyen-mcp)                                                                                                  | Official Adyen server for checkout, configuration and management APIs           | TypeScript |
-| [AgentReader](https://github.com/grokbot1233/agentreader)                                                                                        | UK/EU company KYB, Companies House DD and multi-list sanctions over x402        | Remote     |
 | [Agent Payment Node](https://github.com/nuanu-ai/agent-payment-node)                                                                             | Local MCP payments on Apple Silicon macOS with foreground owner approval        | TypeScript |
+| [AgentReader](https://github.com/grokbot1233/agentreader)                                                                                        | UK/EU company KYB, Companies House DD and multi-list sanctions over x402        | Remote     |
 | [aikstockdata](https://aikstockdata.com/en/mcp)                                                                                                  | Korean listed-company closing prices, DART filings and earnings, no API key     | JavaScript |
 | [Alpaca MCP](https://github.com/alpacahq/alpaca-mcp-server)                                                                                      | Official Alpaca stocks / ETF / crypto trading                                   | Python     |
 | [Car Loan Interest Deduction Calculator MCP](https://github.com/theluckystrike/car-loan-interest-deduction-calculator-mcp)                       | US car loan interest deduction, SALT cap, child tax credit and 2026 brackets    | TypeScript |
@@ -394,7 +395,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [AntV Chart MCP](https://github.com/antvis/mcp-server-chart)                    | Official AntV server generating 25+ chart types                                | TypeScript |
 | [Aseprite MCP](https://github.com/diivi/aseprite-mcp)                           | Create and edit pixel art through the Aseprite API                             | Python     |
 | [Blender MCP](https://github.com/ahujasid/mcp-for-blender)                      | Control Blender 3D modeling from AI assistants                                 | Python     |
-| [ClipOnIt](https://github.com/MattJeff/cliponit-mcp) | Turn long videos into captioned 9:16 shorts and make animated explainer videos | Remote |
+| [ClipOnIt](https://github.com/MattJeff/cliponit-mcp)                            | Turn long videos into captioned 9:16 shorts and make animated explainer videos | Remote     |
 | [ComfyUI MCP](https://github.com/artokun/comfyui-mcp)                           | Run and author ComfyUI workflows for image, video, and audio                   | TypeScript |
 | [DaVinci Resolve MCP](https://github.com/samuelgursky/davinci-resolve-mcp)      | Control DaVinci Resolve editing, color grading, and project media              | Python     |
 | [design:os 3D Blender MCP](https://github.com/jangtrinh/design-os-3d-blender)   | Free, source-available (PolyForm Shield) MCP to model and render 3D in Blender | Python     |
