@@ -393,6 +393,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [AntV Chart MCP](https://github.com/antvis/mcp-server-chart)                    | Official AntV server generating 25+ chart types                                | TypeScript |
 | [Aseprite MCP](https://github.com/diivi/aseprite-mcp)                           | Create and edit pixel art through the Aseprite API                             | Python     |
 | [Blender MCP](https://github.com/ahujasid/mcp-for-blender)                      | Control Blender 3D modeling from AI assistants                                 | Python     |
+| [ClipOnIt](https://github.com/MattJeff/cliponit-mcp) | Turn long videos into captioned 9:16 shorts and make animated explainer videos | Remote |
 | [ComfyUI MCP](https://github.com/artokun/comfyui-mcp)                           | Run and author ComfyUI workflows for image, video, and audio                   | TypeScript |
 | [DaVinci Resolve MCP](https://github.com/samuelgursky/davinci-resolve-mcp)      | Control DaVinci Resolve editing, color grading, and project media              | Python     |
 | [design:os 3D Blender MCP](https://github.com/jangtrinh/design-os-3d-blender)   | Free, source-available (PolyForm Shield) MCP to model and render 3D in Blender | Python     |
