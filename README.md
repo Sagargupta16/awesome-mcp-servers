@@ -555,6 +555,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Fictura](https://github.com/Apex-Byte-Technologies/fictura-mcp)                                            | App growth data for AI coding agents: funnels, paywalls, revenue and errors      | Remote     |
 | [Google Ads Transparency MCP](https://github.com/GeminiGeorge22/google-ads-transparency-mcp)                | Competitor Google ads from the Ads Transparency Center: new, running, stopped    | Python     |
 | [Google Analytics MCP](https://github.com/surendranb/google-analytics-mcp)                                  | GA4 data for AI agents                                                           | Python     |
+| [Skald](https://github.com/spcaeo/skald) | Self-hosted web analytics from your server access log (source-available, ELv2); mostly read-only MCP for AI-assistant fetches, comparisons, withheld days | Python |
 | [Google Search Console MCP](https://github.com/AminForou/mcp-gsc)                                           | Query Google Search Console search analytics, sitemaps and indexing              | Python     |
 | [Google Tag Manager MCP](https://github.com/stape-io/google-tag-manager-mcp-server)                         | Manage GTM containers, tags, triggers and variables                              | TypeScript |
 | [LLM Pulse MCP](https://github.com/LLM-Pulse/llmpulse-mcp)                                                  | AI visibility analytics for mentions, citations, sentiment, and AI traffic       | JavaScript |
