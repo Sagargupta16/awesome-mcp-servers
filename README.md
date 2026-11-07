@@ -316,7 +316,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [RunAPI MCP](https://github.com/runapi-ai/mcp)                                                         | Model discovery, pricing lookup, task creation, and LLM chat                | TypeScript |
 | [SandBase CLI](https://github.com/sandbaseai/cli)                                                      | Local MCP gateway for discovering and running 2,000+ AI models via one API  | TypeScript |
 | [Weights & Biases MCP](https://github.com/wandb/wandb-mcp-server)                                      | Official W&B Models + Weave                                                 | Python     |
-| [Zambo](https://zambo.dev/mcp) | Remote MCP server: 153 tools, cross-AI continuity, AER-1 receipt per job | Remote |
+| [Zambo](https://zambo.dev/mcp)                                                                         | Remote MCP server: 153 tools, cross-AI continuity, AER-1 receipt per job    | Remote     |
 
 ### Finance
 
@@ -327,6 +327,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Agent Payment Node](https://github.com/nuanu-ai/agent-payment-node)                                                                             | Local MCP payments on Apple Silicon macOS with foreground owner approval        | TypeScript |
 | [aikstockdata](https://aikstockdata.com/en/mcp)                                                                                                  | Korean listed-company closing prices, DART filings and earnings, no API key     | JavaScript |
 | [Alpaca MCP](https://github.com/alpacahq/alpaca-mcp-server)                                                                                      | Official Alpaca stocks / ETF / crypto trading                                   | Python     |
+| [BlockVectra](https://github.com/blockvectra/mcp)                                                                                                | Search blockchain docs and access EVM RPC and indexed data tools                | Remote     |
 | [Car Loan Interest Deduction Calculator MCP](https://github.com/theluckystrike/car-loan-interest-deduction-calculator-mcp)                       | US car loan interest deduction, SALT cap, child tax credit and 2026 brackets    | TypeScript |
 | [Coinbase MCP](https://github.com/coinbase/agentkit)                                                                                             | Coinbase crypto trading and wallet                                              | TypeScript |
 | [CPI Inflation Calculator MCP](https://github.com/theluckystrike/cpi-inflation-calculator-mcp)                                                   | BLS CPI inflation from 1913, raise vs inflation and Social Security COLA        | TypeScript |
