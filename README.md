@@ -316,7 +316,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [RunAPI MCP](https://github.com/runapi-ai/mcp)                                                         | Model discovery, pricing lookup, task creation, and LLM chat                | TypeScript |
 | [SandBase CLI](https://github.com/sandbaseai/cli)                                                      | Local MCP gateway for discovering and running 2,000+ AI models via one API  | TypeScript |
 | [Weights & Biases MCP](https://github.com/wandb/wandb-mcp-server)                                      | Official W&B Models + Weave                                                 | Python     |
-| [Zambo](https://zambo.dev/mcp) | Remote MCP server: 153 tools, cross-AI continuity, AER-1 receipt per job | Remote |
+| [Zambo](https://zambo.dev/mcp)                                                                         | Remote MCP server: 153 tools, cross-AI continuity, AER-1 receipt per job    | Remote     |
 
 ### Finance
 
@@ -477,6 +477,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | ---------- |
 | [Airbnb MCP](https://github.com/openbnb-org/mcp-server-airbnb)                 | Search Airbnb from your AI agent                                                | JavaScript |
 | [Cesium MCP](https://github.com/CesiumGS/cesium-ai-integrations/tree/main/mcp) | Official Cesium 3D geospatial and geolocation MCP servers                       | TypeScript |
+| [GC Airport Transfers](https://gc-airporttransfers.com.au/ai-agent-gateway/)   | Private Gold Coast, Brisbane and Byron Bay airport transfer quotes and bookings | Remote     |
 | [GIS MCP](https://github.com/mahdin75/gis-mcp)                                 | Geospatial analysis via GDAL, Shapely, GeoPandas, and PyProj                    | Python     |
 | [Google Maps MCP](https://github.com/cablate/mcp-google-map)                   | Google Maps API with LLM processing                                             | TypeScript |
 | [kosmos.info.pl](https://kosmos.info.pl/en/for-ai)                             | Skywatching in Poland: clouds, ISS passes, aurora, planets, meteors, APOD       | Remote     |
