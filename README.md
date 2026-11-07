@@ -168,6 +168,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Appwrite MCP](https://github.com/appwrite/mcp)                                          | Official Appwrite databases, auth, storage, and functions                  | Python     |
 | [AWS MCP Servers](https://github.com/awslabs/mcp)                                        | Official AWS MCP servers (S3, Lambda, CDK, Bedrock, etc.)                  | Multiple   |
 | [Azure MCP](https://github.com/microsoft/mcp)                                            | Official Azure cloud services                                              | C#         |
+| [BrewPage](https://github.com/kochetkov-ma/brewpage-openapi)                             | Publish HTML, Markdown, JSON, KV and files to shareable links, no signup   | TypeScript |
 | [Cloudflare MCP](https://github.com/cloudflare/mcp-server-cloudflare)                    | Cloudflare Workers, KV, R2, D1                                             | TypeScript |
 | [deed.page](https://deed.page/docs)                                                      | Publish static HTML or folders to permanent subdomain URLs with no account | Remote     |
 | [DigitalOcean MCP](https://github.com/digitalocean-labs/mcp-digitalocean)                | Official DO droplets, apps, databases                                      | Go         |
