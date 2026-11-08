@@ -200,6 +200,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Asana MCP](https://github.com/roychri/mcp-server-asana)                                                         | Asana tasks, projects, workspaces                                              | TypeScript |
 | [CareClinic](https://careclinic.io/careclinic-mcp/)                                                              | Read medication schedules, symptoms and moods, and save confirmed check-ins    | Remote     |
 | [Clera](https://www.getclera.com/mcp)                                                                            | Search vetted startup candidates, review role matches and request intros       | Remote     |
+| [depot.fitness](https://depot.fitness/connect)                                                                   | Search 101 written-out strength programs and 539 exercises, save to your library | Remote     |
 | [Excel MCP](https://github.com/haris-musa/excel-mcp-server)                                                      | Read, write and format Excel workbooks without Excel installed                 | Python     |
 | [fitlog-mcp](https://github.com/hahahahahahahahah6/fitlog-mcp)                                                   | Self-hosted MCP server giving Alexa+ a memory for training                     | Python     |
 | [Google Calendar MCP](https://github.com/nspady/google-calendar-mcp)                                             | Google Calendar management                                                     | TypeScript |
