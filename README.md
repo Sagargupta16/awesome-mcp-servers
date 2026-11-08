@@ -488,6 +488,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Google Maps MCP](https://github.com/cablate/mcp-google-map)                   | Google Maps API with LLM processing                                             | TypeScript |
 | [kosmos.info.pl](https://kosmos.info.pl/en/for-ai)                             | Skywatching in Poland: clouds, ISS passes, aurora, planets, meteors, APOD       | Remote     |
 | [Lake Level MCP](https://github.com/theluckystrike/lake-level-mcp)             | Live US lake and reservoir levels from USGS, USACE, CDEC, USBR and TWDB gauges  | TypeScript |
+| [Latino Events](https://events.lat/llms.txt)                                   | Concerts, festivals and cultural events across Latin America, with ticket links | Remote     |
 | [Mapbox MCP](https://github.com/mapbox/mcp-server)                             | Official Mapbox geocoding, POI search, directions, and isochrones               | TypeScript |
 | [MAQAMI Travel](https://github.com/negm17111995/mcp-server)                    | Search 3M+ hotels and flights with live rates, then check out on book.maqami.co | JavaScript |
 | [Orizn Visa](https://github.com/MattJeff/orizn-mcp-server)                     | Visa and entry rules for 49,750 passport-destination pairs, official sources    | TypeScript |
