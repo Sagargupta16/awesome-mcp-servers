@@ -423,6 +423,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | -------------------------------------------------------------- | ------------------------------------------------------- | ---------- |
 | [Appium MCP](https://github.com/appium/appium-mcp)             | Official Appium mobile app test automation              | TypeScript |
 | [Axe MCP](https://github.com/dequelabs/axe-mcp-server-public)  | Official Deque accessibility testing + AI remediation   | TypeScript |
+| [behave](https://github.com/emirmrkaljevic/behave)               | Record CLI behaviour as golden tests and diff a rewrite | Go         |
 | [BrowserStack MCP](https://github.com/browserstack/mcp-server) | Official BrowserStack cross-browser and device testing  | TypeScript |
 | [Oh My Android](https://github.com/ateymoori/oh-my-android)    | Android Emulator control panel with built-in MCP server | Swift      |
 | [Playwright MCP](https://github.com/microsoft/playwright-mcp)  | Official Microsoft Playwright browser automation        | TypeScript |
