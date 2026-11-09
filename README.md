@@ -447,6 +447,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Semgrep MCP](https://github.com/semgrep/semgrep/tree/develop/cli/src/semgrep/mcp) | Official Semgrep static analysis for vulnerabilities                            | Python     |
 | [Shodan MCP](https://github.com/w0h1v/mcp-shodan)                                  | Shodan device search, IP recon, DNS and CVE intelligence                        | TypeScript |
 | [Subdomain Finder MCP](https://github.com/theluckystrike/subdomain-finder-mcp)     | Passive subdomain enumeration from certificate transparency logs and DNS        | TypeScript |
+| [usb-rea](https://github.com/emirmrkaljevic/usb-rea)                               | Infer USB gadget protocols from captures and generate a pyusb driver         | Python     |
 | [vet](https://github.com/safedep/vet)                                              | Dependency and malicious package scanning with an MCP server                    | Go         |
 
 ### Web Browsing & Scraping
