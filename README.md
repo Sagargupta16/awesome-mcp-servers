@@ -547,6 +547,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Hass MCP](https://github.com/voska/hass-mcp)                             | Minimal Home Assistant MCP                                                    | Python   |
 | [Home Assistant MCP (ha-mcp)](https://github.com/homeassistant-ai/ha-mcp) | The unofficial awesome Home Assistant MCP                                     | Python   |
 | [HomeClaw](https://github.com/omarshahine/HomeClaw)                       | Control HomeKit lights, locks, thermostats, and scenes on macOS               | Swift    |
+| [iotaudit](https://github.com/emirmrkaljevic/iotaudit)                       | Discover and inventory IoT devices on your LAN from PCAP or live capture | Python   |
 | [MQTT MCP](https://github.com/ezhuk/mqtt-mcp)                             | Generic MQTT broker interaction                                               | Python   |
 | [RoboPartPicker](https://robopartpicker.com/developers)                   | Search open robotics projects, parts and bills of materials                   | Remote   |
 | [UniFi MCP](https://github.com/sirkirby/unifi-mcp)                        | Query and control UniFi Network, Protect, Access, and Drive                   | Python   |
