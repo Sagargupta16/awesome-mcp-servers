@@ -163,32 +163,33 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 ### Cloud & Infrastructure
 
-| Server                                                                                   | Description                                                                | Language   |
-| ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------- |
-| [Appwrite MCP](https://github.com/appwrite/mcp)                                          | Official Appwrite databases, auth, storage, and functions                  | Python     |
-| [AWS MCP Servers](https://github.com/awslabs/mcp)                                        | Official AWS MCP servers (S3, Lambda, CDK, Bedrock, etc.)                  | Multiple   |
-| [Azure MCP](https://github.com/microsoft/mcp)                                            | Official Azure cloud services                                              | C#         |
-| [BrewPage](https://github.com/kochetkov-ma/brewpage-openapi)                             | Publish HTML, Markdown, JSON, KV and files to shareable links, no signup   | TypeScript |
-| [Cloudflare MCP](https://github.com/cloudflare/mcp-server-cloudflare)                    | Cloudflare Workers, KV, R2, D1                                             | TypeScript |
-| [deed.page](https://deed.page/docs)                                                      | Publish static HTML or folders to permanent subdomain URLs with no account | Remote     |
-| [DigitalOcean MCP](https://github.com/digitalocean-labs/mcp-digitalocean)                | Official DO droplets, apps, databases                                      | Go         |
-| [Firebase MCP](https://github.com/firebase/firebase-tools)                               | Official Firebase MCP server built into the Firebase CLI                   | TypeScript |
-| [Fly.io MCP](https://github.com/superfly/flyctl)                                         | Official Fly.io MCP server built into the flyctl CLI                       | Go         |
-| [Google Cloud MCP](https://github.com/googleapis/gcloud-mcp)                             | Official gcloud CLI wrapper for GCP services                               | TypeScript |
-| [Google Cloud Run MCP](https://github.com/GoogleCloudPlatform/cloud-run-mcp)             | Official Google Cloud Run app deployment and management                    | JavaScript |
-| [Helm MCP](https://github.com/zekker6/mcp-helm)                                          | Helm package manager for Kubernetes                                        | Go         |
-| [Heroku MCP](https://github.com/heroku/heroku-mcp-server)                                | Official Heroku platform CLI wrapper                                       | TypeScript |
-| [Kubernetes MCP Server](https://github.com/containers/kubernetes-mcp-server)             | Kubernetes and OpenShift cluster operations without kubectl                | Go         |
-| [KubeStellar Console kc-agent](https://github.com/kubestellar/console)                   | MCP server for multi-cluster Kubernetes AI operations (CNCF Sandbox)       | Go         |
-| [LocalStack MCP](https://github.com/localstack/localstack-mcp-server)                    | Official LocalStack local AWS cloud emulator control                       | TypeScript |
-| [Nomad MCP](https://github.com/kocierik/mcp-nomad)                                       | HashiCorp Nomad cluster operations                                         | Go         |
-| [Oracle MCP Servers](https://github.com/oracle/mcp)                                      | Official Oracle MCP servers for OCI compute, networking, and databases     | Python     |
-| [Portainer MCP](https://github.com/portainer/portainer-mcp)                              | Official Portainer container and environment management                    | Python     |
-| [Railway MCP](https://docs.railway.com/cli/mcp)                                          | Official Railway MCP server built into the Railway CLI                     | Rust       |
-| [Render MCP](https://github.com/render-oss/render-mcp-server)                            | Official Render deployment server                                          | Go         |
-| [Tencent CloudBase AI Toolkit](https://github.com/TencentCloudBase/CloudBase-AI-Toolkit) | Tencent CloudBase database, auth, and cloud functions                      | TypeScript |
-| [Terraform MCP](https://github.com/hashicorp/terraform-mcp-server)                       | Official HashiCorp Terraform / OpenTofu                                    | Go         |
-| [Vercel Next DevTools MCP](https://github.com/vercel/next-devtools-mcp)                  | Official Next.js dev tools for coding agents                               | TypeScript |
+| Server                                                                                   | Description                                                                 | Language   |
+| ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ---------- |
+| [Appwrite MCP](https://github.com/appwrite/mcp)                                          | Official Appwrite databases, auth, storage, and functions                   | Python     |
+| [AWS MCP Servers](https://github.com/awslabs/mcp)                                        | Official AWS MCP servers (S3, Lambda, CDK, Bedrock, etc.)                   | Multiple   |
+| [Azure MCP](https://github.com/microsoft/mcp)                                            | Official Azure cloud services                                               | C#         |
+| [BrewPage](https://github.com/kochetkov-ma/brewpage-openapi)                             | Publish HTML, Markdown, JSON, KV and files to shareable links, no signup    | TypeScript |
+| [Cloudflare MCP](https://github.com/cloudflare/mcp-server-cloudflare)                    | Cloudflare Workers, KV, R2, D1                                              | TypeScript |
+| [CloudGPU MCP](https://github.com/mrhy7176/cloudgpu-mcp)                                 | Rent a cloud GPU from an MCP client: quote, run commands, fetch files, stop | JavaScript |
+| [deed.page](https://deed.page/docs)                                                      | Publish static HTML or folders to permanent subdomain URLs with no account  | Remote     |
+| [DigitalOcean MCP](https://github.com/digitalocean-labs/mcp-digitalocean)                | Official DO droplets, apps, databases                                       | Go         |
+| [Firebase MCP](https://github.com/firebase/firebase-tools)                               | Official Firebase MCP server built into the Firebase CLI                    | TypeScript |
+| [Fly.io MCP](https://github.com/superfly/flyctl)                                         | Official Fly.io MCP server built into the flyctl CLI                        | Go         |
+| [Google Cloud MCP](https://github.com/googleapis/gcloud-mcp)                             | Official gcloud CLI wrapper for GCP services                                | TypeScript |
+| [Google Cloud Run MCP](https://github.com/GoogleCloudPlatform/cloud-run-mcp)             | Official Google Cloud Run app deployment and management                     | JavaScript |
+| [Helm MCP](https://github.com/zekker6/mcp-helm)                                          | Helm package manager for Kubernetes                                         | Go         |
+| [Heroku MCP](https://github.com/heroku/heroku-mcp-server)                                | Official Heroku platform CLI wrapper                                        | TypeScript |
+| [Kubernetes MCP Server](https://github.com/containers/kubernetes-mcp-server)             | Kubernetes and OpenShift cluster operations without kubectl                 | Go         |
+| [KubeStellar Console kc-agent](https://github.com/kubestellar/console)                   | MCP server for multi-cluster Kubernetes AI operations (CNCF Sandbox)        | Go         |
+| [LocalStack MCP](https://github.com/localstack/localstack-mcp-server)                    | Official LocalStack local AWS cloud emulator control                        | TypeScript |
+| [Nomad MCP](https://github.com/kocierik/mcp-nomad)                                       | HashiCorp Nomad cluster operations                                          | Go         |
+| [Oracle MCP Servers](https://github.com/oracle/mcp)                                      | Official Oracle MCP servers for OCI compute, networking, and databases      | Python     |
+| [Portainer MCP](https://github.com/portainer/portainer-mcp)                              | Official Portainer container and environment management                     | Python     |
+| [Railway MCP](https://docs.railway.com/cli/mcp)                                          | Official Railway MCP server built into the Railway CLI                      | Rust       |
+| [Render MCP](https://github.com/render-oss/render-mcp-server)                            | Official Render deployment server                                           | Go         |
+| [Tencent CloudBase AI Toolkit](https://github.com/TencentCloudBase/CloudBase-AI-Toolkit) | Tencent CloudBase database, auth, and cloud functions                       | TypeScript |
+| [Terraform MCP](https://github.com/hashicorp/terraform-mcp-server)                       | Official HashiCorp Terraform / OpenTofu                                     | Go         |
+| [Vercel Next DevTools MCP](https://github.com/vercel/next-devtools-mcp)                  | Official Next.js dev tools for coding agents                                | TypeScript |
 
 ### Productivity
 
