@@ -470,6 +470,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ---------- |
 | [Ableton MCP](https://github.com/ahujasid/ableton-mcp)                                  | Control Ableton Live sessions, tracks, clips, and MIDI from an agent      | Python     |
 | [Arr MCP](https://github.com/aplaceforallmystuff/mcp-arr)                               | Manage Sonarr, Radarr, and other arr media library services               | TypeScript |
+| [Internet Radio MCP](https://github.com/AlonDrilich/internet-radio-mcp)                 | Search internet radio stations worldwide and get direct stream URLs       | JavaScript |
 | [MiniMax MCP](https://github.com/MiniMax-AI/MiniMax-MCP)                                | Generate speech, music, images, and video with MiniMax models             | Python     |
 | [Sports Betting Stats MCP](https://github.com/GeminiGeorge22/sports-betting-stats-mcp)  | Sportsbook odds, player props, scores, xG, closing lines and horse racing | Python     |
 | [Sports Odds MCP](https://github.com/GeminiGeorge22/sports-odds-mcp)                    | Live odds from Kambi sportsbooks with every book's price per outcome      | JavaScript |
