@@ -255,6 +255,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [MarkItDown MCP](https://github.com/microsoft/markitdown/tree/main/packages/markitdown-mcp)          | Convert PDF, Office, HTML and audio files to Markdown for LLMs                   | Python     |
 | [Meilisearch MCP](https://github.com/meilisearch/meilisearch-mcp)                                    | Official Meilisearch index server                                                | Python     |
 | [Perplexity MCP](https://github.com/perplexityai/modelcontextprotocol)                               | Official Perplexity search API                                                   | TypeScript |
+| [PlushSource](https://github.com/quickman924/plushsource-mcp) | Search, filter and compare custom plush manufacturers in a directory | TypeScript |
 | [Raw to Cooked Weight MCP](https://github.com/theluckystrike/raw-to-cooked-weight-mcp)               | Meat and poultry cooking yield by cut and method from USDA data                  | TypeScript |
 | [Recall Kitchen](https://github.com/Recall-Kitchen/rk-mcp)                                           | Search U.S. CPSC, FDA, USDA and NHTSA product recalls by keyword or UPC          | Remote     |
 | [Recipe Nutrition Calculator MCP](https://github.com/theluckystrike/recipe-nutrition-calculator-mcp) | Recipe calories and macros per serving from USDA data with FDA label rounding    | TypeScript |
