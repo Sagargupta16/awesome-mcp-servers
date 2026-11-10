@@ -37,7 +37,7 @@ Server entries are table rows in this exact shape:
 | [Name](URL) | Description | Language |
 ```
 
-You do not need to line up the pipes with the rows around yours. The tables are padded so the list passes [awesome-lint](https://github.com/sindresorhus/awesome-lint), and a bot re-pads them after new rows land. When a row wider than the rest widens its table, that re-padding can leave an open pull request in conflict with `main`; merging `main` into your branch, keeping `main`'s version of the table plus your row, and running `python scripts/validate.py --fix` clears it, or a maintainer can.
+You do not need to line up the pipes with the rows around yours. The tables are padded so the list passes [awesome-lint](https://github.com/sindresorhus/awesome-lint), and a bot pads new rows after they land. Every table shares one width per column, set by the widest cell in the whole list, so padding a new row leaves the other rows alone. Only a row wider than every other one widens the tables, and that can leave an open pull request in conflict with `main`; merging `main` into your branch, keeping `main`'s version of the table plus your row, and running `python scripts/validate.py --fix` clears it, or a maintainer can.
 
 - **Name** -- the project name, as a user would recognise it. Keep it short.
 - **URL** -- a direct `https://` link to the repository or official project page. No tracking parameters, no redirect shorteners.
@@ -140,7 +140,7 @@ That is fine and normal -- much of this list exists because authors submitted th
 1. **Disclose it.** Tick the affiliation box in the pull request template. That is all: the disclosure is not held against you, it just means nobody has to guess. Self-promotion that was hidden and later discovered gets the entry removed, which is the only reason this matters.
 2. **Meet the same bar as everyone else.** Licence, documentation, maintenance, real implementation. Being the author neither helps nor hurts.
 
-Being new is not a reason to hold back. If you would rather not open a pull request, the [server suggestion form](https://github.com/Sagargupta16/awesome-mcp-servers/issues/new?template=add-server.yml) works just as well: for a server or a framework, a bot turns the form into the same one-row pull request, runs the same checks, and merges it when they pass. If a field breaks a rule it comments on the issue, and editing the issue retries. Other sections are added by a maintainer.
+Being new is not a reason to hold back. If you would rather not open a pull request, the [server suggestion form](https://github.com/Sagargupta16/awesome-mcp-servers/issues/new?template=add-server.yml) works just as well: for a server or a framework, a bot turns the form into the same one-row pull request, runs the same checks, and merges it when they pass. If a field breaks a rule it comments on the issue, and editing the issue retries. Use the form itself: an issue filed through the API arrives without the `addition` label, and the bot only starts once a maintainer adds it. Other sections are added by a maintainer.
 
 ## Pull request process
 

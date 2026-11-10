@@ -391,6 +391,58 @@ def test_a_starrers_pull_request_event_approves_its_held_runs(fake):
     assert ("POST", f"repos/{star_check.REPO}/actions/runs/11/approve") in api.writes()
 
 
+def _failed_routes(*files: str, attempt: int = 1) -> dict:
+    runs = [
+        {"id": 21, "name": "Lint", "event": "pull_request", "run_attempt": attempt},
+        {
+            "id": 22,
+            "name": "Auto merge",
+            "event": "pull_request_target",
+            "run_attempt": 1,
+        },
+    ]
+    return {
+        ("GET", f"repos/{star_check.REPO}/pulls/7"): (
+            {"head": {"sha": "abc"}, "labels": [], "draft": False},
+            None,
+        ),
+        ("GET", f"repos/{star_check.REPO}/pulls/7/files"): _files(
+            *(files or ("README.md",))
+        ),
+        ("GET", f"repos/{star_check.REPO}/actions/runs?"): (
+            {"workflow_runs": runs},
+            None,
+        ),
+    }
+
+
+def test_a_first_attempt_failure_is_retried_once(fake):
+    """#341: one 504 failed its link check and nothing ran it again."""
+    api = fake(_failed_routes())
+
+    star_check.retry_failed(_pr(), dry_run=False)
+
+    assert api.writes() == [
+        ("POST", f"repos/{star_check.REPO}/actions/runs/21/rerun-failed-jobs")
+    ]
+
+
+def test_a_check_that_failed_again_is_left_for_the_author(fake):
+    api = fake(_failed_routes(attempt=2))
+
+    star_check.retry_failed(_pr(), dry_run=False)
+
+    assert api.writes() == []
+
+
+def test_a_failed_check_on_a_workflow_change_is_never_retried(fake):
+    api = fake(_failed_routes("README.md", "scripts/validate.py"))
+
+    star_check.retry_failed(_pr(), dry_run=False)
+
+    assert api.writes() == []
+
+
 def test_dry_run_writes_nothing(fake):
     api = fake({STARGAZERS: ([], None)})
 

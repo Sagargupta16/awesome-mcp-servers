@@ -2,6 +2,19 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.11.0] - 2026-11-10
+
+On 2026-11-10, 19 of the 31 open pull requests conflicted with `main`, and three starred ones sat unmerged for reasons that were not their authors' fault.
+
+### Changed
+
+- `validate.py --fix` pads every table to one shared width per column, the widest cell in the whole README (144, 80 and 17 characters today), instead of each table's own widest cell. A new row a little longer than its neighbours used to re-pad its whole table, and every open pull request adding to that table then conflicted. Now padding touches only new rows, unless one is wider than all 500-odd others. This one-time re-pad changes whitespace and separator dashes only; no entry changes.
+
+### Fixed
+
+- The star-check sweep now also runs every 6 hours, not only on dispatch. For a starrer's list-only pull request it arms auto-merge that a GitHub error left off (#312's run hit a 502) and re-runs, once, a check that failed on its first attempt (#341's link check hit a 504). A check that fails a second time is left for the author.
+- An issue filed through the API arrives without the `addition` label, so the form bot never saw six of them. Adding the label now starts the bot, when someone other than the author adds it, so a form's own label still cannot run it twice.
+
 ## [2.10.4] - 2026-11-01
 
 ### Added
