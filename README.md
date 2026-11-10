@@ -467,6 +467,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [ReadGZH](https://github.com/sweesama/readgzh)                              | Turn public WeChat Official Account articles into AI-readable pages via MCP      | TypeScript |
 | [ScraperSocial](https://scrapersocial.com/mcp/)                             | Public social media profiles, posts, comments and transcripts from 30+ platforms | Remote     |
 | [Skyvern](https://github.com/Skyvern-AI/skyvern/tree/main/integrations/mcp) | Browser workflow automation via LLMs and computer vision, over MCP               | Python     |
+| [TinyRex MCP](https://github.com/emirmrkaljevic/tinyrex-mcp)                | Run TinyRex Apify scrapers for remote jobs, Shopify stores and B2B leads         | Python     |
 | [Xquik MCP](https://github.com/Xquik-dev/x-twitter-scraper)                 | X/Twitter search, profile tweets, posting, and media tools                       | TypeScript |
 
 ### Media & Entertainment
