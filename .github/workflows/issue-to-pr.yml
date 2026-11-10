@@ -22,9 +22,12 @@ name: Issue to pull request
 #
 # Needs the repository setting "Allow GitHub Actions to create and approve pull
 # requests". There are no required reviews, so only the "create" half is used.
-# Not `labeled`: a form issue arrives with its label, which fires `opened` and
-# `labeled` together and ran this twice (two identical comments on #117). To retry
-# an older issue, edit it.
+# A form issue arrives with its label, which fires `opened` and `labeled`
+# together and once ran this twice (two identical comments on #117), so a
+# `labeled` event only counts when someone other than the author adds
+# `addition`. That is how a maintainer starts an issue filed through the API,
+# which arrives with no label (#158, #240, #257, #296, #297, #325). To retry an
+# older issue, edit it.
 #
 # The sweep (after the runs that precede a merge, and on the schedule as a
 # fallback) closes the issue once its pull request has merged. "Closes #N"
@@ -32,7 +35,7 @@ name: Issue to pull request
 # auto-merge on GITHUB_TOKEN (#119 stayed open after #120 merged).
 on:
   issues:
-    types: [opened, edited]
+    types: [opened, edited, labeled]
   # An auto-merge made with GITHUB_TOKEN starts no workflow, so the merge itself
   # cannot trigger this. The runs that come just before a merge can: the last
   # required check finishing, or Auto merge / Star check merging in the run. The
@@ -100,7 +103,10 @@ jobs:
     if: >-
       github.event_name == 'issues' &&
       github.event.issue.state == 'open' &&
-      contains(github.event.issue.labels.*.name, 'addition')
+      contains(github.event.issue.labels.*.name, 'addition') &&
+      (github.event.action != 'labeled' ||
+        (github.event.label.name == 'addition' &&
+          github.event.sender.login != github.event.issue.user.login))
     runs-on: ubuntu-latest
     permissions:
       contents: write # push the submission branch
