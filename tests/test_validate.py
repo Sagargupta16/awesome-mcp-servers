@@ -270,6 +270,33 @@ def test_align_tables_lines_up_every_pipe():
     assert aligned[1].startswith("| ---")
 
 
+def test_tables_in_one_file_share_column_widths():
+    lines = _lines(
+        "| A | B |\n|---|---|\n| short | x |\n\n| A | B |\n|---|---|\n| a much longer cell | y |"
+    )
+
+    aligned = validate.align_tables(lines)
+
+    assert aligned[2].index("x") == aligned[6].index("y")
+
+
+def test_a_row_narrower_than_the_widest_changes_no_other_line():
+    """Re-padding a whole table on each new row conflicted every open PR."""
+    base = validate.align_tables(
+        _lines(
+            "| Server | Description | Language |\n"
+            "|---|---|---|\n"
+            "| [Alpha](https://x.dev/a) | Alpha widget | Go |\n"
+            "| [Zeta](https://x.dev/z) | Zeta widget for long names | TypeScript |"
+        )
+    )
+    added = [*base[:3], "| [Beta](https://x.dev/b) | Beta | Go |\n", *base[3:]]
+
+    aligned = validate.align_tables(added)
+
+    assert [ln for ln in aligned if "Beta" not in ln] == base
+
+
 def test_align_tables_keeps_alignment_colons():
     lines = _lines("| A | B |\n|:---|---:|\n| x | y |")
 

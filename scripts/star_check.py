@@ -302,6 +302,39 @@ def approve_held(pr: dict, dry_run: bool) -> None:
             )
 
 
+def retry_failed(pr: dict, dry_run: bool) -> None:
+    """Re-run, once, a starrer's check that failed on its first attempt.
+
+    One 504 from GitHub failed #341's link check and nothing ran it again, so a
+    starred entry sat unmerged with a red check that was not its fault. Only
+    first attempts are retried, so a real failure (a description over 80
+    characters) fails a second time and is left for the author.
+    """
+    number = pr["number"]
+    full, err = api("GET", f"repos/{REPO}/pulls/{seg(number)}")
+    sha = ((full or {}).get("head") or {}).get("sha")
+    if err or not sha or not may_auto_merge(full | {"number": number}):
+        return
+    runs, err = api(
+        "GET", f"repos/{REPO}/actions/runs?head_sha={seg(sha)}&status=failure"
+    )
+    if err:
+        return
+    for run in (runs or {}).get("workflow_runs", []):
+        if run.get("event") != "pull_request" or run.get("run_attempt") != 1:
+            continue
+        print(f"  #{number}: retrying failed run {run['id']} ({run.get('name')})")
+        if dry_run:
+            continue
+        _, err = api(
+            "POST", f"repos/{REPO}/actions/runs/{seg(run['id'])}/rerun-failed-jobs"
+        )
+        if err:
+            print(
+                f"  #{number}: could not retry run {run['id']} ({err})", file=sys.stderr
+            )
+
+
 def skip_reason(pr: dict) -> str | None:
     user = pr.get("user") or {}
     if user.get("type") == "Bot":
@@ -316,7 +349,8 @@ def check(pr: dict, dry_run: bool, release_held: bool = False) -> None:
 
     On a pull request event auto-merge.yml makes the merge decision itself, so
     only the sweep, which sees pull requests held before a star, releases them.
-    Either way a starrer's runs that GitHub holds for approval are started.
+    Either way a starrer's runs that GitHub holds for approval are started, and
+    a sweep also retries a starrer's check that failed on its first attempt.
     """
     reason = skip_reason(pr)
     if reason:
@@ -328,6 +362,8 @@ def check(pr: dict, dry_run: bool, release_held: bool = False) -> None:
             release(pr, dry_run)
         else:
             approve_held(pr, dry_run)
+        if release_held:
+            retry_failed(pr, dry_run)
     else:
         flag(pr, dry_run)
 
