@@ -536,6 +536,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Nexscope](https://github.com/nexscope-ai/nexscope-ecommerce-api)                                                                                | Ecommerce product research API and remote MCP for Amazon                         | Python            |
 | [Packrift MCP](https://github.com/Packrift/packrift-mcp)                                                                                         | Packaging catalog search, pricing, inventory, and cart URLs                      | TypeScript        |
 | [Saleor MCP](https://github.com/saleor/saleor-mcp)                                                                                               | Official Saleor server for products, orders, customers and channels              | Python            |
+| [Toolbox POD](https://toolboxpod.com/docs/mcp)                                                                                                   | Design custom tees and hoodies, see mockups, and order prints shipped from Utah  | Remote            |
 | [Zaptu](https://zaptu.ai/agents/)                                                                                                                | US home-service contact requests (cleaning, pest, plumbing calls), not a booking | Remote            |
 
 ### Game Development
