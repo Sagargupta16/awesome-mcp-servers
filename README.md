@@ -298,6 +298,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Telegram Archive MCP](https://github.com/GeiserX/telegram-archive-mcp)                                                                          | Search and read archived Telegram history from a Telegram-Archive instance       | Go                |
 | [Telegram MCP](https://github.com/chigwell/telegram-mcp)                                                                                         | Telegram messaging                                                               | Python            |
 | [TextKit](https://jointextkit.com/docs/mcp)                                                                                                      | Send and receive SMS, verify phone numbers, buy US and Canada numbers            | Remote            |
+| [Wassenger WhatsApp MCP](https://github.com/wassengerhq/whatsapp-mcp) | Official WhatsApp Business API: messages, templates, chats, campaigns, inbox | TypeScript |
 | [Zulip MCP](https://github.com/zulip/zulipmcp)                                                                                                   | Official Zulip streams, messages and mentionable bot agents                      | Python            |
 
 ### File Systems & Storage
