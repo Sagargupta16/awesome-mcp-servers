@@ -158,6 +158,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Skillporter](https://github.com/Shanmukh-l33t/skillporter)                                                                                      | Audit agent skills in one workspace: drift, duplicates, security scans           | Python            |
 | [Spinnaker MCP](https://github.com/GeiserX/spinnaker-mcp)                                                                                        | Operate Spinnaker applications, pipelines and executions via the Gate API        | Go                |
 | [Supergateway](https://github.com/supercorp-ai/supergateway)                                                                                     | Gateway that runs stdio MCP servers over SSE and HTTP                            | TypeScript        |
+| [unslop](https://github.com/avivgerz-hue/unslop) | Audits UI code for AI design slop with 72 rules and refactor plans | TypeScript |
 | [Vicem](https://github.com/RAKKUNN/vicem)                                                                                                        | Context baton, 0-100% salience compaction, and lossless AST rehydration          | JavaScript        |
 | [Vulnify](https://github.com/vulnify/vulnify-mcp)                                                                                                | Runtime authorization for AI agent actions: ALLOW, REVIEW or BLOCK               | TypeScript        |
 | [XcodeBuildMCP](https://github.com/getsentry/MobileBuildMCP)                                                                                     | Build, run and debug Xcode iOS and macOS projects from an agent                  | TypeScript        |
@@ -443,6 +444,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Axe MCP](https://github.com/dequelabs/axe-mcp-server-public)                                                                                    | Official Deque accessibility testing + AI remediation                            | TypeScript        |
 | [behave](https://github.com/emirmrkaljevic/behave)                                                                                               | Record CLI behaviour as golden tests and diff a rewrite                          | Go                |
 | [BrowserStack MCP](https://github.com/browserstack/mcp-server)                                                                                   | Official BrowserStack cross-browser and device testing                           | TypeScript        |
+| [ghost-qa](https://github.com/avivgerz-hue/ghost-qa) | Headless Playwright QA across viewports and themes for local dev servers | TypeScript |
 | [Oh My Android](https://github.com/ateymoori/oh-my-android)                                                                                      | Android Emulator control panel with built-in MCP server                          | Swift             |
 | [Playwright MCP](https://github.com/microsoft/playwright-mcp)                                                                                    | Official Microsoft Playwright browser automation                                 | TypeScript        |
 
@@ -468,6 +470,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Subdomain Finder MCP](https://github.com/theluckystrike/subdomain-finder-mcp)                                                                   | Passive subdomain enumeration from certificate transparency logs and DNS         | TypeScript        |
 | [usb-rea](https://github.com/emirmrkaljevic/usb-rea)                                                                                             | Infer USB gadget protocols from captures and generate a pyusb driver             | Python            |
 | [vet](https://github.com/safedep/vet)                                                                                                            | Dependency and malicious package scanning with an MCP server                     | Go                |
+| [vibe-shield](https://github.com/avivgerz-hue/vibe-shield) | Static security scanner with 92 rules for AI-generated TypeScript apps | TypeScript |
 
 ### Web Browsing & Scraping
 
