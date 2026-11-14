@@ -2,6 +2,16 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.11.1] - 2026-11-14
+
+### Fixed
+
+- The link check accepts HTTP 401. A remote MCP endpoint answers a request without a token with 401, which CONTRIBUTING's hosted rule already counts as live, but the check failed HoneyVid's `/mcp` (#366) and the Kling plugin URL in main's Kling AI MCP description.
+
+### Removed
+
+- Three entries whose repositories are gone (404), which had failed main's daily link check since 2026-11-10: AgentReader (account `grokbot1233` deleted), MailVeri MCP (account `mailveri` deleted a day after it was listed) and UpRes MCP (`auroracapital/upres-cli` deleted).
+
 ## [2.11.0] - 2026-11-10
 
 On 2026-11-10, 19 of the 31 open pull requests conflicted with `main`, and three starred ones sat unmerged for reasons that were not their authors' fault.
