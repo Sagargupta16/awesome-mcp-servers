@@ -609,6 +609,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [UnrealUGC MCP](https://github.com/UnrealUGC/mcp)                                                                                                | Create AI UGC video ads through the UnrealUGC platform                           | TypeScript        |
 | [Watchr](https://github.com/getwatchr/watchr-mcp)                                                                                                | Query competitor signals, insights and reports in a Watchr workspace             | Remote            |
 | [Wavegrain](https://wavegrain.com/mcp)                                                                                                           | Curated TikTok slideshows and Instagram carousels for your brand on autopilot    | Remote            |
+| [zaDojo](https://zadojo.com/docs/mcp)                                                                                                            | Search Console, GA4, rank tracking, SERP and AI visibility data for SEO and GEO  | Remote            |
 
 ### Knowledge Management
 
