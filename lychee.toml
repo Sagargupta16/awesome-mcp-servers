@@ -15,7 +15,9 @@ max_concurrency = 16
 # 403 covers hosts that serve humans but reject automated requests.
 # 405 is a remote MCP endpoint refusing a plain GET: the server answers MCP
 # POSTs (BirkinBagStock's /mcp returned 405 to GET and 200 to initialize).
-accept = [200, 206, 403, 405, 429]
+# 401 is an MCP endpoint asking for its token, which CONTRIBUTING's hosted rule
+# counts as live (HoneyVid's /mcp in #366 and Kling's plugin URL on main).
+accept = [200, 206, 401, 403, 405, 429]
 
 user_agent = "Mozilla/5.0 (compatible; awesome-mcp-servers link check; +https://github.com/Sagargupta16/awesome-mcp-servers)"
 
