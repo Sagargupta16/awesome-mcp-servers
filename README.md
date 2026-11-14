@@ -543,6 +543,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Saleor MCP](https://github.com/saleor/saleor-mcp)                                                                                               | Official Saleor server for products, orders, customers and channels              | Python            |
 | [Toolbox POD](https://toolboxpod.com/docs/mcp)                                                                                                   | Design custom tees and hoodies, see mockups, and order prints shipped from Utah  | Remote            |
 | [Zaptu](https://zaptu.ai/agents/)                                                                                                                | US home-service contact requests (cleaning, pest, plumbing calls), not a booking | Remote            |
+| [Zovo Price Tracker](https://github.com/zovo-one/mcp-price-tracker)                                                                              | Check shop page prices and watch them for drops, with history and target alerts  | TypeScript        |
 
 ### Game Development
 
