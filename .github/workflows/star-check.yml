@@ -16,12 +16,18 @@ name: Star check
 # pull_request_target runs this file from main and checks out main, so nothing
 # from the pull request executes; the script reads the author's login from the
 # event payload. `watch` fires when someone stars, with the starrer as sender.
-# GitHub has no event for unstarring, so a manual sweep is the only re-check.
+# GitHub has no event for unstarring, so the sweep (every 6 hours, or on
+# dispatch) is the only re-check.
 on:
   pull_request_target:
     types: [opened, reopened, synchronize]
   watch:
     types: [started]
+  # The sweep also retries what a single GitHub error left undone: #312's
+  # Auto merge run hit one 502 and #341's link check one 504 (2026-11-05 and
+  # 11-09), and nothing ran again, so both starred pull requests sat unmerged.
+  schedule:
+    - cron: "23 */6 * * *"
   workflow_dispatch:
 
 # nothing by default; the job asks for exactly what it writes
@@ -30,7 +36,7 @@ permissions: {}
 # One run at a time per person, so a pull request run and that person's star run
 # cannot interleave and leave a stale label. A sweep gets its own group.
 concurrency:
-  group: star-check-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.event.pull_request.user.login || github.event.sender.login }}
+  group: star-check-${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule') && github.run_id || github.event.pull_request.user.login || github.event.sender.login }}
   cancel-in-progress: false
 
 jobs:
@@ -57,5 +63,5 @@ jobs:
           # optional, read-only, this repo only: lets the script read the
           # stargazer list, which a workflow's own token may be refused
           STARGAZERS_TOKEN: ${{ secrets.STARGAZERS_TOKEN }}
-        # a dispatch has no pull request, so the script checks every open one
+        # a sweep has no pull request, so the script checks every open one
         run: python scripts/star_check.py

@@ -607,33 +607,52 @@ def align_tables(lines):
     anyone has to follow by hand. Widths are UTF-16 code units, as the lint rule
     measures them, and a column's separator colons set how its cells justify.
     Lines inside fenced code blocks are examples, not tables, and stay as written.
+
+    Every table in the file shares one width per column: the widest cell in that
+    column anywhere. With per-table widths a new row only slightly longer than
+    its neighbours re-padded its whole table, and every open pull request adding
+    to that table then conflicted (19 of 31 open on 2026-11-10). The shared width
+    is the widest of 500-odd rows, and descriptions stop at 80, so a new row
+    almost never moves it and padding touches only the rows that need it.
     """
-    out, i, in_fence = [], 0, False
+    segments, i, in_fence = [], 0, False
     while i < len(lines):
         if lines[i].lstrip().startswith("```"):
             in_fence = not in_fence
         if in_fence or not lines[i].startswith("|"):
-            out.append(lines[i])
+            segments.append(lines[i])
             i += 1
             continue
         block = []
         while i < len(lines) and lines[i].startswith("|"):
             block.append(_cells(lines[i]))
             i += 1
-        out.extend(_align_block(block))
+        segments.append(block)
+    widths = []
+    for block in (s for s in segments if isinstance(s, list)):
+        for row in block:
+            if all(SEPARATOR_CELL_RE.match(c) for c in row):
+                continue
+            widths += [3] * (len(row) - len(widths))
+            for col, cell in enumerate(row):
+                widths[col] = max(widths[col], _width(cell))
+    out = []
+    for segment in segments:
+        if isinstance(segment, list):
+            out.extend(_align_block(segment, widths))
+        else:
+            out.append(segment)
     return out
 
 
-def _align_block(block: list) -> list:
-    """Render one table, given as rows of cells, with its pipes lined up."""
+def _align_block(block: list, shared: list) -> list:
+    """Render one table, given as rows of cells, at the file's shared widths."""
     is_separator = [all(SEPARATOR_CELL_RE.match(c) for c in row) for row in block]
-    widths = [3] * max(len(row) for row in block)
+    columns = max(len(row) for row in block)
+    widths = (shared + [3] * columns)[:columns]
     separators = [row for row, sep in zip(block, is_separator) if sep]
     aligns = [_alignment(c) for c in separators[0]] if separators else []
     aligns += ["left"] * (len(widths) - len(aligns))
-    for row in (r for r, sep in zip(block, is_separator) if not sep):
-        for col, cell in enumerate(row):
-            widths[col] = max(widths[col], _width(cell))
     out = []
     for row, sep in zip(block, is_separator):
         if sep:

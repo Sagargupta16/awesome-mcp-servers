@@ -2,6 +2,42 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.11.1] - 2026-11-14
+
+### Fixed
+
+- The link check accepts HTTP 401. A remote MCP endpoint answers a request without a token with 401, which CONTRIBUTING's hosted rule already counts as live, but the check failed HoneyVid's `/mcp` (#366) and the Kling plugin URL in main's Kling AI MCP description.
+
+### Removed
+
+- Three entries whose repositories are gone (404), which had failed main's daily link check since 2026-11-10: AgentReader (account `grokbot1233` deleted), MailVeri MCP (account `mailveri` deleted a day after it was listed) and UpRes MCP (`auroracapital/upres-cli` deleted).
+
+## [2.11.0] - 2026-11-10
+
+On 2026-11-10, 19 of the 31 open pull requests conflicted with `main`, and three starred ones sat unmerged for reasons that were not their authors' fault.
+
+### Changed
+
+- `validate.py --fix` pads every table to one shared width per column, the widest cell in the whole README (144, 80 and 17 characters today), instead of each table's own widest cell. A new row a little longer than its neighbours used to re-pad its whole table, and every open pull request adding to that table then conflicted. Now padding touches only new rows, unless one is wider than all 500-odd others. This one-time re-pad changes whitespace and separator dashes only; no entry changes.
+
+### Fixed
+
+- The star-check sweep now also runs every 6 hours, not only on dispatch. For a starrer's list-only pull request it arms auto-merge that a GitHub error left off (#312's run hit a 502) and re-runs, once, a check that failed on its first attempt (#341's link check hit a 504). A check that fails a second time is left for the author.
+- An issue filed through the API arrives without the `addition` label, so the form bot never saw six of them. Adding the label now starts the bot, when someone other than the author adds it, so a form's own label still cannot run it twice.
+
+## [2.10.4] - 2026-11-01
+
+### Added
+
+- Community links the sister list, [Awesome Agent Skills](https://github.com/Sagargupta16/awesome-skills), which lists Agent Skills under the same checks. It already links back here.
+
+## [2.10.3] - 2026-11-01
+
+### Fixed
+
+- Removed the 6 Security entries that linked to the `doomsday-network` GitHub account, which no longer exists (every link, and the account itself, answers 404). The dead links had failed the main Link Checker since 2026-10-30, and every submission branch inherited that failure. Five of the six were also bullet lines inside the Security table, which split it.
+- The link check accepts HTTP 405. A remote MCP endpoint refuses a plain GET, so BirkinBagStock's live `/mcp` (200 to an MCP `initialize` POST) failed the check as a dead link.
+
 ## [2.10.2] - 2026-10-25
 
 ### Fixed
