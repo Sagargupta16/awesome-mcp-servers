@@ -274,6 +274,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Tavily MCP](https://github.com/tavily-ai/tavily-mcp)                                                                                            | Tavily AI search for agents                                                      | JavaScript        |
 | [Vegetable Yield Percentage MCP](https://github.com/theluckystrike/vegetable-yield-percentage-mcp)                                               | Edible portion, trim waste and produce to buy from USDA refuse data              | TypeScript        |
 | [zodiak.info.pl](https://zodiak.info.pl/dla-ai)                                                                                                  | Astrology from astronomy: birth charts, transits, synastry, Vedic chart          | Remote            |
+| [链小知区块链](https://lianxiaozhi.com/agent)                                                                                                          | Search Chinese blockchain news, learning materials and tool guides               | Remote            |
 
 ### Communication
 
