@@ -519,6 +519,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 | Server                                                                                                                                           | Description                                                                      | Language          |
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------- |
+| [Agent Flights](https://lowest.flights/connect) | Cheapest flights worldwide, strong on Africa: price calendars and booking links | Remote |
 | [Airbnb MCP](https://github.com/openbnb-org/mcp-server-airbnb)                                                                                   | Search Airbnb from your AI agent                                                 | JavaScript        |
 | [Cesium MCP](https://github.com/CesiumGS/cesium-ai-integrations/tree/main/mcp)                                                                   | Official Cesium 3D geospatial and geolocation MCP servers                        | TypeScript        |
 | [GC Airport Transfers](https://gc-airporttransfers.com.au/ai-agent-gateway/)                                                                     | Private Gold Coast, Brisbane and Byron Bay airport transfer quotes and bookings  | Remote            |
