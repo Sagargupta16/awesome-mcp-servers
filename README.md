@@ -392,6 +392,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Yahoo Finance MCP](https://github.com/Alex2Yang97/yahoo-finance-mcp)                                                                            | Stock data and financial info                                                    | Python            |
 | [Zerodha Kite MCP](https://github.com/zerodha/kite-mcp-server)                                                                                   | Official Zerodha Kite server for Indian holdings, orders and quotes              | Go                |
 | [Zovo Grant Finder](https://grant-finder.zovo.one/)                                                                                              | Search Grants.gov federal grants and export XLSX trackers and ICS deadlines      | Remote            |
+| [EU & Nordic Open Data MCP](https://github.com/itulo/eu-nordic-open-data-mcp) | Official EU and Nordic open data for tenders, sanctions, VAT and companies | JavaScript |
 
 ### Monitoring & Observability
 
