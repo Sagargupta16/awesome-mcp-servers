@@ -138,3 +138,21 @@ def test_skips_a_pull_request_without_a_real_sha(monkeypatch):
     pr = {"number": 7, "head": {"sha": "main; rm -rf /"}, "user": {"login": "x"}}
     format_comment.check(pr, BASE, dry_run=False)
     assert api.calls == []
+
+
+def test_a_refused_write_fails_the_run(monkeypatch):
+    calls = []
+
+    def refusing(method, path, payload=None, token=None):
+        calls.append(method)
+        if method == "GET":
+            return [], None
+        return None, 403
+
+    monkeypatch.setattr(format_comment, "api", refusing)
+    monkeypatch.setattr(
+        format_comment, "head_readme", lambda sha: (_break_first_row(BASE), "")
+    )
+    pr = {"number": 7, "head": {"sha": "a" * 40}, "user": {"login": "someone"}}
+    assert format_comment.check(pr, BASE, dry_run=False) is False
+    assert calls == ["GET", "POST"]

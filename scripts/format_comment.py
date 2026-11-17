@@ -121,17 +121,20 @@ def our_comment(number: int) -> dict | None:
     return None
 
 
-def check(pr: dict, base_text: str, dry_run: bool) -> None:
-    """Post, rewrite or settle the format comment on one pull request."""
+def check(pr: dict, base_text: str, dry_run: bool) -> bool:
+    """Post, rewrite or settle the format comment on one pull request.
+
+    False only when a write GitHub refused, so the run fails visibly.
+    """
     number = pr["number"]
     sha = (pr.get("head") or {}).get("sha") or ""
     if not SHA_RE.fullmatch(sha):
         print(f"  #{number}: no usable head sha; skipped")
-        return
+        return True
     head_text, detail = head_readme(sha)
     if head_text is None:
         print(f"  #{number}: cannot read README.md at {sha[:7]} ({detail}); skipped")
-        return
+        return True
 
     problems = new_problems(head_text, base_text)
     existing = our_comment(number)
@@ -141,25 +144,32 @@ def check(pr: dict, base_text: str, dry_run: bool) -> None:
         body = PASSES_BODY
     else:
         print(f"  #{number}: no new format problems")
-        return
+        return True
 
     if existing and existing.get("body") == body:
         print(f"  #{number}: comment already up to date")
-        return
-    print(
-        f"  #{number}: {len(problems)} new problem(s), comment {'updated' if existing else 'posted'}"
-    )
+        return True
+    action = "updated" if existing else "posted"
     if dry_run:
+        print(f"  #{number}: {len(problems)} new problem(s), comment would be {action}")
         print(body)
-        return
+        return True
     if existing:
-        api(
+        _, err = api(
             "PATCH",
             f"repos/{REPO}/issues/comments/{seg(existing['id'])}",
             {"body": body},
         )
     else:
-        api("POST", f"repos/{REPO}/issues/{seg(number)}/comments", {"body": body})
+        _, err = api(
+            "POST", f"repos/{REPO}/issues/{seg(number)}/comments", {"body": body}
+        )
+    if err:
+        # a refused write must fail the run, or the log says posted while nothing was
+        print(f"  #{number}: comment not {action} ({err})", file=sys.stderr)
+        return False
+    print(f"  #{number}: {len(problems)} new problem(s), comment {action}")
+    return True
 
 
 def open_prs() -> list[dict]:
@@ -183,12 +193,12 @@ def main() -> int:
         json.loads(Path(event_path).read_text(encoding="utf-8")) if event_path else {}
     )
     if os.environ.get("GITHUB_EVENT_NAME") == "pull_request_target":
-        check(event["pull_request"], base_text, args.dry_run)
+        prs = [event["pull_request"]]
     else:
         # a dispatch, or a local run, has no pull request: check every open one
-        for pr in open_prs():
-            check(pr, base_text, args.dry_run)
-    return 0
+        prs = open_prs()
+    results = [check(pr, base_text, args.dry_run) for pr in prs]
+    return 0 if all(results) else 1
 
 
 if __name__ == "__main__":

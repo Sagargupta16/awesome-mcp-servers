@@ -30,7 +30,7 @@ jobs:
     permissions:
       contents: read
       issues: write # comments go through the Issues API
-      pull-requests: read
+      pull-requests: write # which refuses a comment on a pull request without it
     steps:
       - uses: actions/checkout@v7
         with:
