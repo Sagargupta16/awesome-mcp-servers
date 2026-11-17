@@ -194,6 +194,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Tencent CloudBase AI Toolkit](https://github.com/TencentCloudBase/CloudBase-AI-Toolkit)                                                         | Tencent CloudBase database, auth, and cloud functions                            | TypeScript        |
 | [Terraform MCP](https://github.com/hashicorp/terraform-mcp-server)                                                                               | Official HashiCorp Terraform / OpenTofu                                          | Go                |
 | [Vercel Next DevTools MCP](https://github.com/vercel/next-devtools-mcp)                                                                          | Official Next.js dev tools for coding agents                                     | TypeScript        |
+| [Zorven](https://github.com/tkodcumpeg4/zorven) | Publish localhost services over HTTPS with private networking and MCP | Go |
 
 ### Productivity
 
