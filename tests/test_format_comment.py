@@ -7,6 +7,8 @@ out of its code block, and that it settles its own comment once the row is fixed
 
 from __future__ import annotations
 
+import base64
+
 import pytest
 
 import format_comment
@@ -53,7 +55,7 @@ def run(monkeypatch):
     def go(head: str, comments: list[dict]) -> FakeAPI:
         api = FakeAPI(comments)
         monkeypatch.setattr(format_comment, "api", api)
-        monkeypatch.setattr(format_comment.gitref, "show", lambda ref, path: (head, ""))
+        monkeypatch.setattr(format_comment, "head_readme", lambda sha: (head, ""))
         pr = {"number": 7, "head": {"sha": "a" * 40}, "user": {"login": "someone"}}
         format_comment.check(pr, BASE, dry_run=False)
         return api
@@ -112,3 +114,27 @@ def test_ignores_someone_elses_comment_with_the_marker(run):
     forged = {"id": 5, "user": {"login": "someone"}, "body": format_comment.MARKER}
     api = run(BASE, comments=[forged])
     assert api.writes() == []
+
+
+def test_reads_the_head_readme_through_the_contents_api(monkeypatch):
+    text = "# Title" + chr(10)
+    encoded = base64.b64encode(text.encode()).decode()
+    api_calls = []
+
+    def fake(method, path, payload=None, token=None):
+        api_calls.append(path)
+        return {"encoding": "base64", "content": encoded}, None
+
+    monkeypatch.setattr(format_comment, "api", fake)
+    assert format_comment.head_readme("b" * 40) == (text, "")
+    assert api_calls == [
+        f"repos/{format_comment.REPO}/contents/README.md?ref={'b' * 40}"
+    ]
+
+
+def test_skips_a_pull_request_without_a_real_sha(monkeypatch):
+    api = FakeAPI([])
+    monkeypatch.setattr(format_comment, "api", api)
+    pr = {"number": 7, "head": {"sha": "main; rm -rf /"}, "user": {"login": "x"}}
+    format_comment.check(pr, BASE, dry_run=False)
+    assert api.calls == []

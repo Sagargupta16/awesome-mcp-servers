@@ -9,8 +9,9 @@ short "passes now" note once they are gone. A pull request with nothing new
 wrong gets no comment at all.
 
 It runs from main on pull_request_target, so nothing from the pull request
-executes: the workflow fetches the pull request head, and this script reads its
-README.md as text through git and checks it with main's validate.py.
+executes or is even fetched: this script reads the pull request's README.md as
+text through the contents API, at the head commit, and checks it with main's
+validate.py.
 
     python scripts/format_comment.py            # the triggering pull request, or
                                                 # every open pull request
@@ -22,12 +23,14 @@ Needs GITHUB_TOKEN.
 from __future__ import annotations
 
 import argparse
+import base64
+import binascii
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
-import gitref
 import validate
 from star_check import BOT, seg
 from thank_contributors import REPO, api
@@ -36,6 +39,24 @@ MARKER = f"<!-- {REPO.split('/')[-1]}:format-check -->"
 
 # A long list buries the first fix; past this many the comment points at the log.
 MAX_SHOWN = 20
+
+# A head commit sha, which is all that ever goes into the contents API query.
+SHA_RE = re.compile(r"[0-9a-f]{40}")
+
+
+def head_readme(sha: str) -> tuple[str | None, str]:
+    """(README.md at commit `sha`, error), read as data through the contents API.
+
+    The pull request's commits are reachable from this repository through its
+    pull request ref, so a fork's head reads here without fetching anything.
+    """
+    data, err = api("GET", f"repos/{REPO}/contents/README.md?ref={sha}")
+    if err or not isinstance(data, dict) or data.get("encoding") != "base64":
+        return None, str(err or "no base64 content")
+    try:
+        return base64.b64decode(data["content"]).decode("utf-8", "replace"), ""
+    except (binascii.Error, KeyError) as exc:
+        return None, f"undecodable content ({exc})"
 
 
 def new_problems(head_text: str, base_text: str) -> list[str]:
@@ -104,10 +125,10 @@ def check(pr: dict, base_text: str, dry_run: bool) -> None:
     """Post, rewrite or settle the format comment on one pull request."""
     number = pr["number"]
     sha = (pr.get("head") or {}).get("sha") or ""
-    if not gitref.is_valid_ref(sha):
+    if not SHA_RE.fullmatch(sha):
         print(f"  #{number}: no usable head sha; skipped")
         return
-    head_text, detail = gitref.show(sha, "README.md")
+    head_text, detail = head_readme(sha)
     if head_text is None:
         print(f"  #{number}: cannot read README.md at {sha[:7]} ({detail}); skipped")
         return
