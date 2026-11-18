@@ -773,6 +773,7 @@ but not all of resources and prompts.
 - [Smithery](https://smithery.ai/) - Hosted MCP server registry and marketplace for agent tool connections.
 - [Socketlist](https://socketlist.com/) - Directory of MCP servers from the official MCP Registry, scored 0-100 on maintenance, security hygiene and adoption.
 - [Awesome Agent Skills](https://github.com/Sagargupta16/awesome-skills) - The sister list: Agent Skills, curated and checked by the same CI.
+- [TradingAIHub](https://tradingaihub.com) - Free directory of finance MCP servers, agent skills and APIs, re-checked weekly.
 
 ---
 
