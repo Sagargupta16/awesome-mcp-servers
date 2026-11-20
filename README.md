@@ -110,6 +110,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 | Server                                                                                                                                           | Description                                                                      | Language          |
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------- |
+| [alpha_syndicate x402 Gateway](https://pfq-opencode-wr96rj6p4xwwh59v-8001.app.github.dev/.well-known/x402.json) | 11 pay-per-call USDC endpoints for AI agents (token risk, gas prices, quantum solver, code sandbox, tx simulation, defensive code review, verified code fix, JSON schema repair, calldata decode) | Remote |
 | [Agentlas OS](https://github.com/agentlas-ai/Agentlas-OS)                                                                                        | Portable agent teams and cross-host orchestration over MCP                       | Python            |
 | [AgentReady Tools](https://agentready-tools.com/docs/mcp)                                                                                        | Search a catalog of more than 250 APIs, MCP servers and developer tools          | Remote            |
 | [Apollo MCP Server](https://github.com/apollographql/apollo-mcp-server)                                                                          | Official Apollo server exposing GraphQL operations as MCP tools                  | Rust              |
@@ -867,26 +868,3 @@ A remote server. `type` is not optional here: an entry with a `url` and no `type
 ```
 
 Where that JSON lives, and which extra keys it takes, differs per client -- check your own client's docs. The protocol's [guide to connecting a local server](https://modelcontextprotocol.io/docs/develop/connect-local-servers) walks through the stdio case, and each server's README lists the arguments, tokens and environment variables it expects.
-
-## alpha_syndicate x402 Endpoints
-
-| Endpoint | Description | Price | Network | PayTo |
-|----------|-------------|-------|---------|-------|
-| `/v1/solana/token-risk` | Token risk analysis (rug score, honeypot detection) | $0.01 | Solana | DN3pfYEvdkoTBP4oaEVvemsr98fZPhDSAbfVfmewRGQ5 |
-| `/v1/evm/gas-and-rpc-pulse` | Real-time gas prices + RPC health across EVM chains | $0.01 | EVM | 0xC5dD2Ea54FF138bb3f71D3466092eA31eF115868 |
-| `/v1/stellar/account-health` | Stellar account health + trustline analysis | $0.01 | Stellar | 0xC5dD2Ea54FF138bb3f71D3466092eA31eF115868 |
-| `/v1/quantum/qubo-solver` | Quantum QUBO solver for optimization problems | $0.08 | Hybrid | 0xC5dD2Ea54FF138bb3f71D3466092eA31eF115868 |
-| `/v1/stream/quantum-session` | Streaming quantum session with real-time results | $0.0005/s | Hybrid | 0xC5dD2Ea54FF138bb3f71D3466092eA31eF115868 |
-| `/v1/security/tx-simulate` | Transaction simulation + risk scoring | $0.03 | Multi-chain | 0xC5dD2Ea54FF138bb3f71D3466092eA31eF115868 |
-| `/v1/compute/code-sandbox` | Secure code execution sandbox with resource limits | $0.03 | Cloud | 0xC5dD2Ea54FF138bb3f71D3466092eA31eF115868 |
-| `/v1/security/defensive-code-review` | AI-powered defensive code review | $0.15 | Any | 0xC5dD2Ea54FF138bb3f71D3466092eA31eF115868 |
-| `/v1/ai/verified-code-fix` | Verified code fix generation + validation | $0.10 | Any | 0xC5dD2Ea54FF138bb3f71D3466092eA31eF115868 |
-| `/v1/utils/json-schema-repair` | JSON schema repair + validation | $0.01 | Any | 0xC5dD2Ea54FF138bb3f71D3466092eA31eF115868 |
-| `/v1/web3/tx-simulator-decode` | Calldata/instruction decode + simulation | $0.03 | Multi-chain | 0xC5dD2Ea54FF138bb3f71D3466092eA31eF115868 |
-
-**Gateway público (Base USDC):** https://pfq-opencode-wr96rj6p4xwwh59v-8001.app.github.dev/.well-known/x402.json
-**PayTo (Base USDC):** 0xC5dD2Ea54FF138bb3f71D3466092eA31eF115868
-**PayTo (Solana USDC):** DN3pfYEvdkoTBP4oaEVvemsr98fZPhDSAbfVfmewRGQ5
-
-*11 endpoints USDC en vivo - Zero capital required - Instant settlement via x402*
-
