@@ -110,6 +110,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 | Server                                                                                                                                           | Description                                                                      | Language          |
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------- |
+| [alpha_syndicate x402 Gateway](https://pfq-opencode-wr96rj6p4xwwh59v-8001.app.github.dev/.well-known/x402.json) | 11 pay-per-call USDC endpoints for AI agents | Remote |
 | [Agentlas OS](https://github.com/agentlas-ai/Agentlas-OS)                                                                                        | Portable agent teams and cross-host orchestration over MCP                       | Python            |
 | [AgentReady Tools](https://agentready-tools.com/docs/mcp)                                                                                        | Search a catalog of more than 250 APIs, MCP servers and developer tools          | Remote            |
 | [Apollo MCP Server](https://github.com/apollographql/apollo-mcp-server)                                                                          | Official Apollo server exposing GraphQL operations as MCP tools                  | Rust              |
