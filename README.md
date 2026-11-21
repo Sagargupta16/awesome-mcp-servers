@@ -290,6 +290,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Statsnet](https://github.com/usenetstate/statsnet-mcp)                                                                                          | Company background checks: registration, executives, courts and finances         | Remote            |
 | [Tavily MCP](https://github.com/tavily-ai/tavily-mcp)                                                                                            | Tavily AI search for agents                                                      | JavaScript        |
 | [Vegetable Yield Percentage MCP](https://github.com/theluckystrike/vegetable-yield-percentage-mcp)                                               | Edible portion, trim waste and produce to buy from USDA refuse data              | TypeScript        |
+| [You.com MCP](https://github.com/youdotcom-oss/mcp)                                                                                              | Web search MCP with a no-key free tier, about 100 searches a day                 | TypeScript        |
 | [zodiak.info.pl](https://zodiak.info.pl/dla-ai)                                                                                                  | Astrology from astronomy: birth charts, transits, synastry, Vedic chart          | Remote            |
 
 ### Communication
