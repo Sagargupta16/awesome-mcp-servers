@@ -687,6 +687,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 | Server                                                                                                                                           | Description                                                                      | Language          |
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------- |
+| [AIfa Memory](https://github.com/MaksimGalatin/aifa-memory-mcp) | Hosted encrypted AI agent memory over Streamable HTTP with Arweave anchoring | Remote |
 | [Anansi Haven](https://github.com/kburrus64-max/anansi-haven)                                                                                    | Free agent home base with memory, encrypted storage, jobs and directory          | TypeScript        |
 | [Anki MCP](https://github.com/ankimcp/anki-mcp-server)                                                                                           | Anki flashcards via AnkiConnect                                                  | TypeScript        |
 | [Anytype MCP](https://github.com/anyproto/anytype-mcp)                                                                                           | Official MCP server for the Anytype local-first workspace                        | TypeScript        |
