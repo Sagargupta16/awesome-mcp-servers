@@ -247,6 +247,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 | Server                                                                                                                                           | Description                                                                      | Language          |
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------- |
+| [Aethel](https://aethel.pro/mcp) | What 42 companies' own pages say about their AI and video interviews | Remote |
 | [AgentSearch MCP](https://github.com/agentsearchhq-coder/agentsearch-mcp)                                                                        | Web search, URL-to-Markdown extraction and JS page rendering; keyless free tier  | TypeScript        |
 | [AP Score Distributions MCP](https://github.com/theluckystrike/ap-score-distributions-mcp)                                                       | Official College Board AP score distributions, percentiles and pass rates        | TypeScript        |
 | [Apify MCP](https://github.com/apify/apify-mcp-server)                                                                                           | Web scraping actors and automation                                               | TypeScript        |
