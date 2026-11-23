@@ -364,7 +364,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [SightRadar Face Recognition API MCP](https://github.com/sightradar-hq/sightradar-mcp)                                                           | Face recognition API: index photos, search by selfie, compare and detect faces   | TypeScript        |
 | [Weights & Biases MCP](https://github.com/wandb/wandb-mcp-server)                                                                                | Official W&B Models + Weave                                                      | Python            |
 | [Zambo](https://zambo.dev/mcp)                                                                                                                   | Remote MCP server: 153 tools, cross-AI continuity, AER-1 receipt per job         | Remote            |
-| [Velma MCP](https://github.com/modulate-ai/velma-mcp) | Voice AI: transcription, deepfake and AI music detection, PII redaction, emotion, accent and language detection | Python |
+| [Velma MCP](https://github.com/modulate-ai/velma-mcp) | Voice AI: transcription, deepfake and AI music detection, PII redaction | Python |
 
 ### Finance
 
