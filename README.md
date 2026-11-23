@@ -558,6 +558,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Sports Odds MCP](https://github.com/GeminiGeorge22/sports-odds-mcp)                                                                             | Live odds from Kambi sportsbooks with every book's price per outcome             | JavaScript        |
 | [Spotify Play Count MCP](https://github.com/GeminiGeorge22/spotify-play-count-mcp)                                                               | Spotify play counts per track, plus artist monthly listeners                     | Python            |
 | [TMDB MCP](https://github.com/Laksh-star/mcp-server-tmdb)                                                                                        | The Movie Database (TMDB)                                                        | TypeScript        |
+| [Vertov](https://vertov.app/docs/mcp) | Search recordings, read timestamped briefs, and upload existing videos | Remote |
 | [YouTube MCP](https://github.com/ZubeidHendricks/youtube-mcp-server)                                                                             | YouTube API videos and analytics                                                 | TypeScript        |
 | [YouTube Transcript MCP](https://github.com/kimtaeyoon83/mcp-server-youtube-transcript)                                                          | Download YouTube video transcripts                                               | TypeScript        |
 
