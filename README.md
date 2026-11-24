@@ -797,6 +797,7 @@ but not all of resources and prompts.
 ## Tutorials & Articles
 
 - [Introduction to MCP](https://modelcontextprotocol.io/introduction) - Official introduction to the protocol.
+- [aqx-shipping-rates-mcp](https://github.com/AQXLOGISTICS/aqx-shipping-rates-mcp) - Real-time international air freight quotes, volumetric weight (`L×W×H / 5000`), and customs de minimis rules across 15 trade corridors ([OpenAPI 3.0.3](https://aqxlogistics.com/developers)).
 - [Building Your First MCP Server](https://modelcontextprotocol.io/quickstart/server) - Step-by-step server tutorial.
 - [MCP for Claude Desktop](https://modelcontextprotocol.io/quickstart/user) - Getting started as a user.
 - [Build an MCP Server (Python / Node / Java)](https://modelcontextprotocol.io/docs/develop/build-server) - Multi-language build guide.
