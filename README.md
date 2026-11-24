@@ -480,6 +480,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [SVGMaker MCP](https://github.com/GenWaveLLC/svgmaker-mcp)                                                                                       | Generate, edit and convert SVGs, and remove image backgrounds                    | TypeScript        |
 | [UberLLM](https://uberllm.dev/docs/mcp)                                                                                                          | Make images and videos, list models with prices and check balance -- needs key   | Remote            |
 | [VideoGen MCP](https://videogen.io/videogen-mcp)                                                                                                 | Create and edit videos, images, voiceovers, music, and avatars                   | TypeScript        |
+| [Vidocu MCP](https://github.com/CommonNinja/vidocu-mcp-server)                                                                                   | Turn videos, PDFs and slides into subtitles, voiceovers, translations and docs   | Remote            |
 | [Webflow MCP](https://github.com/webflow/mcp-server)                                                                                             | Official Webflow server for sites, pages, CMS, and components                    | TypeScript        |
 
 ### Testing & QA
