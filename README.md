@@ -577,6 +577,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Agent Flights](https://lowest.flights/connect)                                                                                                  | Cheapest flights worldwide, strong on Africa: price calendars and booking links  | Remote            |
 | [Airbnb MCP](https://github.com/openbnb-org/mcp-server-airbnb)                                                                                   | Search Airbnb from your AI agent                                                 | JavaScript        |
 | [Airport Delays FAA Status MCP](https://github.com/theluckystrike/airport-delays-faa-status-mcp)                                                 | Live FAA ground stops, ground delay programs and delays at US airports           | TypeScript        |
+| [AQX Logistics](https://aqxlogistics.com/developers)                                                                                             | International air freight quotes, volumetric weight and 15-country customs       | Remote            |
 | [Border Wait Times Canada Mexico MCP](https://github.com/theluckystrike/border-wait-times-canada-mexico-mcp)                                     | Live CBP wait times at US-Mexico and US-Canada land border crossings             | TypeScript        |
 | [Cesium MCP](https://github.com/CesiumGS/cesium-ai-integrations/tree/main/mcp)                                                                   | Official Cesium 3D geospatial and geolocation MCP servers                        | TypeScript        |
 | [Flood Zone Lookup FEMA Flood Map MCP](https://github.com/theluckystrike/flood-zone-lookup-fema-flood-map-mcp)                                   | FEMA flood zone and base flood elevation for any US address from the NFHL        | TypeScript        |
@@ -797,7 +798,6 @@ but not all of resources and prompts.
 ## Tutorials & Articles
 
 - [Introduction to MCP](https://modelcontextprotocol.io/introduction) - Official introduction to the protocol.
-- [aqx-shipping-rates-mcp](https://github.com/AQXLOGISTICS/aqx-shipping-rates-mcp) - Real-time international air freight quotes, volumetric weight (`L×W×H / 5000`), and customs de minimis rules across 15 trade corridors ([OpenAPI 3.0.3](https://aqxlogistics.com/developers)).
 - [Building Your First MCP Server](https://modelcontextprotocol.io/quickstart/server) - Step-by-step server tutorial.
 - [MCP for Claude Desktop](https://modelcontextprotocol.io/quickstart/user) - Getting started as a user.
 - [Build an MCP Server (Python / Node / Java)](https://modelcontextprotocol.io/docs/develop/build-server) - Multi-language build guide.
