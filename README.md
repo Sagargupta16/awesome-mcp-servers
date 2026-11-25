@@ -525,6 +525,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 | Server                                                                                                                                           | Description                                                                      | Language          |
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------- |
+| [AffixIO](https://www.affix-io.com/mcp/) | Verification infrastructure: circuits, prove, verify and attestation | Remote |
 | [Binary Ninja MCP](https://github.com/fosdickio/binary_ninja_mcp)                                                                                | Binary Ninja plugin for LLM-driven binary analysis                               | Python            |
 | [Bitwarden MCP](https://github.com/bitwarden/mcp-server)                                                                                         | Official Bitwarden password manager                                              | TypeScript        |
 | [Burp AI Agent](https://github.com/six2dez/burp-ai-agent)                                                                                        | Burp Suite extension with MCP tooling                                            | Kotlin            |
