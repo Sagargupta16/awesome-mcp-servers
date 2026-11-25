@@ -467,6 +467,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 | Server                                                                                                                                           | Description                                                                      | Language          |
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------- |
+| [A1 Gallery](https://www.a1.gallery/mcp) | Search real website designs, sections, fonts and measured design tokens | Remote |
 | [Adobe Premiere Pro MCP](https://github.com/hetpatel-11/Adobe_Premiere_Pro_MCP)                                                                  | Drive Adobe Premiere Pro timelines and edits from an agent                       | TypeScript        |
 | [AntV Chart MCP](https://github.com/antvis/mcp-server-chart)                                                                                     | Official AntV server generating 25+ chart types                                  | TypeScript        |
 | [Aseprite MCP](https://github.com/diivi/aseprite-mcp)                                                                                            | Create and edit pixel art through the Aseprite API                               | Python            |
