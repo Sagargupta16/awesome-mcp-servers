@@ -517,6 +517,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Grainulator](https://github.com/grainulation/grainulator)                                                                                       | Local evidence ledger and soundness verifier loop for coding agents              | JavaScript        |
 | [Oh My Android](https://github.com/ateymoori/oh-my-android)                                                                                      | Android Emulator control panel with built-in MCP server                          | Swift             |
 | [Playwright MCP](https://github.com/microsoft/playwright-mcp)                                                                                    | Official Microsoft Playwright browser automation                                 | TypeScript        |
+| [UI Verify](https://uiverify.ai/docs/visual-testing-mcp-server)                                                                                  | Shows a coding agent each visual change its edit made, to accept or deny         | Remote            |
 
 ### Security
 
