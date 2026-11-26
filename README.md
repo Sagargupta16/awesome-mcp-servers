@@ -568,6 +568,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Skyvern](https://github.com/Skyvern-AI/skyvern/tree/main/integrations/mcp)                                                                      | Browser workflow automation via LLMs and computer vision, over MCP               | Python            |
 | [Social Fetch](https://github.com/social-freak-ltd/socialfetch-mcp)                                                                              | Public social data from TikTok, Instagram, YouTube, X and Reddit                 | TypeScript        |
 | [TinyRex MCP](https://github.com/emirmrkaljevic/tinyrex-mcp)                                                                                     | Run TinyRex Apify scrapers for remote jobs, Shopify stores and B2B leads         | Python            |
+| [webfetch.run](https://webfetch.run/docs) | Fetch JS-rendered pages as markdown, HTML or screenshots | Remote |
 | [Xquik MCP](https://github.com/Xquik-dev/x-twitter-scraper)                                                                                      | X/Twitter search, profile tweets, posting, and media tools                       | TypeScript        |
 
 ### Media & Entertainment
