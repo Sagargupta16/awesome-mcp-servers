@@ -1,0 +1,47 @@
+name: Format comment
+
+# Posts what `Validate format` found on the pull request itself, in one marker
+# comment (scripts/format_comment.py), so a submitter is told why the check is
+# red without opening its log. The comment is rewritten when a push changes the
+# problems and turns into a short "passes now" note once they are fixed.
+# Not a required check.
+#
+# A pull request from a fork gets a read-only token on `pull_request`, so the
+# comment cannot come from lint.yml. pull_request_target runs this file from
+# main and checks out main only. The script reads the pull request's README.md
+# as text through the contents API at its head commit and checks it with main's
+# validate.py, so nothing from the pull request is fetched or executes.
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+  workflow_dispatch:
+
+# nothing by default; the job asks for exactly what it writes
+permissions: {}
+
+concurrency:
+  group: format-comment-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  comment:
+    name: Explain format problems
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write # comments go through the Issues API
+      pull-requests: write # which refuses a comment on a pull request without it
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+
+      - name: Comment
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # a dispatch has no pull request, so the script checks every open one
+        run: python scripts/format_comment.py

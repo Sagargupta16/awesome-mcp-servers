@@ -2,6 +2,18 @@
 
 Version headings below are documentation milestones. No git tag or GitHub release has been cut for any of them yet.
 
+## [2.12.1] - 2026-11-17
+
+### Fixed
+
+- The format comment was never posted. Its first live run (44042134942) logged "comment posted" on #375, but no comment appeared: the job had `pull-requests: read`, and GitHub refuses a comment on a pull request without pull request write access, while `format_comment.py` ignored the error. The job now has `pull-requests: write`, and a refused write fails the run with the status code instead of logging success.
+
+## [2.12.0] - 2026-11-17
+
+### Added
+
+- A failed `Validate format` check now explains itself on the pull request. `format-comment.yml` (`scripts/format_comment.py`) posts one comment listing the problems the pull request adds to `README.md`, with the `--fix` hint, rewrites it when a push changes them, and turns it into a short "passes now" note once they are fixed. Before this, the findings sat only in the check log, so a submitter whose row broke a format rule was never told why the check was red. It runs from main on `pull_request_target` and reads the pull request's README as text; nothing from the pull request executes.
+
 ## [2.11.1] - 2026-11-14
 
 ### Fixed
