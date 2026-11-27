@@ -389,6 +389,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [ValorBrain](https://github.com/ValorBrain/valorbrain-cli)                                                                                       | Shared memory for AI agent teams: dated facts, decisions and handoffs            | JavaScript        |
 | [Weights & Biases MCP](https://github.com/wandb/wandb-mcp-server)                                                                                | Official W&B Models + Weave                                                      | Python            |
 | [Zambo](https://zambo.dev/mcp)                                                                                                                   | Remote MCP server: 153 tools, cross-AI continuity, AER-1 receipt per job         | Remote            |
+| [Velma MCP](https://github.com/modulate-ai/velma-mcp) | Voice AI: transcription, deepfake and AI music detection, PII redaction | Python |
 
 ### Finance
 
