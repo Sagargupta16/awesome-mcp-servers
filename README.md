@@ -815,7 +815,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Spring AI MCP](https://github.com/spring-projects/spring-ai)                                                                                    | Spring Boot starters for MCP servers and clients                                 | Java              |
 | [Strands Agents SDK](https://github.com/strands-agents/harness-sdk)                                                                              | AWS agent SDK with MCP tool clients and its own MCP server                       | Python            |
 | [Vercel mcp-handler](https://github.com/vercel-labs/mcp-handler)                                                                                 | Official Vercel MCP adapter for meta-frameworks                                  | TypeScript        |
-| [xmcp](https://github.com/basementstudio/xmcp)                                                                                                   | TypeScript MCP framework with CLI scaffolding for Next.js and Express            | TypeScript        |
+| [xmcp](https://github.com/basementstudio/xmcp)                                                                                                   | TypeScript MCP framework with file-based routing, adapters, and React MCP Apps   | TypeScript        |
 
 ## Clients
 
