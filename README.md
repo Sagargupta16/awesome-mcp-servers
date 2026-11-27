@@ -871,6 +871,7 @@ but not all of resources and prompts.
 - [Socketlist](https://socketlist.com/) - Directory of MCP servers from the official MCP Registry, scored 0-100 on maintenance, security hygiene and adoption.
 - [Awesome Agent Skills](https://github.com/Sagargupta16/awesome-skills) - The sister list: Agent Skills, curated and checked by the same CI.
 - [TradingAIHub](https://tradingaihub.com) - Free directory of finance MCP servers, agent skills and APIs, re-checked weekly.
+- [Mode VC Radar MCP](https://modevc.com/api/mcp) - Read-only venture capital & AI market research MCP server (39 empirical AI charts, 3,650 VC firms, SEC Form D filings, and 18 founder financial calculators; free Streamable HTTP at https://modevc.com/api/mcp).
 
 ---
 
