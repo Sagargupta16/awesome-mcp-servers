@@ -548,6 +548,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 
 | Server                                                                                                                                           | Description                                                                      | Language          |
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------- |
+| [Insomnia Security MCP](https://github.com/vulnz/insomnia-mcp) | 159 SAST/taint, live secrets, Web DAST, OSINT, 21k+ CVE & Outbound Network Tunnel v4.0 tools | Streamable HTTP (`https://mcp.insom.ai/mcp`) & `npx`/`uvx` |
 | [AffixIO](https://www.affix-io.com/mcp/)                                                                                                         | Verification infrastructure: circuits, prove, verify and attestation             | Remote            |
 | [Binary Ninja MCP](https://github.com/fosdickio/binary_ninja_mcp)                                                                                | Binary Ninja plugin for LLM-driven binary analysis                               | Python            |
 | [Bitwarden MCP](https://github.com/bitwarden/mcp-server)                                                                                         | Official Bitwarden password manager                                              | TypeScript        |
