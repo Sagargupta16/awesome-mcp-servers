@@ -769,6 +769,7 @@ An MCP server runs as a trusted extension of your assistant, with your files and
 | [Watchr](https://github.com/getwatchr/watchr-mcp)                                                                                                | Query competitor signals, insights and reports in a Watchr workspace             | Remote            |
 | [Wavegrain](https://wavegrain.com/mcp)                                                                                                           | Curated TikTok slideshows and Instagram carousels for your brand on autopilot    | Remote            |
 | [zaDojo](https://zadojo.com/docs/mcp)                                                                                                            | Search Console, GA4, rank tracking, SERP and AI visibility data for SEO and GEO  | Remote            |
+| [The SEO Agent MCP](https://github.com/jeremy665/theseoagent-mcp) | MCP server for technical SEO site audits, keyword planning, and CMS article publishing workflows | TypeScript |
 
 ### Knowledge Management
 
